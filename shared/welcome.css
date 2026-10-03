@@ -1,0 +1,108 @@
+/* ============================================================
+   WELCOME (START HERE) PAGE — reusable, color-neutral stylesheet
+   ------------------------------------------------------------
+   This file contains NO colors of its own. Every color comes from
+   the --w-* tokens that each companion defines in its own :root
+   block (see README.md in this folder for the full token list).
+   That is what lets every companion share one layout while keeping
+   its own two-tone color scheme.
+
+   Everything is scoped under .welcome, so it cannot clash with
+   anything else on the page. Layout and class names follow the
+   Start page in bacteria1.html.
+   ============================================================ */
+
+.welcome .eyebrow,.welcome .kicker{display:flex;align-items:center;gap:10px;font-size:.72rem;font-weight:750;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.welcome .eyebrow::before,.welcome .kicker::before{content:"";width:26px;height:3px;border-radius:2px;background:var(--w-hl);flex:0 0 26px}
+
+/* ---------- HERO ---------- */
+.welcome .hero{position:relative;overflow:hidden;border-radius:var(--r-lg);box-shadow:var(--shadow);
+  background:linear-gradient(120deg,var(--w-hero-1) 0%,var(--w-hero-2) 52%,var(--w-hero-3) 100%);
+  padding:46px 44px 42px;display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;margin-bottom:20px}
+.welcome .hero-title{font-size:clamp(2rem,4.2vw,3.05rem);line-height:1.06;letter-spacing:-.025em;margin:.25em 0 .35em;font-weight:800;color:var(--w-deep)}
+.welcome .hero-title span{display:block;color:var(--w-hl-strong)}
+.welcome .hero p{color:var(--ink-mid);font-size:1.04rem}
+.welcome .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.welcome .btn.lg{padding:13px 22px;font-size:.95rem;border-radius:11px}
+.welcome .btn.outline{background:#fff;color:var(--green);border:1.5px solid var(--green-line)}
+.welcome .btn.outline:hover{background:var(--green-soft);color:var(--w-deep)}
+.welcome .btn.hl{background:var(--w-hl);color:var(--w-on-hl)}
+.welcome .btn.hl:hover{background:var(--w-hl-hover);color:var(--w-on-hl)}
+.welcome .hero-note{display:flex;align-items:center;gap:12px;margin-top:22px;font-size:.86rem;color:var(--ink-mid)}
+.welcome .hero-dots{display:flex;flex:0 0 auto}
+.welcome .hero-dots i{width:26px;height:26px;border-radius:50%;border:2px solid #fff;margin-left:-8px;display:block}
+.welcome .hero-dots i:first-child{margin-left:0}
+.welcome .hero-art{position:relative;display:grid;place-items:center}
+.welcome .hero-art svg{width:100%;max-width:400px;height:auto;display:block}
+.welcome .hero-badge{position:absolute;right:2%;top:6%;background:#fff;border-radius:14px;padding:11px 15px;
+  box-shadow:0 8px 24px rgba(var(--w-shadow-rgb),.18);text-align:left}
+.welcome .hero-badge b{display:block;font-size:1.5rem;line-height:1;color:var(--w-deep)}
+.welcome .hero-badge span{font-size:.62rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- STAT BAND ---------- */
+.welcome .statband{background:var(--w-band);color:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow);
+  display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:20px;overflow:hidden}
+.welcome .stat{display:flex;align-items:center;gap:14px;padding:20px 22px;border-left:1px solid rgba(255,255,255,.13)}
+.welcome .stat:first-child{border-left:0}
+.welcome .stat svg{width:34px;height:34px;flex:0 0 34px;stroke:var(--w-hl);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.welcome .stat b{display:block;font-size:1.45rem;line-height:1.1}
+.welcome .stat span{font-size:.78rem;color:rgba(255,255,255,.78)}
+
+/* ---------- MODULE CARDS ("Your path") ---------- */
+.welcome .sect-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.welcome .sect-head h2{margin:0}
+.welcome .mod-cards{display:grid;grid-template-columns:repeat(var(--w-cols,5),minmax(0,1fr));gap:14px}
+.welcome .mod-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px 16px 16px;
+  text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;
+  box-shadow:0 1px 6px rgba(var(--w-shadow-rgb),.05);transition:transform .15s,box-shadow .15s,border-color .15s;font:inherit;color:inherit}
+.welcome .mod-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--green-line)}
+.welcome .mod-card h3{font-size:.92rem;margin:4px 0 0;line-height:1.3}
+.welcome .mod-card p{font-size:.78rem;color:var(--ink-soft);margin:0;line-height:1.45}
+.welcome .mod-card .go{font-size:.78rem;font-weight:700;color:var(--w-hl-ink);margin-top:auto;padding-top:8px}
+.welcome .chip-ico{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;flex:0 0 46px}
+.welcome .chip-ico svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.welcome .tone-1{background:var(--w-t1-bg);color:var(--w-t1-fg)}
+.welcome .tone-2{background:var(--w-t2-bg);color:var(--w-t2-fg)}
+.welcome .tone-3{background:var(--w-t3-bg);color:var(--w-t3-fg)}
+.welcome .tone-4{background:var(--w-t4-bg);color:var(--w-t4-fg)}
+.welcome .tone-5{background:var(--w-t5-bg);color:var(--w-t5-fg)}
+.welcome .tone-6{background:var(--w-t6-bg);color:var(--w-t6-fg)}
+
+/* ---------- HOW IT WORKS (two-column) ---------- */
+.welcome .why{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.welcome .why-art{background:linear-gradient(140deg,var(--w-art-1),var(--w-art-2));border-radius:var(--r-md);padding:22px;position:relative}
+.welcome .why-art svg{width:100%;height:auto;display:block}
+.welcome .badge-hl{position:absolute;right:16px;top:16px;background:var(--w-hl);color:var(--w-on-hl);border-radius:12px;padding:9px 14px;
+  font-weight:800;line-height:1.1;text-align:center;box-shadow:0 6px 16px rgba(var(--w-shadow-rgb),.22)}
+.welcome .badge-hl small{display:block;font-size:.62rem;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
+.welcome .lede{font-size:1.02rem;color:var(--ink-mid);margin:0 0 4px}
+.welcome .checks{list-style:none;padding:0;margin:14px 0 6px}
+.welcome .checks li{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px;font-size:.95rem}
+.welcome .checks li>span{flex:1 1 auto;min-width:0}
+.welcome .checks li::before{content:"";flex:0 0 18px;height:18px;margin-top:3px;border-radius:50%;
+  background:var(--w-check) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.6 2.6L13 6.6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+
+/* ---------- CALL-TO-ACTION BANNER ---------- */
+.welcome .cta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;border-radius:var(--r-lg);padding:24px 28px;color:#fff;
+  background:linear-gradient(110deg,var(--w-deep),var(--w-band) 60%,var(--w-lift));box-shadow:var(--shadow);margin-bottom:20px}
+.welcome .cta-ico{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.1);display:grid;place-items:center;flex:0 0 56px}
+.welcome .cta-ico svg{width:28px;height:28px;stroke:var(--w-hl);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.welcome .cta-body{flex:1 1 260px}
+.welcome .cta h2{color:#fff;margin:0 0 4px;font-size:1.3rem}
+.welcome .cta p{color:rgba(255,255,255,.82);margin:0;font-size:.94rem}
+
+/* ---------- RESPONSIVE (same breakpoints as bacteria1.html) ---------- */
+@media (max-width:900px){
+  .welcome .hero{grid-template-columns:1fr;padding:30px 22px}
+  .welcome .hero-art{order:-1}
+  .welcome .hero-art svg{max-width:260px}
+  .welcome .statband{grid-template-columns:1fr 1fr}
+  .welcome .stat:nth-child(3){border-left:0}
+  .welcome .stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.13)}
+  .welcome .mod-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .welcome .why{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .welcome .mod-cards{grid-template-columns:1fr}
+}

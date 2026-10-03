@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antibacterial Mechanisms, Resistance &amp; Prevention · Bacteria II</title>
+<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
+<style>
+/* ============================================================
+   BACTERIA II THEME — espresso (primary) + methylene blue (accent)
+   Only this page's own <style> block is changed; shared/styles.css is untouched.
+   The token names stay --green* because they mean "this companion's primary".
+   "Correct / done" is kept a true green (--ok) so brown never reads as "right".
+   ============================================================ */
+:root{
+  --green:#4A2F27; --green-bright:#6B4539; --green-soft:#F3ECE8; --green-line:#DCCBC3;
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-ink:#1C7554;
+  --blue:#2B8CC4; --blue-soft:#E3F3FC;
+  --acc:#4DB6EA; --acc-deep:#1F7FB8; --deep:#2E1C17; --band:#5A3D33;
+}
+body{background:
+  radial-gradient(900px 420px at 88% -8%, #E3F3FC 0%, rgba(227,243,252,0) 62%),
+  radial-gradient(760px 380px at 4% -4%, #F3ECE8 0%, rgba(243,236,232,0) 60%), var(--page);
+  background-attachment:fixed}
+.mod-head.current,.sub button.current,.pill,.ring-num,.dnd-pill,.dnd-ghost,.opt.sel,.btn.ghost.on{color:var(--green)}
+.mod-head.current .mod-badge{background:var(--green-soft);color:var(--green)}
+.mod-badge.done,.mod-head.current .mod-badge.done{background:var(--ok-soft);color:var(--ok-ink)}
+.sub button.done .dot{background:var(--ok)}
+.ring-cap{color:#8A6B5F}
+.eyebrow{color:var(--acc-deep)}
+.apply .tag{background:#E5D5CC;color:var(--green)}
+.btn:hover{background:var(--green-bright)}
+.choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback{border-left-color:var(--ok)}
+.opt.reveal{border-color:var(--ok);color:var(--ok-ink)}
+.dnd-row.correct{border-color:var(--ok);background:var(--ok-soft)}
+.dnd-row.correct .dnd-slot{border-color:var(--ok)}
+.lock-dot.done{background:var(--ok)}
+.home-num.done{background:var(--ok-soft);color:var(--ok-ink)}
+.home-status.done{color:var(--ok-ink)}
+.fc-front{background:linear-gradient(140deg,#F8F2EE,#E3F3FC)}
+.score-hero{background:linear-gradient(135deg,#4A2F27,#2E1C17)}
+input[type=range]{background:linear-gradient(90deg,#BFE3F6,#2B8CC4)}
+input[type=range]::-webkit-slider-thumb{border-color:#2B8CC4}
+input[type=range]::-moz-range-thumb{border-color:#2B8CC4}
+.figure .act-hs.on{filter:drop-shadow(0 0 5px rgba(77,182,234,.95))}
+.bd-fill{background:var(--green)!important}
+.back-to-hub{color:var(--green-bright)}
+
+
+/* ---------- WELCOME PAGE TOKENS: the only colors the shared welcome template uses ----------
+   (the layout itself is in shared/welcome.css, linked above) */
+:root{
+  --w-band:#4A2F27;   --w-deep:#2E1C17;   --w-lift:#5A3D33;            /* espresso family: stat band, CTA banner */
+  --w-hl:#4DB6EA;     --w-hl-hover:#36A2D9;                            /* methylene blue highlight: bars, icons, buttons */
+  --w-hl-strong:#1F7FB8; --w-hl-ink:#0F5E8A;                           /* blue for big headline / small link text */
+  --w-on-hl:#2E1C17;                                                   /* text placed on a highlight fill */
+  --w-hero-1:#E3F3FC; --w-hero-2:#FBF8F6; --w-hero-3:#F3ECE8;          /* hero background: blue tint > warm white > espresso tint */
+  --w-art-1:#E3F3FC;  --w-art-2:#F3ECE8;  --w-art-line:#B7DDF2;        /* "how it works" panel */
+  --w-check:#1F7FB8;  --w-shadow-rgb:46,28,23;
+  --w-hl-soft:#DDEFF9; --w-ring-track:#DCCBC3; --w-ring-fill:#2B8CC4;    /* sidebar: status pill tint, progress ring */
+  --w-kp-bg:#F5F9FD;                                                      /* section pages: background of the Key points box */
+  --w-t1-bg:#F3ECE8; --w-t1-fg:#4A2F27;  --w-t2-bg:#DDEFF9; --w-t2-fg:#1F7FB8;   /* module-card icon tones */
+  --w-t3-bg:#F8E6DC; --w-t3-fg:#A4522A;  --w-t4-bg:#E4E9FB; --w-t4-fg:#3B55B5;
+  --w-t5-bg:#DFF1F4; --w-t5-fg:#1D7A8C;  --w-t6-bg:#F2E8D9; --w-t6-fg:#7A5A2E;
+}
+
+/* ---------- companion-specific components ---------- */
+.prov{display:inline-block;background:var(--amber-soft);color:var(--amber);border:1.5px solid #F0D5A0;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;letter-spacing:.02em;vertical-align:middle;margin-left:6px}
+.prov-note{background:var(--amber-soft);border-radius:var(--r-sm);padding:10px 14px;font-size:.86rem;color:#7A5410;margin:0 0 14px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.cclass{background:#fff;border:1.5px solid var(--line);border-radius:var(--r-md);padding:12px 14px}
+.cclass h4{margin:0 0 4px;font-size:.95rem;color:var(--green)}
+.cclass p{margin:0;font-size:.85rem;color:var(--ink-mid)}
+.explain{background:var(--blue-soft);border-radius:var(--r-md);padding:18px 20px;margin:22px 0}
+.explain h3{margin:0 0 8px;font-size:1rem;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.explain .tag{background:#BFE3F6;color:#0F5E8A}
+.explain textarea{width:100%;min-height:76px;font:inherit;font-size:.92rem;border:1.5px solid #BFE3F6;border-radius:var(--r-sm);padding:10px 12px;background:#fff;resize:vertical}
+.explain .ans{display:none;margin-top:12px;background:#fff;border-left:4px solid var(--blue);border-radius:var(--r-sm);padding:12px 14px;font-size:.92rem}
+.explain .ans.show{display:block}
+.explain .fine{font-size:.78rem;color:var(--ink-soft);margin:6px 0 0}
+/* mechanism lens card */
+.lens{border:1.5px solid var(--green-line);border-radius:var(--r-md);background:#fff;margin:16px 0;overflow:hidden}
+.lens-head{background:var(--green);color:#fff;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.lens-head b{font-size:.95rem}
+.lens-head button{background:transparent;border:1.5px solid #B99A8D;color:#F3ECE8;border-radius:999px;padding:3px 12px;font-size:.78rem}
+.lens-head button:hover{background:var(--band)}
+.lens-row{display:block;width:100%;text-align:left;background:#fff;border:0;border-top:1px solid var(--line);padding:11px 16px;font:inherit;color:var(--ink)}
+.lens-head button,.tube,.plate{font:inherit}
+.lens-row:hover{background:#FBF8F6}
+.lens-q{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.lens-tag{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em;flex:0 0 auto}
+.lt1{background:#DDEFF9;color:#0F5E8A}.lt2{background:#F6E1DC;color:#8B3A2B}.lt3{background:#DDF1E7;color:#1C7554}.lt4{background:#FFF0CE;color:#7A5410}.lt5{background:#E9E2F8;color:#4D3BA6}
+.lens-prompt{font-size:.86rem;color:var(--ink-mid)}
+.lens-ans{display:none;margin-top:8px;font-size:.92rem}
+.lens-row.open .lens-ans{display:block}
+.route{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;margin:0 6px 4px 0}
+.r1{background:#F6E1DC;color:#8B3A2B}.r2{background:#E9E2F8;color:#4D3BA6}.r3{background:#DDEFF9;color:#0F5E8A}.r4{background:#DDF1E7;color:#1C7554}
+.route-lock{font-size:.78rem;color:var(--ink-soft);font-style:italic}
+/* simulations */
+.sim{background:#FAFCFD;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px}
+.sim-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.sim-row label{font-size:.86rem;color:var(--ink-mid);font-weight:600}
+.sim-row input[type=range]{flex:1 1 180px;max-width:320px}
+.sim-out{font-weight:700;color:var(--green);min-width:3ch}
+.sim-note{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 14px;font-size:.92rem;margin-top:10px;min-height:3.2em}
+.togs{display:flex;gap:8px;flex-wrap:wrap}
+.togs .btn.ghost.on{background:var(--blue-soft);border-color:var(--blue);color:var(--acc-deep)}
+.todo{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.todo li{font-size:.86rem;color:var(--ink-mid);display:flex;gap:8px;align-items:center}
+.todo li::before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid var(--line);flex:0 0 12px}
+.todo li.got{color:var(--ink)}
+.todo li.got::before{background:var(--ok);border-color:var(--ok)}
+.meter{height:12px;background:#E9EFF2;border-radius:99px;overflow:hidden;flex:1 1 200px}
+.meter i{display:block;height:100%;background:var(--blue);border-radius:99px;transition:width .5s ease}
+.mrow{display:flex;align-items:center;gap:12px;margin:6px 0}
+.mrow b{flex:0 0 150px;font-size:.86rem;color:var(--ink-mid)}
+.tubes{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.tube{width:74px;text-align:center;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:8px 4px 6px}
+.tube:hover:not(:disabled){border-color:var(--acc)}
+.tube .glass{display:block;width:34px;height:64px;margin:0 auto 6px;border:2px solid #8A6B5F;border-radius:6px 6px 16px 16px;background:#FFFEFB}
+.tube.grow .glass{background:#E8A26A}
+.tube.pick{border-color:var(--blue);background:var(--blue-soft)}
+.tube.good{border-color:var(--ok);background:var(--ok-soft)}
+.tube.bad{border-color:var(--rose);background:var(--rose-soft)}
+.tube small{display:block;font-size:.72rem;color:var(--ink-soft)}
+.tube b{font-size:.85rem}
+.plates{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.plate{width:84px;text-align:center;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:8px 4px}
+.plate:hover:not(:disabled){border-color:var(--acc)}
+.plate svg{width:52px;height:52px;display:block;margin:0 auto 4px}
+.plate.pick{border-color:var(--blue);background:var(--blue-soft)}
+.plate.good{border-color:var(--ok);background:var(--ok-soft)}
+.plate.bad{border-color:var(--rose);background:var(--rose-soft)}
+.plate small{display:block;font-size:.72rem;color:var(--ink-soft)}
+.esc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0}
+.esc-grid select{width:100%;font:inherit;padding:8px 10px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff}
+.esc-out{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.esc-out svg{width:120px;height:90px}
+@media (max-width:640px){.esc-out{grid-template-columns:1fr}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+/* welcome page, sidebar, module-overview pages, and content-section marks
+   now come from shared/welcome.css, shared/shell.css, shared/sections.css */
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7.5" width="19" height="9" rx="4.5" transform="rotate(-30 12 12)"/><circle cx="9.3" cy="13" r=".9" fill="currentColor"/><circle cx="13" cy="10.9" r=".9" fill="currentColor"/><circle cx="15.6" cy="13.2" r=".9" fill="currentColor"/></svg></div>
+      <div><div class="brand-title">Bacteria II &middot; Antibacterials</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="18" fill="none" style="stroke:var(--w-ring-track)" stroke-width="5"/>
+        <circle id="ringFill" cx="22" cy="22" r="18" fill="none" style="stroke:var(--w-ring-fill)" stroke-width="5"
+                stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113"
+                transform="rotate(-90 22 22)"/>
+      </svg>
+      <div><div class="ring-num" id="ringPct">0%</div>
+      <div class="ring-cap">of the companion<br>complete</div></div>
+    </div>
+    <button class="reset" id="resetBtn">Clear my saved progress</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="topTitle">Welcome</h1><div class="meta" id="topMeta">Bacteria II &middot; PHA3109 Microbiology &amp; Immunology</div></div>
+      <div class="pill" id="topPill">Not started</div>
+    </div>
+
+<section class="section welcome" data-key="welcome">
+
+  <div class="hero">
+    <div>
+      <div class="kicker">PHA3109 &middot; Microbiology &amp; Immunology</div>
+      <h2 class="hero-title">Know the target.<span>Outwit resistance.</span></h2>
+      <p>Bacteria II &mdash; Antibacterial drugs, resistance, and prevention. Predict, build, sort, and diagnose your way through the material. The lecture supplies the content; this companion supplies the practice.</p>
+      <div class="btn-row">
+        <button class="btn lg" data-go="m1home">Start Module 1</button>
+        <button class="btn lg outline" data-go="flashcards">Try the flashcards</button>
+      </div>
+      <div class="hero-note"><span class="hero-dots"><i style="background:#4A2F27"></i><i style="background:#4DB6EA"></i><i style="background:#E8A26A"></i></span>Built around the five-part mechanism lens: target, action, selective toxicity, spectrum, and resistance</div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 400 400" role="img" aria-label="Illustration of a rod-shaped bacterium under attack from antibiotic capsules, with a shield marking prevention">
+  <defs>
+    <radialGradient id="hgW" cx="45%" cy="35%" r="75%"><stop offset="0" stop-color="#7A5347"/><stop offset="1" stop-color="#2A1914"/></radialGradient>
+  </defs>
+  <circle cx="200" cy="205" r="184" fill="none" stroke="#4DB6EA" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round"/>
+  <circle cx="200" cy="205" r="152" fill="url(#hgW)"/>
+  <circle cx="200" cy="205" r="152" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3"/>
+  <g transform="rotate(-24 200 205)">
+    <rect x="104" y="166" width="192" height="80" rx="40" fill="#4DB6EA" fill-opacity=".18" stroke="#8ED8F8" stroke-width="8"/>
+    <rect x="116" y="178" width="168" height="56" rx="28" fill="none" stroke="#2B8CC4" stroke-width="3"/>
+    <ellipse cx="176" cy="206" rx="36" ry="14" fill="#BFE3F6" fill-opacity=".9"/>
+    <path d="M150 206 q8 -10 16 0 t16 0 t16 0" fill="none" stroke="#2B8CC4" stroke-width="2.4" stroke-linecap="round"/>
+    <g fill="#fff"><circle cx="236" cy="196" r="4.5"/><circle cx="250" cy="212" r="4.5"/><circle cx="234" cy="221" r="4.5"/><circle cx="262" cy="201" r="4.5"/><circle cx="221" cy="205" r="4.5"/></g>
+  </g>
+  <g stroke="#E8863A" stroke-width="3.6" stroke-linecap="round"><path d="M182 158 v-14"/><path d="M168 163 l-11 -9"/><path d="M196 163 l11 -9"/></g>
+  <g>
+    <g transform="translate(124 138) rotate(52)"><rect x="-27" y="-11" width="54" height="22" rx="11" fill="#fff"/><path d="M0 -11 H-16 a11 11 0 0 0 0 22 H0 Z" fill="#E8863A"/></g>
+    <g transform="translate(296 128) rotate(-36)"><rect x="-27" y="-11" width="54" height="22" rx="11" fill="#fff"/><path d="M0 -11 H-16 a11 11 0 0 0 0 22 H0 Z" fill="#E8863A"/></g>
+    <g transform="translate(300 292) rotate(-28)"><rect x="-27" y="-11" width="54" height="22" rx="11" fill="#fff"/><path d="M0 -11 H-16 a11 11 0 0 0 0 22 H0 Z" fill="#E8863A"/></g>
+  </g>
+  <g stroke="#fff" stroke-opacity=".55" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="2 7">
+    <path d="M100 116 L84 96"/><path d="M322 108 L338 92"/><path d="M324 306 L344 316"/>
+  </g>
+  <g transform="translate(112 300)"><path d="M0 -26 l24 10 v16 c0 16 -11 28 -24 34 c-13 -6 -24 -18 -24 -34 v-16 z" fill="#4DB6EA" stroke="#fff" stroke-width="3"/><path d="M-10 2 l7 7 13 -15" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <circle cx="322" cy="102" r="6" fill="#4DB6EA"/><circle cx="62" cy="262" r="5" fill="#8ED8F8"/><circle cx="352" cy="262" r="4" fill="#4DB6EA"/>
+  <g font-family="inherit" font-weight="700" font-size="13">
+    <rect x="10" y="98" width="92" height="30" rx="15" fill="#fff"/><circle cx="28" cy="113" r="6" fill="#4DB6EA"/><text x="42" y="118" fill="#2E1C17">Target</text>
+    <rect x="278" y="330" width="112" height="30" rx="15" fill="#fff"/><circle cx="296" cy="345" r="6" fill="#E8863A"/><text x="310" y="350" fill="#2E1C17">Resistance</text>
+  </g>
+</svg>
+      <div class="hero-badge"><b data-stat="modules">0</b><span>Modules</span></div>
+    </div>
+  </div>
+
+  <!-- The four numbers are filled in live from the manifest and bank, so they can never drift from the real content. -->
+  <div class="statband" aria-label="What is inside this companion">
+    <div class="stat"><span data-ico="layers"></span><div><b data-stat="modules">0</b><span>Modules</span></div></div>
+    <div class="stat"><span data-ico="spark"></span><div><b data-stat="activities">0</b><span>Hands-on activities</span></div></div>
+    <div class="stat"><span data-ico="question"></span><div><b data-stat="questions">0</b><span>Quiz questions</span></div></div>
+    <div class="stat"><span data-ico="cards"></span><div><b data-stat="cards">0</b><span>Flashcards</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="sect-head"><div><div class="eyebrow">Your path</div><h2>Six modules, one pharmacist&rsquo;s question each</h2></div></div>
+    <div class="mod-cards" style="--w-cols:3">
+      <button class="mod-card" data-go="m1home">
+        <span class="chip-ico tone-1" data-ico="target"></span>
+        <h3>Selective toxicity and the mechanism lens</h3><p>How can we kill a bacterium without killing the patient?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m2home">
+        <span class="chip-ico tone-2" data-ico="layers"></span>
+        <h3>Breaking the bacterial envelope</h3><p>How can disrupting the cell wall or membrane kill bacteria?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m3home">
+        <span class="chip-ico tone-3" data-ico="dna"></span>
+        <h3>Starving or sabotaging genetic information</h3><p>How can antibiotics prevent bacteria from making nucleotides, DNA, or RNA?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m4home">
+        <span class="chip-ico tone-4" data-ico="ribosome"></span>
+        <h3>Disrupting the bacterial ribosome</h3><p>How does targeting the 30S or 50S subunit stop bacterial protein synthesis?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m5home">
+        <span class="chip-ico tone-5" data-ico="flask"></span>
+        <h3>When bacteria fight back</h3><p>How does resistance emerge, and how do pharmacists recognize and respond to it?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m6home">
+        <span class="chip-ico tone-6" data-ico="shield"></span>
+        <h3>Preventing infection before treatment is needed</h3><p>How do immunity and infection-control strategies reduce bacterial disease?</p><span class="go">Open module &rarr;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="why">
+      <div class="why-art">
+<svg viewBox="0 0 420 230" role="img" aria-label="Three steps: predict, interact, explain">
+  <g fill="none" style="stroke:var(--w-art-line)" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round">
+    <path d="M118 96 C 140 60, 170 60, 190 92"/><path d="M232 92 C 252 60, 282 60, 302 96"/>
+  </g>
+  <g>
+    <circle cx="80" cy="112" r="46" fill="#fff" style="stroke:var(--w-hl)" stroke-width="4"/>
+    <text x="80" y="122" text-anchor="middle" font-size="34" font-weight="800" style="fill:var(--w-deep)">?</text>
+    <text x="80" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">1 Predict</text>
+    <circle cx="210" cy="112" r="46" style="fill:var(--w-band)"/>
+    <path d="M196 96 v34 l9 -8 6 13 7 -3 -6 -13 12 -1 z" style="fill:var(--w-hl)"/>
+    <text x="210" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">2 Interact</text>
+    <circle cx="340" cy="112" r="46" fill="#fff" style="stroke:var(--ok)" stroke-width="4"/>
+    <path d="M320 113 l14 14 26 -30" fill="none" style="stroke:var(--ok)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="340" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">3 Explain</text>
+  </g>
+</svg>
+        <div class="badge-hl"><small>Every section</small>Practice first</div>
+      </div>
+      <div>
+        <div class="eyebrow">How it works</div>
+        <h2>Not a repeat of the slides</h2>
+        <p class="lede">You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
+        <ul class="checks">
+          <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
+          <li><span><b>Interact.</b> Rebuild a pathway, watch a PBP fail, block folate synthesis, or play the bacterium and try to escape a drug, then watch what your choices do.</span></li>
+          <li><span><b>Explain.</b> Every answer comes with the reasoning, not only right or wrong.</span></li>
+          <li><span><b>Apply.</b> Pharmacist&rsquo;s Lens boxes tie each mechanism to a real decision: a dose, a report, or a precaution.</span></li>
+          <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
+          <li><span><b>Finish strong.</b> The Mastery Challenge unlocks once all six modules are complete.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-ico" data-ico="book"></div>
+    <div class="cta-body"><h2>Ready to begin?</h2><p>Start with the question behind every antibiotic: how can a drug harm a bacterium without harming you? Your progress saves in this browser as you go.</p></div>
+    <button class="btn hl lg" data-go="m1home">Start Module 1 &rarr;</button>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m1home">
+  <div class="modhero">
+    <div class="kicker">Module 1</div>
+    <h2>Selective toxicity and the mechanism lens</h2>
+    <p>Every antibacterial drug is a bet on a difference between the microbe and the patient. This module shows where those differences live, how a drug can kill or only stop growth, and the five questions you will ask about every antibiotic for the rest of the course.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How can we kill a bacterium without killing the patient?</span></div>
+    <div class="ghost-num" aria-hidden="true">1</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Explain selective toxicity, and identify which bacterial targets are absent from, or different in, human cells.</span></li>
+      <li><span>Distinguish bactericidal from bacteriostatic drugs, and broad from narrow spectrum, using growth-curve behavior.</span></li>
+      <li><span>Apply the five-part mechanism lens (target, action, selective toxicity, spectrum, resistance link) to a drug.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m1s1"><span class="home-num">1</span><span class="home-body"><span class="home-title">Why a drug can spare the patient</span><span class="home-desc">Predict which drugs are selective, then explore the bacterial cell as a target map.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m1s2"><span class="home-num">2</span><span class="home-body"><span class="home-title">Kill, stop, or both?</span><span class="home-desc">Run a growth-curve simulation and classify drugs by effect and spectrum.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m1s3"><span class="home-num">3</span><span class="home-body"><span class="home-title">The five-part mechanism lens</span><span class="home-desc">Train the five questions you will ask about every antibiotic.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m1quiz"><span class="home-num">&#10003;</span><span class="home-body"><span class="home-title">Module 1 quiz</span><span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span></span><span class="home-status">Not started</span></button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+
+<section class="section" data-key="m1s1">
+  <div class="card">
+    <div class="eyebrow">Module 1 · Section 1</div>
+    <h2>Why a drug can spare the patient</h2>
+    <p class="lede">Every antibacterial drug is a bet on a difference: a target that matters to the bacterium and is missing, or built differently, in the human body. Make a prediction first, then explore where the differences live.</p>
+    <div id="act-cellGate"></div>
+  </div>
+  <div class="card hands-card hidden" id="card-cellMap">
+    <div class="eyebrow hands">Hands-on · Explore</div>
+    <h2>The bacterial cell as a target map</h2>
+    <p class="try-note">Select each part of the cell (or its button below the diagram) to see which drugs act there and why the patient is spared. Open all four parts to finish.</p>
+    <div id="act-cellMap"></div>
+  </div>
+  <div class="card">
+    <div class="keypoints"><h4>Big ideas</h4>
+      <ul>
+        <li>Selective toxicity is a difference between bacterial and human biology that a drug can exploit.</li>
+        <li>The best targets are absent from humans (peptidoglycan, folate synthesis) or built differently (the 70S ribosome).</li>
+        <li>Membrane-active drugs are the cautionary case: poor selectivity means more risk to the patient.</li>
+      </ul>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c11a">
+      <p>Which target gives an antibacterial drug the best basis for selective toxicity?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c11b">
+      <p>Bacteria make their own folate, while humans obtain folate from the diet. Which drug design uses this difference?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c11c">
+      <p>Bacterial ribosomes (50S and 30S) differ in size from human ribosomes (60S and 40S). What does this difference allow?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s2">
+  <div class="card">
+    <div class="eyebrow">Module 1 · Section 2</div>
+    <h2>Kill, stop, or both?</h2>
+    <p class="lede">A drug can lower the number of viable bacteria, or it can only hold the number steady. That difference decides whether the patient's own defenses have to finish the job. Commit to a prediction, then run the experiment yourself.</p>
+    <div id="act-growthGate"></div>
+  </div>
+  <div class="card hands-card hidden" id="card-growthLab">
+    <div class="eyebrow hands">Hands-on · Interactive simulation</div>
+    <h2>Growth curve lab</h2>
+    <p class="try-note">This model is based on the lecture's growth curves. The dashed line is the untreated culture. Change the drug, when it is added, and whether host defenses are present, and watch the curve respond.</p>
+    <div id="act-growthLab"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Classify</div>
+    <h2>Which description fits which drug effect?</h2>
+    <div id="act-cidalSort"></div>
+    <h3 style="margin-top:26px">Spectrum: broad or narrow?</h3>
+    <div id="act-spectrumSort"></div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>In endocarditis, bacteria sit inside vegetations where phagocytes reach them poorly. A drug that kills bacteria directly does not depend on the host to finish the job, which is why bactericidal therapy is favored in life-threatening infections such as endocarditis.</p>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c12a">
+      <p>After a drug is added, the viable bacterial count levels off. When the drug is removed, the count rises again. Which term describes this drug?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c12b">
+      <p>Which statement best explains why a bactericidal drug suits a life-threatening infection such as endocarditis?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c12c">
+      <p>Vancomycin acts against Gram-positive cocci such as staphylococci and enterococci. Which term describes this range of activity?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s3">
+  <div class="card">
+    <div class="eyebrow">Module 1 · Section 3</div>
+    <h2>The five-part mechanism lens</h2>
+    <p class="lede">From here on, every antibiotic gets the same five questions. The lens keeps you from memorizing lists: if you can answer these five prompts, you can reason about a drug you have never met.</p>
+    <div class="lens" data-lens-static>
+      <div class="lens-head"><b>The lens, in five prompts</b></div>
+      <div style="padding:6px 16px 12px">
+        <div class="lens-q" style="margin-top:8px"><span class="lens-tag lt1">Target</span><span class="lens-prompt">What bacterial molecule or process is directly affected?</span></div>
+        <div class="lens-q" style="margin-top:8px"><span class="lens-tag lt2">Action</span><span class="lens-prompt">Does the drug inhibit, bind, block, disrupt, or cause misreading?</span></div>
+        <div class="lens-q" style="margin-top:8px"><span class="lens-tag lt3">Selective toxicity</span><span class="lens-prompt">Why are bacterial cells more vulnerable than human cells?</span></div>
+        <div class="lens-q" style="margin-top:8px"><span class="lens-tag lt4">Spectrum / context</span><span class="lens-prompt">What broad pattern matters at this stage of the course?</span></div>
+        <div class="lens-q" style="margin-top:8px"><span class="lens-tag lt5">Resistance link</span><span class="lens-prompt">What is the simplest escape route from this mechanism?</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Lens training lab</div>
+    <h2>Which prompt does each statement answer?</h2>
+    <p class="try-note">Drag each prompt onto the vancomycin statement it answers, then check. You will see the same five prompts again for every drug class.</p>
+    <div id="act-lensLab"></div>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Worked example</div>
+    <h2>Now reveal the lens yourself</h2>
+    <p class="caption">Try answering each prompt in your head, then select it to check. This is the format you will see in later modules.</p>
+    <div data-lens="vanco"></div>
+    <div class="explain" data-explain>
+      <h3><span class="tag">CAN YOU EXPLAIN IT?</span></h3>
+      <p>In two or three sentences, explain to a classmate why a drug that blocks peptidoglycan cross-linking harms bacteria but spares the patient.</p>
+      <textarea aria-label="Your explanation" placeholder="Write your explanation here"></textarea>
+      <p class="fine">Your response stays on your device and is not scored.</p>
+      <div class="controls"><button class="btn ghost explain-btn" type="button">Show a model answer</button></div>
+      <div class="ans"><strong>Model answer.</strong> Cross-linking gives the bacterial cell wall its strength, and human cells build no peptidoglycan wall at all. Blocking cross-linking weakens the bacterium's wall while leaving a process the patient does not have untouched, so the drug is selectively toxic.</div>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c13a">
+      <p>A drug binds the 30S ribosomal subunit. Which lens prompt does this statement answer?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c13b">
+      <p>Bacteria methylate 23S rRNA, which blocks erythromycin binding. Which lens prompt does this statement answer?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1quiz">
+  <div class="card">
+    <div class="eyebrow">Module 1 · Mastery check</div>
+    <h2>Module 1 quiz</h2>
+    <p class="lede">Six questions drawn at random from this module's bank, with answer choices reshuffled. Submitting works at any score.</p>
+    <p class="caption">After you submit, the results screen shows mastery by concept area. If any area is below 100%, <strong>Practice the concepts you missed</strong> builds a fresh, targeted round from exactly those areas. A targeted round does not overwrite your saved best score.</p>
+    <div class="quiz-body" data-quiz="m1"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m2home">
+  <div class="modhero">
+    <div class="kicker">Module 2</div>
+    <h2>Breaking the bacterial envelope</h2>
+    <p>The cell wall and membrane are the outermost targets. Follow peptidoglycan from precursor to cross-link, see how β-lactams stop it, and learn why bacteria that make β-lactamases survive.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How can disrupting the cell wall or membrane kill bacteria?</span></div>
+    <div class="ghost-num" aria-hidden="true">2</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Order the stages of peptidoglycan synthesis, and place cycloserine, bacitracin, vancomycin, and β-lactams at the stage each blocks.</span></li>
+      <li><span>Explain how β-lactams inhibit penicillin-binding proteins, and predict the effect of β-lactamases, altered PBPs, reduced permeability, and inhibitors.</span></li>
+      <li><span>Compare vancomycin, polymyxins, and daptomycin by target, spectrum, and selectivity.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m2s1"><span class="home-num">1</span><span class="home-body"><span class="home-title">Building the wall and blocking it</span><span class="home-desc">Order the pathway, then drag drugs onto the stage they block.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m2s2"><span class="home-num">2</span><span class="home-body"><span class="home-title">β-Lactams, PBPs, and β-lactamases</span><span class="home-desc">Watch cross-linking fail, then give the bacterium escape routes.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m2s3"><span class="home-num">3</span><span class="home-body"><span class="home-title">Vancomycin and the membrane</span><span class="home-desc">Compare wall-assembly blockers with membrane-active drugs.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m2quiz"><span class="home-num">&#10003;</span><span class="home-body"><span class="home-title">Module 2 quiz</span><span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span></span><span class="home-status">Not started</span></button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+
+<section class="section" data-key="m2s1">
+  <div class="card">
+    <div class="eyebrow">Module 2 · Section 1</div>
+    <h2>Building the wall and blocking it</h2>
+    <p class="lede">Peptidoglycan is assembled like a factory line: parts are made inside the cell, carried out across the membrane, joined into strands, and finally cross-linked. The lecture's key point is that <strong>the location of a block predicts the direct target and the most likely resistance mechanism.</strong></p>
+    <div class="keypoints"><h4>Before you start</h4>
+      <ul>
+        <li>Humans build no peptidoglycan wall, so every stage is a selective target.</li>
+        <li>Different drugs interrupt the same pathway at different points.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Put the pathway in order</div>
+    <h2>Build the pathway</h2>
+    <p class="try-note">Use the arrows to move each stage until the pathway runs from first to last, then check.</p>
+    <div id="act-pgOrder"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Place the drugs</div>
+    <h2>Where does each drug block the pathway?</h2>
+    <p class="try-note">Drag each stage label onto the drug that acts there. One label is a decoy: think about which stage has no drug in this lecture, and which stage two different drugs share.</p>
+    <div id="act-pgDrugs"></div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c21a">
+      <p>Cycloserine mimics D-alanine. Which stage of peptidoglycan synthesis does it block?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c21b">
+      <p>Bacitracin prevents recycling of the lipid carrier bactoprenol. Which stage does this disrupt?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c21c">
+      <p>Which pair of drug groups acts at the peptide cross-linking stage?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s2">
+  <div class="card">
+    <div class="eyebrow">Module 2 · Section 2</div>
+    <h2>β-Lactams, PBPs, and β-lactamases</h2>
+    <p class="lede">All β-lactams share one mechanism: they bind penicillin-binding proteins (PBPs) and inhibit transpeptidase cross-linking. Watch it happen, then ask the question the lecture keeps asking: <em>can the bacterium escape?</em></p>
+    <div data-lens="bl"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Predict, watch, explain</div>
+    <h2>PBP simulator: normal wall building versus a β-lactam</h2>
+    <p class="try-note">Play each scene to the last step. Before you press Next on the drug scene, predict what the wall will look like at the end.</p>
+    <div id="act-pbpSim"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Can the bacterium escape?</div>
+    <h2>Give the organism an escape route</h2>
+    <p class="try-note">Select each condition, predict what happens to the β-lactam, and then see why.</p>
+    <div id="act-betaPredict"></div>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Drug classes</div>
+    <h2>Class cards</h2>
+    <p class="caption">You do not need to memorize dozens of agents. Attach each class to its mechanism and one representative example.</p>
+    <div class="cgrid">
+      <div class="cclass"><h4>Penicillins</h4><p>amoxicillin, ampicillin, piperacillin–tazobactam</p></div>
+      <div class="cclass"><h4>Cephalosporins</h4><p>cephalexin, cefazolin, ceftriaxone. Later generations widen activity against Gram-negative rods.</p></div>
+      <div class="cclass"><h4>Carbapenems</h4><p>meropenem, ertapenem, imipenem–cilastatin. Drugs of last resort, reserved for hospital use.</p></div>
+      <div class="cclass"><h4>Monobactam</h4><p>aztreonam. Stable to metallo-β-lactamases, but vulnerable to serine enzymes such as ESBLs, AmpC, and KPC.</p></div>
+    </div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>Imipenem is given with cilastatin. Cilastatin has no antibacterial job: it inhibits a kidney enzyme, dehydropeptidase, that would otherwise inactivate imipenem. A combination product can protect a drug from the host as well as from the bacterium.</p>
+    </div>
+    <div class="explain" data-explain>
+      <h3><span class="tag">CAN YOU EXPLAIN IT?</span></h3>
+      <p>A β-lactam is effective against a culture in the lab, yet an organism carrying a β-lactamase survives. Explain what the enzyme changes, and why adding an inhibitor can help.</p>
+      <textarea aria-label="Your explanation" placeholder="Write your explanation here"></textarea>
+      <p class="fine">Your response stays on your device and is not scored.</p>
+      <div class="controls"><button class="btn ghost explain-btn" type="button">Show a model answer</button></div>
+      <div class="ans"><strong>Model answer.</strong> The β-lactamase cleaves the β-lactam ring, so the drug is destroyed before it can bind a PBP. An inhibitor has no antibiotic activity of its own: it occupies or disables the enzyme, so the partner β-lactam survives long enough to block cross-linking. Inhibitors do not work against metallo-β-lactamases.</div>
+    </div>
+    <h3>Inhibitor combinations in practice</h3>
+    <p class="caption">Each inhibitor is paired with a β-lactam partner that it protects from breakdown.</p>
+    <div class="cgrid">
+      <div class="cclass"><h4>Amoxicillin–clavulanate</h4><p>Oral. Extends amoxicillin's coverage to many β-lactamase-producing organisms.</p></div>
+      <div class="cclass"><h4>Piperacillin–tazobactam</h4><p>IV. Broad coverage, including many Gram-negative and anaerobic organisms.</p></div>
+      <div class="cclass"><h4>Ceftazidime–avibactam</h4><p>IV. Covers many organisms that make serine carbapenemases (for example KPC), but not metallo-β-lactamase producers.</p></div>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c22a">
+      <p>β-Lactams bind penicillin-binding proteins (PBPs). Which PBP activity do they inhibit?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c22b">
+      <p>A β-lactam kills bacteria in a culture. Which growth state leaves cells vulnerable?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c22c">
+      <p>A β-lactamase inhibitor is prescribed with a β-lactam. What is the role of the inhibitor?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c22d">
+      <p>Which β-lactam and β-lactamase inhibitor combination is given orally?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s3">
+  <div class="card">
+    <div class="eyebrow">Module 2 · Section 3</div>
+    <h2>Vancomycin and the membrane</h2>
+    <p class="lede">Two different ways to break the envelope: block the wall's assembly (vancomycin, cycloserine) or disrupt the membrane itself (polymyxins, daptomycin). Destroying the envelope does not always mean targeting peptidoglycan.</p>
+    <div class="keypoints"><h4>Compare and contrast</h4>
+      <ul>
+        <li>Vancomycin is bactericidal and acts against Gram-positive bacteria. The outer membrane of Gram-negative bacteria is impermeable to large glycopeptides.</li>
+        <li>Polymyxins behave like a cationic detergent on the phospholipid bilayer and have poor bacterial selectivity.</li>
+        <li>Daptomycin is a cyclic lipopeptide that disrupts the membrane of Gram-positive cocci.</li>
+      </ul>
+    </div>
+    <div data-lens="dapto"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Match the mechanism</div>
+    <h2>Which drug does each description fit?</h2>
+    <p class="try-note">Choose one drug for each row, then check. Watch for pairs of drugs that sound similar but act on different structures.</p>
+    <div id="act-envelopeSort"></div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>Vancomycin has very low oral bioavailability, so it is given by slow intravenous infusion for systemic infection. Infusing it too quickly can cause red man syndrome. Oral vancomycin is reserved for intestinal infections, where the drug needs to stay in the gut.</p>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c23a">
+      <p>Which feature explains why vancomycin acts against Gram-positive bacteria and spares Gram-negative bacteria?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c23b">
+      <p>Polymyxins act like a cationic detergent on the phospholipid bilayer. Which concern limits their use?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2quiz">
+  <div class="card">
+    <div class="eyebrow">Module 2 · Mastery check</div>
+    <h2>Module 2 quiz</h2>
+    <p class="lede">Six questions drawn at random from this module's bank, with answer choices reshuffled. Submitting works at any score.</p>
+    <p class="caption">After you submit, the results screen shows mastery by concept area. If any area is below 100%, <strong>Practice the concepts you missed</strong> builds a fresh, targeted round from exactly those areas. A targeted round does not overwrite your saved best score.</p>
+    <div class="quiz-body" data-quiz="m2"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m3home">
+  <div class="modhero">
+    <div class="kicker">Module 3</div>
+    <h2>Starving or sabotaging genetic information</h2>
+    <p>Bacteria must make folate, copy DNA, and transcribe RNA. Drugs that interrupt these steps exploit enzymes humans lack or build differently, and some drugs work only after the microbe activates them.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How can antibiotics prevent bacteria from making nucleotides, DNA, or RNA?</span></div>
+    <div class="ghost-num" aria-hidden="true">3</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Describe the folate pathway, and explain why sulfamethoxazole and trimethoprim work better together than either alone.</span></li>
+      <li><span>Match fluoroquinolones, rifamycins, and fidaxomicin to the enzyme each inhibits, and connect the fluoroquinolone core to its functions.</span></li>
+      <li><span>Explain how activation inside the microbe (prodrugs) creates selectivity and a distinctive resistance route.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m3s1"><span class="home-num">1</span><span class="home-body"><span class="home-title">The folate pathway lab</span><span class="home-desc">Rebuild the pathway and discover why sequential blockade works.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m3s2"><span class="home-num">2</span><span class="home-body"><span class="home-title">DNA and RNA targets</span><span class="home-desc">Explore the fluoroquinolone core and match drugs to their enzymes.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m3s3"><span class="home-num">3</span><span class="home-body"><span class="home-title">Activated by the enemy</span><span class="home-desc">Predict how a prodrug-activating system could be lost, and sort the TB drugs.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m3quiz"><span class="home-num">&#10003;</span><span class="home-body"><span class="home-title">Module 3 quiz</span><span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span></span><span class="home-status">Not started</span></button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+
+<section class="section" data-key="m3s1">
+  <div class="card">
+    <div class="eyebrow">Module 3 · Section 1</div>
+    <h2>The folate pathway lab</h2>
+    <p class="lede">Bacteria make folate; humans obtain it from the diet. That single difference is why folate synthesis is such a clean target. Rebuild the pathway, then discover why two drugs blocking two <em>sequential</em> steps beat one.</p>
+    <div data-lens="smx"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Put the pathway in order</div>
+    <h2>Rebuild the folate pathway</h2>
+    <p class="try-note">Move each step into place from starting material to the final use of folate.</p>
+    <div id="act-folateOrder"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Predict, then manipulate</div>
+    <h2>Sequential blockade lab</h2>
+    <div id="act-seqGate"></div>
+    <div class="hidden" id="seqWrap">
+      <p class="caption" style="margin-top:14px">Switch each drug on and off. The output bar is an illustrative model (each blocked step is set to pass 35% of the flow), not a measured potency. Visit all four combinations to finish.</p>
+      <div id="act-seqLab"></div>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c31a">
+      <p>Sulfamethoxazole mimics which substrate of dihydropteroate synthase?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c31b">
+      <p>Trimethoprim inhibits dihydrofolate reductase. Which conversion is blocked?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s2">
+  <div class="card">
+    <div class="eyebrow">Module 3 · Section 2</div>
+    <h2>DNA and RNA targets</h2>
+    <p class="lede">Two different enzymes copy and read the bacterial genome, and two drug groups take one each. Fluoroquinolones stop DNA replication; rifamycins and fidaxomicin stop RNA synthesis.</p>
+    <div data-lens="fq"></div>
+    <div data-lens="rif"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Interactive molecular design</div>
+    <h2>The fluoroquinolone core</h2>
+    <p class="try-note">Every fluoroquinolone shares the same core. Select each region of the structure to learn what it controls. Open all four parts to finish.</p>
+    <div id="act-fqCore"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Match the drug to its enzyme</div>
+    <h2>Which enzyme does each drug block?</h2>
+    <p class="try-note">Choose one enzyme for each row. The feedback names the downstream consequence, so try to predict it before you check.</p>
+    <div id="act-nucleicSort"></div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>Rifampin can turn urine, sweat, and saliva orange. It is harmless, but counseling patients ahead of time prevents needless alarm. Rifabutin is a rifampin derivative that induces cytochrome P450 enzymes less, which matters when a patient takes other drugs.</p>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c32a">
+      <p>Fluoroquinolones inhibit which pair of enzymes?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c32b">
+      <p>Rifampin inhibits bacterial DNA-dependent RNA polymerase. Which product is reduced?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c32c">
+      <p>On the fluoroquinolone core diagram, which substituent position is linked to spectrum of activity?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s3">
+  <div class="card">
+    <div class="eyebrow">Module 3 · Section 3</div>
+    <h2>Activated by the enemy</h2>
+    <p class="lede">Some antibacterial drugs are inactive until a microbe converts them into their active form. That gives them a built-in selectivity, and it hands the bacterium an unusual escape route: break the activator.</p>
+    <div class="keypoints"><h4>From the lecture</h4>
+      <ul>
+        <li>Metronidazole is a prodrug that is reductively activated in anaerobic and microaerophilic organisms. The activated radical breaks DNA strands.</li>
+        <li>Nitrofurantoin binds DNA. Bacteria contain more of its reduced form than human cells do, which explains its selectivity.</li>
+        <li>The TB drugs isoniazid, ethambutol, and pyrazinamide each attack a different part of the mycobacterial envelope or metabolism.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Predict the escape route</div>
+    <h2>If the microbe has to activate the drug, how could it escape?</h2>
+    <div id="act-prodrugPredict"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Match the TB drug</div>
+    <h2>Which antimycobacterial drug fits each description?</h2>
+    <div id="act-tbSort"></div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c33a">
+      <p>Metronidazole is a prodrug activated by reduction in anaerobic organisms. What does the activated form do?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c33b">
+      <p>Isoniazid inhibits synthesis of which mycobacterial cell component?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c33c">
+      <p>Isoniazid must be converted to its active form by a mycobacterial enzyme. Which change in the organism could produce resistance?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3quiz">
+  <div class="card">
+    <div class="eyebrow">Module 3 · Mastery check</div>
+    <h2>Module 3 quiz</h2>
+    <p class="lede">Six questions drawn at random from this module's bank, with answer choices reshuffled. Submitting works at any score.</p>
+    <p class="caption">After you submit, the results screen shows mastery by concept area. If any area is below 100%, <strong>Practice the concepts you missed</strong> builds a fresh, targeted round from exactly those areas. A targeted round does not overwrite your saved best score.</p>
+    <div class="quiz-body" data-quiz="m3"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m4home">
+  <div class="modhero">
+    <div class="kicker">Module 4</div>
+    <h2>Disrupting the bacterial ribosome</h2>
+    <p>Bacterial ribosomes differ from human ribosomes in size and structure. Build the 70S ribosome, learn which subunit each drug class binds, and practice predicting how a drug you have never met would behave.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How does targeting the 30S or 50S subunit stop bacterial protein synthesis?</span></div>
+    <div class="ghost-num" aria-hidden="true">4</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Distinguish the bacterial 70S ribosome (30S and 50S) from the human 80S ribosome (40S and 60S).</span></li>
+      <li><span>Place aminoglycosides, tetracyclines, macrolides, clindamycin, and oxazolidinones on the ribosome, and state what each blocks.</span></li>
+      <li><span>Infer the likely drug class, resistance route, and selectivity of an unfamiliar ribosome-binding drug.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m4s1"><span class="home-num">1</span><span class="home-body"><span class="home-title">Assemble the ribosome</span><span class="home-desc">Build the 70S ribosome and contrast it with the human ribosome.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m4s2"><span class="home-num">2</span><span class="home-body"><span class="home-title">Drugs on the ribosome map</span><span class="home-desc">Place drug classes on their targets and predict what goes wrong.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m4s3"><span class="home-num">3</span><span class="home-body"><span class="home-title">The unfamiliar drug challenge</span><span class="home-desc">Infer how a brand-new ribosome drug behaves.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m4quiz"><span class="home-num">&#10003;</span><span class="home-body"><span class="home-title">Module 4 quiz</span><span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span></span><span class="home-status">Not started</span></button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+
+<section class="section" data-key="m4s1">
+  <div class="card">
+    <div class="eyebrow">Module 4 · Section 1</div>
+    <h2>Assemble the ribosome</h2>
+    <p class="lede">Bacterial and human ribosomes do the same job but differ in size, and that difference is what lets a drug tell them apart. Build the bacterial 70S ribosome yourself, and watch the human ribosome come together beside it.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Watch it assemble</div>
+    <h2>30S + 50S makes 70S</h2>
+    <p class="try-note">Play both scenes to the last step.</p>
+    <div id="act-ribAssemble"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Name the parts</div>
+    <h2>Which subunit is which?</h2>
+    <p class="try-note">Drag each subunit label onto its description.</p>
+    <div id="act-ribSizes"></div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c41a">
+      <p>Which pair of subunits forms the bacterial ribosome?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c41b">
+      <p>Which ribosomal site receives the incoming aminoacyl-tRNA?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s2">
+  <div class="card">
+    <div class="eyebrow">Module 4 · Section 2</div>
+    <h2>Drugs on the ribosome map</h2>
+    <p class="lede">This map is the interface for the whole module. Keep it in mind as you place each drug class, then predict what goes wrong during translation.</p>
+    <div data-lens="r30"></div>
+    <div data-lens="r50"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 3 · Explore the map</div>
+    <h2>The ribosome reference map</h2>
+    <p class="try-note">Select each part to see which drug classes bind there. Open all four parts to finish.</p>
+    <div id="act-ribMap"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 3 · Drag drugs to their targets</div>
+    <h2>Place each drug class</h2>
+    <p class="try-note">Drag each target-and-consequence label onto the drug class it describes.</p>
+    <div id="act-ribTargets"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 3 of 3 · What goes wrong?</div>
+    <h2>Add a drug and predict the failure</h2>
+    <p class="try-note">Choose a drug, predict what goes wrong during translation, and then see the ribosome.</p>
+    <div id="act-ribPredict"></div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c42a">
+      <p>Which class binds the 30S subunit and blocks aminoacyl-tRNA from entering the A site?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c42b">
+      <p>Macrolides bind the 50S subunit. Which event do they prevent?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c42c">
+      <p>Aminoglycosides act at the 30S subunit. Which pair of effects do they produce?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s3">
+  <div class="card">
+    <div class="eyebrow">Module 4 · Section 3</div>
+    <h2>The unfamiliar drug challenge</h2>
+    <p class="lede">You will not memorize every future antibiotic, and you do not have to. If you can locate a new drug on the ribosome and describe what it blocks, you can predict how it behaves. Work through this case one decision at a time.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Case</div>
+    <h2>RX-30, a drug you have never seen</h2>
+    <div id="act-ribCase"></div>
+    <div class="explain" data-explain>
+      <h3><span class="tag">CAN YOU EXPLAIN IT?</span></h3>
+      <p>Explain to a colleague how you would decide which existing antibiotic class a brand-new ribosome-binding drug resembles most.</p>
+      <textarea aria-label="Your explanation" placeholder="Write your explanation here"></textarea>
+      <p class="fine">Your response stays on your device and is not scored.</p>
+      <div class="controls"><button class="btn ghost explain-btn" type="button">Show a model answer</button></div>
+      <div class="ans"><strong>Model answer.</strong> Place the drug on the ribosome map first: which subunit does it bind, and which step of translation does it stop (initiation, A-site entry, peptide bond formation, or translocation)? The subunit plus the blocked step points to the closest existing class, and the same lens prompts tell you what its likely resistance routes and selective toxicity are.</div>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c43a">
+      <p>A new drug binds 23S rRNA in the 50S subunit and prevents 70S initiation complex formation. Which class does it most resemble?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c43b">
+      <p>Telithromycin is a ketolide related to macrolides. What was its structure modified to do?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4quiz">
+  <div class="card">
+    <div class="eyebrow">Module 4 · Mastery check</div>
+    <h2>Module 4 quiz</h2>
+    <p class="lede">Six questions drawn at random from this module's bank, with answer choices reshuffled. Submitting works at any score.</p>
+    <p class="caption">After you submit, the results screen shows mastery by concept area. If any area is below 100%, <strong>Practice the concepts you missed</strong> builds a fresh, targeted round from exactly those areas. A targeted round does not overwrite your saved best score.</p>
+    <div class="quiz-body" data-quiz="m4"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m5home">
+  <div class="modhero">
+    <div class="kicker">Module 5</div>
+    <h2>When bacteria fight back</h2>
+    <p>Resistance follows four routes. Learn to classify any mechanism, run the susceptibility tests a laboratory uses, and turn the results into stewardship decisions.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How does resistance emerge, and how do pharmacists recognize and respond to it?</span></div>
+    <div class="ghost-num" aria-hidden="true">5</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Classify resistance mechanisms as drug inactivation, target change, reduced entry, or efflux, and identify where resistance comes from.</span></li>
+      <li><span>Read MIC, MBC, disk diffusion, antibiogram, and S/I/R reports, and say which question each one answers.</span></li>
+      <li><span>Apply stewardship principles from empiric to targeted therapy, including when combination therapy is justified.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m5s1"><span class="home-num">1</span><span class="home-body"><span class="home-title">Four routes to resistance</span><span class="home-desc">Classify mechanisms and trace where resistance comes from.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m5s2"><span class="home-num">2</span><span class="home-body"><span class="home-title">The resistance escape lab</span><span class="home-desc">Be the bacterium: choose an escape route and test whether it works.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m5s3"><span class="home-num">3</span><span class="home-body"><span class="home-title">The susceptibility lab</span><span class="home-desc">Run a broth dilution, find the MIC and MBC, and read the reports.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m5s4"><span class="home-num">4</span><span class="home-body"><span class="home-title">Stewardship and combinations</span><span class="home-desc">Work a case from empiric therapy to targeted therapy.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m5quiz"><span class="home-num">&#10003;</span><span class="home-body"><span class="home-title">Module 5 quiz</span><span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span></span><span class="home-status">Not started</span></button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+
+<section class="section" data-key="m5s1">
+  <div class="card">
+    <div class="eyebrow">Module 5 · Section 1</div>
+    <h2>Four routes to resistance</h2>
+    <p class="lede">Every resistance mechanism you have met so far falls into one of four routes: <strong>inactivate the drug, change the target, reduce entry, or pump the drug out.</strong> A single organism can combine more than one. Learn the routes and every new mechanism becomes a classification problem.</p>
+    <div class="cgrid">
+      <div class="cclass"><h4><span class="route r1">Drug inactivation</span></h4><p>The drug is destroyed or chemically modified.</p></div>
+      <div class="cclass"><h4><span class="route r2">Target change</span></h4><p>The bacterium changes what the antibiotic recognizes.</p></div>
+      <div class="cclass"><h4><span class="route r3">Reduced entry</span></h4><p>Not enough drug gets in.</p></div>
+      <div class="cclass"><h4><span class="route r4">Efflux</span></h4><p>The drug is pumped back out.</p></div>
+    </div>
+    <p class="caption"><strong>Resistance overlay unlocked when you finish this section:</strong> every mechanism lens card you opened in earlier modules will then show which route its resistance link belongs to.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Classify the mechanism</div>
+    <h2>Which route does each example use?</h2>
+    <div id="act-routeSort"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Where does resistance come from?</div>
+    <h2>Genetic and nongenetic origins</h2>
+    <p class="try-note">Resistance can be encoded in DNA or arise from circumstances that have nothing to do with a resistance gene. Transposons can also carry resistance genes between DNA molecules. Drag each origin label onto its description.</p>
+    <div id="act-originSort"></div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c51a">
+      <p>Aminoglycoside-modifying enzymes add chemical groups to the drug. Which resistance route is this?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c51b">
+      <p>Tetracycline resistance can involve membrane pumps that move the drug out of the cell. Which resistance route is this?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c51c">
+      <p>Which feature makes plasmid-mediated resistance especially important in the clinic?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s2">
+  <div class="card">
+    <div class="eyebrow">Module 5 · Section 2</div>
+    <h2>The resistance escape lab</h2>
+    <p class="lede">Change your perspective: <strong>you are the bacterium.</strong> Pick an antibiotic, pick an escape route, and see whether the route makes mechanistic sense. Wrong choices teach as much as right ones.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Interactive lab</div>
+    <h2>Escape the antibiotic</h2>
+    <p class="try-note">Find at least one workable escape route for five different drugs to finish. Your progress is tracked below the lab.</p>
+    <div id="act-escapeLab"></div>
+    <div class="explain" data-explain>
+      <h3><span class="tag">CAN YOU EXPLAIN IT?</span></h3>
+      <p>A drug works by blocking a ribosomal enzyme reaction. Explain which of the four resistance routes would leave the drug itself unchanged, and how you would recognize it in a lab report.</p>
+      <textarea aria-label="Your explanation" placeholder="Write your explanation here"></textarea>
+      <p class="fine">Your response stays on your device and is not scored.</p>
+      <div class="controls"><button class="btn ghost explain-btn" type="button">Show a model answer</button></div>
+      <div class="ans"><strong>Model answer.</strong> Target change leaves the drug intact: the ribosomal site is altered (for example by methylation of 23S rRNA) so the drug no longer binds. Reduced entry and efflux also leave the drug intact, but they act by keeping the concentration inside the cell too low. In the lab you would see high resistance despite normal drug stability.</div>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Worked example</div>
+    <h2>MRSA: target change in action</h2>
+    <div id="act-mrsaCase"></div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c52a">
+      <p>An organism keeps cross-linking its wall in the presence of a β-lactam because its penicillin-binding protein has an altered form. Which resistance route is this?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c52b">
+      <p>Chromosomal mutations produce which change in rifampin-resistant bacteria?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c52c">
+      <p>A plasmid-encoded acetyltransferase inactivates which drug?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c52d">
+      <p>The mecA gene encodes PBP2a in MRSA. Why does the organism keep cross-linking its wall in the presence of a β-lactam?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s3">
+  <div class="card">
+    <div class="eyebrow">Module 5 · Section 3</div>
+    <h2>The susceptibility lab</h2>
+    <p class="lede">Now switch from the bacterium's side to the pharmacist's. A susceptibility test tells you which drugs are likely to work, but each report answers a different question. You will run a broth dilution experiment and then decide which report answers which question.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 3 · Broth dilution and subculture</div>
+    <h2>Find the MIC, then the MBC</h2>
+    <div id="act-micLab"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 3 · Match the report</div>
+    <h2>Which test or report answers which question?</h2>
+    <div id="act-reportSort"></div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>Before a patient's own culture is back, an antibiogram (the facility's periodic summary of the percentage of isolates susceptible to each drug) helps you choose empiric therapy. Once the patient's isolate is tested, the individual result replaces that guess.</p>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 3 of 3 · Read the breakpoints</div>
+    <h2>What does an MIC mean once it meets a breakpoint?</h2>
+    <div id="act-sirPredict"></div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c53a">
+      <p>In a broth dilution test, tubes at 32, 16, 8, and 4 µg/mL are clear, and tubes at 2 and 1 µg/mL show growth. What is the MIC?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c53b">
+      <p>Subcultures from the 4, 8, and 16 µg/mL tubes give colonies at 4 and 8 µg/mL and no colonies at 16 µg/mL. What is the MBC?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c53c">
+      <p>Which tool summarizes the percentage of isolates in a facility that are susceptible to each antibiotic?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c53d">
+      <p>An MIC value becomes clinically useful once it is compared with what?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s4">
+  <div class="card">
+    <div class="eyebrow">Module 5 · Section 4</div>
+    <h2>Stewardship and combinations</h2>
+    <p class="lede">Widespread antibiotic use drives multidrug-resistant pathogens, reduces drug effectiveness, causes adverse effects such as <em>Clostridioides difficile</em> infection, and raises costs. Stewardship is a sequence of decisions, so practice it that way.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Stewardship case</div>
+    <h2>Empiric therapy to targeted therapy</h2>
+    <div id="act-stewardCase"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Combination puzzle</div>
+    <h2>Why give two antibiotics?</h2>
+    <p class="try-note">Choose the reason for each combination, then check.</p>
+    <div id="act-comboSort"></div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>Duration of exposure correlates with the risk of many adverse effects, so use the shortest effective course. Patients with reduced renal function may need dose adjustment based on glomerular filtration rate, and hypersensitivity history should be explored before dosing.</p>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c54a">
+      <p>Culture results identify one organism, and a targeted drug is available. Which action fits stewardship?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c54b">
+      <p>Penicillin plus gentamicin acts synergistically against enterococci. Which mechanism explains this?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c54c">
+      <p>Which change lowers the risk of catheter-associated infection during antibiotic treatment?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5quiz">
+  <div class="card">
+    <div class="eyebrow">Module 5 · Mastery check</div>
+    <h2>Module 5 quiz</h2>
+    <p class="lede">Six questions drawn at random from this module's bank, with answer choices reshuffled. Submitting works at any score.</p>
+    <p class="caption">After you submit, the results screen shows mastery by concept area. If any area is below 100%, <strong>Practice the concepts you missed</strong> builds a fresh, targeted round from exactly those areas. A targeted round does not overwrite your saved best score.</p>
+    <div class="quiz-body" data-quiz="m5"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m6home">
+  <div class="modhero">
+    <div class="kicker">Module 6</div>
+    <h2>Preventing infection before treatment is needed</h2>
+    <p>The best treatment is the one a patient never needs. Compare active and passive immunity, match vaccine platforms to what they present to the immune system, and choose infection-control measures that fit the material or the patient.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do immunity and infection-control strategies reduce bacterial disease?</span></div>
+    <div class="ghost-num" aria-hidden="true">6</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Distinguish active, passive, and combined immunity, and predict how protection changes over time.</span></li>
+      <li><span>Match vaccines to their platforms, and explain why conjugate vaccines work in infants where plain polysaccharide vaccines do not.</span></li>
+      <li><span>Choose standard or transmission-based precautions, and match sterilization, disinfection, and antisepsis methods to their uses.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m6s1"><span class="home-num">1</span><span class="home-body"><span class="home-title">Active, passive, or both?</span><span class="home-desc">Sort scenarios and predict how protection changes over time.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m6s2"><span class="home-num">2</span><span class="home-body"><span class="home-title">Vaccine platforms and conjugation</span><span class="home-desc">Match platforms to examples, then build a conjugate vaccine response.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m6s3"><span class="home-num">3</span><span class="home-body"><span class="home-title">Stopping transmission</span><span class="home-desc">Choose precautions and match methods to materials.</span></span><span class="home-status">Not started</span></button>
+      <button class="home-item" data-goto="m6quiz"><span class="home-num">&#10003;</span><span class="home-body"><span class="home-title">Module 6 quiz</span><span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span></span><span class="home-status">Not started</span></button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+
+<section class="section" data-key="m6s1">
+  <div class="card">
+    <div class="eyebrow">Module 6 · Section 1</div>
+    <h2>Active, passive, or both?</h2>
+    <p class="lede">Prevention works by getting antibody where it is needed. You can make the patient produce it (active), give it ready-made (passive), or do both when the situation needs immediate and long-term protection.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Immunity builder</div>
+    <h2>Which kind of immunity is each scenario?</h2>
+    <div id="act-immunitySort"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Predict the timing</div>
+    <h2>Immediate protection versus long-term memory</h2>
+    <p class="try-note">Pick each option, predict how protection changes over the coming months, and then compare with the chart.</p>
+    <div id="act-timingPredict"></div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>For a contaminated wound, tetanus immune globulin can be paired with tetanus toxoid. The globulin gives immediate antibody, and the vaccine starts the patient's own long-term response, which makes this a durable passive-active example.</p>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c61a">
+      <p>A patient receives pre-formed antibodies against a toxin. Which type of immunity is this?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c61b">
+      <p>A patient with a contaminated wound receives tetanus immune globulin and tetanus toxoid. What does this combination provide?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s2">
+  <div class="card">
+    <div class="eyebrow">Module 6 · Section 2</div>
+    <h2>Vaccine platforms and conjugation</h2>
+    <p class="lede">Different platforms present different antigens to the immune system. Match the examples to their platforms, then explore the platform with the most interesting immunology: the conjugate vaccine.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Platform explorer</div>
+    <h2>Match each example to its platform</h2>
+    <p class="try-note">Drag each platform onto the vaccines that use it.</p>
+    <div id="act-platformDnd"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Conjugate vaccine builder</div>
+    <h2>What does the carrier protein change?</h2>
+    <div id="act-conjGate"></div>
+    <div class="hidden" id="conjWrap">
+      <p class="caption" style="margin-top:14px">Choose a vaccine and a recipient. The bars are schematic. Visit all four combinations to finish.</p>
+      <div id="act-conjugateLab"></div>
+    </div>
+    <div class="explain" data-explain>
+      <h3><span class="tag">CAN YOU EXPLAIN IT?</span></h3>
+      <p>Explain what attaching a carrier protein to a polysaccharide changes about the immune response, and why that matters in infants.</p>
+      <textarea aria-label="Your explanation" placeholder="Write your explanation here"></textarea>
+      <p class="fine">Your response stays on your device and is not scored.</p>
+      <div class="controls"><button class="btn ghost explain-btn" type="button">Show a model answer</button></div>
+      <div class="ans"><strong>Model answer.</strong> A plain polysaccharide triggers a T-independent B-cell response: weaker, shorter-lived, and with little memory, and infants respond poorly to it. Linking it to a carrier protein brings in T-cell help, which produces a stronger response, immune memory, and effective boosters. That is why Hib, pneumococcal (PCV), and meningococcal (MenACWY) vaccines are given as conjugates in infants.</div>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c62a">
+      <p>Which vaccine platform uses an inactivated toxin?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c62b">
+      <p>The Hib, PCV, and MenACWY vaccines link a polysaccharide to a protein. Which platform is this?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c62c">
+      <p>BCG and Ty21a are examples of which vaccine platform?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c62d">
+      <p>B cells respond to a plain polysaccharide vaccine without T-cell help. Which result follows?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c62e">
+      <p>A conjugate vaccine links a polysaccharide antigen to a carrier protein. What does this change about the immune response?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s3">
+  <div class="card">
+    <div class="eyebrow">Module 6 · Section 3</div>
+    <h2>Stopping transmission</h2>
+    <p class="lede">Prevention also means keeping bacteria from reaching the next patient. Two decisions matter most: which precautions a patient needs, and which method matches the material you are trying to make safe.</p>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 1 of 2 · Precautions</div>
+    <h2>Standard or transmission-based?</h2>
+    <p class="try-note">Choose the category each item belongs to, then check.</p>
+    <div id="act-precautionSort"></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on · Step 2 of 2 · Infection-control decision lab</div>
+    <h2>Match the method to the material</h2>
+    <p class="try-note">Drag each method onto the object or setting it suits.</p>
+    <div id="act-methodDnd"></div>
+    <div class="box clinical">
+      <h3><span class="tag">PHARMACIST'S LENS</span></h3>
+      <p>Sterility of a compounded product depends on the whole process, not only the last step. Sterile filtration removes microorganisms without heating the drug, but the full filtration and aseptic process must be validated, and cleaning first improves any sterilization or disinfection method.</p>
+    </div>
+  </div>
+    <div class="card">
+  <div class="box predict">
+    <h3><span class="tag">CHECKPOINT</span></h3>
+    <div class="cp-item" data-check="c63a">
+      <p>Which precaution set applies to each patient regardless of diagnosis?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+    <div class="cp-item" data-check="c63b">
+      <p>A heat-sensitive drug solution requires removal of microorganisms without heating. Which method fits?</p>
+      <div class="choices"></div><div class="feedback"></div>
+    </div>
+  </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6quiz">
+  <div class="card">
+    <div class="eyebrow">Module 6 · Mastery check</div>
+    <h2>Module 6 quiz</h2>
+    <p class="lede">Six questions drawn at random from this module's bank, with answer choices reshuffled. Submitting works at any score.</p>
+    <p class="caption">After you submit, the results screen shows mastery by concept area. If any area is below 100%, <strong>Practice the concepts you missed</strong> builds a fresh, targeted round from exactly those areas. A targeted round does not overwrite your saved best score.</p>
+    <div class="quiz-body" data-quiz="m6"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section" data-key="flashcards">
+  <div class="card">
+    <div class="eyebrow">Retrieval practice</div>
+    <h2>Flashcards</h2>
+    <p class="lede">Thirty-eight cards linking drug classes to targets, targets to consequences, resistance routes to examples, susceptibility terms to meanings, and vaccine platforms to immunology. Try to recall the answer before you flip the card.</p>
+    <div class="fc-stage">
+      <div class="fc" id="fcCard" tabindex="0" role="button" aria-label="Flashcard. Press Enter to flip.">
+        <div class="fc-face fc-front"><div>
+          <div class="fc-term" id="fcFront"></div>
+          <div class="fc-hint">click, tap, or press Enter to flip</div>
+        </div></div>
+        <div class="fc-face fc-back"><div class="fc-def" id="fcBack"></div></div>
+      </div>
+    </div>
+    <div class="fc-bar">
+      <button class="btn ghost" id="fcPrev">Previous</button>
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn ghost" id="fcNext">Next</button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="final">
+  <div class="card">
+    <div class="eyebrow">Mastery Challenge</div>
+    <h2>Integrate mechanism, resistance, susceptibility, and prevention</h2>
+    <p class="lede">Twenty-five randomized questions drawn from the whole bank: 6 foundational, 12 application, and 7 integration. Each retake draws a new set with the answer choices reshuffled.</p>
+    <p class="caption">When you submit, the results screen shows mastery by concept area. If any area is below 100%, use <strong>Practice the concepts you missed</strong> to build a fresh, targeted round from exactly those areas. A targeted round does not overwrite your saved best score.</p>
+    <div class="quiz-body" data-quiz="final"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit Mastery Challenge</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+  </main>
+</div>
+
+<script src="banks/bacteria2.js"></script>
+<script src="banks/bacteria2.manifest.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/helpers.js"></script>
+<script src="shared/activities.js"></script>
+<script src="shared/welcome.js"></script>
+<script>
+/* ============================================================
+   BACTERIA II — this topic's content script
+   1. Derives MODULES / FLOW / SECTION_REQ / ... from MANIFEST (verbatim per architecture §5)
+   2. Builds every activity with the shared Act toolkit (or a registered custom activity)
+   engine.js loads after this script and does all wiring.
+   ============================================================ */
+
+/* ---------- 1. structure derived from the manifest (do not hand-edit) ---------- */
+var BADGES = {start:'&#9670;', m1:'1', m2:'2', m3:'3', m4:'4', m5:'5', m6:'6', flash:'&#10022;', final:'&#9733;'};
+
+var MODULES = MANIFEST.modules.map(function(m){
+  var mod = {id:m.id, badge:BADGES[m.id]||'&#8226;', title:m.title,
+             sections:m.sections.map(function(s){return {key:s.key,label:s.label};})};
+  if(m.unlockAfter) mod.unlockAfter = m.unlockAfter;
+  return mod;
+});
+
+var FLOW = []; MODULES.forEach(function(m){ m.sections.forEach(function(s){ FLOW.push(s); }); });
+
+var UNGRADED = [];
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(!s.checks && !s.activity && !s.quiz) UNGRADED.push(s.key);
+});});
+
+var SECTION_REQ = {}, QUIZ_KEY_FOR_SECTION = {};
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(s.checks || s.activity){
+    SECTION_REQ[s.key] = {checks:s.checks||[]};
+    if(s.activity) SECTION_REQ[s.key].activity = s.activity;
+  }
+  if(s.quiz) QUIZ_KEY_FOR_SECTION[s.key] = s.quiz;
+});});
+
+var AREA_SECTION = MANIFEST.areaSection;
+
+var MODULE_QUIZ_SIZE = 6;   /* smaller than the 12-15 questions per module, so targeted rounds have fresh items */
+var FINAL_EXAM_MIX = {concept:6, application:12, integration:7};
+
+/* ---------- 2. small helpers for this page ---------- */
+function $(id){ return document.getElementById(id); }
+function unlock(id){ return function(){ var c=$(id); if(c) c.classList.remove('hidden'); }; }
+function svgWrap(w,h,label,inner){
+  return '<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+label+'" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';
+}
+function isDone(name){ var v=state.activities[name]; return v!==null && v!==undefined; }
+
+/* One submodule may hold several activities. The manifest lists one name per section, so an
+   "aggregate" name is marked complete only while ALL of its parts are complete, and it is cleared
+   again if a part is reset with Try again. This runs on every save, so it is always in step. */
+var CHAINS = {};
+function chain(agg, parts){ CHAINS[agg] = parts; }
+function syncChains(){
+  var changed = false;
+  Object.keys(CHAINS).forEach(function(agg){
+    var ok = CHAINS[agg].every(isDone), has = isDone(agg);
+    if(ok && !has){ state.activities[agg] = true; changed = true; }
+    if(!ok && has){ state.activities[agg] = null; changed = true; }
+  });
+  return changed;
+}
+(function(){
+  var baseSave = saveState;
+  saveState = function(){
+    var ch = syncChains();
+    baseSave();
+    if(ch && typeof paintNav === 'function') paintNav();
+    if(typeof refreshLenses === 'function') refreshLenses();
+  };
+})();
+
+/* ---------- 3. mechanism lens cards (with the resistance overlay) ---------- */
+var ROUTE_NAMES = {r1:'Drug inactivation', r2:'Target change', r3:'Reduced entry', r4:'Efflux'};
+var LENS = {
+  vanco:{title:'Vancomycin',
+    target:'The D-alanyl-D-alanine end of the growing peptidoglycan (lipid II) precursor.',
+    action:'Binds the substrate and sterically blocks the transpeptidase, so cross-linking cannot proceed.',
+    selective:'Human cells build no peptidoglycan wall, so nothing in the patient is being cross-linked.',
+    context:'Bactericidal and active against Gram-positive bacteria. The outer membrane of Gram-negative bacteria is impermeable to large glycopeptides. Given by slow IV infusion.',
+    resistance:'Bacteria change the peptide sequence that the drug recognizes, so vancomycin no longer binds.', routes:['r2']},
+  bl:{title:'β-Lactams',
+    target:'Penicillin-binding proteins (PBPs), specifically their transpeptidase activity.',
+    action:'Bind and inhibit the PBP, so peptidoglycan cross-linking is blocked and the wall weakens.',
+    selective:'Humans have no peptidoglycan and no PBPs.',
+    context:'Bactericidal, but kills cells that are growing. Four classes with different reach: penicillins, cephalosporins, carbapenems, and monobactams.',
+    resistance:'β-Lactamases cleave the ring (high-level), altered PBPs keep cross-linking, and poor permeability lowers drug entry (low-level).', routes:['r1','r2','r3']},
+  dapto:{title:'Daptomycin (a membrane-active drug)',
+    target:'The cell membrane of Gram-positive cocci.',
+    action:'A cyclic lipopeptide that disrupts the membrane.',
+    selective:'Membrane disruption offers less selectivity than a wall or ribosome target, which is the cautionary case that polymyxins illustrate.',
+    context:'Bactericidal. Used for skin and skin structure infections, bacteremia, and right-sided endocarditis.',
+    resistance:'This lecture does not detail a resistance mechanism for daptomycin, so use the four routes to reason about what would be possible.', routes:[]},
+  smx:{title:'Sulfamethoxazole and trimethoprim',
+    target:'Sulfamethoxazole: dihydropteroate synthase (DHPS). Trimethoprim: dihydrofolate reductase (DHFR).',
+    action:'Sulfamethoxazole mimics PABA, a DHPS substrate. Trimethoprim blocks the conversion of DHF to THF.',
+    selective:'Humans obtain folate from the diet and cannot synthesize it. Trimethoprim is about 60,000-fold selective for the bacterial DHFR.',
+    context:'Two sequential blocks lower folate output more than either block alone, which is why the combination is used.',
+    resistance:'Plasmid-borne sul and dfr genes encode drug-insensitive versions of DHPS and DHFR. Efflux and chromosomal target mutations also contribute.', routes:['r2','r4']},
+  fq:{title:'Fluoroquinolones',
+    target:'DNA gyrase and topoisomerase IV.',
+    action:'Inhibit the enzymes, which prevents bacterial DNA replication.',
+    selective:'The drugs act on the bacterial enzymes that manage DNA supercoiling.',
+    context:'Active against Gram-positive and Gram-negative bacteria. Gram-negative organisms rely more on gyrase, and Gram-positive organisms rely more on topoisomerase IV.',
+    resistance:'Chromosomal mutations alter DNA gyrase, the target of the quinolones.', routes:['r2']},
+  rif:{title:'Rifampin, rifabutin, and fidaxomicin',
+    target:'Bacterial DNA-dependent RNA polymerase.',
+    action:'Inhibit the enzyme, which blocks mRNA synthesis.',
+    selective:'The drugs act on the bacterial polymerase.',
+    context:'Rifampin is first-line therapy for Mycobacterium tuberculosis. Fidaxomicin is specific for Clostridioides difficile.',
+    resistance:'Chromosomal mutations alter RNA polymerase, the target of rifampin.', routes:['r2']},
+  r30:{title:'30S drugs: aminoglycosides and tetracyclines',
+    target:'The 30S ribosomal subunit.',
+    action:'Aminoglycosides inhibit initiation complex formation and cause misreading of mRNA. Tetracyclines block aminoacyl-tRNA from entering the A site.',
+    selective:'The bacterial 30S subunit differs from the human 40S subunit.',
+    context:'Aminoglycosides are active against primarily aerobic Gram-negative bacteria. Tetracyclines are broad-spectrum.',
+    resistance:'Aminoglycosides: modifying enzymes, chromosomal mutations, or reduced permeability. Tetracyclines: efflux or reduced uptake.', routes:['r1','r2','r3','r4']},
+  r50:{title:'50S drugs: macrolides, clindamycin, and linezolid',
+    target:'The 50S ribosomal subunit (the 23S rRNA region).',
+    action:'Macrolides prevent tRNA release after amino acid transfer. Clindamycin blocks peptide bond formation. Linezolid blocks 70S initiation complex formation.',
+    selective:'Bacterial 50S and human 60S subunits differ in size and structure. Clindamycin cannot bind the human 60S ribosome.',
+    context:'Macrolides are active primarily against Gram-positive bacteria. Telithromycin is a ketolide modified to evade macrolide resistance.',
+    resistance:'Erythromycin: methylation of 23S rRNA, an esterase that cleaves the ring, or an efflux pump.', routes:['r1','r2','r4']}
+};
+var LENS_ROWS = [
+  ['lt1','Target','What bacterial molecule or process is directly affected?','target'],
+  ['lt2','Action','Does the drug inhibit, bind, block, disrupt, or cause misreading?','action'],
+  ['lt3','Selective toxicity','Why are bacterial cells more vulnerable than human cells?','selective'],
+  ['lt4','Spectrum / context','What broad pattern matters at this stage of the course?','context'],
+  ['lt5','Resistance link','What is the simplest escape route from this mechanism?','resistance']
+];
+function buildLens(host){
+  var d = LENS[host.getAttribute('data-lens')]; if(!d) return;
+  var box = el('div','lens');
+  var head = el('div','lens-head','<b>Mechanism lens · '+d.title+'</b>');
+  var all = el('button',null,'Reveal all'); all.type='button'; head.appendChild(all);
+  box.appendChild(head);
+  var rows = [];
+  LENS_ROWS.forEach(function(r){
+    var row = el('button','lens-row'); row.type='button';
+    row.innerHTML = '<span class="lens-q"><span class="lens-tag '+r[0]+'">'+r[1]+'</span><span class="lens-prompt">'+r[2]+'</span></span>'+
+                    '<span class="lens-ans">'+d[r[3]]+(r[3]==='resistance'?'<div class="lens-routes" style="margin-top:8px"></div>':'')+'</span>';
+    row.onclick = function(){ row.classList.toggle('open'); };
+    box.appendChild(row); rows.push(row);
+  });
+  all.onclick = function(){
+    var anyClosed = rows.some(function(r){return !r.classList.contains('open');});
+    rows.forEach(function(r){ r.classList.toggle('open', anyClosed); });
+    all.textContent = anyClosed ? 'Hide all' : 'Reveal all';
+  };
+  host.appendChild(box);
+  host._lens = d;
+}
+/* The resistance overlay: route labels appear on every lens card once Module 5 section 1 is complete. */
+function refreshLenses(){
+  var unlocked = isDone('routesLab');
+  document.querySelectorAll('[data-lens]').forEach(function(host){
+    var slot = host.querySelector('.lens-routes'); if(!slot || !host._lens) return;
+    if(!host._lens.routes.length){
+      slot.innerHTML = unlocked ? '<span class="route-lock">No route from this lecture is assigned to this drug. Which of the four would you predict?</span>' : '';
+      return;
+    }
+    slot.innerHTML = unlocked
+      ? host._lens.routes.map(function(r){ return '<span class="route '+r+'">'+ROUTE_NAMES[r]+'</span>'; }).join('')
+      : '<span class="route-lock">Resistance overlay: finish "Four routes to resistance" in Module 5 to see which route this belongs to.</span>';
+  });
+}
+document.querySelectorAll('[data-lens]').forEach(buildLens);
+
+/* ---------- 4. "Can you explain it?" boxes ---------- */
+document.querySelectorAll('[data-explain]').forEach(function(box){
+  var btn = box.querySelector('.explain-btn'), ans = box.querySelector('.ans');
+  btn.onclick = function(){
+    var open = ans.classList.toggle('show');
+    btn.textContent = open ? 'Hide the model answer' : 'Show a model answer';
+  };
+});
+
+/* ---------- 5. palette used by the figures ---------- */
+var C = {esp:'#4A2F27', espSoft:'#F3ECE8', blue:'#2B8CC4', blueSoft:'#DDEFF9', acc:'#4DB6EA', deepBlue:'#0F5E8A',
+         wall:'#B9856E', wallSoft:'#F3D9CC', teal:'#3A9E90', ok:'#2FA97A', rose:'#D4536B', amber:'#E0A73C', orange:'#E8863A',
+         gray:'#9C8F8A', dgray:'#5E524D', purple:'#8B78C8', ink:'#1D2B33', mid:'#4A5C68'};
+
+/* ============================================================
+   FIGURES — redrawn as interactive SVG from the lecture's own images
+   (bacterial cell overview, PBP cross-linking sequence, fluoroquinolone core,
+   ribosome diagram, MIC/MBC slide). Every figure has a text alternative.
+   ============================================================ */
+
+/* ----- bacterial cell target map (from the "mechanisms of action" overview image) ----- */
+function cellSVG(){
+  var rib = [[430,118],[458,146],[432,176],[492,132],[486,172],[402,150]].map(function(p){
+    return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="8" />';}).join('');
+  return svgWrap(640,300,'Bacterial cell with the cell wall, cell membrane, nucleoid, and ribosomes',
+    '<rect x="70" y="70" width="500" height="160" rx="80" fill="#FFF8F3"/>'+
+    '<rect data-hs="wall" x="70" y="70" width="500" height="160" rx="80" fill="none" stroke="'+C.wall+'" stroke-width="14"/>'+
+    '<rect data-hs="membrane" x="88" y="88" width="464" height="124" rx="62" fill="none" stroke="'+C.blue+'" stroke-width="7"/>'+
+    '<ellipse data-hs="dna" cx="280" cy="150" rx="84" ry="38" fill="'+C.blueSoft+'" stroke="#1F7FB8" stroke-width="3"/>'+
+    '<text x="280" y="155" text-anchor="middle" font-size="15" font-weight="700" fill="'+C.deepBlue+'">Nucleoid (DNA)</text>'+
+    '<g data-hs="ribosome" fill="'+C.esp+'"><rect x="384" y="100" width="128" height="100" rx="18" fill="#fff" fill-opacity="0.01"/>'+rib+'</g>'+
+    '<text x="90" y="40" font-size="14" font-weight="700" fill="#8B5B44">Cell wall (peptidoglycan)</text>'+
+    '<line x1="150" y1="46" x2="160" y2="66" stroke="#8B5B44" stroke-width="1.5"/>'+
+    '<text x="300" y="266" text-anchor="middle" font-size="14" font-weight="700" fill="#1F7FB8">Cell membrane</text>'+
+    '<line x1="300" y1="250" x2="300" y2="216" stroke="#1F7FB8" stroke-width="1.5"/>'+
+    '<text x="470" y="266" text-anchor="middle" font-size="14" font-weight="700" fill="'+C.esp+'">Ribosomes</text>'+
+    '<line x1="470" y1="250" x2="470" y2="184" stroke="'+C.esp+'" stroke-width="1.5"/>');
+}
+
+/* ----- fluoroquinolone core (from the lecture's structure diagram, function labels withheld) ----- */
+function fqSVG(){
+  var L = '230,100 273.3,125 273.3,175 230,200 186.7,175 186.7,125';
+  var R = '316.6,100 359.9,125 359.9,175 316.6,200 273.3,175 273.3,125';
+  return svgWrap(520,270,'Fluoroquinolone core structure with substituent positions R6, R7, the ring-nitrogen substituent, and the pharmacophore region',
+    '<polygon points="'+L+'" fill="#FFF8F3" stroke="'+C.esp+'" stroke-width="3"/>'+
+    '<g data-hs="pharm"><polygon points="'+R+'" fill="'+C.blueSoft+'" stroke="'+C.blue+'" stroke-width="4"/>'+
+      '<line x1="316.6" y1="100" x2="316.6" y2="66" stroke="'+C.blue+'" stroke-width="3"/><text x="316.6" y="58" text-anchor="middle" font-size="16" font-weight="700" fill="'+C.deepBlue+'">O</text>'+
+      '<line x1="359.9" y1="125" x2="402" y2="103" stroke="'+C.blue+'" stroke-width="3"/><text x="438" y="108" text-anchor="middle" font-size="16" font-weight="700" fill="'+C.deepBlue+'">COOH</text></g>'+
+    '<g data-hs="n1"><text x="316.6" y="206" text-anchor="middle" font-size="16" font-weight="700" fill="'+C.esp+'">N</text>'+
+      '<line x1="316.6" y1="212" x2="316.6" y2="232" stroke="'+C.esp+'" stroke-width="3"/>'+
+      '<rect x="296" y="232" width="41" height="26" rx="8" fill="#fff" stroke="'+C.esp+'" stroke-width="2"/><text x="316.6" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="'+C.esp+'">R</text></g>'+
+    '<g data-hs="r6"><line x1="186.7" y1="125" x2="150" y2="103" stroke="'+C.esp+'" stroke-width="3"/>'+
+      '<rect x="102" y="84" width="50" height="30" rx="9" fill="#fff" stroke="'+C.esp+'" stroke-width="2.5"/><text x="127" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="'+C.esp+'">R6</text></g>'+
+    '<g data-hs="r7"><line x1="186.7" y1="175" x2="150" y2="197" stroke="'+C.esp+'" stroke-width="3"/>'+
+      '<circle cx="118" cy="205" r="26" fill="#fff" stroke="'+C.esp+'" stroke-width="2.5"/><text x="118" y="210" text-anchor="middle" font-size="15" font-weight="700" fill="'+C.esp+'">R7</text></g>'+
+    '<line x1="230" y1="100" x2="230" y2="74" stroke="'+C.gray+'" stroke-width="2"/><text x="230" y="66" text-anchor="middle" font-size="13" fill="'+C.gray+'">R5</text>'+
+    '<line x1="230" y1="200" x2="230" y2="226" stroke="'+C.gray+'" stroke-width="2"/><text x="230" y="242" text-anchor="middle" font-size="13" fill="'+C.gray+'">R8</text>');
+}
+
+/* ----- ribosome map (from the lecture's ribosome diagram and reference map) ----- */
+function ribMapSVG(){
+  function box(x, t1, t2){
+    return '<rect x="'+x+'" y="300" width="148" height="42" rx="9" fill="#fff" stroke="'+C.wall+'" stroke-width="1.5"/>'+
+      '<text x="'+(x+74)+'" y="318" text-anchor="middle" font-size="11.5" font-weight="700" fill="'+C.esp+'">'+t1+'</text>'+
+      '<text x="'+(x+74)+'" y="333" text-anchor="middle" font-size="11" fill="'+C.mid+'">'+t2+'</text>';
+  }
+  return svgWrap(640,350,'Ribosome map: 50S subunit above the 30S subunit, with E, P, and A tRNA sites, mRNA, and the polypeptide exit tunnel',
+    '<path data-hs="s50" d="M110 172 C110 30 530 30 530 172 Z" fill="'+C.wallSoft+'" stroke="'+C.wall+'" stroke-width="3"/>'+
+    '<text x="250" y="88" text-anchor="middle" font-size="24" font-weight="700" fill="#8B5B44">50S</text>'+
+    '<text x="250" y="110" text-anchor="middle" font-size="13" fill="#8B5B44">23S rRNA</text>'+
+    '<g data-hs="exit"><path d="M428 98 L462 98 L452 152 L438 152 Z" fill="#E7B9A2" stroke="'+C.wall+'" stroke-width="2"/>'+
+    '<line x1="464" y1="112" x2="544" y2="112" stroke="#8B5B44" stroke-width="1.5"/><text x="548" y="116" font-size="12" font-weight="700" fill="#8B5B44">Exit tunnel</text></g>'+
+    '<ellipse data-hs="s30" cx="320" cy="214" rx="210" ry="62" fill="'+C.blueSoft+'" stroke="#1F7FB8" stroke-width="3"/>'+
+    '<text x="320" y="262" text-anchor="middle" font-size="13" font-weight="700" fill="'+C.deepBlue+'">30S · 16S rRNA</text>'+
+    '<line x1="40" y1="216" x2="600" y2="216" stroke="'+C.esp+'" stroke-width="5"/>'+
+    '<text x="22" y="240" font-size="12" font-weight="700" fill="'+C.esp+'">mRNA 5′</text><text x="588" y="240" font-size="12" font-weight="700" fill="'+C.esp+'">3′</text>'+
+    '<g data-hs="sites"><circle cx="240" cy="176" r="25" fill="#F3C0A0" stroke="'+C.esp+'" stroke-width="2"/><text x="240" y="183" text-anchor="middle" font-size="19" font-weight="700" fill="'+C.esp+'">E</text>'+
+    '<circle cx="320" cy="176" r="25" fill="#9AD4B5" stroke="'+C.esp+'" stroke-width="2"/><text x="320" y="183" text-anchor="middle" font-size="19" font-weight="700" fill="'+C.esp+'">P</text>'+
+    '<circle cx="400" cy="176" r="25" fill="#C7B0E6" stroke="'+C.esp+'" stroke-width="2"/><text x="400" y="183" text-anchor="middle" font-size="19" font-weight="700" fill="'+C.esp+'">A</text></g>'+
+    box(6,'30S · Aminoglycosides','misreading')+box(164,'30S · Tetracyclines','block A-site entry')+
+    box(322,'50S · Macrolides','and clindamycin (23S)')+box(480,'50S · Oxazolidinones','initiation'));
+}
+
+/* ----- ribosome assembly scenes (for Act.stepper) ----- */
+function ribScene(p, big, small, bigLbl, smallLbl, bigRx, smallRx, bigCol, smallCol){
+  return svgWrap(640,300,'Assembly of a ribosome from a large and a small subunit',
+    '<g id="'+p+'-g50"><ellipse cx="320" cy="128" rx="'+bigRx+'" ry="62" fill="'+bigCol+'" stroke="'+C.wall+'" stroke-width="3"/>'+
+      '<text x="320" y="126" text-anchor="middle" font-size="24" font-weight="700" fill="#8B5B44">'+big+'</text>'+
+      '<text x="320" y="148" text-anchor="middle" font-size="12.5" fill="#8B5B44">'+bigLbl+'</text></g>'+
+    '<g id="'+p+'-g30"><ellipse cx="320" cy="204" rx="'+smallRx+'" ry="46" fill="'+smallCol+'" stroke="#1F7FB8" stroke-width="3"/>'+
+      '<text x="320" y="214" text-anchor="middle" font-size="24" font-weight="700" fill="'+C.deepBlue+'">'+small+'</text>'+
+      '<text x="320" y="232" text-anchor="middle" font-size="12.5" fill="'+C.deepBlue+'">'+smallLbl+'</text></g>'+
+    '<g id="'+p+'-mrna"><line x1="50" y1="246" x2="590" y2="246" stroke="'+C.esp+'" stroke-width="5"/><text x="30" y="272" font-size="12" font-weight="700" fill="'+C.esp+'">mRNA 5′</text></g>'+
+    '<g id="'+p+'-sites"><circle cx="250" cy="164" r="18" fill="#F3C0A0" stroke="'+C.esp+'" stroke-width="2"/><text x="250" y="170" text-anchor="middle" font-size="16" font-weight="700" fill="'+C.esp+'">E</text>'+
+      '<circle cx="320" cy="164" r="18" fill="#9AD4B5" stroke="'+C.esp+'" stroke-width="2"/><text x="320" y="170" text-anchor="middle" font-size="16" font-weight="700" fill="'+C.esp+'">P</text>'+
+      '<circle cx="390" cy="164" r="18" fill="#C7B0E6" stroke="'+C.esp+'" stroke-width="2"/><text x="390" y="170" text-anchor="middle" font-size="16" font-weight="700" fill="'+C.esp+'">A</text></g>'+
+    '<text id="'+p+'-tot" x="560" y="120" text-anchor="middle" font-size="30" font-weight="700" fill="'+C.esp+'">'+(p==='b'?'70S':'80S')+'</text>');
+}
+
+/* ----- PBP cross-linking scenes (from the lecture's penicillin-inhibition image) ----- */
+function pbpScene(p, drug){
+  var chains = '';
+  [[140,170],[260,290],[380,410]].forEach(function(x){
+    chains += '<line x1="'+x[0]+'" y1="60" x2="'+x[0]+'" y2="118" stroke="'+C.gray+'" stroke-width="3"/>'+
+      '<circle cx="'+x[0]+'" cy="78" r="7" fill="#4A7FC9"/><circle cx="'+x[0]+'" cy="98" r="7" fill="#3AA36B"/><circle cx="'+x[0]+'" cy="118" r="7" fill="#D4536B"/>'+
+      '<line x1="'+x[1]+'" y1="210" x2="'+x[1]+'" y2="152" stroke="'+C.gray+'" stroke-width="3"/>'+
+      '<circle cx="'+x[1]+'" cy="192" r="7" fill="#4A7FC9"/><circle cx="'+x[1]+'" cy="172" r="7" fill="#3AA36B"/><circle id="'+p+'-ala'+x[1]+'" cx="'+x[1]+'" cy="152" r="7" fill="#D4536B"/>';
+  });
+  var links = '';
+  [[140,170],[260,290],[380,410]].forEach(function(x,i){
+    links += '<line id="'+p+'-lk'+(i+1)+'" x1="'+x[0]+'" y1="98" x2="'+x[1]+'" y2="152" stroke="'+C.amber+'" stroke-width="6" stroke-linecap="round"/>';
+  });
+  var pbp = '<g id="'+p+'-pbp"><rect id="'+p+'-pbpbody" x="500" y="88" width="96" height="104" rx="24" fill="'+C.gray+'"/>'+
+    '<rect x="524" y="124" width="48" height="30" rx="9" fill="'+C.dgray+'"/>'+
+    '<text x="548" y="212" text-anchor="middle" font-size="13" font-weight="700" fill="'+C.dgray+'">PBP</text></g>';
+  var extra = drug
+    ? '<g id="'+p+'-drug"><rect x="500" y="8" width="96" height="28" rx="14" fill="'+C.orange+'"/><text x="548" y="27" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">β-lactam</text></g>'+
+      '<g id="'+p+'-x"><line x1="248" y1="106" x2="302" y2="146" stroke="'+C.rose+'" stroke-width="7" stroke-linecap="round"/><line x1="302" y1="106" x2="248" y2="146" stroke="'+C.rose+'" stroke-width="7" stroke-linecap="round"/></g>'+
+      '<text id="'+p+'-weak" x="260" y="266" text-anchor="middle" font-size="15" font-weight="700" fill="'+C.rose+'">Cross-links missing: weakened wall</text>'
+    : '<text id="'+p+'-ok" x="260" y="266" text-anchor="middle" font-size="15" font-weight="700" fill="'+C.ok+'">Cross-linked: intact wall</text>';
+  return svgWrap(640,280,drug?'A β-lactam binds the PBP so peptide cross-links cannot form':'A PBP cross-links neighboring peptide chains',
+    '<rect id="'+p+'-top" x="70" y="40" width="400" height="20" rx="4" fill="'+C.teal+'"/>'+
+    '<rect id="'+p+'-bot" x="70" y="210" width="400" height="20" rx="4" fill="'+C.teal+'"/>'+
+    chains+links+pbp+extra);
+}
+
+/* ----- one-line reveal figures for the β-lactam escape predictions ----- */
+function betaReveal(kind){
+  var wall = '<rect x="20" y="96" width="360" height="12" rx="3" fill="'+C.teal+'"/>';
+  var pbp = '<rect x="290" y="34" width="70" height="52" rx="14" fill="'+(kind==='pbp'?'#B7A6D8':C.gray)+'"'+(kind==='pbp'?' stroke-dasharray="5 3" stroke="#6F5BB0" stroke-width="2"':'')+'/><text x="325" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">PBP</text>';
+  var pill = function(x,y,extra){ return '<g '+(extra||'')+'><rect x="'+x+'" y="'+y+'" width="64" height="22" rx="11" fill="'+C.orange+'"/><text x="'+(x+32)+'" y="'+(y+15)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">β-lactam</text></g>'; };
+  var t = function(s,col){ return '<text x="200" y="128" text-anchor="middle" font-size="12.5" font-weight="700" fill="'+(col||C.esp)+'">'+s+'</text>'; };
+  var body = wall + pbp;
+  if(kind==='none') body += pill(200,44)+'<line x1="266" y1="55" x2="288" y2="55" stroke="'+C.orange+'" stroke-width="3"/>'+
+      '<text x="325" y="26" text-anchor="middle" font-size="22" font-weight="700" fill="'+C.rose+'">✕</text>'+t('Drug binds the PBP: cross-linking is blocked');
+  if(kind==='lactamase') body += '<path d="M150 55 L176 42 A26 26 0 1 0 176 68 Z" fill="'+C.purple+'" transform="translate(300 0) scale(-1 1)"/>'+
+      pill(28,44)+'<g opacity="0.6"><rect x="200" y="38" width="28" height="16" rx="8" fill="'+C.orange+'"/><rect x="234" y="58" width="24" height="14" rx="7" fill="'+C.orange+'"/></g>'+
+      '<text x="232" y="88" text-anchor="middle" font-size="11" fill="'+C.mid+'">inactive pieces</text>'+t('β-Lactamase cleaves the ring: the drug is inactive');
+  if(kind==='pbp') body += pill(200,44)+'<path d="M266 55 L280 55 M275 46 L284 55 L275 64" stroke="'+C.rose+'" stroke-width="2.5" fill="none" transform="rotate(180 275 55) translate(-10 0)"/>'+
+      '<text x="325" y="26" text-anchor="middle" font-size="22" font-weight="700" fill="'+C.ok+'">✓</text>'+t('Drug intact, but it barely binds: cross-linking continues','#8B3A2B');
+  if(kind==='perm') body += '<line x1="150" y1="10" x2="150" y2="46" stroke="'+C.blue+'" stroke-width="8"/><line x1="150" y1="64" x2="150" y2="94" stroke="'+C.blue+'" stroke-width="8"/>'+
+      pill(50,14)+pill(50,40)+pill(50,66)+pill(200,44)+'<line x1="266" y1="55" x2="288" y2="55" stroke="'+C.orange+'" stroke-width="3"/>'+t('Narrow porin: little drug reaches the PBP (low-level resistance)');
+  if(kind==='inhib') body += '<path d="M120 55 L146 42 A26 26 0 1 0 146 68 Z" fill="'+C.purple+'"/><rect x="118" y="46" width="22" height="18" rx="5" fill="'+C.ok+'"/>'+
+      '<text x="70" y="90" font-size="11" font-weight="700" fill="'+C.ok+'">inhibitor</text>'+pill(200,44)+'<line x1="266" y1="55" x2="288" y2="55" stroke="'+C.orange+'" stroke-width="3"/>'+
+      t('Inhibitor occupies the enzyme: the β-lactam reaches the PBP');
+  return '<div class="figure">'+svgWrap(400,140,'Illustration: '+kind,body)+'</div>';
+}
+
+/* ----- small ribosome pictures for the "what goes wrong?" reveals ----- */
+function ribMini(kind){
+  var up = kind==='init' ? -16 : 0;
+  var b = '<g transform="translate(0 '+up+')"><path d="M90 72 C90 8 310 8 310 72 Z" fill="'+C.wallSoft+'" stroke="'+C.wall+'" stroke-width="2.5"/><text x="200" y="40" text-anchor="middle" font-size="16" font-weight="700" fill="#8B5B44">50S</text></g>'+
+    '<ellipse cx="200" cy="96" rx="112" ry="30" fill="'+C.blueSoft+'" stroke="#1F7FB8" stroke-width="2.5"/><text x="200" y="120" text-anchor="middle" font-size="13" font-weight="700" fill="'+C.deepBlue+'">30S</text>'+
+    '<line x1="24" y1="104" x2="376" y2="104" stroke="'+C.esp+'" stroke-width="4"/>';
+  var sites = function(bad){ return ['E','P','A'].map(function(s,i){ var x=150+i*50,col=['#F3C0A0','#9AD4B5','#C7B0E6'][i];
+    var st = (bad===s)?' stroke="'+C.rose+'" stroke-width="3" stroke-dasharray="4 3"':' stroke="'+C.esp+'" stroke-width="1.5"';
+    return '<circle cx="'+x+'" cy="72" r="14" fill="'+col+'"'+st+'/><text x="'+x+'" y="77" text-anchor="middle" font-size="13" font-weight="700" fill="'+C.esp+'">'+s+'</text>'; }).join(''); };
+  var cap = function(s){ return '<text x="200" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="'+C.esp+'">'+s+'</text>'; };
+  var body = b;
+  if(kind==='mis') body += sites() + '<path d="M60 104 q12 -14 24 0 t24 0 t24 0" stroke="'+C.rose+'" stroke-width="3" fill="none"/><text x="290" y="92" font-size="18" font-weight="700" fill="'+C.rose+'">?</text>' + cap('Wrong codons are read: wrong amino acids are inserted');
+  if(kind==='asite') body += sites('A') + '<text x="250" y="52" text-anchor="middle" font-size="18" font-weight="700" fill="'+C.rose+'">✕</text>' + cap('A site blocked: no new aminoacyl-tRNA can enter');
+  if(kind==='trans') body += sites('E') + '<path d="M198 56 L160 56 M169 48 L159 56 L169 64" stroke="'+C.rose+'" stroke-width="2.5" fill="none"/><text x="179" y="46" text-anchor="middle" font-size="16" font-weight="700" fill="'+C.rose+'">✕</text>' + cap('tRNA stays put: translocation is impaired');
+  if(kind==='init') body += '<text x="200" y="66" text-anchor="middle" font-size="24" font-weight="700" fill="'+C.rose+'">✕</text>' + cap('Subunits fail to form the 70S initiation complex');
+  return '<div class="figure">'+svgWrap(400,156,'Illustration: '+kind,body)+'</div>';
+}
+
+/* ----- protection over time (predict the timing) ----- */
+function timingSVG(kind){
+  var ax = '<line x1="40" y1="10" x2="40" y2="110" stroke="'+C.mid+'" stroke-width="2"/><line x1="40" y1="110" x2="330" y2="110" stroke="'+C.mid+'" stroke-width="2"/>'+
+    '<text x="14" y="62" font-size="11" fill="'+C.mid+'" transform="rotate(-90 14 62)" text-anchor="middle">Protection</text>'+
+    '<text x="185" y="128" font-size="11" fill="'+C.mid+'" text-anchor="middle">Time after treatment (days to months)</text>';
+  var p = function(d,col,dash,w){ return '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="'+(w||3)+'"'+(dash?' stroke-dasharray="6 4"':'')+' stroke-linecap="round"/>'; };
+  var body = ax, note = '', cap = '';
+  if(kind==='ig'){ body += p('M42 22 C100 30 170 70 328 104', C.blue); note='Antibody from immune globulin: immediate, then fading'; cap=note; }
+  if(kind==='vax'){ body += p('M42 106 C130 104 170 50 328 24', C.ok); note='Antibody made by the patient: slow to start, then durable'; cap=note; }
+  if(kind==='both'){ body += p('M42 22 C100 30 170 70 328 104', C.blue, true, 2)+p('M42 106 C130 104 170 50 328 24', C.ok, true, 2)+p('M42 22 C120 24 220 24 328 22', C.esp); note='Combined: immediate coverage that hands over to durable coverage'; cap='Blue dashed line: antibody from immune globulin, fading. Green dashed line: antibody the patient makes, rising. Dark line: combined protection, immediate and durable.'; }
+  return '<div class="figure">'+svgWrap(340,140,'Protection over time: '+note, body)+'<p class="caption">'+cap+(cap.slice(-1)==='.'?'':'.')+'</p></div>';
+}
+
+/* ============================================================
+   ACTIVITIES · MODULES 1–3
+   ============================================================ */
+
+/* ---------- Module 1 · Section 1 ---------- */
+Act.explore('act-cellMap', {name:'cellMap', svg:cellSVG(), ids:['wall','membrane','dna','ribosome'],
+  start:'Select the cell wall, the cell membrane, the nucleoid, or the ribosomes.',
+  items:{
+    wall:{title:'Cell wall (peptidoglycan)',
+      html:'<p><strong>Drugs that act here:</strong> penicillins, cephalosporins, carbapenems, and vancomycin (Module 2).</p>'+
+           '<p><strong>Why the patient is spared:</strong> human cells build no peptidoglycan wall, so blocking its assembly has no human counterpart to injure.</p>'},
+    membrane:{title:'Cell membrane',
+      html:'<p><strong>Drugs that act here:</strong> daptomycin and the polymyxins (Module 2).</p>'+
+           '<p><strong>Selectivity is weaker:</strong> human cells also have phospholipid membranes. Polymyxins have poor bacterial selectivity, which is why kidney and nerve toxicity limited their use.</p>'},
+    dna:{title:'Nucleoid: DNA and RNA synthesis',
+      html:'<p><strong>Drugs that act here:</strong> fluoroquinolones, sulfonamides, trimethoprim, metronidazole, and rifampin (Module 3).</p>'+
+           '<p><strong>Why the patient is spared:</strong> it depends on the drug. Humans cannot make folate at all, so sulfonamides and trimethoprim have a clean target. The others act on bacterial enzymes such as DNA gyrase and RNA polymerase.</p>'},
+    ribosome:{title:'Ribosomes',
+      html:'<p><strong>Drugs that act here:</strong> aminoglycosides, macrolides, tetracyclines, chloramphenicol, linezolid, and clindamycin (Module 4).</p>'+
+           '<p><strong>Why the patient is spared:</strong> the bacterial ribosome (50S and 30S) differs in size and structure from the human ribosome (60S and 40S).</p>'}
+  }});
+Act.gate('act-cellGate', {name:'cellGate',
+  prompt:'Three hypothetical drugs are proposed. Drug A destroys bacterial peptidoglycan. Drug B inhibits bacterial and human DNA polymerase equally. Drug C binds specifically to bacterial 30S ribosomal subunits. Which drugs have the best basis for selective toxicity?',
+  options:['Drugs A and C','Drugs A and B','Drugs B and C','Drug B alone'], answer:0,
+  why:'<p>Drug A attacks a structure that human cells do not have, and Drug C binds a bacterial subunit that differs from the human ribosome. Drug B injures the patient\u2019s cells as much as the bacteria.</p>'},
+  unlock('card-cellMap'));
+
+/* ---------- Module 1 · Section 2 ---------- */
+Act.sort('act-cidalSort', {name:'cidalSort', options:['Bactericidal','Bacteriostatic'], rows:[
+  {text:'After the drug is removed, the surviving bacteria resume growth.', answer:'Bacteriostatic', why:'The cells were held in check, not killed.'},
+  {text:'The viable count falls, even without help from the host.', answer:'Bactericidal', why:'A bactericidal drug lowers the number of living bacteria directly.'},
+  {text:'Clearing the infection depends on host defenses such as phagocytosis.', answer:'Bacteriostatic', why:'Bacteriostatic drugs require the host defense system to finish the job.'},
+  {text:'Favored for life-threatening infections such as endocarditis.', answer:'Bactericidal', why:'Killing the bacteria directly gives the patient the greatest margin of safety.'},
+  {text:'Penicillins and carbapenems act this way on cells that are growing.', answer:'Bactericidal', why:'β-Lactams are bactericidal, but they kill only cells that are growing and building wall.'}
+]});
+Act.sort('act-spectrumSort', {name:'spectrumSort', options:['Broad spectrum','Narrow spectrum'], rows:[
+  {text:'Tetracyclines act against Gram-negative rods, chlamydiae, mycoplasmas, and rickettsiae.', answer:'Broad spectrum', why:'Several unrelated groups of microbes are affected.'},
+  {text:'Vancomycin acts against Gram-positive cocci such as staphylococci and enterococci.', answer:'Narrow spectrum', why:'One group of organisms is affected.'},
+  {text:'Fidaxomicin is specific for Clostridioides difficile.', answer:'Narrow spectrum', why:'A single organism is the target.'},
+  {text:'Isoniazid is specific for mycobacteria.', answer:'Narrow spectrum', why:'It acts against one genus and its relatives.'},
+  {text:'Fluoroquinolones act against both Gram-positive and Gram-negative bacteria.', answer:'Broad spectrum', why:'Coverage spans both major Gram groups.'}
+]});
+chain('cidalLab', ['growthLab','cidalSort','spectrumSort']);
+
+/* ---------- Module 1 · Section 3 ---------- */
+Act.dnd('act-lensLab', {name:'lensLab',
+  pills:['Target','Action','Selective toxicity','Spectrum / context','Resistance link'],
+  rows:[
+    {text:'Vancomycin binds the D-alanyl-D-alanine end of the growing precursor.', answer:'Target', why:'A specific bacterial molecule is directly affected.'},
+    {text:'The drug sterically blocks the transpeptidase, so cross-linking stops.', answer:'Action', why:'This says what the drug does to its target: it blocks.'},
+    {text:'Human cells do not build peptidoglycan.', answer:'Selective toxicity', why:'It explains why bacteria are more vulnerable than the patient.'},
+    {text:'Vancomycin acts against Gram-positive bacteria and is given by slow IV infusion.', answer:'Spectrum / context', why:'This is the broad clinical pattern.'},
+    {text:'The precursor peptide changes from D-Ala-D-Ala to D-Ala-D-Lac.', answer:'Resistance link', why:'A change in what the drug recognizes is an escape route.'}
+  ]});
+
+/* ---------- Module 2 · Section 1 ---------- */
+Act.order('act-pgOrder', {name:'pgOrder', items:[
+  '<strong>Precursor formation</strong> · cytoplasm. Building blocks, including D-alanyl-D-alanine, are made.',
+  '<strong>Lipid-carrier transport</strong> · inner membrane. A lipid carrier moves subunits across the membrane and is recycled.',
+  '<strong>Glycan polymerization</strong> · periplasm / exterior. Transglycosylation extends the glycan strands.',
+  '<strong>Peptide cross-linking</strong> · periplasm / exterior. Transpeptidases (PBPs) link the peptide chains.'
+]});
+Act.dnd('act-pgDrugs', {name:'pgDrugs',
+  pills:['Stage 1 · precursor formation','Stage 2 · lipid-carrier transport','Stage 3 · glycan polymerization',
+         'Stage 4 · cross-linking (binds the substrate)','Stage 4 · cross-linking (binds the PBP enzyme)'],
+  rows:[
+    {text:'<strong>Cycloserine</strong> mimics D-alanine.', answer:'Stage 1 · precursor formation', why:'It blocks synthesis of D-alanyl-D-alanine in the cytoplasm. Used in TB treatment.'},
+    {text:'<strong>Bacitracin</strong> prevents recycling of the lipid carrier bactoprenol.', answer:'Stage 2 · lipid-carrier transport', why:'Subunits stop crossing the membrane. Too toxic for systemic use, so it is applied topically.'},
+    {text:'<strong>Vancomycin</strong> binds D-Ala-D-Ala on the growing precursor.', answer:'Stage 4 · cross-linking (binds the substrate)', why:'It blocks the transpeptidase by covering its substrate.'},
+    {text:'<strong>β-Lactams</strong> bind penicillin-binding proteins.', answer:'Stage 4 · cross-linking (binds the PBP enzyme)', why:'They inhibit the transpeptidase itself. They do not block the transglycosylase domain of bifunctional PBPs, so Stage 3 has no drug in this lecture.'}
+  ]});
+chain('pgBuild', ['pgOrder','pgDrugs']);
+
+/* ---------- Module 2 · Section 2 ---------- */
+Act.stepper('act-pbpSim', {name:'pbpSim', scenes:[
+  {id:'tf', label:'Without a drug', intro:'Glycan strands (green) carry peptide chains. Watch a PBP link them.', svg:pbpScene('tf', false), steps:[
+    {caption:'Two glycan strands carry short peptide chains that are not yet linked. A PBP waits on the right.',
+      set:{'tf-lk1':{o:0},'tf-lk2':{o:0},'tf-lk3':{o:0},'tf-ok':{o:0}}},
+    {caption:'The transpeptidase site of the PBP docks between two peptide chains.', set:{'tf-pbp':{t:[-270,0]}}},
+    {caption:'The PBP removes a terminal D-alanine and joins the chains, forming a cross-link.', set:{'tf-ala290':{t:[26,-24],o:0},'tf-lk2':{o:1}}},
+    {caption:'The PBP moves on and repeats the reaction. Many cross-links give an intact wall.', set:{'tf-pbp':{t:[0,0]},'tf-lk1':{o:1},'tf-lk3':{o:1},'tf-ok':{o:1}}}
+  ]},
+  {id:'wb', label:'With a β-lactam', intro:'Prediction time: before you press Next, decide what the wall will look like at the end.', svg:pbpScene('wb', true), steps:[
+    {caption:'The same wall and the same PBP. This time a β-lactam is about to enter.',
+      set:{'wb-lk1':{o:0},'wb-lk2':{o:0},'wb-lk3':{o:0},'wb-drug':{o:0},'wb-x':{o:0},'wb-weak':{o:0}}},
+    {caption:'The β-lactam reaches the PBPs in the periplasm.', set:{'wb-drug':{o:1}}},
+    {caption:'The β-lactam binds the PBP\u2019s active site and inhibits its transpeptidase activity.', set:{'wb-drug':{t:[0,84]},'wb-pbpbody':{c:'#C9805A'}}},
+    {caption:'The inhibited PBP cannot join the peptide chains, so no cross-links form.', set:{'wb-x':{o:1}}},
+    {caption:'Without cross-links, the growing wall is weak. The killing effect appears in cells that are actively growing.',
+      set:{'wb-weak':{o:1},'wb-top':{c:'#A9CFC8'},'wb-bot':{c:'#A9CFC8'}}}
+  ]}
+]});
+var BQ = ['Cross-linking is blocked and the wall weakens','Cross-linking continues normally','The drug is cleaved before it reaches a PBP','The drug is pumped out of the cell'];
+Act.predict('act-betaPredict', {name:'betaPredict',
+  start:'Select an organism type, make your prediction, and see why.',
+  items:[
+    {id:'none', title:'No resistance', prompt:'A susceptible organism meets a β-lactam. What happens to cross-linking?',
+      options:BQ, answer:0, why:'<p>The drug reaches its PBP targets, binds, and blocks transpeptidation.</p>', reveal:betaReveal('none')},
+    {id:'lactamase', title:'β-Lactamase producer', prompt:'An organism makes a β-lactamase. What happens to the drug?',
+      options:['The β-lactam ring is cleaved and the drug is inactive','The drug is bound more tightly by its PBP','The drug enters the cell faster','The PBP is converted into a β-lactamase'], answer:0,
+      why:'<p>β-Lactamases cleave the ring of every β-lactam class. Plasmid-mediated β-lactamase production gives high-level resistance.</p>', reveal:betaReveal('lactamase')},
+    {id:'pbp', title:'Altered PBP', prompt:'An organism carries a PBP with low affinity for the drug. What happens?',
+      options:['The drug stays intact, yet cross-linking continues','The drug is cleaved before it reaches a PBP','The drug is pumped out before it binds','Cross-linking is blocked and the wall weakens'], answer:0,
+      why:'<p>This is target change: the drug is intact and arrives, but its target no longer responds.</p>', reveal:betaReveal('pbp')},
+    {id:'perm', title:'Reduced permeability', prompt:'Porin channels narrow. How does the organism respond to the β-lactam?',
+      options:['Less drug reaches the PBPs, giving low-level resistance','The drug is destroyed by an enzyme','The PBP no longer binds the drug','The drug is converted into an active form'], answer:0,
+      why:'<p>Poor drug permeability produces low-level resistance. Less drug arrives, but some still does.</p>', reveal:betaReveal('perm')},
+    {id:'inhib', title:'β-Lactamase plus inhibitor', prompt:'An organism makes a β-lactamase, and a β-lactamase inhibitor is added to the β-lactam. What happens?',
+      options:['The inhibitor occupies the enzyme, so the β-lactam reaches its PBP','The inhibitor kills the organism directly','The inhibitor blocks the PBP more tightly than the β-lactam','The inhibitor pumps the enzyme out of the cell'], answer:0,
+      why:'<p>Inhibitors have no antibiotic activity of their own: they protect the partner drug. They do not work against metallo-β-lactamases.</p>', reveal:betaReveal('inhib')}
+  ]});
+chain('betaLab', ['pbpSim','betaPredict']);
+
+/* ---------- Module 2 · Section 3 ---------- */
+Act.sort('act-envelopeSort', {name:'envelopeSort', options:['Vancomycin','Cycloserine','Polymyxins','Daptomycin'], rows:[
+  {text:'Mimics D-alanine and blocks formation of D-alanyl-D-alanine.', answer:'Cycloserine', why:'It acts early, in the cytoplasm. It is used in TB treatment.'},
+  {text:'Binds D-Ala-D-Ala, blocks transpeptidation, and acts against Gram-positive bacteria.', answer:'Vancomycin', why:'The Gram-negative outer membrane is impermeable to this large glycopeptide.'},
+  {text:'Acts like a cationic detergent on the phospholipid bilayer, with poor bacterial selectivity.', answer:'Polymyxins', why:'Positively charged amino acids disrupt the bilayer.'},
+  {text:'A cyclic lipopeptide that disrupts the membrane of Gram-positive cocci.', answer:'Daptomycin', why:'It is bactericidal.'},
+  {text:'Used for bacteremia and right-sided endocarditis.', answer:'Daptomycin', why:'It is also used for skin and skin structure infections.'},
+  {text:'Removed from use in the 1960s over kidney and nerve toxicity, and useful mostly against Gram-negative bacteria.', answer:'Polymyxins', why:'Polymyxin E is colistin.'}
+]});
+
+/* ---------- Module 3 · Section 1 ---------- */
+Act.order('act-folateOrder', {name:'folateOrder', items:[
+  '<strong>PABA plus precursors</strong> · the starting materials.',
+  '<strong>Dihydropteroate</strong> · made by dihydropteroate synthase (DHPS).',
+  '<strong>Dihydrofolate (DHF)</strong> · the next intermediate.',
+  '<strong>Tetrahydrofolate (THF)</strong> · made from DHF by dihydrofolate reductase (DHFR).',
+  '<strong>Nucleotide synthesis</strong> · THF is used to build nucleotides.'
+]});
+Act.gate('act-seqGate', {name:'seqGate',
+  prompt:'Sulfamethoxazole blocks DHPS. Trimethoprim blocks DHFR, a later step. Predict which condition lowers folate output the most.',
+  options:['Both drugs together','Sulfamethoxazole alone','Trimethoprim alone','All three give the same output'], answer:0,
+  why:'<p>Blocking two sequential steps lowers folate output more than blocking either one alone.</p>'},
+  function(){ var w=$('seqWrap'); if(w) w.classList.remove('hidden'); });
+chain('folateLab', ['folateOrder','seqLab']);
+
+/* ---------- Module 3 · Section 2 ---------- */
+Act.explore('act-fqCore', {name:'fqCore', svg:fqSVG(), ids:['pharm','r6','r7','n1'],
+  start:'Select the colored region, R6, R7, or the group on the ring nitrogen.',
+  items:{
+    pharm:{title:'The pharmacophore', html:'<p>The shaded region, with its keto group and carboxylic acid, is the shared core drawn as the <strong>pharmacophore</strong> on the lecture slide. Every quinolone keeps it, because it carries the ability to inhibit DNA gyrase and topoisomerase IV.</p>'},
+    r6:{title:'R6 · cell wall penetration', html:'<p>The R6 position influences how well the drug penetrates the cell wall. Most commonly prescribed quinolones carry a fluorine here, which is why they are called <strong>fluoroquinolones</strong>.</p>'},
+    r7:{title:'R7 · spectrum of activity', html:'<p>The R7 substituent influences the spectrum of activity. Changing it is one way chemists produce different fluoroquinolones from the same core.</p>'},
+    n1:{title:'The N1 substituent · potency', html:'<p>The group on the ring nitrogen influences potency. Ciprofloxacin, levofloxacin, and moxifloxacin share the core and differ in these positions.</p>'}
+  }});
+Act.sort('act-nucleicSort', {name:'nucleicSort',
+  options:['DNA gyrase / topoisomerase IV','RNA polymerase','Dihydropteroate synthase','Dihydrofolate reductase'], rows:[
+  {text:'<strong>Fluoroquinolones</strong>', answer:'DNA gyrase / topoisomerase IV', why:'Consequence: bacterial DNA replication stops.'},
+  {text:'<strong>Rifampin</strong>', answer:'RNA polymerase', why:'Consequence: mRNA synthesis is blocked. It is first-line therapy for Mycobacterium tuberculosis.'},
+  {text:'<strong>Rifabutin</strong>', answer:'RNA polymerase', why:'A rifampin derivative that induces P450 enzymes less.'},
+  {text:'<strong>Fidaxomicin</strong> (specific for Clostridioides difficile)', answer:'RNA polymerase', why:'Consequence: transcription in C. difficile is inhibited.'},
+  {text:'<strong>Sulfamethoxazole</strong>', answer:'Dihydropteroate synthase', why:'Consequence: an early step in folate synthesis stalls.'},
+  {text:'<strong>Trimethoprim</strong>', answer:'Dihydrofolate reductase', why:'Consequence: DHF is not converted to THF. It is 60,000-fold selective for the bacterial enzyme.'}
+]});
+chain('nucleicLab', ['fqCore','nucleicSort']);
+
+/* ---------- Module 3 · Section 3 ---------- */
+Act.predict('act-prodrugPredict', {name:'prodrugPredict',
+  start:'Choose a drug, predict the escape route, and see the reasoning.',
+  items:[
+    {id:'metro', title:'Metronidazole', prompt:'A bacterium loses the system that reductively activates metronidazole. What happens to the drug\u2019s activity?',
+      options:['Activity falls, because the prodrug stays inactive','Activity rises, because more active drug builds up','Activity is unchanged, because the parent drug is active','Activity moves to the ribosome'], answer:0,
+      why:'<p>The activated radical is what damages DNA. Without activation the drug never becomes toxic to the microbe.</p>'},
+    {id:'inh', title:'Isoniazid', prompt:'Isoniazid is activated inside mycobacteria by a catalase-peroxidase (KatG). Which change could produce resistance?',
+      options:['Loss or mutation of the activating enzyme','Gain of a second copy of the activating enzyme','Loss of a porin that admits the drug','Increased peptidoglycan cross-linking'], answer:0,
+      why:'<p>If the enzyme that turns the prodrug on is lost or mutated, the drug is never activated. Resistance can arise simply by losing the activator.</p>'},
+    {id:'nitro', title:'Nitrofurantoin', prompt:'Bacterial nitroreductases are more abundant in bacteria than in human cells. What does this explain about nitrofurantoin?',
+      options:['Its selective toxicity for bacteria','Its resistance in human cells','Its absorption from the gut','Its activity against viruses'], answer:0,
+      why:'<p>More of the active, reduced form is produced in bacteria than in human cells, so bacteria are affected more.</p>'}
+  ]});
+Act.sort('act-tbSort', {name:'tbSort', options:['Isoniazid','Ethambutol','Pyrazinamide'], rows:[
+  {text:'Inhibits mycolic acid synthesis and is specific for mycobacteria.', answer:'Isoniazid', why:'It is often given with pyridoxine to limit neurologic side effects.'},
+  {text:'Inhibits arabinogalactan synthesis, disrupting mycolic acid–peptidoglycan linkages.', answer:'Ethambutol', why:'Effective against Mycobacterium tuberculosis.'},
+  {text:'Effective against semidormant mycobacteria that isoniazid and rifampin do not affect.', answer:'Pyrazinamide', why:'Its mechanism is uncertain and may involve fatty acid synthesis related to mycolic acid production.'},
+  {text:'Often given with pyridoxine to limit neurologic side effects.', answer:'Isoniazid', why:'Pyridoxine is vitamin B6.'}
+]});
+chain('prodrugLab', ['prodrugPredict','tbSort']);
+
+/* ============================================================
+   ACTIVITIES · MODULES 4–6
+   ============================================================ */
+
+/* ---------- Module 4 · Section 1 ---------- */
+Act.stepper('act-ribAssemble', {name:'ribAssemble', scenes:[
+  {id:'bact', label:'Bacterial ribosome (70S)', intro:'The bacterial ribosome is built from a large and a small subunit.',
+   svg:ribScene('b','50S','30S','23S rRNA','16S rRNA',130,150,C.wallSoft,C.blueSoft), steps:[
+    {caption:'Two separate subunits: the large 50S and the small 30S.',
+      set:{'b-g50':{t:[0,-44]},'b-g30':{t:[0,32]},'b-mrna':{o:0},'b-sites':{o:0},'b-tot':{o:0}}},
+    {caption:'mRNA threads onto the small subunit.', set:{'b-mrna':{o:1}}},
+    {caption:'The subunits join to form the 70S ribosome.', set:{'b-g50':{t:[0,0]},'b-g30':{t:[0,0]},'b-tot':{o:1}}},
+    {caption:'Three tRNA sites appear: E, P, and A. Drugs are sorted by the subunit they bind and the site or step they block.', set:{'b-sites':{o:1}}}
+  ]},
+  {id:'human', label:'Human ribosome (80S)', intro:'The human ribosome does the same job, but its subunits are larger.',
+   svg:ribScene('h','60S','40S','','',150,166,'#F4E3D8','#E6F3FB'), steps:[
+    {caption:'Two separate subunits: the large 60S and the small 40S.',
+      set:{'h-g50':{t:[0,-44]},'h-g30':{t:[0,32]},'h-mrna':{o:0},'h-sites':{o:0},'h-tot':{o:0}}},
+    {caption:'The subunits and mRNA come together.', set:{'h-mrna':{o:1},'h-g50':{t:[0,0]},'h-g30':{t:[0,0]}}},
+    {caption:'They form the 80S ribosome, larger than the bacterial 70S.', set:{'h-tot':{o:1},'h-sites':{o:1}}},
+    {caption:'Because the structures differ, a drug shaped to bind the bacterial subunits fits the human ribosome poorly. That is selective toxicity.', set:{}}
+  ]}
+]});
+Act.dnd('act-ribSizes', {name:'ribSizes', pills:['30S','50S','40S','60S'], rows:[
+  {text:'The small bacterial subunit, containing 16S rRNA.', answer:'30S', why:'Aminoglycosides and tetracyclines bind here.'},
+  {text:'The large bacterial subunit, containing 23S rRNA and the exit tunnel.', answer:'50S', why:'Macrolides, clindamycin, and oxazolidinones bind here.'},
+  {text:'The small human subunit.', answer:'40S', why:'Part of the human 80S ribosome.'},
+  {text:'The large human subunit.', answer:'60S', why:'Clindamycin cannot bind it.'}
+]});
+chain('ribBuild', ['ribAssemble','ribSizes']);
+
+/* ---------- Module 4 · Section 2 ---------- */
+Act.explore('act-ribMap', {name:'ribMap', svg:ribMapSVG(), ids:['s30','s50','sites','exit'],
+  start:'Select the 30S subunit, the 50S subunit, the tRNA sites, or the exit tunnel.',
+  items:{
+    s30:{title:'30S subunit · 16S rRNA', html:'<p><strong>Aminoglycosides</strong> inhibit initiation complex formation and cause misreading of mRNA. <strong>Tetracyclines</strong> block aminoacyl-tRNA from entering the A site.</p>'},
+    s50:{title:'50S subunit · 23S rRNA', html:'<p><strong>Macrolides and clindamycin</strong> act in the 23S region. <strong>Oxazolidinones</strong> (linezolid) inhibit formation of the 70S initiation complex.</p>'},
+    sites:{title:'The E, P, and A sites', html:'<p>The A site receives incoming aminoacyl-tRNA, the P site holds the growing peptide, and the E site is where empty tRNA leaves. A drug that blocks the A site stops new amino acids from being added.</p>'},
+    exit:{title:'The exit tunnel', html:'<p>The growing polypeptide leaves the ribosome through a tunnel in the 50S subunit. Macrolides bind near this region, and the lecture places them in the 23S region.</p>'}
+  }});
+Act.dnd('act-ribTargets', {name:'ribTargets',
+  pills:['30S · initiation disrupted, mRNA misread','30S · A-site entry blocked','50S · translocation impaired','50S · peptide bond formation blocked','50S · 70S initiation blocked'],
+  rows:[
+    {text:'<strong>Aminoglycosides</strong>', answer:'30S · initiation disrupted, mRNA misread', why:'They inhibit initiation complex formation and cause misreading.'},
+    {text:'<strong>Tetracyclines</strong>', answer:'30S · A-site entry blocked', why:'Aminoacyl-tRNA cannot enter the A site.'},
+    {text:'<strong>Macrolides</strong>', answer:'50S · translocation impaired', why:'tRNA cannot leave after it has transferred its amino acid.'},
+    {text:'<strong>Clindamycin</strong>', answer:'50S · peptide bond formation blocked', why:'It binds the 50S subunit and blocks peptide bond formation.'},
+    {text:'<strong>Oxazolidinones</strong> (linezolid)', answer:'50S · 70S initiation blocked', why:'Linezolid binds 23S rRNA and inhibits 70S initiation complex formation.'}
+  ]});
+Act.predict('act-ribPredict', {name:'ribPredict',
+  start:'Choose a drug to add to the ribosome, predict what goes wrong, and see the result.',
+  items:[
+    {id:'ag', title:'Add an aminoglycoside', prompt:'The drug binds the 30S subunit. Which hallmark failure follows?',
+      options:['mRNA is misread as translation proceeds','The A site is blocked','tRNA is stuck after donating its amino acid','Peptide bonds cannot form'], answer:0,
+      why:'<p>Aminoglycosides cause misreading of mRNA, so wrong amino acids are inserted.</p>', reveal:ribMini('mis')},
+    {id:'tc', title:'Add a tetracycline', prompt:'The drug binds the 30S subunit. Which failure follows?',
+      options:['Aminoacyl-tRNA cannot enter the A site','mRNA is misread','Subunits fail to join','tRNA is stuck after donating its amino acid'], answer:0,
+      why:'<p>Tetracyclines block aminoacyl-tRNA from entering the A site, so no new amino acids can be added.</p>', reveal:ribMini('asite')},
+    {id:'ml', title:'Add a macrolide', prompt:'The drug binds the 50S subunit. Which failure follows?',
+      options:['tRNA stays after transferring its amino acid, so translocation is impaired','The A site is blocked','mRNA is misread','The subunits fail to join'], answer:0,
+      why:'<p>Macrolides prevent tRNA from leaving after it has transferred its amino acid.</p>', reveal:ribMini('trans')},
+    {id:'lz', title:'Add linezolid', prompt:'The drug binds 23S rRNA in the 50S subunit. Which failure follows?',
+      options:['The 70S initiation complex fails to form','mRNA is misread','The A site is blocked','tRNA is stuck in the E site'], answer:0,
+      why:'<p>Linezolid inhibits formation of the 70S initiation complex, so translation cannot begin.</p>', reveal:ribMini('init')}
+  ]});
+chain('ribLab', ['ribMap','ribTargets','ribPredict']);
+
+/* ---------- Module 4 · Section 3 ---------- */
+Act.stages('act-ribCase', {name:'ribCase', stages:[
+  {lead:'<p>A company announces <strong>RX-30</strong>, an experimental antibacterial. Early data show that it binds the 30S subunit and prevents aminoacyl-tRNA from entering the A site.</p>',
+   prompt:'Which existing class does RX-30 most resemble?',
+   options:['Tetracyclines','Macrolides','Aminoglycosides','Oxazolidinones'], answer:0,
+   why:'<p>Binding 30S and blocking A-site entry is the tetracycline mechanism. Aminoglycosides also bind 30S but cause misreading and disrupt initiation.</p>'},
+  {lead:'<p>Resistant isolates of a Gram-negative organism carry a membrane pump that exports RX-30. The drug itself is unchanged, but its concentration inside the cell stays low.</p>',
+   prompt:'Which resistance route is this?',
+   options:['Efflux','Drug inactivation','Target change','Reduced entry'], answer:0,
+   why:'<p>A pump that exports the drug is efflux. Tetracycline resistance in the lecture follows the same pattern: the drug is unchanged, but it never reaches an effective concentration inside the cell.</p>'},
+  {lead:'<p>RX-30 binds the bacterial 30S subunit and shows little binding to human ribosomes.</p>',
+   prompt:'Which lens prompt does this observation answer?',
+   options:['Selective toxicity','Action','Resistance link','Spectrum / context'], answer:0,
+   why:'<p>Little binding to the human 40S subunit is what makes bacterial cells more vulnerable than the patient.</p>'}
+]});
+
+/* ---------- Module 5 · Section 1 ---------- */
+Act.sort('act-routeSort', {name:'routeSort', options:['Drug inactivation','Target change','Reduced entry','Efflux'], rows:[
+  {text:'β-Lactamases cleave the β-lactam ring.', answer:'Drug inactivation', why:'The drug is destroyed before it acts.'},
+  {text:'A plasmid-encoded acetyltransferase modifies chloramphenicol.', answer:'Drug inactivation', why:'Chemical modification inactivates the drug.'},
+  {text:'PBP2a in MRSA keeps cross-linking despite the drug.', answer:'Target change', why:'The target has changed, not the drug.'},
+  {text:'Chromosomal mutations alter RNA polymerase.', answer:'Target change', why:'This is the rifampin resistance pattern.'},
+  {text:'Plasmid-borne genes encode a drug-insensitive dihydrofolate reductase.', answer:'Target change', why:'The enzyme still works but ignores trimethoprim.'},
+  {text:'Porin loss or altered permeability.', answer:'Reduced entry', why:'Less drug reaches the cell interior.'},
+  {text:'Tetracycline and multidrug pumps.', answer:'Efflux', why:'The drug is pushed back out.'}
+]});
+Act.dnd('act-originSort', {name:'originSort', pills:['Chromosome-mediated','Plasmid-mediated','Nongenetic'], rows:[
+  {text:'A mutation alters the target enzyme, as in fluoroquinolone and rifampin resistance.', answer:'Chromosome-mediated', why:'Chromosomal mutations alter DNA gyrase and RNA polymerase.'},
+  {text:'The most important clinical resistance: common in different species, resistant to different drugs, and transferred at a high rate by conjugation.', answer:'Plasmid-mediated', why:'Plasmids spread resistance between cells and between species.'},
+  {text:'Organisms survive as protoplasts, or a foreign body physically separates bacteria from the drug.', answer:'Nongenetic', why:'No resistance gene is involved. Artifacts such as the wrong drug or dose and noncompliance also belong here.'}
+]});
+chain('routesLab', ['routeSort','originSort']);
+
+/* ---------- Module 5 · Section 2 ---------- */
+Act.stages('act-mrsaCase', {name:'mrsaCase', stages:[
+  {lead:'<p>A <em>Staphylococcus aureus</em> isolate keeps building its wall in the presence of methicillin, even though the organism\u2019s normal PBPs are fully inhibited.</p>',
+   prompt:'Which explanation fits the lecture\u2019s example of target-modification resistance?',
+   options:['The isolate carries an altered PBP (PBP2a) with reduced affinity for the drug','The isolate makes a β-lactamase that destroys the drug','The isolate stops making peptidoglycan','The isolate pumps the drug out of the periplasm'], answer:0,
+   why:'<p>PBP2a is an altered penicillin-binding protein with markedly reduced affinity for nearly all β-lactams, so cross-linking continues.</p>'},
+  {prompt:'A β-lactamase inhibitor is added to the β-lactam. What is the expected effect against MRSA?',
+   options:['Little restoration, because the resistance does not depend on a β-lactamase','Full restoration, because inhibitors block PBP2a','Partial restoration, because the inhibitor kills the organism','Greater resistance, because the inhibitor induces PBP2a'], answer:0,
+   why:'<p>The mechanism is a different, insensitive enzyme rather than a β-lactamase, so β-lactamase inhibitors do not restore β-lactam activity.</p>'},
+  {prompt:'Vancomycin resistance in enterococci replaces D-Ala-D-Ala with D-Ala-D-Lac. How does this differ from PBP2a?',
+   options:['It changes what the drug binds, whereas PBP2a changes the enzyme the drug inhibits','It destroys the drug, whereas PBP2a pumps it out','It blocks drug entry, whereas PBP2a modifies the drug','It changes the ribosome, whereas PBP2a changes the wall'], answer:0,
+   why:'<p>Vancomycin binds a substrate, and the resistant organism alters that substrate. PBP2a alters the enzyme that β-lactams inhibit.</p>'}
+]});
+chain('escapeAll', ['escapeLab','mrsaCase']);
+
+/* ---------- Module 5 · Section 3 ---------- */
+Act.sort('act-reportSort', {name:'reportSort', options:['MIC','MBC','Antibiogram','Disk diffusion'], rows:[
+  {text:'The lowest concentration that inhibits visible growth of one isolate.', answer:'MIC', why:'It comes from a tube dilution test.'},
+  {text:'The lowest concentration that kills at least 99.9% of organisms after subculture.', answer:'MBC', why:'It asks about killing, not just inhibition.'},
+  {text:'A facility summary of the percentage of isolates susceptible to each drug.', answer:'Antibiogram', why:'It is compiled periodically from routine susceptibility testing.'},
+  {text:'The diameter of a clear zone around a drug-containing disk.', answer:'Disk diffusion', why:'The zone of inhibition is the readout.'},
+  {text:'A guide to drug choice before the patient\u2019s own culture results return.', answer:'Antibiogram', why:'It guides empiric therapy.'},
+  {text:'The result of a series of tubes with two-fold drug dilutions.', answer:'MIC', why:'The lowest clear tube is the MIC.'}
+]});
+Act.predict('act-sirPredict', {name:'sirPredict',
+  start:'Choose a scenario, predict what the report means, and see the reasoning.',
+  items:[
+    {id:'cmp', title:'Comparing two drugs', prompt:'Drug X has an MIC of 2 \u00B5g/mL and Drug Y has an MIC of 8 \u00B5g/mL against the same organism. What can you conclude?',
+      options:['Compare each MIC with that drug\u2019s own breakpoint before judging','Drug X is more effective, because its number is lower','Drug Y is more effective, because its number is higher','Both drugs are equally effective'], answer:0,
+      why:'<p>Breakpoints are specific to a drug and organism pair. Raw MIC values are never compared across different drugs or organisms.</p>'},
+    {id:'int', title:'An Intermediate result', prompt:'An isolate is reported Intermediate for a drug that concentrates in urine, and the infection is in the bladder. What is a reasonable prediction?',
+      options:['It may respond, because the drug concentrates at the infection site','It is certain to fail','It is certain to succeed','It should be judged against another organism\u2019s breakpoint'], answer:0,
+      why:'<p>Intermediate means the infection may respond at higher dosing or when the drug concentrates at the site of infection.</p>'},
+    {id:'res', title:'A Resistant result', prompt:'An isolate is reported Resistant to a drug. What is the prediction?',
+      options:['The infection is unlikely to respond, even at the maximum safe dose','The infection will respond to a higher dose','The infection will respond if the drug is given orally','The infection will respond if the course is longer'], answer:0,
+      why:'<p>Resistant means an infection is unlikely to respond even at maximum safe dosing.</p>'}
+  ]});
+chain('susceptLab', ['micLab','reportSort','sirPredict']);
+
+/* ---------- Module 5 · Section 4 ---------- */
+Act.stages('act-stewardCase', {name:'stewardCase', stages:[
+  {lead:'<p>A patient arrives with a serious infection. The organism is not yet known, and results will take a day or more.</p>',
+   prompt:'Which starting approach fits both patient safety and stewardship?',
+   options:['Start empiric therapy that covers likely pathogens, and send cultures','Wait for culture results before giving any antibiotic','Give one narrow-spectrum drug chosen at random','Give oral therapy because it is more convenient'], answer:0,
+   why:'<p>Serious infections are treated before the microbe is identified, and two or more antibiotics are sometimes given at this stage. Cultures make targeted therapy possible next.</p>'},
+  {lead:'<p>Cultures identify one organism that is susceptible to a narrow-spectrum drug.</p>',
+   prompt:'Narrowing the regimen serves which two goals?',
+   options:['Less selection for resistant mutants and fewer adverse effects','Higher drug cost and longer treatment','More broad-spectrum exposure and easier dosing','Faster resistance and better patient satisfaction'], answer:0,
+   why:'<p>Targeted treatment decreases the chance of selecting naturally occurring resistant mutants. Shorter and narrower exposure also lowers adverse effects such as <em>C. difficile</em> infection.</p>'},
+  {lead:'<p>The patient improves quickly.</p>',
+   prompt:'Which principle decides how long to continue therapy?',
+   options:['Use the shortest duration that achieves the effect','Continue until the medication supply runs out','Extend the course as a precaution','Stop once the patient asks to stop'], answer:0,
+   why:'<p>Duration of exposure correlates with the risk of many adverse effects, so use the antibiotic for the shortest possible time.</p>'},
+  {lead:'<p>The patient also has reduced renal function.</p>',
+   prompt:'Which step fits stewardship?',
+   options:['Adjust the dose based on glomerular filtration rate','Double the dose to make up for slower clearance','Switch to a broader-spectrum drug','Ignore renal function because the infection is serious'], answer:0,
+   why:'<p>Patients with reduced renal function may require dose adjustment based on GFR, and hypersensitivity history should be explored before dosing.</p>'}
+]});
+Act.sort('act-comboSort', {name:'comboSort',
+  options:['Serious infection, organism unknown','Synergy','Prevent resistance'], rows:[
+  {text:'Penicillin plus gentamicin against enterococci.', answer:'Synergy', why:'Penicillin damages the cell wall, which enhances gentamicin entry.'},
+  {text:'Sulfonamide plus trimethoprim.', answer:'Synergy', why:'Sequential blockade lowers folate output more than either step alone.'},
+  {text:'Two or more antibiotics given before the microbe is identified.', answer:'Serious infection, organism unknown', why:'Treatment cannot wait for the culture in a serious infection.'},
+  {text:'A second drug is used so that mutants resistant to the first drug do not emerge.', answer:'Prevent resistance', why:'Combinations can prevent the emergence of resistant organisms.'}
+]});
+chain('stewardLab', ['stewardCase','comboSort']);
+
+/* ---------- Module 6 · Section 1 ---------- */
+Act.sort('act-immunitySort', {name:'immunitySort', options:['Active','Passive','Passive + active'], rows:[
+  {text:'A child completes a tetanus toxoid vaccine series.', answer:'Active', why:'The antigens make the child produce antibodies.'},
+  {text:'A patient receives botulinum antitoxin.', answer:'Passive', why:'Antitoxin is pre-formed antibody.'},
+  {text:'A patient with a contaminated wound receives tetanus immune globulin and tetanus toxoid.', answer:'Passive + active', why:'Immediate and long-term protection together.'},
+  {text:'A patient receives diphtheria antitoxin.', answer:'Passive', why:'Pre-formed antibody, with no immune memory.'},
+  {text:'A vaccine\u2019s antigens elicit the patient\u2019s own antibodies.', answer:'Active', why:'The patient\u2019s immune system does the work.'}
+]});
+Act.predict('act-timingPredict', {name:'timingPredict',
+  start:'Choose a product, predict how protection behaves over time, and compare with the chart.',
+  items:[
+    {id:'ig', title:'Immune globulin alone', prompt:'How does protection look over the coming months?',
+      options:['Immediate, then fading','Slow to start, then durable','Immediate and durable','Delayed and fading'], answer:0,
+      why:'<p>Pre-formed antibody works at once, but it is not replaced by the patient\u2019s own production.</p>', reveal:timingSVG('ig')},
+    {id:'vax', title:'Vaccine alone', prompt:'How does protection look over the coming months?',
+      options:['Slow to start, then durable','Immediate, then fading','Immediate and durable','Delayed and fading'], answer:0,
+      why:'<p>The immune system needs time to respond, but it then builds memory.</p>', reveal:timingSVG('vax')},
+    {id:'both', title:'Immune globulin plus vaccine', prompt:'How does protection look over the coming months?',
+      options:['Immediate and durable','Immediate, then fading','Slow to start, then durable','Delayed and fading'], answer:0,
+      why:'<p>The globulin covers the gap while the vaccine builds long-term immunity.</p>', reveal:timingSVG('both')}
+  ]});
+chain('immunityLab', ['immunitySort','timingPredict']);
+
+/* ---------- Module 6 · Section 2 ---------- */
+Act.dnd('act-platformDnd', {name:'platformDnd',
+  pills:['Toxoid','Protein / subunit','Conjugate','Live attenuated','Inactivated whole-cell'], rows:[
+  {text:'Diphtheria and tetanus vaccines', answer:'Toxoid', why:'The toxin is inactivated.'},
+  {text:'Acellular pertussis and anthrax vaccines', answer:'Protein / subunit', why:'Selected antigens rather than the whole organism.'},
+  {text:'Hib, PCV, and MenACWY', answer:'Conjugate', why:'A polysaccharide is linked to a protein.'},
+  {text:'Ty21a and BCG', answer:'Live attenuated', why:'A weakened organism.'},
+  {text:'Whole-cell pertussis and selected oral cholera vaccines (outside routine U.S. use)', answer:'Inactivated whole-cell', why:'A killed organism.'}
+]});
+Act.gate('act-conjGate', {name:'conjGate',
+  prompt:'A plain polysaccharide vaccine is given to an infant. Predict the immune response.',
+  options:['A weak, short-lived response with little immune memory','A strong response with durable memory','A strong response that boosts well','No response in older children either'], answer:0,
+  why:'<p>Infants and young children respond poorly to plain polysaccharide antigens.</p>'},
+  function(){ var w=$('conjWrap'); if(w) w.classList.remove('hidden'); });
+chain('vaccineLab', ['platformDnd','conjugateLab']);
+
+/* ---------- Module 6 · Section 3 ---------- */
+Act.sort('act-precautionSort', {name:'precautionSort', options:['Standard precautions','Transmission-based precautions'], rows:[
+  {text:'Hand hygiene', answer:'Standard precautions', why:'Used for every patient.'},
+  {text:'Contact, droplet, or airborne set', answer:'Transmission-based precautions', why:'Added when the pathogen or syndrome warrants it.'},
+  {text:'Safe injection practices', answer:'Standard precautions', why:'Part of the baseline set.'},
+  {text:'Room placement and PPE follow the route of transmission.', answer:'Transmission-based precautions', why:'The route of transmission decides the setup.'},
+  {text:'Sharps and waste disposal', answer:'Standard precautions', why:'Part of the baseline set.'},
+  {text:'PPE chosen according to anticipated exposure', answer:'Standard precautions', why:'Standard precautions include PPE based on anticipated exposure.'}
+]});
+Act.dnd('act-methodDnd', {name:'methodDnd',
+  pills:['Antisepsis','Disinfection','Steam sterilization','Sterile filtration + aseptic processing','Low-temperature sterilization'], rows:[
+  {text:'Living tissue before an injection', answer:'Antisepsis', why:'Antiseptics are used on living tissue.'},
+  {text:'An environmental surface', answer:'Disinfection', why:'Disinfectants are used on inanimate surfaces.'},
+  {text:'Heat-stable critical equipment', answer:'Steam sterilization', why:'Reliable and preferred for compatible critical items.'},
+  {text:'A heat-sensitive solution', answer:'Sterile filtration + aseptic processing', why:'Filtration removes microorganisms without heating the drug. The full process must be validated.'},
+  {text:'A heat-sensitive device', answer:'Low-temperature sterilization', why:'Examples include ethylene oxide and hydrogen peroxide gas plasma.'}
+]});
+chain('controlLab', ['precautionSort','methodDnd']);
+
+/* ============================================================
+   CUSTOM INTERACTIVE ACTIVITIES
+   Each follows the architecture's contract: Act.done(name, true) when finished,
+   Act.keep(name+'_v', ...) for partial progress, and Act.register() so automated tests can drive it.
+   ============================================================ */
+
+function todoHTML(list, seen){
+  return list.map(function(t){ return '<li class="'+(seen.indexOf(t[0])>-1?'got':'')+'">'+t[1]+'</li>'; }).join('');
+}
+
+/* ---------- Growth curve lab (Module 1 · Section 2) ---------- */
+(function(){
+  var host = $('act-growthLab'); if(!host) return;
+  var mode = 'none', td = 8, rm = false, hd = false;
+  var TODO = [['s1','Add a bacteriostatic drug, then remove it'],['s2','Add a bacteriostatic drug with host defenses present'],['s3','Add a bactericidal drug']];
+  var seen = (state.activities.growthLab_v || []).slice();
+  if(isDone('growthLab')) seen = ['s1','s2','s3'];
+  var box = el('div','sim');
+  box.innerHTML =
+    '<div class="togs" role="group" aria-label="Drug type">'+
+      '<button class="btn ghost on" data-m="none" type="button">No drug</button>'+
+      '<button class="btn ghost" data-m="static" type="button">Bacteriostatic drug</button>'+
+      '<button class="btn ghost" data-m="cidal" type="button">Bactericidal drug</button></div>'+
+    '<div class="sim-row"><label for="gl-td">Drug added at hour</label><input id="gl-td" type="range" min="3" max="12" step="1" value="8"><span class="sim-out" id="gl-tdo">8</span></div>'+
+    '<div class="sim-row"><label><input type="checkbox" id="gl-rm"> Remove the drug 8 hours later</label> '+
+      '<label><input type="checkbox" id="gl-host"> Host defenses present (phagocytosis)</label></div>'+
+    '<div class="figure" id="gl-fig" style="background:#fff"></div>'+
+    '<div class="sim-note" id="gl-note" aria-live="polite"></div>'+
+    '<p class="caption" style="margin-bottom:0"><strong>Try each of these to finish:</strong></p><ul class="todo" id="gl-todo"></ul>';
+  host.appendChild(box);
+  function curve(m){
+    var r = 0.55, N = 0.03, pts = [], tr = rm ? td + 8 : 1e9, dt = 0.25;
+    for(var t = 0; t <= 30.0001; t += dt){
+      pts.push([t, N]);
+      var on = m !== 'none' && t >= td && t < tr, dN;
+      if(!on) dN = N > 0 ? r * N * (1 - N) : 0;
+      else if(m === 'static') dN = hd ? -0.22 * N : 0;
+      else dN = -(0.75 + (hd ? 0.1 : 0)) * N;
+      N = Math.max(0, N + dN * dt);
+      if(m !== 'none' && on && N < 0.002 && (m === 'cidal' || hd)) N = 0;
+    }
+    return pts;
+  }
+  function X(t){ return 56 + t / 30 * 480; } function Y(n){ return 214 - n * 186; }
+  function P(pts){ return pts.map(function(p,i){ return (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }).join(' '); }
+  function note(){
+    if(mode === 'none') return 'With no drug, the culture grows until it reaches the limit of its medium, then levels off.';
+    if(mode === 'static' && hd) return 'Host defenses are present, so the count now falls. A bacteriostatic drug holds the bacteria in check while the host, for example through phagocytosis, clears them.';
+    if(mode === 'static' && rm) return 'The drug was removed, and the surviving bacteria resumed growth toward the untreated level. Bacteriostatic drugs stop growth but leave the cells alive.';
+    if(mode === 'static') return 'The count levels off while the drug is present, but the bacteria are alive. Try removing the drug, or adding host defenses.';
+    if(rm) return 'The viable count fell to zero before the drug was removed, so nothing regrew. A bactericidal drug kills the bacteria directly.';
+    return 'The viable count falls even without host help. A bactericidal drug kills bacteria directly, which matters when host defenses cannot be relied on.';
+  }
+  function scenario(){
+    if(mode === 'static' && hd) return 's2';
+    if(mode === 'static' && rm) return 's1';
+    if(mode === 'cidal') return 's3';
+    return null;
+  }
+  function draw(){
+    var treated = curve(mode), ref = curve('none');
+    var svg = '<svg viewBox="0 0 560 250" role="img" aria-label="Viable bacteria over time for the chosen drug">'+
+      '<line x1="56" y1="20" x2="56" y2="214" stroke="'+C.mid+'" stroke-width="2"/><line x1="56" y1="214" x2="536" y2="214" stroke="'+C.mid+'" stroke-width="2"/>'+
+      '<text x="296" y="242" font-size="12" text-anchor="middle" fill="'+C.mid+'">Time (hours)</text>'+
+      '<text x="16" y="120" font-size="12" text-anchor="middle" fill="'+C.mid+'" transform="rotate(-90 16 120)">Viable bacteria</text>'+
+      '<path d="'+P(ref)+'" fill="none" stroke="'+C.gray+'" stroke-width="2.5" stroke-dasharray="6 5"/>'+
+      '<path d="'+P(treated)+'" fill="none" stroke="'+C.blue+'" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    if(mode !== 'none'){
+      svg += '<line x1="'+X(td)+'" y1="20" x2="'+X(td)+'" y2="214" stroke="'+C.esp+'" stroke-width="1.5" stroke-dasharray="3 3"/>'+
+             '<text x="'+(X(td)+5)+'" y="16" font-size="12" font-weight="700" fill="'+C.esp+'">Drug added</text>';
+      if(rm) svg += '<line x1="'+X(td+8)+'" y1="66" x2="'+X(td+8)+'" y2="214" stroke="'+C.rose+'" stroke-width="1.5" stroke-dasharray="3 3"/>'+
+             '<text x="'+(X(td+8)+5)+'" y="78" font-size="12" font-weight="700" fill="'+C.rose+'">Drug removed</text>';
+    }
+    svg += '<text x="536" y="'+(Y(0.97)+18)+'" font-size="11" fill="'+C.gray+'" text-anchor="end">dashed line: no drug</text></svg>';
+    $('gl-fig').innerHTML = svg;
+    $('gl-note').textContent = note();
+    var sc = scenario();
+    if(sc && seen.indexOf(sc) === -1){ seen.push(sc); Act.keep('growthLab_v', seen.slice()); }
+    $('gl-todo').innerHTML = todoHTML(TODO, seen);
+    if(seen.length >= 3 && !isDone('growthLab')) Act.done('growthLab', true);
+  }
+  box.querySelectorAll('[data-m]').forEach(function(b){
+    b.onclick = function(){
+      mode = b.getAttribute('data-m');
+      box.querySelectorAll('[data-m]').forEach(function(x){ x.classList.toggle('on', x === b); });
+      draw();
+    };
+  });
+  $('gl-td').oninput = function(){ td = Number(this.value); $('gl-tdo').textContent = td; draw(); };
+  $('gl-rm').onchange = function(){ rm = this.checked; draw(); };
+  $('gl-host').onchange = function(){ hd = this.checked; draw(); };
+  draw();
+  Act.register('growthLab', {solve:function(){ seen = ['s1','s2','s3']; Act.keep('growthLab_v', seen.slice()); $('gl-todo').innerHTML = todoHTML(TODO, seen); Act.done('growthLab', true); }});
+})();
+Act.gate('act-growthGate', {name:'growthGate',
+  prompt:'You add a bacteriostatic drug to a growing culture and later remove it. Predict what happens to the viable count after removal.',
+  options:['It rises again toward the untreated level','It keeps falling','It stays level indefinitely','It drops to zero at once'], answer:0,
+  why:'<p>Bacteriostatic drugs hold bacteria in check without killing them, so the survivors resume growth.</p>'},
+  unlock('card-growthLab'));
+
+/* ---------- Folate sequential blockade lab (Module 3 · Section 1) ---------- */
+(function(){
+  var host = $('act-seqLab'); if(!host) return;
+  var smx = false, tmp = false;
+  var STATES = [['none','Neither drug'],['smx','Sulfamethoxazole alone'],['tmp','Trimethoprim alone'],['both','Both drugs']];
+  var seen = (state.activities.seqLab_v || []).slice();
+  if(isDone('seqLab')) seen = ['none','smx','tmp','both'];
+  var box = el('div','sim');
+  box.innerHTML =
+    '<div class="togs" role="group" aria-label="Drugs">'+
+      '<button class="btn ghost" data-d="smx" type="button">Sulfamethoxazole (blocks DHPS)</button>'+
+      '<button class="btn ghost" data-d="tmp" type="button">Trimethoprim (blocks DHFR)</button></div>'+
+    '<div class="figure" id="sq-fig" style="background:#fff"></div>'+
+    '<div class="mrow"><b>Folate output</b><span class="meter"><i id="sq-bar" style="width:100%"></i></span><span class="sim-out" id="sq-pct">100%</span></div>'+
+    '<div class="sim-note" id="sq-note" aria-live="polite"></div>'+
+    '<p class="caption" style="margin-bottom:0"><strong>Visit all four combinations:</strong></p><ul class="todo" id="sq-todo"></ul>';
+  host.appendChild(box);
+  var NODES = [['PABA +','precursors'],['Dihydro-','pteroate'],['DHF',''],['THF',''],['Nucleotide','synthesis']];
+  function flux(){ return (smx ? 0.35 : 1) * (tmp ? 0.35 : 1); }
+  function key(){ return smx && tmp ? 'both' : smx ? 'smx' : tmp ? 'tmp' : 'none'; }
+  function draw(){
+    var s = '', op = [0,1,2,3,4].map(function(i){ return (smx && i >= 1 ? 0.5 : 1) * (tmp && i >= 3 ? 0.5 : 1); });
+    NODES.forEach(function(n, i){
+      var x = 16 + i * 124;
+      s += '<g opacity="'+op[i]+'"><rect x="'+x+'" y="70" width="104" height="48" rx="12" fill="'+(i === 4 ? '#FFF0CE' : C.blueSoft)+'" stroke="#1F7FB8" stroke-width="2"/>'+
+        '<text x="'+(x + 52)+'" y="'+(n[1] ? 91 : 99)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="'+C.deepBlue+'">'+n[0]+'</text>'+
+        (n[1] ? '<text x="'+(x + 52)+'" y="107" text-anchor="middle" font-size="12.5" font-weight="700" fill="'+C.deepBlue+'">'+n[1]+'</text>' : '')+'</g>';
+      if(i < 4){
+        var blocked = (i === 0 && smx) || (i === 2 && tmp), col = blocked ? C.rose : C.esp, ax = x + 106;
+        s += '<line x1="'+ax+'" y1="94" x2="'+(ax + 12)+'" y2="94" stroke="'+col+'" stroke-width="'+(blocked ? 5 : 3)+'"/>'+
+             '<polygon points="'+(ax + 12)+',88 '+(ax + 20)+',94 '+(ax + 12)+',100" fill="'+col+'"/>';
+        if(i === 0) s += '<text x="'+(ax + 8)+'" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="'+C.mid+'">DHPS</text>';
+        if(i === 2) s += '<text x="'+(ax + 8)+'" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="'+C.mid+'">DHFR</text>';
+        if(blocked) s += '<text x="'+(ax + 8)+'" y="86" text-anchor="middle" font-size="20" font-weight="700" fill="'+C.rose+'">✕</text>';
+      }
+    });
+    if(smx) s += '<rect x="30" y="140" width="150" height="26" rx="13" fill="#F6E1DC"/><text x="105" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#8B3A2B">Sulfamethoxazole</text>';
+    if(tmp) s += '<rect x="278" y="140" width="130" height="26" rx="13" fill="#E9E2F8"/><text x="343" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#4D3BA6">Trimethoprim</text>';
+    s += '<text x="20" y="28" font-size="12.5" font-weight="700" fill="'+C.esp+'">Inside the bacterium: folate is made step by step</text>';
+    s += '<text x="20" y="196" font-size="12" fill="'+C.mid+'">Human cells take folate from the diet, so neither drug touches their supply.</text>';
+    $('sq-fig').innerHTML = svgWrap(640, 206, 'Folate pathway with optional blocks at DHPS and DHFR', s);
+    var f = Math.round(flux() * 100);
+    $('sq-bar').style.width = f + '%'; $('sq-pct').textContent = f + '%';
+    var msg = {none:'Normal flow: the bacterium makes folate and can build nucleotides.',
+      smx:'Sulfamethoxazole mimics PABA and stalls DHPS, so folate output falls.',
+      tmp:'Trimethoprim blocks DHFR, so DHF is not converted to THF and output falls.',
+      both:'Two sequential blocks: output drops much further than with either drug alone. Bacteria are hit twice, while humans, who obtain folate from the diet, are unaffected.'};
+    $('sq-note').textContent = msg[key()] + '  (Illustrative model: each blocked step passes 35% of the flow.)';
+    var k = key(); if(seen.indexOf(k) === -1){ seen.push(k); Act.keep('seqLab_v', seen.slice()); }
+    $('sq-todo').innerHTML = todoHTML(STATES, seen);
+    box.querySelectorAll('[data-d]').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-d') === 'smx' ? smx : tmp); });
+    if(seen.length >= 4 && !isDone('seqLab')) Act.done('seqLab', true);
+  }
+  box.querySelectorAll('[data-d]').forEach(function(b){
+    b.onclick = function(){ if(b.getAttribute('data-d') === 'smx') smx = !smx; else tmp = !tmp; draw(); };
+  });
+  draw();
+  var gateApi = null;
+  Act.register('seqLab', {solve:function(){ seen = ['none','smx','tmp','both']; Act.keep('seqLab_v', seen.slice()); Act.done('seqLab', true); }});
+})();
+
+/* ---------- Resistance escape lab (Module 5 · Section 2) ---------- */
+(function(){
+  var host = $('act-escapeLab'); if(!host) return;
+  var ROUTES = [['r1','Drug inactivation'],['r2','Target change'],['r3','Reduced entry'],['r4','Efflux']];
+  var WHY = {r1:'Drug inactivation needs an enzyme that destroys or modifies this particular drug.',
+             r2:'Target change needs an alteration at the site this drug recognizes.',
+             r3:'Reduced entry would lower how much of this drug gets into the cell.',
+             r4:'Efflux would need a pump that exports this drug.'};
+  var ESC = {
+    bl:{name:'β-Lactams', ok:{r1:'β-Lactamases cleave the β-lactam ring, so the drug is destroyed. Plasmid-mediated production gives high-level resistance.',
+                              r2:'Modified penicillin-binding proteins bind the drug poorly, so cross-linking continues.',
+                              r3:'Poor drug permeability lets less drug reach the PBPs, giving low-level resistance.'},
+        hint:'The lecture lists three routes for β-lactams.'},
+    van:{name:'Vancomycin', ok:{r2:'A modified peptidoglycan peptide sequence means vancomycin cannot bind. This can be transposon- and plasmid-mediated.'},
+        hint:'Vancomycin recognizes a peptide end on the precursor. What would defeat that recognition?'},
+    ag:{name:'Aminoglycosides', ok:{r1:'Enzymes adenylylate, acetylate, or phosphorylate the drug.', r2:'Chromosomal mutations alter the target.', r3:'Reduced permeability lowers uptake.'},
+        hint:'The lecture lists three routes for aminoglycosides.'},
+    tc:{name:'Tetracyclines', ok:{r4:'Plasmid-mediated changes enhance efflux, so the drug does not reach an effective intracellular concentration.',
+                                 r3:'Reduced uptake keeps the intracellular concentration below the minimum inhibitory concentration.'},
+        hint:'Tetracycline resistance in the lecture keeps the drug from building up inside the cell.'},
+    cm:{name:'Chloramphenicol', ok:{r1:'A plasmid-encoded acetyltransferase acetylates the drug and inactivates it.'},
+        hint:'Think about a chemical modification of the drug itself.'},
+    ery:{name:'Erythromycin', ok:{r2:'A plasmid-mediated enzyme methylates 23S rRNA, so erythromycin cannot bind.', r1:'An esterase cleaves the macrolide ring.', r4:'An efflux pump lowers the intracellular concentration.'},
+        hint:'The lecture lists three routes for erythromycin.'},
+    sul:{name:'Sulfonamides and trimethoprim', ok:{r2:'Horizontally acquired sul and dfr genes encode drug-insensitive DHPS and DHFR enzymes.'},
+        hint:'These drugs inhibit enzymes. What could the bacterium do to the enzymes?'},
+    fq:{name:'Fluoroquinolones', ok:{r2:'Chromosomal mutations alter DNA gyrase, the target of the quinolones.'},
+        hint:'Think about the enzyme the drug binds.'},
+    rif:{name:'Rifampin', ok:{r2:'Chromosomal mutations alter RNA polymerase, the target of rifampin.'},
+        hint:'Think about the enzyme the drug binds.'}
+  };
+  var solved = (state.activities.escapeLab_v || []).slice();
+  var box = el('div','sim');
+  var dOpts = Object.keys(ESC).map(function(k){ return '<option value="'+k+'">'+ESC[k].name+'</option>'; }).join('');
+  var rOpts = ROUTES.map(function(r){ return '<option value="'+r[0]+'">'+r[1]+'</option>'; }).join('');
+  box.innerHTML =
+    '<div class="esc-grid"><label class="caption" style="margin:0">1 · The antibiotic you face<select id="es-d" aria-label="Antibiotic">'+dOpts+'</select></label>'+
+    '<label class="caption" style="margin:0">2 · Your escape route<select id="es-r" aria-label="Escape route">'+rOpts+'</select></label></div>'+
+    '<div class="controls"><button class="btn" id="es-go" type="button">Try to escape</button></div>'+
+    '<div class="sim-note esc-out" id="es-out" aria-live="polite"><span></span><span>Choose a drug and a route, then try to escape.</span></div>'+
+    '<p class="caption" style="margin-bottom:6px"><strong>Drugs escaped so far (finish with five):</strong></p><div class="act-chips" id="es-chips"></div>';
+  host.appendChild(box);
+  function icon(route, good){
+    var col = good ? C.ok : C.rose, cell = '<path d="M14 6 Q4 45 14 84" stroke="'+C.wall+'" stroke-width="6" fill="none"/>';
+    var g = '';
+    if(route === 'r1') g = '<circle cx="80" cy="45" r="9" fill="'+C.orange+'"/><path d="M64 20 L84 26 L74 46 Z" fill="'+C.purple+'"/><line x1="78" y1="38" x2="88" y2="54" stroke="#fff" stroke-width="3"/>';
+    if(route === 'r2') g = '<rect x="46" y="28" width="34" height="34" rx="9" fill="'+C.gray+'"/><path d="M63 28 l8 12 -8 8" fill="none" stroke="#fff" stroke-width="3"/><circle cx="102" cy="45" r="9" fill="'+C.orange+'"/>';
+    if(route === 'r3') g = '<line x1="30" y1="6" x2="30" y2="36" stroke="'+C.blue+'" stroke-width="7"/><line x1="30" y1="54" x2="30" y2="84" stroke="'+C.blue+'" stroke-width="7"/><circle cx="8" cy="45" r="0"/><circle cx="76" cy="20" r="8" fill="'+C.orange+'"/><circle cx="96" cy="45" r="8" fill="'+C.orange+'"/><circle cx="76" cy="70" r="8" fill="'+C.orange+'"/>';
+    if(route === 'r4') g = '<rect x="26" y="30" width="26" height="30" rx="6" fill="'+C.ok+'"/><path d="M52 45 L88 45 M80 37 L90 45 L80 53" stroke="'+C.ok+'" stroke-width="4" fill="none"/><circle cx="100" cy="45" r="8" fill="'+C.orange+'"/>';
+    var badge = '<circle cx="104" cy="14" r="12" fill="'+col+'"/><text x="104" y="19" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">'+(good ? '✓' : '✕')+'</text>';
+    return '<svg viewBox="0 0 120 90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">'+cell+g+badge+'</svg>';
+  }
+  function chips(){
+    $('es-chips').innerHTML = Object.keys(ESC).map(function(k){
+      return '<span class="act-chip'+(solved.indexOf(k) > -1 ? ' done' : '')+'">'+ESC[k].name+'</span>'; }).join('');
+  }
+  function tryEscape(d, r){
+    var e = ESC[d], out = $('es-out');
+    if(e.ok[r]){
+      out.innerHTML = icon(r, true) + '<span><strong>The escape works.</strong> ' + e.ok[r] + '</span>';
+      if(solved.indexOf(d) === -1){ solved.push(d); Act.keep('escapeLab_v', solved.slice()); }
+    } else {
+      out.innerHTML = icon(r, false) + '<span><strong>That route does not fit here.</strong> ' + WHY[r] + ' ' + e.hint + '</span>';
+    }
+    chips();
+    if(solved.length >= 5 && !isDone('escapeLab')) Act.done('escapeLab', true);
+  }
+  $('es-go').onclick = function(){ tryEscape($('es-d').value, $('es-r').value); };
+  chips();
+  if(solved.length >= 5 && !isDone('escapeLab')) Act.done('escapeLab', true);
+  Act.register('escapeLab', {solve:function(){
+    Object.keys(ESC).slice(0, 5).forEach(function(k){ tryEscape(k, Object.keys(ESC[k].ok)[0]); });
+  }});
+})();
+
+/* ---------- Susceptibility lab: MIC and MBC (Module 5 · Section 3) ---------- */
+(function(){
+  var host = $('act-micLab'); if(!host) return;
+  var CONC = [32, 16, 8, 4, 2, 1];
+  var ORG = {
+    A:{label:'Organism A', grow:{32:0,16:0,8:0,4:0,2:1,1:1}, col:{32:0,16:0,8:1,4:1}, mic:4, mbc:16,
+       why:'Growth was inhibited at 4 µg/mL, but subcultures from 4 and 8 µg/mL still grew colonies, so killing of at least 99.9% needed 16 µg/mL. MIC and MBC answer different questions: inhibition versus killing.'},
+    B:{label:'Organism B', grow:{32:0,16:0,8:0,4:0,2:1,1:1}, col:{32:0,16:0,8:0,4:0}, mic:4, mbc:4,
+       why:'Here the drug kills at the same concentration that inhibits growth, so MIC and MBC are equal.'},
+    C:{label:'Organism C', grow:{32:0,16:0,8:0,4:1,2:1,1:1}, col:{32:0,16:1,8:1}, mic:8, mbc:32,
+       why:'Growth was inhibited at 8 µg/mL, but killing needed 32 µg/mL. A large gap between MIC and MBC means the drug mainly inhibits this organism.'}
+  };
+  var cur = 'A', stage = 1, micPick = null, mbcPick = null, plates = false, micOK = false;
+  var box = el('div','sim');
+  host.appendChild(box);
+  function colonies(n){
+    var s = '<svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23" fill="#FFFEFB" stroke="'+C.esp+'" stroke-width="2"/>';
+    if(n) [[16,18],[32,16],[22,32],[35,34],[26,24],[14,32]].forEach(function(p){ s += '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.2" fill="'+C.esp+'"/>'; });
+    return s + '</svg>';
+  }
+  function render(){
+    var o = ORG[cur], html = '';
+    html += '<div class="act-chips">'+Object.keys(ORG).map(function(k){ return '<button type="button" class="act-chip'+(k === cur ? ' on' : '')+'" data-o="'+k+'">'+ORG[k].label+'</button>'; }).join('')+'</div>';
+    html += '<p class="caption"><strong>Step 1.</strong> Click the tube that shows the <strong>MIC</strong>: the lowest concentration with no visible growth.</p><div class="tubes">';
+    CONC.forEach(function(c){
+      var cls = 'tube'+(o.grow[c] ? ' grow' : '')+(micPick === c ? (micOK ? ' good' : ' bad') : '');
+      html += '<button type="button" class="'+cls+'" data-t="'+c+'"><span class="glass"></span><b>'+c+'</b><small>µg/mL</small></button>';
+    });
+    html += '</div>';
+    if(micOK){
+      html += '<p class="caption"><strong>Step 2.</strong> Now subculture the clear tubes onto plates, and look for colonies.</p>';
+      if(!plates) html += '<div class="controls"><button class="btn" id="mc-sub" type="button">Subculture the clear tubes</button></div>';
+      else {
+        html += '<p class="caption"><strong>Step 3.</strong> Click the plate that shows the <strong>MBC</strong>: the lowest concentration with no colonies.</p><div class="plates">';
+        CONC.filter(function(c){ return !o.grow[c]; }).reverse().forEach(function(c){
+          var cls = 'plate'+(mbcPick === c ? (c === o.mbc ? ' good' : ' bad') : '');
+          html += '<button type="button" class="'+cls+'" data-p="'+c+'">'+colonies(o.col[c])+'<b>'+c+'</b><small>'+(o.col[c] ? 'colonies' : 'no colonies')+'</small></button>';
+        });
+        html += '</div>';
+      }
+    }
+    var msg = '';
+    if(micPick !== null && !micOK) msg = 'Not quite. The MIC is the lowest tube that is still clear. Scan from the low-concentration end to find where growth stops.';
+    if(micOK && !plates) msg = 'Correct: the MIC is '+o.mic+' µg/mL.';
+    if(plates && mbcPick === null) msg = 'MIC = '+o.mic+' µg/mL. Choose the plate that marks killing.';
+    if(mbcPick !== null && mbcPick !== o.mbc) msg = 'Not quite. The MBC is the lowest concentration whose subculture shows no colonies, meaning at least 99.9% of the organisms were killed.';
+    if(mbcPick === o.mbc) msg = 'Correct: MIC = '+o.mic+' µg/mL and MBC = '+o.mbc+' µg/mL. '+o.why;
+    html += '<div class="sim-note" aria-live="polite">'+(msg || 'Start with the tubes.')+'</div>';
+    box.innerHTML = html;
+    box.querySelectorAll('[data-o]').forEach(function(b){ b.onclick = function(){ cur = b.getAttribute('data-o'); micPick = mbcPick = null; plates = micOK = false; render(); }; });
+    box.querySelectorAll('[data-t]').forEach(function(b){ b.onclick = function(){
+      if(micOK) return; micPick = Number(b.getAttribute('data-t')); micOK = (micPick === ORG[cur].mic); render(); }; });
+    var sb = $('mc-sub'); if(sb) sb.onclick = function(){ plates = true; render(); };
+    box.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){
+      mbcPick = Number(b.getAttribute('data-p'));
+      if(mbcPick === ORG[cur].mbc && cur === 'A' && !isDone('micLab')) Act.done('micLab', true);
+      render(); }; });
+  }
+  render();
+  Act.register('micLab', {solve:function(){ Act.done('micLab', true); }});
+})();
+
+/* ---------- Conjugate vaccine builder (Module 6 · Section 2) ---------- */
+(function(){
+  var host = $('act-conjugateLab'); if(!host) return;
+  var vac = 'plain', who = 'infant';
+  var COMBOS = [['plain-infant','Plain polysaccharide in an infant'],['plain-adult','Plain polysaccharide in an adult'],
+                ['conj-infant','Conjugate in an infant'],['conj-adult','Conjugate in an adult']];
+  var seen = (state.activities.conjugateLab_v || []).slice();
+  if(isDone('conjugateLab')) seen = COMBOS.map(function(c){ return c[0]; });
+  var VAL = {'plain-infant':[12,5,5],'plain-adult':[40,15,10],'conj-infant':[80,80,80],'conj-adult':[85,85,85]};
+  var MSG = {'plain-infant':'A T-independent B-cell response in a young child is weak and short-lived, with little immune memory. Plain polysaccharides are poorly immunogenic in children younger than 2 years.',
+             'plain-adult':'B cells respond to the polysaccharide directly, without T-cell help. The response is weaker and shorter-lived, with little immune memory.',
+             'conj-infant':'The carrier protein brings in T-cell help, so the response is stronger, memory forms, and booster doses work, even in infants.',
+             'conj-adult':'T-cell help gives a strong response with immune memory and effective boosters.'};
+  var box = el('div','sim');
+  box.innerHTML =
+    '<div class="togs" role="group" aria-label="Vaccine type"><button class="btn ghost on" data-v="plain" type="button">Plain polysaccharide</button><button class="btn ghost" data-v="conj" type="button">Protein conjugate</button></div>'+
+    '<div class="togs" style="margin-top:8px" role="group" aria-label="Recipient"><button class="btn ghost on" data-w="infant" type="button">Infant</button><button class="btn ghost" data-w="adult" type="button">Adult</button></div>'+
+    '<div class="figure" id="cj-fig" style="background:#fff"></div>'+
+    '<div class="mrow"><b>Antibody response</b><span class="meter"><i id="cj-b0"></i></span></div>'+
+    '<div class="mrow"><b>Immune memory</b><span class="meter"><i id="cj-b1"></i></span></div>'+
+    '<div class="mrow"><b>Booster response</b><span class="meter"><i id="cj-b2"></i></span></div>'+
+    '<div class="sim-note" id="cj-note" aria-live="polite"></div>'+
+    '<p class="caption" style="margin-bottom:0"><strong>Visit all four combinations:</strong></p><ul class="todo" id="cj-todo"></ul>';
+  host.appendChild(box);
+  function draw(){
+    var conj = vac === 'conj', s = '';
+    s += '<circle cx="120" cy="90" r="40" fill="'+C.blueSoft+'" stroke="#1F7FB8" stroke-width="3"/><text x="120" y="95" text-anchor="middle" font-size="14" font-weight="700" fill="'+C.deepBlue+'">B cell</text>';
+    for(var i = 0; i < 5; i++) s += '<rect x="'+(20 + i * 18)+'" y="'+(30 + (i % 2) * 8)+'" width="14" height="14" rx="3" fill="'+C.orange+'"/>';
+    s += '<text x="66" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#8B5B44">Polysaccharide</text>';
+    if(conj){
+      s += '<ellipse cx="60" cy="62" rx="24" ry="14" fill="'+C.gray+'"/><text x="60" y="66" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">carrier</text>';
+      s += '<circle cx="400" cy="90" r="36" fill="'+C.espSoft+'" stroke="'+C.esp+'" stroke-width="3"/><text x="400" y="95" text-anchor="middle" font-size="14" font-weight="700" fill="'+C.esp+'">T cell</text>';
+      s += '<line x1="362" y1="90" x2="164" y2="90" stroke="'+C.ok+'" stroke-width="4"/><polygon points="164,82 152,90 164,98" fill="'+C.ok+'"/><text x="262" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="'+C.ok+'">T-cell help</text>';
+    } else {
+      s += '<circle cx="400" cy="90" r="36" fill="#fff" stroke="'+C.gray+'" stroke-width="3" stroke-dasharray="5 4"/><text x="400" y="95" text-anchor="middle" font-size="14" fill="'+C.gray+'">T cell</text>';
+      s += '<text x="262" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="'+C.rose+'">No T-cell help: T-independent response</text>';
+    }
+    $('cj-fig').innerHTML = svgWrap(520, 150, 'A B cell recognizes the vaccine antigen, with or without T-cell help', s);
+    var k = vac + '-' + who, v = VAL[k];
+    [0,1,2].forEach(function(i){ $('cj-b'+i).style.width = v[i] + '%'; });
+    $('cj-note').textContent = MSG[k] + ' (Schematic bars, not measured values.)';
+    if(seen.indexOf(k) === -1){ seen.push(k); Act.keep('conjugateLab_v', seen.slice()); }
+    $('cj-todo').innerHTML = todoHTML(COMBOS, seen);
+    box.querySelectorAll('[data-v]').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-v') === vac); });
+    box.querySelectorAll('[data-w]').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-w') === who); });
+    if(seen.length >= 4 && !isDone('conjugateLab')) Act.done('conjugateLab', true);
+  }
+  box.querySelectorAll('[data-v]').forEach(function(b){ b.onclick = function(){ vac = b.getAttribute('data-v'); draw(); }; });
+  box.querySelectorAll('[data-w]').forEach(function(b){ b.onclick = function(){ who = b.getAttribute('data-w'); draw(); }; });
+  draw();
+  Act.register('conjugateLab', {solve:function(){ seen = COMBOS.map(function(c){ return c[0]; }); Act.keep('conjugateLab_v', seen.slice()); Act.done('conjugateLab', true); }});
+})();
+
+/* ---------- start-up: reconcile aggregate activities, then paint the resistance overlay ---------- */
+if(syncChains()) saveState();
+refreshLenses();
+
+/* WELCOME_ICONS and initWelcome() now come from shared/welcome.js,
+   loaded above. Call it once here, at the very end of this script,
+   now that every activity above it has been built. */
+initWelcome();   /* draws icons, fills live counts, wires the Start buttons */
+
+</script>
+<script src="shared/engine.js"></script>
+</body>
+</html>

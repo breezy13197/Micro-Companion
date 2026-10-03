@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bacteria I · Introduction — PHA3109 Study Companion</title>
+<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
+<style>
+/* ============================================================
+   THEME — Bacteria I companion
+   Only this page's look. shared/styles.css is untouched.
+   Meaning of the colors on this page:
+     navy   = this companion's primary (buttons, current section)
+     gold   = highlight (hero accents, stat icons, "predict" boxes)
+     green  = correct / complete
+     rose   = incorrect / needs review
+   ============================================================ */
+:root{
+  --navy:#0F2A6B; --navy-deep:#0A1D4E; --royal:#1E4FCC;
+  --gold:#F5B82E; --gold-deep:#D99A0B; --gold-soft:#FFF4D6; --gold-ink:#7A5200;
+
+  /* the "primary" family every shared component reads */
+  --green:#173F9A; --green-bright:#2F62D9; --green-soft:#E8EEFC; --green-line:#B9C8F0;
+  --amber:#7A5200; --amber-soft:#FFF4D6;
+
+  /* correct / complete keep a true green, so navy never reads as "right" */
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-line:#BFE6D4; --ok-ink:#1C7554;
+
+  /* biology colors used in figures */
+  --gpos:#5B3D9E; --gpos-soft:#E9E2F7;
+  --gneg:#E0668C; --gneg-soft:#FCE6EE;
+  --pg:#E0A010;
+  --mem:#2E7DA8;
+
+  --ink:#14203F; --ink-mid:#42506E; --ink-soft:#72809C;
+  --page:#F3F6FC; --line:#E0E7F3;
+  --shadow:0 2px 16px rgba(15,42,107,.09);
+  --navy-ink:#12318A;
+
+  /* welcome page + sidebar + section tokens (companion-architecture.md §15-17)
+     — mapped straight from this companion's own navy/gold colors above,
+     so the shared kit reproduces the same look this page already had */
+  --w-deep:var(--navy-deep); --w-band:var(--navy); --w-lift:var(--royal);
+  --w-hero-1:#EAF1FF; --w-hero-2:#F8FAFF; --w-hero-3:#FFF6DC;
+  --w-hl:var(--gold); --w-hl-hover:var(--gold-deep); --w-hl-ink:var(--gold-ink); --w-hl-strong:var(--royal); --w-on-hl:#1B2A57;
+  --w-hl-soft:var(--gold-soft);
+  --w-art-1:#EAF1FF; --w-art-2:#FFF6DC;
+  --w-check:var(--royal);
+  --w-kp-bg:#F6F8FE;
+  --w-shadow-rgb:15,42,107;
+  --w-t1-bg:#E4E9FB; --w-t1-fg:#2B48B8;
+  --w-t2-bg:#E0F3EB; --w-t2-fg:#1C8A62;
+  --w-t3-bg:#FDE9DF; --w-t3-fg:#C8551F;
+  --w-t4-bg:#EDE6FA; --w-t4-fg:#6A47C4;
+  --w-t5-bg:#DFF1F8; --w-t5-fg:#1D7FA6;
+}
+body{
+  background:
+    radial-gradient(900px 420px at 92% -8%, #E4ECFF 0%, rgba(228,236,255,0) 62%),
+    radial-gradient(760px 380px at 2% -4%, #FFF3D0 0%, rgba(255,243,208,0) 58%),
+    var(--page);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{color:var(--ink)}
+h2{letter-spacing:-.015em}
+
+/* --- shared components, re-inked from green to navy / ok-green ---
+   (brand-mark and the module-title wrap rule now come from shared/shell.css,
+   which reads the --w-* tokens above and reproduces the same look) */
+.mod-head.current{background:var(--green-soft);color:var(--navy-ink)}
+.mod-head.current .mod-badge{background:#fff;color:var(--navy-ink)}
+.mod-head .mod-badge.done{background:var(--ok-soft);color:var(--ok-ink)}
+.sub button.current{background:var(--green-soft);color:var(--navy-ink)}
+.sub button.done .dot{background:var(--ok)}
+.sub button.current .dot{background:var(--royal)}
+.ring-wrap{background:var(--green-soft)}
+.ring-num{color:var(--navy-ink)}
+.ring-cap{color:var(--ink-mid)}
+.btn:hover{background:var(--navy-deep)}
+.btn.ghost.on{background:var(--green-soft);border-color:var(--green-line);color:var(--navy-ink)}
+.opt.sel{color:var(--navy-ink)}
+.opt.reveal{border-color:var(--ok);color:var(--ok-ink)}
+.opt.sel.bad{background:var(--rose-soft)}
+.dnd-pill{color:var(--navy-ink)}
+.dnd-ghost{color:var(--navy-ink)}
+.dnd-row.correct{border-color:var(--ok);background:var(--ok-soft)}
+.dnd-row.correct .dnd-slot{border-color:var(--ok)}
+.choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback{border-left-color:var(--ok)}
+.feedback.miss{border-left-color:var(--rose)}
+.apply{background:var(--green-soft)}
+.apply .tag{background:#D3DEFA;color:var(--navy-ink)}
+.predict .tag{background:#FBE3A6;color:var(--gold-ink)}
+.mod-badge.done,.home-num.done{background:var(--ok-soft);color:var(--ok-ink)}
+.home-status.done{color:var(--ok-ink)}
+.s-strong{color:var(--ok-ink)}
+.lock-dot.done{background:var(--ok)}
+.fc-front{background:linear-gradient(140deg,#EEF3FF,#FFF6DE);border:1px solid var(--green-line)}
+.score-hero{background:linear-gradient(135deg,var(--royal),var(--navy))}
+.score-hero .big{color:var(--gold)}
+.reset:hover{color:var(--rose)}
+.back-to-hub{color:var(--royal)}
+input[type=range]{background:linear-gradient(90deg,var(--green-line),var(--royal))}
+input[type=range]::-webkit-slider-thumb{border-color:var(--navy)}
+input[type=range]::-moz-range-thumb{border-color:var(--navy)}
+
+/* --- eyebrow/kicker, lede, and keypoints now come from shared/sections.css --- */
+.box.clinical{background:#EFEBFC}
+
+/* ---------- HERO, STAT BAND, MODULE CARDS, WHY/HOW, CTA BANNER,
+   MODULE BANNER, and the hands-on card marker now all come from
+   shared/welcome.css, shared/shell.css and shared/sections.css.
+   These few rules are kept because they use a color genuinely
+   different from what the shared token maps to below. ---------- */
+.btn.outline{background:#fff;color:var(--navy);border:1.5px solid var(--green-line)}
+.btn.outline:hover{background:var(--green-soft);color:var(--navy-deep)}
+.mod-card .go{color:var(--royal)}
+.badge-gold{position:absolute;right:16px;top:16px;background:var(--gold);color:#1B2A57;border-radius:12px;padding:9px 14px;
+  font-weight:800;line-height:1.1;text-align:center;box-shadow:0 6px 16px rgba(217,154,11,.35)}
+.badge-gold small{display:block;font-size:.62rem;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- custom activity pieces ---------- */
+.lab-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
+.seg button{border:0;background:transparent;padding:8px 15px;font-size:.86rem;color:var(--ink-mid)}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button.on{background:var(--navy);color:#fff}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.stage-name{font-size:1.2rem;font-weight:750;color:var(--navy);min-height:1.6em}
+.meter{height:12px;border-radius:99px;background:#E7ECF6;overflow:hidden;margin:6px 0 2px}
+.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--ok));width:0;transition:width .4s}
+.reagents{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.reagent{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px 8px 8px;font-weight:650;font-size:.9rem;color:var(--ink)}
+.reagent i{width:26px;height:34px;border-radius:6px 6px 9px 9px;display:block;border:2px solid rgba(20,32,63,.25)}
+.reagent:hover:not(:disabled){border-color:var(--royal)}
+.reagent.used{background:var(--ok-soft);border-color:var(--ok)}
+.reagent:disabled{cursor:default;opacity:.85}
+.report{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.sir{font-weight:800;font-size:1.05rem;border-radius:999px;padding:8px 20px;color:#fff;min-width:140px;text-align:center}
+.sir.S{background:var(--ok)}.sir.I{background:var(--gold);color:#1B2A57}.sir.R{background:var(--rose)}
+.scroll-x{overflow-x:auto}
+
+@keyframes dvPop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+.dv-new{animation:dvPop .45s ease both;transform-box:fill-box;transform-origin:center}
+
+/* figure text inside SVG uses the page font */
+.figure svg text{font-family:var(--font)}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5.2"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1"/></svg></div>
+      <div><div class="brand-title">Bacteria I &middot; Introduction</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="18" fill="none" stroke="#D5DEF5" stroke-width="5"/>
+        <circle id="ringFill" cx="22" cy="22" r="18" fill="none" stroke="#F5B82E" stroke-width="5"
+                stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113"
+                transform="rotate(-90 22 22)"/>
+      </svg>
+      <div><div class="ring-num" id="ringPct">0%</div>
+      <div class="ring-cap">of the companion<br>complete</div></div>
+    </div>
+    <button class="reset" id="resetBtn">Clear my saved progress</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="topTitle">Welcome</h1><div class="meta" id="topMeta">Bacteria I &middot; PHA3109 Microbiology &amp; Immunology</div></div>
+      <div class="pill" id="topPill">Not started</div>
+    </div>
+
+
+<section class="section welcome" data-key="start">
+  <div class="hero">
+    <div>
+      <div class="kicker">PHA3109 &middot; Microbiology &amp; Immunology</div>
+      <h2 class="hero-title">Know the microbe.<span>Choose the drug.</span></h2>
+      <p>Bacteria I &mdash; Introduction. Predict, build, sort, and diagnose your way through the material. The lecture supplies the content; this companion supplies the practice.</p>
+      <div class="btn-row">
+        <button class="btn lg" data-go="m1home">Start Module 1</button>
+        <button class="btn lg outline" data-go="flashcards">Try the flashcards</button>
+      </div>
+      <div class="hero-note"><span class="hero-dots"><i style="background:#5B3D9E"></i><i style="background:#E0668C"></i><i style="background:#F5B82E"></i></span>Built around the five questions a pharmacist asks about every microbe</div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 400 400" role="img" aria-label="Illustration of bacteria under a microscope: a chain of round cells, a cluster, pink rods, and a spiral">
+  <defs>
+    <radialGradient id="hg" cx="45%" cy="35%" r="75%"><stop offset="0" stop-color="#2F5FD6"/><stop offset="1" stop-color="#0F2A6B"/></radialGradient>
+  </defs>
+  <circle cx="200" cy="205" r="184" fill="none" stroke="#F5B82E" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round"/>
+  <circle cx="200" cy="205" r="152" fill="url(#hg)"/>
+  <circle cx="200" cy="205" r="152" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3"/>
+  <g fill="#A58BEA" stroke="#D6C9F8" stroke-width="2">
+    <circle cx="104" cy="228" r="12"/><circle cx="121" cy="217" r="12"/><circle cx="139" cy="208" r="12"/>
+    <circle cx="158" cy="202" r="12"/><circle cx="177" cy="200" r="12"/><circle cx="196" cy="202" r="12"/>
+  </g>
+  <g fill="#A58BEA" stroke="#D6C9F8" stroke-width="2">
+    <circle cx="262" cy="150" r="12"/><circle cx="282" cy="143" r="12"/><circle cx="273" cy="168" r="12"/>
+    <circle cx="294" cy="163" r="12"/><circle cx="256" cy="131" r="12"/><circle cx="286" cy="185" r="12"/>
+  </g>
+  <g fill="#F28FAE" stroke="#FAC7D6" stroke-width="2">
+    <rect x="132" y="262" width="52" height="20" rx="10" transform="rotate(-18 158 272)"/>
+    <rect x="196" y="282" width="52" height="20" rx="10" transform="rotate(12 222 292)"/>
+    <rect x="244" y="240" width="52" height="20" rx="10" transform="rotate(-40 270 250)"/>
+    <rect x="150" y="304" width="52" height="20" rx="10" transform="rotate(5 176 314)"/>
+  </g>
+  <path d="M118 140 q9 -20 18 0 t18 0 t18 0 t18 0 t18 0" fill="none" stroke="#F5B82E" stroke-width="4.5" stroke-linecap="round" transform="rotate(-8 170 140)"/>
+  <circle cx="322" cy="102" r="6" fill="#F5B82E"/><circle cx="62" cy="290" r="5" fill="#1E4FCC"/><circle cx="352" cy="262" r="4" fill="#F5B82E"/>
+  <g font-family="inherit" font-weight="700" font-size="13">
+    <rect x="10" y="98" width="92" height="30" rx="15" fill="#fff"/><circle cx="28" cy="113" r="6" fill="#5B3D9E"/><text x="42" y="118" fill="#14203F">Gram +</text>
+    <rect x="288" y="318" width="96" height="30" rx="15" fill="#fff"/><circle cx="306" cy="333" r="6" fill="#E0668C"/><text x="320" y="338" fill="#14203F">Gram &#8722;</text>
+  </g>
+</svg>
+      <div class="hero-badge"><b data-stat="modules">5</b><span>Modules</span></div>
+    </div>
+  </div>
+
+  <div class="statband" aria-label="What is inside this companion">
+    <div class="stat"><span data-ico="layers"></span><div><b data-stat="modules">5</b><span>Modules</span></div></div>
+    <div class="stat"><span data-ico="spark"></span><div><b data-stat="activities">21</b><span>Hands-on activities</span></div></div>
+    <div class="stat"><span data-ico="question"></span><div><b data-stat="questions">77</b><span>Quiz questions</span></div></div>
+    <div class="stat"><span data-ico="cards"></span><div><b data-stat="cards">47</b><span>Flashcards</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="sect-head"><div><div class="eyebrow">Your path</div><h2>Five modules, one pharmacist&rsquo;s question each</h2></div></div>
+    <div class="mod-cards">
+      <button class="mod-card" data-go="m1home">
+        <span class="chip-ico tone-1" data-ico="microbe"></span>
+        <h3>What makes a bacterium a bacterium?</h3><p>Is it living? What is unique about it?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m2home">
+        <span class="chip-ico tone-2" data-ico="layers"></span>
+        <h3>The envelope and selective toxicity</h3><p>How do I treat it without harming the patient?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m3home">
+        <span class="chip-ico tone-3" data-ico="dna"></span>
+        <h3>Growth, survival, genetics, and resistance</h3><p>How does it survive, adapt, and resist?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m4home">
+        <span class="chip-ico tone-4" data-ico="shield"></span>
+        <h3>From colonization to disease</h3><p>How does it cause disease, and what happens to the patient?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m5home">
+        <span class="chip-ico tone-5" data-ico="flask"></span>
+        <h3>From specimen to treatment decision</h3><p>What does the laboratory result mean?</p><span class="go">Open module &rarr;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="why">
+      <div class="why-art"><svg viewBox="0 0 420 230" role="img" aria-label="Three steps: predict, interact, explain">
+  <g fill="none" stroke="#B9C8F0" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round">
+    <path d="M118 96 C 140 60, 170 60, 190 92"/><path d="M232 92 C 252 60, 282 60, 302 96"/>
+  </g>
+  <g>
+    <circle cx="80" cy="112" r="46" fill="#fff" stroke="#F5B82E" stroke-width="4"/>
+    <text x="80" y="122" text-anchor="middle" font-size="34" font-weight="800" fill="#0F2A6B">?</text>
+    <text x="80" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#14203F">1 Predict</text>
+    <circle cx="210" cy="112" r="46" fill="#0F2A6B"/>
+    <path d="M196 96 v34 l9 -8 6 13 7 -3 -6 -13 12 -1 z" fill="#F5B82E"/>
+    <text x="210" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#14203F">2 Interact</text>
+    <circle cx="340" cy="112" r="46" fill="#fff" stroke="#2FA97A" stroke-width="4"/>
+    <path d="M320 113 l14 14 26 -30" fill="none" stroke="#2FA97A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="340" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#14203F">3 Explain</text>
+  </g>
+</svg><div class="badge-gold"><small>Every section</small>Practice first</div></div>
+      <div>
+        <div class="eyebrow">How it works</div>
+        <h2>Not a repeat of the slides</h2>
+        <p>You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
+        <ul class="checks">
+          <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
+          <li><span><b>Interact.</b> Build a wall, run a Gram stain, race a resistant cell, or sort a case, then watch what your choices do.</span></li>
+          <li><span><b>Explain.</b> Every answer comes with the reasoning, not only right or wrong.</span></li>
+          <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
+          <li><span><b>Finish strong.</b> The Final Mastery Exam unlocks once all five modules are complete.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-ico" data-ico="book"></div>
+    <div class="cta-body"><h2>Ready to begin?</h2><p>Start with what separates a bacterium from every other kind of microbe. Your progress saves in this browser as you go.</p></div>
+    <button class="btn hl lg" data-go="m1home">Start Module 1 &rarr;</button>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m1home">
+  <div class="modhero">
+    <div class="kicker">Module 1</div>
+    <h2>What makes a bacterium a bacterium?</h2>
+    <p>Before a pharmacist can think about a drug, the first job is to place the microbe: what kind of agent is it, how does it differ from a human cell, and what does its outside look like?</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Is this microbe living or non-living, and what is unique about it?</span></div>
+    <div class="ghost-num" aria-hidden="true">1</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Distinguish bacteria from viruses, fungi, protozoa, helminths, and prions by cellular organization and replication strategy.</li><li>Name the features that separate a bacterial cell from a human cell, and explain why those differences guide drug design.</li><li>Describe bacterial shapes and arrangements, and the roles of the capsule, slime layer, pili, and flagella.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m1s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Microbes at a glance</span><span class="home-desc">Match six kinds of infectious agent to their defining clues.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Bacterial vs. human cells</span><span class="home-desc">Sort features into bacterial, human, or shared.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Shape and arrangement</span><span class="home-desc">Divide cells yourself and watch chains, pairs, and clusters form.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Outside the cell wall</span><span class="home-desc">Open every part of a bacterial cell to see what it does.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 1 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s1">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 1</div>
+    <h2>Microbes at a glance</h2>
+    <p class="lede">Every infectious agent raises the same first questions: what is it made of, and how does it replicate? The answers decide which drugs can work at all, because a drug cannot hit a structure the microbe does not have.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Cells or not: prions and viruses are acellular, bacteria are prokaryotes, and fungi, protozoa, and helminths are eukaryotes.</li><li>Ribosomes give a quick divider: 70S in bacteria, 80S in eukaryotes, and none in prions or viruses.</li><li>Replication differs too: templated protein conversion, use of host machinery, binary fission, budding or mitosis, or complex life cycles.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match each clue to its microbe</h2>
+    <p class="try-note">Drag each label onto the description it fits. On a phone or with a keyboard, tap a label first, then tap the row it belongs to.</p>
+    <div id="act-microbeMatch"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c1a"><p>An infectious agent made of protein alone, with no DNA or RNA, spreads by converting normal host protein into a misfolded form. Which category is it?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1b"><p>Which pair of categories has a true, membrane-bound nucleus and 80S ribosomes?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1c"><p>Which replication strategy is typical of helminths?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Start with two questions: is it living, and what is unique about it? A prion offers no ribosome, wall, or nucleic acid for a drug to hit, which is why those two questions come before any thought about treatment.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s2">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 2</div>
+    <h2>Bacterial vs. human cells</h2>
+    <p class="lede">Bacterial and human cells share the basics, yet differ in the places drugs can exploit. Those differences aid in designing therapy and in anticipating side effects.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>No membrane around the DNA, no mitosis, and no histone-packaged nucleosomes in bacteria.</li><li>No mitochondria or lysosomes in bacteria, and 70S rather than 80S cytosolic ribosomes.</li><li>Peptidoglycan is present in most bacteria and absent from human cells. Mycoplasma lack a wall, and some bacteria carry more than one chromosome.</li></ul></div>
+    <div class="figure">
+  <svg viewBox="0 0 640 290" role="img" aria-label="A bacterial cell beside a human cell. The bacterial cell has a peptidoglycan wall, a nucleoid without a membrane, and 70S ribosomes. The human cell has a membrane-bound nucleus, mitochondria, and 80S ribosomes.">
+    <text x="130" y="24" text-anchor="middle" font-weight="750" font-size="15" fill="#14203F">Bacterial cell (prokaryote)</text>
+    <text x="490" y="24" text-anchor="middle" font-weight="750" font-size="15" fill="#14203F">Human cell (eukaryote)</text>
+    <!-- bacterium -->
+    <rect x="30" y="58" width="200" height="120" rx="60" fill="#FFF4D6" stroke="#E0A010" stroke-width="6"/>
+    <rect x="41" y="69" width="178" height="98" rx="49" fill="#F4F8FF" stroke="#2E7DA8" stroke-width="3"/>
+    <path d="M84 118 q10 -26 20 0 t20 0 t20 0 t20 0" fill="none" stroke="#5B3D9E" stroke-width="3.5" stroke-linecap="round"/>
+    <g fill="#14203F"><circle cx="70" cy="95" r="3.5"/><circle cx="92" cy="146" r="3.5"/><circle cx="150" cy="92" r="3.5"/><circle cx="182" cy="140" r="3.5"/><circle cx="196" cy="102" r="3.5"/><circle cx="118" cy="152" r="3.5"/><circle cx="60" cy="130" r="3.5"/></g>
+    <g font-size="12.5" fill="#42506E">
+      <rect x="34" y="204" width="14" height="10" rx="3" fill="#FFF4D6" stroke="#E0A010" stroke-width="2.5"/><text x="56" y="213">Peptidoglycan wall (in most)</text>
+      <path d="M34 232 q4 -9 8 0 t8 0" fill="none" stroke="#5B3D9E" stroke-width="2.5"/><text x="56" y="235">Nucleoid, not enclosed by a membrane</text>
+      <circle cx="41" cy="256" r="3.5" fill="#14203F"/><text x="56" y="260">70S ribosomes</text>
+    </g>
+    <!-- human -->
+    <g transform="translate(490 112) scale(.86) translate(-490 -118)">
+    <circle cx="490" cy="118" r="88" fill="#FDF4F6" stroke="#D4536B" stroke-width="4"/>
+    <circle cx="480" cy="112" r="34" fill="#E9E2F7" stroke="#5B3D9E" stroke-width="3"/>
+    <g stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M462 108 q6 -8 12 0 t12 0 t12 0"/><path d="M462 122 q6 -8 12 0 t12 0 t12 0"/></g>
+    <g fill="#F8D6A8" stroke="#C8781A" stroke-width="2"><ellipse cx="545" cy="150" rx="20" ry="11" transform="rotate(-30 545 150)"/><ellipse cx="430" cy="160" rx="18" ry="10" transform="rotate(20 430 160)"/><ellipse cx="520" cy="70" rx="16" ry="9" transform="rotate(35 520 70)"/></g>
+    <g fill="#14203F"><circle cx="440" cy="92" r="4.5"/><circle cx="470" cy="168" r="4.5"/><circle cx="530" cy="112" r="4.5"/><circle cx="497" cy="160" r="4.5"/><circle cx="446" cy="130" r="4.5"/></g>
+    </g>
+    <g font-size="12.5" fill="#42506E">
+      <circle cx="358" cy="206" r="7" fill="#E9E2F7" stroke="#5B3D9E" stroke-width="2"/><text x="373" y="210">Nucleus with histone-packaged DNA</text>
+      <ellipse cx="358" cy="232" rx="8" ry="5" fill="#F8D6A8" stroke="#C8781A" stroke-width="2"/><text x="373" y="236">Mitochondria and other organelles</text>
+      <circle cx="358" cy="258" r="4.5" fill="#14203F"/><text x="373" y="262">80S cytosolic ribosomes</text>
+    </g>
+  </svg>
+  <p class="caption">The two cells share a plasma membrane, DNA, and ribosomes. The differences are where drugs can aim.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Bacterial, human, or shared?</h2>
+    <p class="try-note">Choose one answer for every feature, then check. Each row explains its answer once you have checked.</p>
+    <div id="act-cellSort"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c2a"><p>A drug is designed to fit the bacterial 70S ribosome. How strongly is it expected to bind human cytosolic ribosomes?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2b"><p>Which structure marks a cell as eukaryotic rather than bacterial?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2c"><p>Which typical bacterial feature is absent from Mycoplasma?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A shared structure predicts a shared risk. Both cell types have a plasma membrane, so a drug that attacks membranes has to be built to prefer the bacterial version, or it will injure the patient as well.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s3">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 3</div>
+    <h2>Shape and arrangement</h2>
+    <p class="lede">Shape comes from the cell wall. Arrangement comes from how cells stay together after they divide. Together they are the first identification clues on a Gram stain report.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Coccus is a sphere, bacillus is a rod, and spirochete is a spiral. The word &ldquo;bacillus&rdquo; can also be the genus Bacillus, so context tells you which is meant.</li><li>Prefixes describe arrangement: diplo- for pairs, strepto- for chains, and staphylo- for clusters.</li><li>Some bacteria are pleomorphic, meaning their shape varies.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The division lab</h2>
+    <p class="try-note">Say the name out loud before you look. Choose a shape and a division pattern, then press Divide up to four times. Try all three cocci arrangements to finish.</p>
+    <div id="act-divideLab"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c3a"><p>Round cells stay attached after dividing and form chains. What are they called?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c3b"><p>Which structure dictates a bacterium&rsquo;s shape?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A Gram stain report is written in exactly this vocabulary, for example &ldquo;Gram-positive cocci in clusters.&rdquo; Reading that phrase fluently is the first step toward an empiric choice.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s4">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 4</div>
+    <h2>Outside the cell wall</h2>
+    <p class="lede">Everything outside the wall decides how a bacterium attaches, moves, and hides from the immune system. Open each part of the cell below to see what it does and why a pharmacist cares.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Glycocalyx is the broad term for the polymer layer outside the wall. A capsule is organized and tightly attached; a slime layer is diffuse and loosely attached.</li><li>The glycocalyx helps protect against desiccation, toxins, and phagocytosis.</li><li>Pili attach to host surfaces (adhesion), and flagella provide motility. Polysaccharides and proteins on the surface can serve as diagnostic antigens.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Explore a bacterial cell</h2>
+    <p class="try-note">Select any part of the diagram, or use the buttons under it. Open every part to finish.</p>
+    <div id="act-cellExplore"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c4a"><p>Which layer outside the wall is organized and tightly attached to it?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4b"><p>A mutant bacterium loses its pili. Which change is expected?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4c"><p>What role can capsule polysaccharides on the surface play in medicine?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Capsule polysaccharides do double duty. The structure that shields the bacterium from phagocytes also gives the immune system something to recognize, which is why capsular polysaccharides are used as antigens in bacterial vaccines.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1quiz">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Mastery check</div>
+    <h2>Module 1 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 1 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m1"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m2home">
+  <div class="modhero">
+    <div class="kicker">Module 2</div>
+    <h2>The envelope and selective toxicity</h2>
+    <p>The bacterial envelope explains three things at once: how a Gram stain turns out, which drugs can get in, and why so many antibiotics spare the patient. This module builds that link.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do I treat the infection without harming the patient?</span></div>
+    <div class="ghost-num" aria-hidden="true">2</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Explain how peptidoglycan is built, and why blocking its cross-links weakens the wall.</li><li>Compare Gram-positive and Gram-negative envelopes, and predict a Gram stain result from the structure.</li><li>Recognize organisms the Gram stain cannot classify, and name the alternative approach.</li><li>Match each antimicrobial class to the bacterial target it exploits, and explain why that target keeps the patient safe.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m2s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Peptidoglycan: the wall</span><span class="home-desc">Build a wall link by link, then test it under pressure with and without a beta-lactam.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Gram-positive vs. Gram-negative</span><span class="home-desc">Sort envelope features into the design they belong to.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">The Gram stain</span><span class="home-desc">Run a Gram stain, reagent by reagent, and watch two cell types diverge.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">When Gram staining falls short</span><span class="home-desc">Match six problem organisms to the approach that works instead.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">Targeting the microbe, not the patient</span><span class="home-desc">Predict how selective each drug target is, then see why.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 2 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s1">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 1</div>
+    <h2>Peptidoglycan: the wall</h2>
+    <p class="lede">Peptidoglycan is the reason wall-targeting drugs are among the safest antibiotics: human cells do not make it. Its strength comes from cross-links, and cross-links are exactly what beta-lactams block.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Glycan chains alternate two sugars, NAG (N-acetylglucosamine) and NAM (N-acetylmuramic acid), joined by &beta;-1,4 bonds.</li><li>Peptide bridges of about four to five amino acids cross-link the chains. Their sequence and length differ between bacteria.</li><li>Beta-lactam antibiotics block the transpeptidation (cross-linking) step.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Build a wall, then test it</h2>
+    <p class="try-note">Part 1: click the gaps between strands to let the transpeptidase form cross-links, then press <b>Test the wall</b>. Part 2: add a beta-lactam, try to build again, and test once more. Complete both tests to finish.</p>
+    <div id="act-wallBuild"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c5a"><p>Beta-lactam antibiotics block which step in peptidoglycan assembly?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c5b"><p>A growing bacterium cannot cross-link its peptidoglycan. What happens to the cell?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Beta-lactams injure dividing bacteria yet spare human cells, because the step they block does not exist in the patient. A growing cell that is still building wall is the one most exposed when cross-linking stops.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s2">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 2</div>
+    <h2>Gram-positive vs. Gram-negative</h2>
+    <p class="lede">Two envelope designs explain Gram stain results, which drugs can enter, and where endotoxin is found. Compare them below, then sort features by design.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Gram-positive: a thick peptidoglycan wall that also contains teichoic acids. The exact thickness varies by species.</li><li>Gram-negative: a thin peptidoglycan layer plus an outer membrane that carries lipopolysaccharide (LPS).</li><li>Some bacteria fit neither class cleanly: Mycobacterium has an outer layer rich in mycolic acids.</li></ul></div>
+    <div class="figure">
+  <svg viewBox="0 0 640 300" role="img" aria-label="Side-by-side Gram-positive and Gram-negative envelopes. Gram-positive: thick peptidoglycan with teichoic acids over the cytoplasmic membrane. Gram-negative: outer membrane with LPS and porins, a periplasm with thin peptidoglycan, and the cytoplasmic membrane.">
+    <text x="150" y="20" text-anchor="middle" font-weight="750" font-size="15" fill="#5B3D9E">Gram-positive</text>
+    <text x="490" y="20" text-anchor="middle" font-weight="750" font-size="15" fill="#C2477A">Gram-negative</text>
+    <text x="14" y="40" font-size="11" font-weight="700" fill="#72809C" letter-spacing="1">OUTSIDE</text>
+    <text x="14" y="292" font-size="11" font-weight="700" fill="#72809C" letter-spacing="1">INSIDE</text>
+
+    <!-- Gram-positive -->
+    <rect x="20" y="48" width="260" height="62" rx="6" fill="#FFEBB0" stroke="#E0A010" stroke-width="2"/>
+    <path d="M43.3 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M70.0 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M96.7 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M123.3 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M150.0 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M176.7 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M203.3 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M230.0 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M256.7 54 q6 8 0 16 t0 16 t0 12" stroke="#5B3D9E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <rect x="68" y="66" width="164" height="26" rx="13" fill="#fff" fill-opacity=".92"/>
+    <text x="150" y="83" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14203F">Thick peptidoglycan</text>
+    <text x="150" y="126" text-anchor="middle" font-size="11.5" fill="#5B3D9E" font-weight="700">teichoic acids run through the wall</text>
+    <g><line x1="25.0" y1="146" x2="25.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="25.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="25.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="35.0" y1="146" x2="35.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="35.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="35.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="45.0" y1="146" x2="45.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="45.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="45.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="55.0" y1="146" x2="55.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="55.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="55.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="65.0" y1="146" x2="65.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="65.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="65.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="75.0" y1="146" x2="75.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="75.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="75.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="85.0" y1="146" x2="85.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="85.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="85.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="95.0" y1="146" x2="95.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="95.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="95.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="105.0" y1="146" x2="105.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="105.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="105.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="115.0" y1="146" x2="115.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="115.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="115.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="125.0" y1="146" x2="125.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="125.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="125.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="135.0" y1="146" x2="135.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="135.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="135.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="145.0" y1="146" x2="145.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="145.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="145.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="155.0" y1="146" x2="155.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="155.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="155.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="165.0" y1="146" x2="165.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="165.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="165.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="175.0" y1="146" x2="175.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="175.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="175.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="185.0" y1="146" x2="185.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="185.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="185.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="195.0" y1="146" x2="195.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="195.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="195.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="205.0" y1="146" x2="205.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="205.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="205.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="215.0" y1="146" x2="215.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="215.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="215.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="225.0" y1="146" x2="225.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="225.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="225.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="235.0" y1="146" x2="235.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="235.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="235.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="245.0" y1="146" x2="245.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="245.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="245.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="255.0" y1="146" x2="255.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="255.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="255.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="265.0" y1="146" x2="265.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="265.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="265.0" cy="166" r="4.2" fill="#2E7DA8"/><line x1="275.0" y1="146" x2="275.0" y2="164" stroke="#9CC4DB" stroke-width="2"/><circle cx="275.0" cy="144" r="4.2" fill="#2E7DA8"/><circle cx="275.0" cy="166" r="4.2" fill="#2E7DA8"/></g>
+    <text x="150" y="196" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2E7DA8">Cytoplasmic membrane</text>
+    <rect x="20" y="212" width="260" height="60" rx="6" fill="#F4F8FF" stroke="#D5DEF5"/>
+    <text x="150" y="247" text-anchor="middle" font-size="12.5" fill="#72809C">Cytoplasm</text>
+
+    <!-- Gram-negative -->
+    <path d="M370.8 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M392.5 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M414.2 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M435.8 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M457.5 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M479.2 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M500.8 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M522.5 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M544.2 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M565.8 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M587.5 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M609.2 56 v-10 m0 0 l-4 -7 m4 7 l4 -7" stroke="#E0668C" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g><line x1="365.0" y1="62" x2="365.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="365.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="365.0" cy="82" r="4.2" fill="#C2477A"/><line x1="375.0" y1="62" x2="375.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="375.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="375.0" cy="82" r="4.2" fill="#C2477A"/><line x1="385.0" y1="62" x2="385.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="385.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="385.0" cy="82" r="4.2" fill="#C2477A"/><line x1="395.0" y1="62" x2="395.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="395.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="395.0" cy="82" r="4.2" fill="#C2477A"/><line x1="405.0" y1="62" x2="405.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="405.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="405.0" cy="82" r="4.2" fill="#C2477A"/><line x1="415.0" y1="62" x2="415.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="415.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="415.0" cy="82" r="4.2" fill="#C2477A"/><line x1="425.0" y1="62" x2="425.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="425.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="425.0" cy="82" r="4.2" fill="#C2477A"/><line x1="435.0" y1="62" x2="435.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="435.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="435.0" cy="82" r="4.2" fill="#C2477A"/><line x1="445.0" y1="62" x2="445.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="445.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="445.0" cy="82" r="4.2" fill="#C2477A"/><line x1="455.0" y1="62" x2="455.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="455.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="455.0" cy="82" r="4.2" fill="#C2477A"/><line x1="465.0" y1="62" x2="465.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="465.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="465.0" cy="82" r="4.2" fill="#C2477A"/><line x1="475.0" y1="62" x2="475.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="475.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="475.0" cy="82" r="4.2" fill="#C2477A"/><line x1="485.0" y1="62" x2="485.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="485.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="485.0" cy="82" r="4.2" fill="#C2477A"/><line x1="495.0" y1="62" x2="495.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="495.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="495.0" cy="82" r="4.2" fill="#C2477A"/><line x1="505.0" y1="62" x2="505.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="505.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="505.0" cy="82" r="4.2" fill="#C2477A"/><line x1="515.0" y1="62" x2="515.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="515.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="515.0" cy="82" r="4.2" fill="#C2477A"/><line x1="525.0" y1="62" x2="525.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="525.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="525.0" cy="82" r="4.2" fill="#C2477A"/><line x1="535.0" y1="62" x2="535.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="535.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="535.0" cy="82" r="4.2" fill="#C2477A"/><line x1="545.0" y1="62" x2="545.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="545.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="545.0" cy="82" r="4.2" fill="#C2477A"/><line x1="555.0" y1="62" x2="555.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="555.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="555.0" cy="82" r="4.2" fill="#C2477A"/><line x1="565.0" y1="62" x2="565.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="565.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="565.0" cy="82" r="4.2" fill="#C2477A"/><line x1="575.0" y1="62" x2="575.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="575.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="575.0" cy="82" r="4.2" fill="#C2477A"/><line x1="585.0" y1="62" x2="585.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="585.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="585.0" cy="82" r="4.2" fill="#C2477A"/><line x1="595.0" y1="62" x2="595.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="595.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="595.0" cy="82" r="4.2" fill="#C2477A"/><line x1="605.0" y1="62" x2="605.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="605.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="605.0" cy="82" r="4.2" fill="#C2477A"/><line x1="615.0" y1="62" x2="615.0" y2="80" stroke="#EBB2C6" stroke-width="2"/><circle cx="615.0" cy="60" r="4.2" fill="#C2477A"/><circle cx="615.0" cy="82" r="4.2" fill="#C2477A"/></g>
+    <rect x="450" y="56" width="18" height="30" rx="4" fill="#fff" stroke="#14203F" stroke-width="1.6"/>
+    <rect x="530" y="56" width="18" height="30" rx="4" fill="#fff" stroke="#14203F" stroke-width="1.6"/>
+    <text x="490" y="106" text-anchor="middle" font-size="12.5" font-weight="700" fill="#C2477A">Outer membrane: LPS and porins</text>
+    <rect x="360" y="116" width="260" height="60" rx="6" fill="#F0EBFA" stroke="#D7CCF1"/>
+    <path d="M360 146 h260" stroke="#E0A010" stroke-width="6"/>
+    <rect x="410" y="127" width="160" height="38" rx="14" fill="#fff" fill-opacity=".9"/>
+    <text x="490" y="143" text-anchor="middle" font-size="12" font-weight="700" fill="#14203F">Periplasm with</text>
+    <text x="490" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#14203F">thin peptidoglycan</text>
+    <g><line x1="365.0" y1="190" x2="365.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="365.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="365.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="375.0" y1="190" x2="375.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="375.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="375.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="385.0" y1="190" x2="385.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="385.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="385.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="395.0" y1="190" x2="395.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="395.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="395.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="405.0" y1="190" x2="405.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="405.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="405.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="415.0" y1="190" x2="415.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="415.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="415.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="425.0" y1="190" x2="425.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="425.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="425.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="435.0" y1="190" x2="435.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="435.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="435.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="445.0" y1="190" x2="445.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="445.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="445.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="455.0" y1="190" x2="455.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="455.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="455.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="465.0" y1="190" x2="465.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="465.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="465.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="475.0" y1="190" x2="475.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="475.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="475.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="485.0" y1="190" x2="485.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="485.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="485.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="495.0" y1="190" x2="495.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="495.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="495.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="505.0" y1="190" x2="505.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="505.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="505.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="515.0" y1="190" x2="515.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="515.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="515.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="525.0" y1="190" x2="525.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="525.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="525.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="535.0" y1="190" x2="535.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="535.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="535.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="545.0" y1="190" x2="545.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="545.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="545.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="555.0" y1="190" x2="555.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="555.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="555.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="565.0" y1="190" x2="565.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="565.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="565.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="575.0" y1="190" x2="575.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="575.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="575.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="585.0" y1="190" x2="585.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="585.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="585.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="595.0" y1="190" x2="595.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="595.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="595.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="605.0" y1="190" x2="605.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="605.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="605.0" cy="210" r="4.2" fill="#2E7DA8"/><line x1="615.0" y1="190" x2="615.0" y2="208" stroke="#9CC4DB" stroke-width="2"/><circle cx="615.0" cy="188" r="4.2" fill="#2E7DA8"/><circle cx="615.0" cy="210" r="4.2" fill="#2E7DA8"/></g>
+    <text x="490" y="236" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2E7DA8">Cytoplasmic membrane</text>
+    <rect x="360" y="246" width="260" height="34" rx="6" fill="#F4F8FF" stroke="#D5DEF5"/>
+    <text x="490" y="268" text-anchor="middle" font-size="12.5" fill="#72809C">Cytoplasm</text>
+  </svg>
+  <p class="caption">Porins are channels in the outer membrane that admit small hydrophilic molecules, including some drugs. The thick wall of a Gram-positive cell carries no outer membrane.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Positive, negative, or both?</h2>
+    <p class="try-note">Choose an answer for every feature, then check. Each row explains itself once checked.</p>
+    <div id="act-envSort"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c6a"><p>Which sequence lists the layers of a Gram-negative envelope from the inside out?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6b"><p>Which structure limits entry of large hydrophilic drugs into Gram-negative cells?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6c"><p>Which component is embedded in the thick peptidoglycan of Gram-positive cells?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The outer membrane is a permeability barrier. Porins admit small hydrophilic molecules, but a large hydrophilic drug is largely kept out, which is a form of intrinsic resistance that no mutation created.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s3">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 3</div>
+    <h2>The Gram stain</h2>
+    <p class="lede">The Gram stain is a short chemical argument about wall structure. Watch what each reagent does to a thick-walled cell and a thin-walled cell with an outer membrane.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Gram-positive cells keep the crystal violet&ndash;iodine complex inside their thick peptidoglycan through the alcohol wash. Gram-negative cells lose it and take up the pink counterstain, safranin.</li><li>Gram-positive bacteria appear purple, and Gram-negative bacteria appear pink.</li><li>Interpretation combines the Gram reaction with morphology, arrangement, and specimen source.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Run the stain</h2>
+    <p class="try-note">Apply the four reagents in the correct order. The bottles are listed in random order. Before the alcohol goes on, you will be asked to predict the outcome.</p>
+    <div id="act-gramSim"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c7a"><p>Which cells retain the crystal violet&ndash;iodine complex after the alcohol wash, and why?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c7b"><p>What color are Gram-negative cells right after the alcohol wash, before safranin is added?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A Gram stain shapes initial (empiric) therapy while cultures incubate, but it reports only shape, size, arrangement, and Gram reaction. It does not name the species, and it does not report susceptibility.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s4">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 4</div>
+    <h2>When Gram staining falls short</h2>
+    <p class="lede">Gram stains are among the most informative tests for identifying bacteria, but several important organisms do not stain reliably. Each one has a reason and a workaround.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Reasons include excess wall lipid, organisms too thin to see, no cell wall, poor counterstain uptake, and life inside host cells.</li><li>The workaround depends on the reason: a different stain, a different microscope, more counterstain time, or a search for inclusion bodies.</li><li>Modern practice increasingly relies on NAAT, antigen, and other molecular methods alongside or instead of these microscopic approaches.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match the problem to the fix</h2>
+    <p class="try-note">Drag each approach onto the organism and reason it fits, or tap an approach first, then tap the row.</p>
+    <div id="act-exceptMatch"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c8a"><p>A Gram stain is attempted on Mycoplasma pneumoniae, which has no cell wall. What result is expected?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c8b"><p>Which approach is the alternative for Mycobacteria, whose lipid-rich wall resists Gram dyes?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When a Gram stain is unhelpful, that is a clue in itself. A specimen suspected of Mycobacterium, Treponema, or Legionella calls for a different laboratory approach, so the request has to say so.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s5">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 5</div>
+    <h2>Targeting the microbe, not the patient</h2>
+    <p class="lede">Selective toxicity is the guiding idea of antimicrobial therapy: harm the microbe while sparing the patient. The safest target is one that exists in the microbe and has no counterpart in the patient.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Peptidoglycan (unique to bacteria): beta-lactams and glycopeptides.</li><li>70S ribosomes (differ from human 80S): macrolides, tetracyclines, aminoglycosides.</li><li>Folate synthesis (bacteria make their own, humans take it in from the diet): sulfonamides and trimethoprim.</li><li>DNA gyrase and topoisomerase (bacterial enzymes): fluoroquinolones.</li><li>Bacterial membranes (structurally distinct from human membranes): daptomycin and polymyxins.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict, then reveal</h2>
+    <p class="try-note">Pick a target, predict what a drug aimed at it would do, and see the reasoning. Answer all seven to finish.</p>
+    <div id="act-targetProbe"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c9a"><p>A drug targets a structure that is absent from human cells. How selective is its toxicity, and why?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9b"><p>Which drug class binds the bacterial 70S ribosome?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9c"><p>Bacteria make their own folate while humans obtain it from the diet. Which drugs exploit this difference?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Ask the retrieval question the lecture ends on: why do beta-lactams generally harm bacteria more than human cells? The answer points to a target the patient lacks, or one that differs enough to be told apart.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2quiz">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Mastery check</div>
+    <h2>Module 2 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 2 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m2"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m3home">
+  <div class="modhero">
+    <div class="kicker">Module 3</div>
+    <h2>Growth, survival, genetics, and resistance</h2>
+    <p>Bacteria adapt quickly. This module follows an organism from the oxygen it needs, through the spores that let it wait out a disinfectant, to the DNA it swaps and the selection that turns one resistant cell into a resistant population.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How does this microbe survive and adapt, and what does that mean for how I treat it?</span></div>
+    <div class="ghost-num" aria-hidden="true">3</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Predict where an organism grows from its oxygen requirement, and name the enzymes that neutralize reactive oxygen species.</li><li>Explain why endospores change infection-control practice.</li><li>Distinguish transformation, transduction, conjugation, and transposition.</li><li>Explain how antimicrobial exposure selects for resistant cells that were already present.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m3s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Oxygen and where bacteria grow</span><span class="home-desc">Predict the growth pattern for each oxygen category, then see the tube.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Endospores</span><span class="home-desc">Work through a C. difficile ward case one decision at a time.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Moving DNA between bacteria</span><span class="home-desc">Step through transformation, transduction, and conjugation.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">How resistance takes over</span><span class="home-desc">Run repeated antibiotic doses and watch the population change.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 3 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s1">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 1</div>
+    <h2>Oxygen and where bacteria grow</h2>
+    <p class="lede">Oxygen requirement is a quick way to predict where an organism can live and which defenses it must carry. Make a prediction for each category before you see the tube.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Obligate aerobes require oxygen. Obligate anaerobes cannot grow with it. Facultative anaerobes can use oxygen but also grow without it, and most familiar clinical bacteria, such as E. coli, are in this group.</li><li>Microaerophiles need low oxygen. Aerotolerant anaerobes tolerate oxygen but do not use it for growth.</li><li>Aerobic growth gives a higher yield, but it requires enzymes that neutralize reactive oxygen species: typically superoxide dismutase and catalase.</li><li>Obligate intracellular pathogens (Chlamydia, Rickettsia, Ehrlichia, Anaplasma) need living host cells to grow.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the growth pattern</h2>
+    <p class="try-note">Air is at the top of each tube. Choose a category, predict where it will grow, then see the tube. Answer all five to finish.</p>
+    <div id="act-oxygenProbe"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c10a"><p>Where in a tube of medium does an obligate aerobe grow?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10b"><p>An organism grows better with oxygen but can also grow without it. Which category fits?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10c"><p>Which enzyme pair neutralizes reactive oxygen species during aerobic growth?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Most familiar clinical bacteria are facultative anaerobes. The category matters when a specimen is collected and transported, because the organism you are trying to grow has to survive the trip.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s2">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 2</div>
+    <h2>Endospores</h2>
+    <p class="lede">Endospores are the reason C. difficile precautions differ from routine ones. They are dormant survival structures, not a way to multiply.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>A single vegetative cell forms one spore, so sporulation does not increase cell numbers.</li><li>Spores are extremely resistant to heat, desiccation, radiation, and many disinfectants, and can persist in the environment for years.</li><li>Clostridioides (for example C. difficile) and Bacillus species are the key spore-formers for pharmacy practice. Not all bacteria form spores.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>A C. difficile case, one decision at a time</h2>
+    <p class="try-note">Answer each question to move the case forward. A wrong choice lets you try again.</p>
+    <div id="act-sporeCase"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c11a"><p>Which product is needed for room cleaning under C. difficile precautions?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c11b"><p>What is the role of an endospore?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Alcohol-based hand rub does not kill spores. Soap-and-water handwashing, which removes them mechanically, is required, and sporicidal agents such as dilute bleach are needed for environmental disinfection.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s3">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 3</div>
+    <h2>Moving DNA between bacteria</h2>
+    <p class="lede">Bacteria change their DNA by mutation, by shuffling it within a genome, and by taking it from other cells. Three distinct mechanisms move DNA between cells. Step through each one.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Transposons move DNA from place to place within a genome, between the chromosome and plasmids.</li><li>Transformation is uptake of naked DNA. Transduction is transfer by a bacteriophage (a virus). Conjugation is direct cell-to-cell transfer by contact.</li><li>Conjugation uses a pilus as a bridge, and plasmids are the usual cargo. Plasmids can encode resistance genes, virulence genes such as exotoxins, metabolic traits, and transfer machinery.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Watch each mechanism, step by step</h2>
+    <p class="try-note">Choose a scene, then press Next step. Play all three scenes to the end to finish.</p>
+    <div id="act-hgtSteps"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c12a"><p>Which mechanism moves DNA directly between two cells that touch?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12b"><p>Which mechanism is uptake of naked DNA released from a dead cell?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12c"><p>Which element moves DNA between the chromosome and plasmids within one cell?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Resistant organisms can hand resistance genes to other bacteria, including bacteria that were never exposed to the drug. Conjugation on a plasmid is why resistance can spread so effectively.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s4">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 4</div>
+    <h2>How resistance takes over</h2>
+    <p class="lede">Antimicrobial exposure does not create resistance mutations. It selects for resistant cells that were already present, and removes the competition so they can multiply.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Intrinsic resistance is an inherent property, such as outer-membrane impermeability in Gram-negative bacteria.</li><li>Acquired resistance is gained through mutation or horizontal gene transfer.</li><li>Mutation and gene transfer generate or spread the resistance determinants; drug exposure sorts the population.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The selection lab</h2>
+    <p class="try-note">Make a prediction first. Then treat two populations with the same drug: one that contains a single resistant cell, and one that contains none.</p>
+    <div id="act-selectionLab"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c13a"><p>Gram-negative bacilli resist a large hydrophilic drug because of outer-membrane impermeability. What type of resistance is this?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c13b"><p>What does antibiotic exposure do to a mixed population?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A resistant survivor can transfer its genes to other bacteria, for example by conjugation. Completing the course and choosing the drug thoughtfully both limit the number of rounds of selection a population goes through.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3quiz">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Mastery check</div>
+    <h2>Module 3 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 3 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m3"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m4home">
+  <div class="modhero">
+    <div class="kicker">Module 4</div>
+    <h2>From colonization to disease</h2>
+    <p>Most bacteria a person meets never cause disease. This module explains the difference between living alongside a microbe and being harmed by one, and the tools bacteria use when they do cause harm.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How does this microbe cause disease, and what does it do to the patient?</span></div>
+    <div class="ghost-num" aria-hidden="true">4</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Describe the resident microbiota by body site, and explain colonization resistance.</li><li>Distinguish colonization, contamination, infection, and disease.</li><li>Use the vocabulary of transmission: fomite, vector, reservoir, source, zoonosis, vertical, and horizontal.</li><li>Connect adherence, biofilm, spread, immune evasion, toxins, and immune-mediated damage to what happens in the patient.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m4s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">The human microbiome</span><span class="home-desc">Open each body site to see who lives there and how dense the community is.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Colonization, infection, and disease</span><span class="home-desc">Sort real-world scenarios into the four terms.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">How microbes travel</span><span class="home-desc">Match transmission vocabulary to concrete examples.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Adherence, spread, and immune evasion</span><span class="home-desc">Complete a paragraph on how bacteria dig in, spread, and hide.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">Toxins and immune-mediated damage</span><span class="home-desc">Sort clues into exotoxin, endotoxin, and immune-mediated injury.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 4 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s1">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 1</div>
+    <h2>The human microbiome</h2>
+    <p class="lede">The resident microbiota is the community of microbes that normally lives on and in the body. It is not just a passenger list: it shapes immunity, helps nutrition, and keeps pathogens out.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Members of the resident microbiota can act as mutualists, commensals, or potential pathogens depending on body site and host conditions.</li><li>The colon holds the majority of the microbiome, a dense and mostly anaerobic community. Healthy bladder urine and the lower airways are low-biomass, not sterile.</li><li>Colonization resistance is how the resident microbiota limits pathogens: competing for adhesion sites and nutrients, making antimicrobial metabolites and bacteriocins, and stimulating host defenses.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Tour the body</h2>
+    <p class="try-note">Select a body site on the figure, or use the buttons under it. Open all seven to finish.</p>
+    <div id="act-bodyMap"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c14a"><p>Which body site holds most of the human microbiome?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14b"><p>After broad-spectrum antibiotics deplete gut microbiota, how does colonization resistance change?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14c"><p>Which action of vaginal Lactobacillus limits pathogen growth?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Endogenous species can become pathogenic if they occupy new sites or their composition is altered. That is a concern especially for immunocompromised patients, and it is the logic behind why a broad antibiotic can open the door to an infection like C. difficile.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s2">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 2</div>
+    <h2>Colonization, infection, and disease</h2>
+    <p class="lede">These four words are easy to blur, and the difference decides whether a positive culture needs treatment. Sort the scenarios below.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Colonization: presence or growth of an organism without attributable tissue injury or disease.</li><li>Contamination: an organism from an external source, such as specimen handling, that was never growing in the patient.</li><li>Infection: the organism has invaded tissue and caused a host response, with or without symptoms.</li><li>Disease: symptomatic illness resulting from infection.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort the scenarios</h2>
+    <p class="try-note">Choose one term for each scenario, then check. Each row explains its answer once checked.</p>
+    <div id="act-termSort"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c15a"><p>S. aureus grows in a healthy nurse&rsquo;s nose with no tissue injury. Which term fits?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c15b"><p>Organisms from the environment enter a specimen during handling and were absent from the patient. Which term fits?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Ask the lecture&rsquo;s question of every positive culture: does it justify an antibiotic on its own? Colonization and contamination usually need context before treatment, while infection with symptoms is where treatment decisions begin.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s3">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 3</div>
+    <h2>How microbes travel</h2>
+    <p class="lede">Transmission is the movement of a microbe from one place to another. The vocabulary is precise because the interventions differ: cleaning a fomite, controlling a vector, or finding the reservoir are different jobs.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Fomites are inanimate objects that transfer microbes, such as towels, bedsheets, and doorknobs. A vector is a living organism, usually an arthropod.</li><li>Vertical transmission is mother to child. Horizontal transmission is person to person, not via offspring.</li><li>The reservoir is the normal habitat that maintains and multiplies the agent. The source is the immediate origin of a specific exposure and may differ from the reservoir.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match the term to the example</h2>
+    <p class="try-note">Drag each term onto the example that fits, or tap a term first, then tap a row.</p>
+    <div id="act-travelMatch"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c16a"><p>Which term describes a doorknob, towel, or bedsheet that carries microbes between people?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c16b"><p>Which term describes the immediate origin of one patient&rsquo;s exposure?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When you are asked where an infection came from, separate the reservoir from the source. The reservoir explains where the organism lives; the source explains how this patient met it.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s4">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 4</div>
+    <h2>Adherence, spread, and immune evasion</h2>
+    <p class="lede">To cause harm, a bacterium has to stick, spread, and survive the immune response. Each step has a tool, and several of them are enzymes or surface structures you can name.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Adherence can lead to a biofilm: a protective matrix of proteins, polysaccharides, and extracellular DNA that may form on implanted devices and lowers antibiotic susceptibility.</li><li>Secreted enzymes promote spread: collagenase and hyaluronidase ease movement through tissue, coagulase promotes a fibrin clot that can shield bacteria, and IgA proteases cleave secretory IgA.</li><li>Evasion tools: a capsule blocks phagocyte attachment, M protein and protein A interfere with complement and antibody, and leukocidins destroy phagocytes. Opsonization marks a bacterium for phagocytosis.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Complete the paragraph</h2>
+    <p class="try-note">Choose a word for every blank from each drop-down list, then check. Extra words in the list are decoys.</p>
+    <div id="act-virulenceFill"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c17a"><p>Bacteria on an implanted catheter are embedded in a protective matrix. How does their antibiotic susceptibility compare with free-floating cells?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17b"><p>Which enzyme promotes a fibrin clot that walls bacteria off from phagocytes?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17c"><p>Which factor is a pore-forming toxin that destroys neutrophils and macrophages?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A biofilm on a device helps explain why an infection can persist even when the organism tests susceptible in the laboratory. Section 3 of Module 5 returns to this point.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s5">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 5</div>
+    <h2>Toxins and immune-mediated damage</h2>
+    <p class="lede">Not all damage comes from the organism itself. Some comes from a secreted protein, some from a component of the envelope, and some from the host&rsquo;s own response.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Exotoxins are secreted polypeptides made by Gram-positive and Gram-negative bacteria. Some diseases, such as tetanus and botulism, are toxin-mediated without substantial tissue invasion.</li><li>Endotoxin is lipopolysaccharide (LPS) in the outer membrane of Gram-negative bacteria. It is built from lipid A, a core oligosaccharide, and the O antigen, in that order outward. Lipid A is the major inflammatory component.</li><li>In immunopathogenesis the immune response, not the organism, causes symptoms. Rheumatic fever is an example.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort the clues</h2>
+    <p class="try-note">Choose one category for each clue, then check. Each row explains its answer once checked. Below the sort, open the LPS molecule to see its three parts.</p>
+    <div id="act-toxinSort"></div><div id="act-lpsExplore"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c18a"><p>Which toxin type can be treated with formaldehyde to make a toxoid for vaccines?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18b"><p>Which LPS component is the major inflammatory part?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18c"><p>In rheumatic fever, what mainly causes the injury to heart tissue?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The category tells you what prevention looks like. A toxin-mediated disease can be prevented with a toxoid vaccine, while an endotoxin is weakly antigenic and is not used to make toxoids.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4quiz">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Mastery check</div>
+    <h2>Module 4 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 4 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m4"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m5home">
+  <div class="modhero">
+    <div class="kicker">Module 5</div>
+    <h2>From specimen to treatment decision</h2>
+    <p>A laboratory report is not a diagnosis. This module walks the path from a specimen to a treatment decision and practices the judgment a pharmacist adds at the end: what does this result mean for this patient?</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>What does the laboratory result mean, and what should it change?</span></div>
+    <div class="ghost-num" aria-hidden="true">5</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Put the diagnostic sequence in order and state what each step can and cannot tell you.</li><li>Decide whether a positive result reflects colonization, contamination, or infection.</li><li>Interpret an MIC and the S, I, and R categories, and name what MIC testing leaves out.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m5s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">The diagnostic sequence</span><span class="home-desc">Put six steps in order, from specimen to clinical interpretation.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Reading culture results</span><span class="home-desc">Judge five real-world results: true pathogen, or something else?</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">MIC and susceptibility</span><span class="home-desc">Slide an isolate&rsquo;s MIC and watch the report change from S to I to R.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 5 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s1">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 1</div>
+    <h2>The diagnostic sequence</h2>
+    <p class="lede">Each step in the sequence answers a different question, and each depends on the one before it. A poor specimen damages everything that follows.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Specimen quality is the foundation for every downstream result.</li><li>Gram stain gives shape, size, arrangement, and Gram reaction, and guides initial therapy while cultures incubate.</li><li>Culture, or NAAT and antigen testing, comes next, followed by identification, susceptibility testing, and clinical interpretation.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Put the steps in order</h2>
+    <p class="try-note">Use the arrow buttons to move each step up or down, then check.</p>
+    <div id="act-dxOrder"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c19a"><p>Which step in the diagnostic sequence is the foundation for later results?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c19b"><p>What can a Gram stain report before culture results return?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Ask what a Gram stain can tell you before culture results return, and what it cannot. It can steer empiric therapy; it cannot give the species, the susceptibility, or the clinical significance.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s2">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 2</div>
+    <h2>Reading culture results</h2>
+    <p class="lede">Organism detection alone does not automatically establish infection. The site, the number of positive samples, and the patient all change what the same result means.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>A normally sterile site, such as cerebrospinal fluid, makes any growth significant.</li><li>Growth from a non-sterile site, or in only one of several samples, needs the clinical picture.</li><li>Toxin-based results are read together with symptoms and recent antibiotic exposure.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Judge the result</h2>
+    <p class="try-note">Decide what each result most likely represents, then check. Each row gives the reasoning.</p>
+    <div id="act-caseSort"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c21a"><p>A mildly ill outpatient&rsquo;s sputum grows a few colonies of S. pneumoniae. What is the best next step?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c21b"><p>Neisseria meningitidis grows from cerebrospinal fluid. How should this be read?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Detection is not the same as infection, and infection is not the same as an antibiotic indication. The pharmacist&rsquo;s contribution is the interpretation that connects the report to the patient.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s3">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 3</div>
+    <h2>MIC and susceptibility</h2>
+    <p class="lede">The minimum inhibitory concentration is a laboratory measurement, and the S, I, and R categories translate it into a likely response. Move the slider to see how one number becomes a report.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>MIC is the lowest antimicrobial concentration that visibly inhibits growth in the laboratory.</li><li>Susceptible (S): likely to respond to standard dosing. Intermediate or increased exposure (I): may respond at higher dosing or where the drug concentrates. Resistant (R): unlikely to respond even at maximal safe dosing.</li><li>MIC and susceptibility describe the organism in a test tube. They do not account for biofilms, source control, or drug penetration at the infection site.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Set the MIC, read the report</h2>
+    <p class="try-note">Make a prediction, then slide the isolate&rsquo;s MIC. Reach an S, an I, and an R report to finish. The breakpoints here belong to a made-up drug, for teaching.</p>
+    <div id="act-micLab"></div>
+  </div>
+  
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c22a"><p>What does the minimum inhibitory concentration (MIC) measure?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c22b"><p>An organism is likely to respond to standard dosing. Which category is reported?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c22c"><p>A biofilm-associated infection persists although the isolate tests susceptible. Which limitation of MIC testing explains this?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Ask which information should sit next to an MIC on the chart: the infection site, how well the drug reaches it, and the source. A susceptible result is a starting point for a decision, not the decision.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5quiz">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Mastery check</div>
+    <h2>Module 5 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 5 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m5"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section" data-key="flashcards">
+  <div class="card">
+    <div class="eyebrow">Retrieval practice</div>
+    <h2>Flashcards</h2>
+    <p class="lede">Say the answer out loud before you flip the card. Retrieval from memory strengthens recall far more than rereading does.</p>
+    <div class="fc-stage">
+      <div class="fc" id="fcCard" tabindex="0" role="button" aria-label="Flashcard. Press Enter to flip.">
+        <div class="fc-face fc-front"><div>
+          <div class="fc-term" id="fcFront"></div>
+          <div class="fc-hint">click, tap, or press Enter to flip</div>
+        </div></div>
+        <div class="fc-face fc-back"><div class="fc-def" id="fcBack"></div></div>
+      </div>
+    </div>
+    <div class="fc-bar">
+      <button class="btn ghost" id="fcPrev">Previous</button>
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn ghost" id="fcNext">Next</button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section" data-key="final">
+  <div class="card">
+    <div class="eyebrow">Final Mastery Exam</div>
+    <h2>25-question mastery exam</h2>
+    <p class="lede">A mixed set drawn from all five modules: recall, application, and integration. After you submit, any concept area you missed becomes a targeted practice round, drawing on fresh questions where possible.</p>
+    <div class="quiz-body" data-quiz="final"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit exam</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+  </main>
+</div>
+
+<!-- Load order matters (see companion-architecture.md section 3). Content first, then shared
+     tools, then this page's own script, then the engine last. -->
+<script src="banks/bacteria1.js"></script>
+<script src="banks/bacteria1.manifest.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/helpers.js"></script>
+<script src="shared/activities.js"></script>
+<script src="shared/welcome.js"></script>
+<script>
+/* ============================================================
+   THIS PAGE'S OWN SCRIPT — Bacteria I · Introduction
+   1) builds the structure engine.js needs from MANIFEST (copied
+      unchanged from the reference pattern in companion-architecture §5)
+   2) decorates the page (icons, live counts, buttons)
+   3) builds every hands-on activity
+   ============================================================ */
+
+/* ---------- 1) Structure derived from MANIFEST ---------- */
+var BADGES = {home:'&#8962;', m1:'1', m2:'2', m3:'3', m4:'4', m5:'5', flash:'&#10022;', final:'&#9733;'};
+
+var MODULES = MANIFEST.modules.map(function(m){
+  var mod = {id:m.id, badge:BADGES[m.id]||'&#8226;', title:m.title,
+             sections:m.sections.map(function(s){return {key:s.key,label:s.label};})};
+  if(m.unlockAfter) mod.unlockAfter = m.unlockAfter;
+  return mod;
+});
+
+var FLOW = []; MODULES.forEach(function(m){ m.sections.forEach(function(s){ FLOW.push(s); }); });
+
+var UNGRADED = [];
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(!s.checks && !s.activity && !s.quiz) UNGRADED.push(s.key);
+});});
+
+var SECTION_REQ = {}, QUIZ_KEY_FOR_SECTION = {};
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(s.checks || s.activity){
+    SECTION_REQ[s.key] = {checks:s.checks||[]};
+    if(s.activity) SECTION_REQ[s.key].activity = s.activity;
+  }
+  if(s.quiz) QUIZ_KEY_FOR_SECTION[s.key] = s.quiz;
+});});
+
+var AREA_SECTION = MANIFEST.areaSection;
+
+var MODULE_QUIZ_SIZE = 8;
+var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
+
+/* ---------- 2) Page decoration ----------
+   Icon fill, live stat counts, and data-go button wiring used to be
+   hand-written here. They now live in shared/welcome.js as initWelcome(),
+   called once at the very end of this script (after every activity below
+   has been built) — see companion-architecture.md §15. */
+
+/* tiny helpers shared by the activities below */
+function $(id){return document.getElementById(id);}
+function svgEl(inner,vb,label){return '<svg viewBox="'+vb+'" role="img" aria-label="'+label+'">'+inner+'</svg>';}
+function segControl(labels,onPick){
+  /* labels: [[value,text],...]; returns {box, set(value), buttons:{value:btn}} */
+  var box=el('div','seg'),buttons={};
+  labels.forEach(function(p){
+    var b=el('button',null,p[1]);b.type='button';b.setAttribute('data-v',p[0]);
+    b.onclick=function(){onPick(p[0]);};box.appendChild(b);buttons[p[0]]=b;
+  });
+  return {box:box,buttons:buttons,set:function(v){Object.keys(buttons).forEach(function(k){buttons[k].classList.toggle('on',k===v);});}};
+}
+
+/* ============================================================
+   MODULE 1 ACTIVITIES
+   ============================================================ */
+
+/* --- 1.1 Match each clue to its microbe (drag and drop) --- */
+Act.dnd('act-microbeMatch',{name:'microbeMatch',
+  pills:['Prion','Virus','Bacterium','Fungus','Protozoan','Helminth'],
+  rows:[
+    {text:'Protein only, with no DNA or RNA. Spreads by converting normal host protein into a misfolded form.',answer:'Prion',
+     why:'Prions are acellular and protein only, with no genetic material. They cause disease by templated conversion of normal prion protein (PrP) into a misfolded form.'},
+    {text:'Acellular, carries DNA or RNA (not both), and copies itself only by using host machinery.',answer:'Virus',
+     why:'Viruses are acellular, contain either DNA or RNA, and use host machinery to replicate.'},
+    {text:'A prokaryote with a nucleoid, 70S ribosomes, and replication by binary fission.',answer:'Bacterium',
+     why:'Bacteria are prokaryotes. The nucleoid is nucleus-like but has no membrane, and the ribosomes are 70S.'},
+    {text:'A eukaryote, single-celled or multicellular, with a chitin wall. Replicates by budding or mitosis.',answer:'Fungus',
+     why:'Fungi have a true nucleus and 80S ribosomes. Mycoses are of increasing clinical importance in hospitalized and immunocompromised patients.'},
+    {text:'A single-celled eukaryote. Many are obligate parasites with host-dependent, often complex life cycles.',answer:'Protozoan',
+     why:'Protozoa are eukaryotes with a true nucleus and 80S ribosomes. Many depend on a host for their life cycle.'},
+    {text:'A multicellular eukaryotic worm that uses sexual and asexual life-cycle stages that can span more than one host.',answer:'Helminth',
+     why:'Helminths are eukaryotes with complex life cycles, commonly involving sexual and asexual stages across more than one host.'}
+  ]});
+
+/* --- 1.2 Bacterial, human, or shared? (sort) --- */
+Act.sort('act-cellSort',{name:'cellSort',options:['Bacterial','Human','Shared'],
+  rows:[
+    {text:'70S ribosomes',answer:'Bacterial',why:'Bacterial ribosomes are 70S. That size difference is what lets drugs such as macrolides pick out the bacterial ribosome.'},
+    {text:'80S cytosolic ribosomes',answer:'Human',why:'Human cytosolic ribosomes are 80S, so a drug shaped for the 70S ribosome fits them poorly.'},
+    {text:'A peptidoglycan cell wall',answer:'Bacterial',why:'Most bacteria have a peptidoglycan wall, and human cells make none. Mycoplasma is the notable exception with no wall.'},
+    {text:'Mitochondria and lysosomes',answer:'Human',why:'Membrane-bound organelles belong to eukaryotic cells.'},
+    {text:'DNA packaged with histones into nucleosomes',answer:'Human',why:'Histone-DNA packaging is a eukaryotic feature.'},
+    {text:'DNA in a nucleoid that no membrane encloses',answer:'Bacterial',why:'The bacterial nucleoid is nucleus-like but has no membrane around it.'},
+    {text:'A plasma membrane',answer:'Shared',why:'Both cell types have one. That shared feature is why membrane-active drugs must be built to prefer the bacterial version.'},
+    {text:'Mitosis',answer:'Human',why:'Bacteria divide by binary fission and do not undergo mitosis.'},
+    {text:'DNA as the genetic material',answer:'Shared',why:'Both cell types store their genetic information as DNA.'}
+  ]});
+
+/* --- 1.3 Division lab (manipulate a variable, see the result) --- */
+(function divideLab(){
+  var host=$('act-divideLab'),name='divideLab',vkey=name+'_v',MAXN=4;
+  var seen=(state.activities[vkey]||[]).slice(),shape='coccus',pat='pairs',n=0;
+  var NAMES={
+    coccus:{pairs:['Diplococci','pairs of cocci'],chain:['Streptococci','chains of cocci'],cluster:['Staphylococci','clusters of cocci']},
+    bacillus:{pairs:['Diplobacilli','pairs of rods'],chain:['Streptobacilli','chains of rods']}
+  };
+  var HINT={pairs:'Cells divide in one plane, and each new pair stays joined.',
+            chain:'Cells keep dividing in the same plane and stay attached, forming a line.',
+            cluster:'Cells divide in several planes and stay attached, forming a clump.'};
+  var top=el('div','lab-row');top.innerHTML='<span class="lab-label">Shape</span>';
+  var segS=segControl([['coccus','Coccus (sphere)'],['bacillus','Bacillus (rod)'],['spirochete','Spirochete (spiral)']],function(v){shape=v;fix();reset();});
+  top.appendChild(segS.box);
+  var mid=el('div','lab-row');mid.innerHTML='<span class="lab-label">Pattern</span>';
+  var segP=segControl([['pairs','Pairs'],['chain','Chain'],['cluster','Cluster']],function(v){pat=v;fix();reset();});
+  mid.appendChild(segP.box);
+  var figBox=el('div','figure'),nameBox=el('div','stage-name'),hint=el('p','caption'),
+      ctl=el('div','controls'),go=el('button','btn','Divide'),rs=el('button','btn ghost','Reset'),prog=el('span','caption');
+  go.type=rs.type='button';prog.style.margin='0';
+  ctl.appendChild(go);ctl.appendChild(rs);ctl.appendChild(prog);
+  [top,mid,figBox,nameBox,hint,ctl].forEach(function(x){host.appendChild(x);});
+
+  function fix(){
+    segS.set(shape);
+    segP.buttons.cluster.disabled=(shape!=='coccus');
+    segP.buttons.pairs.disabled=segP.buttons.chain.disabled=(shape==='spirochete');
+    if(shape!=='coccus'&&pat==='cluster')pat='pairs';
+    segP.set(shape==='spirochete'?'':pat);
+  }
+  function coccus(N,mode){
+    var r=13,out='',i;
+    if(mode==='pairs'){
+      var pairsN=Math.max(1,N/2),cols=Math.min(pairsN,4),rows=Math.ceil(pairsN/cols);
+      for(i=0;i<Math.max(1,pairsN);i++){
+        var cx=640*((i%cols)+.5)/cols,cy=250*(Math.floor(i/cols)+.5)/rows,a=(i*37)%90-45;
+        if(N===1){out+=circ(320,125,r,i>=N/2&&n>0);continue;}
+        out+='<g transform="rotate('+a+' '+cx+' '+cy+')">'+circ(cx-r,cy,r,n>0)+circ(cx+r,cy,r,n>0)+'</g>';
+      }
+    }else if(mode==='chain'){
+      for(i=0;i<N;i++)out+=circ(320+(i-(N-1)/2)*(2*r-1),125+16*Math.sin(i*.55),r,i>=N/2&&n>0);
+    }else{
+      for(i=0;i<N;i++){var rad=19*Math.sqrt(i+.4),th=i*2.399;out+=circ(320+rad*Math.cos(th),125+rad*Math.sin(th),r,i>=N/2&&n>0);}
+    }
+    return out;
+  }
+  function circ(x,y,r,isNew){return '<circle class="'+(isNew?'dv-new':'')+'" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r+'" fill="#A58BEA" stroke="#5B3D9E" stroke-width="2.5"/>';}
+  function rod(x,y,isNew){return '<rect class="'+(isNew?'dv-new':'')+'" x="'+(x-17).toFixed(1)+'" y="'+(y-7)+'" width="34" height="14" rx="7" fill="#F28FAE" stroke="#C2477A" stroke-width="2.2"/>';}
+  function bacillus(N,mode){
+    var out='',i;
+    if(mode==='pairs'){
+      var pairsN=Math.max(1,N/2),cols=Math.min(pairsN,4),rows=Math.ceil(pairsN/cols);
+      for(i=0;i<pairsN;i++){var cx=640*((i%cols)+.5)/cols,cy=250*(Math.floor(i/cols)+.5)/rows;
+        if(N===1){out+=rod(320,125,false);break;}
+        out+=rod(cx-17,cy,n>0)+rod(cx+17,cy,n>0);}
+    }else{
+      for(i=0;i<N;i++)out+=rod(320+(i-(N-1)/2)*36,125,i>=N/2&&n>0);
+    }
+    return out;
+  }
+  function spiro(N){
+    var out='',cols=Math.min(N,4),rows=Math.ceil(N/cols),i;
+    for(i=0;i<N;i++){var cx=640*((i%cols)+.5)/cols-48,cy=250*(Math.floor(i/cols)+.5)/rows;
+      out+='<path class="'+(i>=N/2&&n>0?'dv-new':'')+'" d="M'+cx+' '+cy+' q8 -12 16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#B57614" stroke-width="4" stroke-linecap="round"/>';}
+    return out;
+  }
+  function draw(){
+    var N=Math.pow(2,n),body=shape==='coccus'?coccus(N,pat):shape==='bacillus'?bacillus(N,pat):spiro(N);
+    figBox.innerHTML=svgEl('<rect x="2" y="2" width="636" height="246" rx="14" fill="#F6F8FE" stroke="#E0E7F3"/>'+body,'0 0 640 250',
+      'Bacteria after '+n+' divisions: '+N+' cells');
+    if(n===0)nameBox.textContent='One cell. Predict the name, then press Divide.';
+    else if(shape==='spirochete')nameBox.textContent='Spirochetes: spiral-shaped cells, described by shape rather than an arrangement prefix.';
+    else nameBox.textContent=NAMES[shape][pat][0]+' \u2014 '+NAMES[shape][pat][1];
+    hint.textContent=shape==='spirochete'?'Spiral shape is the identifying feature here.':HINT[pat];
+    go.disabled=n>=MAXN;
+    prog.textContent='Divisions: '+n+' of '+MAXN+'   \u2022   Cocci arrangements built: '+seen.length+' of 3';
+  }
+  function divide(){
+    if(n>=MAXN)return;n++;draw();
+    if(shape==='coccus'&&n>=2&&seen.indexOf(pat)===-1){
+      seen.push(pat);Act.keep(vkey,seen.slice());draw();
+      if(seen.length>=3&&!state.activities[name])Act.done(name,true);
+    }
+  }
+  function reset(){n=0;draw();}
+  go.onclick=divide;rs.onclick=function(){reset();};
+  fix();draw();
+  Act.register(name,{solve:function(){shape='coccus';['pairs','chain','cluster'].forEach(function(p){pat=p;fix();reset();divide();divide();});}});
+})();
+
+/* --- 1.4 Explore a bacterial cell (clickable diagram) --- */
+(function(){
+  var pili='',pl=[[190,92,180,26],[250,92,254,12],[320,92,330,20],[128,128,44,92],[126,150,34,146],[128,176,46,214],[220,208,212,284],[330,208,344,288]];
+  pl.forEach(function(p){pili+='<path d="M'+p[0]+' '+p[1]+' L'+p[2]+' '+p[3]+'" stroke="transparent" stroke-width="16" fill="none"/><path d="M'+p[0]+' '+p[1]+' L'+p[2]+' '+p[3]+'" stroke="#14203F" stroke-width="2.2" fill="none" stroke-linecap="round"/>';});
+  var svg=svgEl(
+    '<rect x="86" y="52" width="380" height="196" rx="98" fill="none" stroke="#F5B82E" stroke-width="12" stroke-dasharray="3 9" stroke-linecap="round" opacity=".75" data-hs="slime"/>'+
+    '<rect x="110" y="76" width="332" height="148" rx="74" fill="none" stroke="#E0A010" stroke-width="12" data-hs="capsule"/>'+
+    '<rect x="126" y="92" width="300" height="116" rx="58" fill="#FFF4D6" stroke="#B57614" stroke-width="7" data-hs="wall"/>'+
+    '<rect x="137" y="103" width="278" height="94" rx="47" fill="#F4F8FF" stroke="#2E7DA8" stroke-width="6" data-hs="membrane"/>'+
+    '<rect x="152" y="116" width="248" height="68" rx="34" fill="#F4F8FF" data-hs="inside"/>'+
+    '<path d="M190 150 q10 -22 20 0 t20 0 t20 0 t20 0" fill="none" stroke="#5B3D9E" stroke-width="3.5" stroke-linecap="round" pointer-events="none"/>'+
+    '<g fill="#14203F" pointer-events="none"><circle cx="172" cy="132" r="3.5"/><circle cx="176" cy="168" r="3.5"/><circle cx="292" cy="130" r="3.5"/><circle cx="330" cy="170" r="3.5"/><circle cx="356" cy="136" r="3.5"/></g>'+
+    '<circle cx="372" cy="152" r="12" fill="none" stroke="#C2477A" stroke-width="3" pointer-events="none"/>'+
+    '<g data-hs="pili">'+pili+'</g>'+
+    '<g data-hs="flagellum"><path d="M426 150 C 462 118, 490 184, 528 150 S 592 118, 626 150" stroke="transparent" stroke-width="18" fill="none"/><path d="M426 150 C 462 118, 490 184, 528 150 S 592 118, 626 150" stroke="#14203F" stroke-width="4" fill="none" stroke-linecap="round"/></g>',
+    '0 0 640 300','A rod-shaped bacterium with a slime layer, capsule, cell wall, cell membrane, pili, a flagellum, and internal structures');
+  Act.explore('act-cellExplore',{name:'cellExplore',svg:svg,
+    ids:['slime','capsule','wall','membrane','pili','flagellum','inside'],
+    start:'Select a part of the cell, or one of the buttons below the figure.',
+    items:{
+      slime:{title:'Slime layer',html:'<p>A <b>diffuse, loosely attached</b> glycocalyx. It offers protection as well, but a loose layer protects less effectively against phagocytosis than an organized capsule.</p><p>Glycocalyx is the broad term for the polymer layer outside the wall. It is usually polysaccharide, with notable exceptions such as protein capsules.</p>'},
+      capsule:{title:'Capsule',html:'<p>An organized glycocalyx that is <b>tightly attached</b> to the cell wall. It helps protect the bacterium from desiccation, toxins, and phagocytosis.</p><p>Polysaccharides on the capsule surface can serve as antigens for bacterial vaccines.</p>'},
+      wall:{title:'Cell wall',html:'<p>The key external structural component, located outside the cell membrane and made of peptidoglycan. Its structure, chemistry, and thickness differ between bacteria, and its characteristics dictate cell shape.</p><p><i>Drug angle:</i> peptidoglycan is the target of beta-lactams and glycopeptides.</p>'},
+      membrane:{title:'Cell membrane',html:'<p>The membrane inside the wall. Pili and flagella attach to it.</p><p>Human cells have a plasma membrane too, so membrane-active drugs such as daptomycin and polymyxins depend on structural differences.</p>'},
+      pili:{title:'Pili',html:'<p>Hair-like structures used for <b>adhesion</b> to host surfaces. In conjugation, a pilus forms the bridge between two bacteria (Module 3).</p>'},
+      flagellum:{title:'Flagellum',html:'<p>A whip-like structure used for <b>motility</b>. A bacterium that loses its flagella loses its ability to swim, while adhesion by pili is not affected.</p>'},
+      inside:{title:'Inside the cell',html:'<p>A nucleoid (DNA with no membrane around it), 70S ribosomes, and often plasmids: small circular DNA that can carry resistance or virulence genes.</p>'}
+    }});
+})();
+
+/* ============================================================
+   MODULE 2 ACTIVITIES
+   ============================================================ */
+
+/* --- 2.1 Build a wall, then test it (interactive molecular design) --- */
+(function wallBuild(){
+  var host=$('act-wallBuild'),name='wallBuild',vkey=name+'_v';
+  var prog=Object.assign({held:false,lysed:false},state.activities[vkey]||{});
+  var links=[false,false,false,false,false,false],drug=false,result=null,NEED=4;
+  var XS=[106,218,330], GAPS=[110,190];  /* x of each NAM, y of each gap */
+
+  function hex(cx,cy,fill){
+    var pts=[],i;for(i=0;i<6;i++){var a=Math.PI/3*i+Math.PI/6;pts.push((cx+17*Math.cos(a)).toFixed(1)+','+(cy+17*Math.sin(a)).toFixed(1));}
+    return '<polygon points="'+pts.join(' ')+'" fill="'+fill+'" stroke="#14203F" stroke-opacity=".35" stroke-width="1.5"/>';
+  }
+  function strand(y){
+    var out='<line x1="30" y1="'+y+'" x2="392" y2="'+y+'" stroke="#14203F" stroke-opacity=".25" stroke-width="3"/>',i;
+    for(i=0;i<6;i++)out+=hex(50+56*i,y,i%2===0?'#2E7DA8':'#E0A010');
+    return out;
+  }
+  function build(){
+    var s='',g,k,idx=0;
+    s+=strand(70)+strand(150)+strand(230);
+    [70,150,230].forEach(function(y,si){
+      XS.forEach(function(x){
+        if(si<2)s+='<line x1="'+x+'" y1="'+(y+18)+'" x2="'+x+'" y2="'+(y+34)+'" stroke="#B57614" stroke-width="3"/>';
+        if(si>0)s+='<line x1="'+x+'" y1="'+(y-18)+'" x2="'+x+'" y2="'+(y-34)+'" stroke="#B57614" stroke-width="3"/>';
+      });
+    });
+    GAPS.forEach(function(gy){
+      XS.forEach(function(x){
+        var on=links[idx];
+        s+='<g class="wb-slot" data-i="'+idx+'" tabindex="0" role="button" aria-label="Cross-link position '+(idx+1)+(on?', linked':', open')+'" style="cursor:pointer">'+
+           '<circle cx="'+x+'" cy="'+gy+'" r="30" fill="transparent"/>'+
+           (on?'<line x1="'+x+'" y1="'+(gy-16)+'" x2="'+x+'" y2="'+(gy+16)+'" stroke="#173F9A" stroke-width="5"/><circle cx="'+x+'" cy="'+gy+'" r="7" fill="#173F9A" stroke="#fff" stroke-width="2"/>'
+              :'<circle cx="'+x+'" cy="'+gy+'" r="8" fill="#fff" stroke="#173F9A" stroke-width="2" stroke-dasharray="3 3"/>')+'</g>';
+        idx++;
+      });
+    });
+    s+='<g font-size="11.5" fill="#42506E"><rect x="30" y="278" width="14" height="14" rx="3" fill="#2E7DA8"/><text x="50" y="290">NAG</text><rect x="92" y="278" width="14" height="14" rx="3" fill="#E0A010"/><text x="112" y="290">NAM (carries a peptide stub)</text>'+
+       '<circle cx="290" cy="285" r="6" fill="#fff" stroke="#173F9A" stroke-width="2" stroke-dasharray="3 3"/><text x="302" y="290">open gap</text></g>';
+    /* the cell under pressure */
+    var cnt=links.filter(Boolean).length,ring=cnt>=NEED?'#2FA97A':(cnt>0?'#E0A010':'#D4536B'),cx=560,cy=140;
+    var arrows='';
+    for(k=0;k<8;k++){var a=Math.PI/4*k;arrows+='<line x1="'+(cx+16*Math.cos(a)).toFixed(1)+'" y1="'+(cy+16*Math.sin(a)).toFixed(1)+'" x2="'+(cx+40*Math.cos(a)).toFixed(1)+'" y2="'+(cy+40*Math.sin(a)).toFixed(1)+'" stroke="#D4536B" stroke-width="3" stroke-linecap="round"/>';}
+    if(result==='burst'){
+      s+='<path d="M560 66 l12 22 22-10 -4 26 26 4 -18 18 20 16 -26 2 4 26 -22 -12 -12 22 -12 -22 -22 12 4 -26 -26 -2 20 -16 -18 -18 26 -4 -4 -26 22 10z" fill="#FDECEF" stroke="#D4536B" stroke-width="3" stroke-dasharray="5 4"/>'+
+         '<g fill="#F5B82E"><circle cx="500" cy="205" r="5"/><circle cx="540" cy="222" r="4"/><circle cx="590" cy="220" r="5"/><circle cx="622" cy="196" r="4"/></g>';
+    }else{
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="72" fill="#F4F8FF" stroke="'+ring+'" stroke-width="'+(result==='hold'?12:6+cnt*1.2)+'"'+(cnt===0?' stroke-dasharray="7 6"':'')+'/>'+arrows;
+    }
+    s+='<text x="560" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14203F">Cell under pressure</text>';
+    return svgEl(s,'0 0 680 300','Three peptidoglycan strands with open gaps for cross-links, and a cell showing how strong its wall is');
+  }
+  var fig=el('div','figure'),meterBox=el('div'),msg=el('div','feedback show'),ctl=el('div','controls'),
+      drugBtn=el('button','btn ghost','Add a beta-lactam'),testBtn=el('button','btn','Test the wall'),
+      resetBtn=el('button','btn ghost','Reset'),cap=el('span','caption');
+  drugBtn.type=testBtn.type=resetBtn.type='button';cap.style.margin='0';
+  ctl.appendChild(drugBtn);ctl.appendChild(testBtn);ctl.appendChild(resetBtn);ctl.appendChild(cap);
+  host.appendChild(fig);host.appendChild(meterBox);host.appendChild(msg);host.appendChild(ctl);
+
+  function paint(say,miss){
+    fig.innerHTML=build();
+    var cnt=links.filter(Boolean).length;
+    meterBox.innerHTML='<div class="lab-label">Wall strength: '+cnt+' of 6 cross-links (needs '+NEED+' to hold)</div><div class="meter"><i style="width:'+(cnt/6*100)+'%"></i></div>';
+    drugBtn.classList.toggle('on',drug);drugBtn.setAttribute('aria-pressed',drug?'true':'false');
+    drugBtn.textContent=drug?'Remove the beta-lactam':'Add a beta-lactam';
+    msg.className='feedback show'+(miss?' miss':'');
+    msg.innerHTML=say||(drug?'<strong>Beta-lactam present.</strong> It is bound to the transpeptidase, so no new cross-links can form. Try building, then test the wall.':'<strong>Part 1.</strong> Click the open gaps to let the transpeptidase cross-link the strands, then test the wall.');
+    cap.textContent=(prog.held?'Wall held \u2713  ':'')+(prog.lysed?'Wall failed with the drug \u2713':'');
+    fig.querySelectorAll('.wb-slot').forEach(function(g){
+      function act(){slot(Number(g.getAttribute('data-i')));}
+      g.onclick=act;g.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}};
+    });
+  }
+  function slot(i){
+    if(drug){result=null;paint('<strong>Blocked.</strong> The beta-lactam is bound to the transpeptidase, so no cross-link forms at this gap.',true);return;}
+    links[i]=!links[i];result=null;paint();
+  }
+  function test(){
+    var cnt=links.filter(Boolean).length;
+    if(cnt>=NEED){
+      result='hold';prog.held=prog.held||!drug;
+      paint('<strong>The wall holds.</strong> Enough cross-links share the load, so the wall resists the internal pressure.');
+    }else{
+      result='burst';if(drug)prog.lysed=true;
+      paint('<strong>The wall gives way.</strong> Too few cross-links were formed, so the weakened wall cannot resist internal pressure and the cell lyses.'+(drug?' This is how a beta-lactam kills a growing bacterium.':''),true);
+    }
+    Act.keep(vkey,{held:prog.held,lysed:prog.lysed});
+    if(prog.held&&prog.lysed&&!state.activities[name])Act.done(name,true);
+    paint(msg.innerHTML,result==='burst');
+  }
+  drugBtn.onclick=function(){drug=!drug;links=[false,false,false,false,false,false];result=null;
+    paint(drug?'<strong>A beta-lactam is added.</strong> New wall material can no longer be cross-linked. Build as much as you can, then test the wall.':'<strong>The drug is removed.</strong> Cross-linking can resume.');};
+  testBtn.onclick=test;
+  resetBtn.onclick=function(){links=[false,false,false,false,false,false];drug=false;result=null;paint();};
+  paint();
+  Act.register(name,{solve:function(){
+    drug=false;links=links.map(function(){return true;});result=null;paint();test();
+    drugBtn.click();test();
+  }});
+})();
+
+/* --- 2.2 Gram-positive, Gram-negative, or both? (sort) --- */
+Act.sort('act-envSort',{name:'envSort',options:['Gram-positive','Gram-negative','Both'],
+  rows:[
+    {text:'A thick peptidoglycan wall',answer:'Gram-positive',why:'Gram-positive walls are thick. The exact thickness varies by species.'},
+    {text:'An outer membrane',answer:'Gram-negative',why:'The outer membrane sits outside a thin peptidoglycan layer and acts as a permeability barrier.'},
+    {text:'Teichoic acids in the wall',answer:'Gram-positive',why:'Teichoic acids are embedded in the thick peptidoglycan of Gram-positive cells.'},
+    {text:'Lipopolysaccharide (LPS)',answer:'Gram-negative',why:'LPS is part of the outer membrane and is the endotoxin of Gram-negative bacteria.'},
+    {text:'Porin channels',answer:'Gram-negative',why:'Porins are channels in the outer membrane that admit small hydrophilic molecules, including some drugs.'},
+    {text:'A cytoplasmic (inner) membrane',answer:'Both',why:'Every bacterial cell has a membrane inside its wall.'},
+    {text:'Peptidoglycan',answer:'Both',why:'Both classes have peptidoglycan. It is thick in one and thin in the other.'},
+    {text:'Keeps the crystal violet\u2013iodine complex through the alcohol wash',answer:'Gram-positive',why:'The complex stays trapped in the thick peptidoglycan, so the cells remain purple.'},
+    {text:'A periplasm between two membranes',answer:'Gram-negative',why:'The periplasm lies between the inner and outer membranes and holds the thin peptidoglycan layer.'}
+  ]});
+
+/* --- 2.3 Run the Gram stain (put reagents in order, predict, observe) --- */
+(function gramSim(){
+  var host=$('act-gramSim'),name='gramSim';
+  var STEPS=[
+    {id:'cv',label:'Crystal violet',color:'#5B3D9E'},
+    {id:'iodine',label:'Iodine',color:'#B8863A'},
+    {id:'alcohol',label:'Alcohol',color:'#CFE3F1'},
+    {id:'safranin',label:'Safranin',color:'#E0668C'}
+  ];
+  var CAPS=[
+    '<strong>Crystal violet.</strong> The primary stain colors every cell purple, whatever its wall type.',
+    '<strong>Iodine.</strong> Iodine acts as a mordant: it binds crystal violet and forms a large crystal violet\u2013iodine complex inside the cell.',
+    '<strong>Alcohol.</strong> Gram-positive cells keep the complex inside their thick peptidoglycan. Gram-negative cells lose it and turn colorless.',
+    '<strong>Safranin.</strong> The counterstain colors the now-colorless Gram-negative cells pink. Gram-positive cells stay purple.'
+  ];
+  var HINTS={
+    iodine:'Not yet. Iodine needs a dye to bind, so the primary stain comes first.',
+    alcohol:'Not yet. The decolorizer needs a dye complex to wash out, so the primary stain and the iodine come first.',
+    safranin:'Not yet. The counterstain goes on last, after the decolorizer has done its work.',
+    cv:'Crystal violet is the first reagent. Start there.'
+  };
+  var shown,step=0,awaiting=false;
+  function shuffled(){var s;do{s=shuffle(STEPS);}while(s.every(function(x,i){return x.id===STEPS[i].id;}));return s;}
+  shown=shuffled();
+
+  var fig=el('div','figure'),rg=el('div','reagents'),predBox=el('div'),cap=el('div','act-cap'),ctl=el('div','controls'),
+      again=el('button','btn ghost','Run it again');again.type='button';ctl.appendChild(again);
+  host.appendChild(fig);host.appendChild(rg);host.appendChild(predBox);host.appendChild(cap);host.appendChild(ctl);
+  var btns={};
+  function buildButtons(){
+    rg.innerHTML='';
+    shown.forEach(function(s){
+      var b=btns[s.id]||(btns[s.id]=el('button','reagent','<i style="background:'+s.color+'"></i>'+s.label));
+      b.type='button';b.onclick=function(){press(s.id);};rg.appendChild(b);
+    });
+  }
+  function cell(x,fill,edge,edgeW,dots,label,sub,outer){
+    return '<g><rect x="'+x+'" y="60" width="200" height="90" rx="45" fill="'+fill+'" stroke="'+edge+'" stroke-width="'+edgeW+'"'+(edgeW>10?' stroke-opacity=".55"':'')+'/>'+
+      (outer?'<rect x="'+(x-8)+'" y="52" width="216" height="106" rx="53" fill="none" stroke="'+edge+'" stroke-width="3" stroke-dasharray="5 4"/>':'')+
+      (dots?'<g fill="#1E1240" opacity=".55"><circle cx="'+(x+60)+'" cy="105" r="5"/><circle cx="'+(x+100)+'" cy="92" r="5"/><circle cx="'+(x+135)+'" cy="112" r="5"/><circle cx="'+(x+80)+'" cy="122" r="5"/></g>':'')+
+      '<text x="'+(x+100)+'" y="182" text-anchor="middle" font-size="13" font-weight="700" fill="#14203F">'+label+'</text>'+
+      '<text x="'+(x+100)+'" y="200" text-anchor="middle" font-size="11.5" fill="#72809C">'+sub+'</text></g>';
+  }
+  function paintCells(k){
+    var gp={fill:'#F7F3E8',edge:'#9CA9BC',dots:false}, gn={fill:'#F7F3E8',edge:'#9CA9BC',dots:false};
+    if(k===1){gp={fill:'#5B3D9E',edge:'#3E2A73',dots:false};gn=gp;}
+    if(k===2){gp={fill:'#3E2A73',edge:'#2A1B54',dots:true};gn=gp;}
+    if(k===3){gp={fill:'#3E2A73',edge:'#2A1B54',dots:true};gn={fill:'#F4F1EA',edge:'#B9C3D2',dots:false};}
+    if(k>=4){gp={fill:'#4B2F8E',edge:'#2A1B54',dots:false};gn={fill:'#E0668C',edge:'#C2477A',dots:false};}
+    fig.innerHTML=svgEl(
+      '<rect x="2" y="2" width="636" height="216" rx="14" fill="#F1F5FA" stroke="#DCE5F1"/>'+
+      '<text x="20" y="24" font-size="11" font-weight="700" fill="#72809C" letter-spacing="1">GLASS SLIDE</text>'+
+      cell(70,gp.fill,gp.edge,gp.fill==='#F7F3E8'?4:14,gp.dots,'Gram-positive cell','thick peptidoglycan',false)+
+      cell(370,gn.fill,gn.edge,4,gn.dots,'Gram-negative cell','thin peptidoglycan + outer membrane',true),
+      '0 0 640 220','A Gram-positive cell and a Gram-negative cell on a slide, changing color at each staining step');
+  }
+  function refresh(){
+    STEPS.forEach(function(s,i){btns[s.id].disabled=i<step;btns[s.id].classList.toggle('used',i<step);});
+    paintCells(step);
+    cap.innerHTML=step===0?'The slide is dry and unstained. Choose the first reagent.':CAPS[step-1]+(step===4?'<br><b>Result:</b> purple means Gram-positive, and pink means Gram-negative.':'');
+  }
+  function apply(){
+    step++;refresh();
+    if(step===4&&!state.activities[name])Act.done(name,true);
+  }
+  function press(id){
+    if(awaiting||step>=4)return;
+    if(id!==STEPS[step].id){cap.innerHTML='<strong>'+HINTS[id]+'</strong>';return;}
+    if(id==='alcohol'){predict();return;}
+    apply();
+  }
+  function predict(){
+    awaiting=true;predBox.innerHTML='';
+    var g=el('div','act-gate');
+    g.appendChild(el('p','q-stem','Predict: after the alcohol wash, which cell keeps the purple crystal violet\u2013iodine complex?'));
+    var ch=el('div','choices'),fb=el('div','feedback');
+    shuffle([['gp','The Gram-positive cell, because its thick peptidoglycan traps the complex'],
+     ['gn','The Gram-negative cell, because its outer membrane traps the complex']]).forEach(function(o){
+      var b=el('button','choice',o[1]);b.type='button';
+      b.onclick=function(){
+        var right=o[0]==='gp';
+        ch.querySelectorAll('.choice').forEach(function(x){x.disabled=true;});
+        b.classList.add(right?'right':'wrong');
+        fb.className='feedback show'+(right?'':' miss');
+        fb.innerHTML='<strong>'+(right?'Good prediction.':'Not quite.')+'</strong> Look at the slide: the alcohol removes the complex from the Gram-negative cell, while the thick peptidoglycan of the Gram-positive cell retains it.';
+        awaiting=false;apply();
+      };
+      ch.appendChild(b);
+    });
+    g.appendChild(ch);g.appendChild(fb);predBox.appendChild(g);
+  }
+  again.onclick=function(){step=0;awaiting=false;predBox.innerHTML='';shown=shuffled();buildButtons();refresh();};
+  buildButtons();
+  if(state.activities[name]===true)step=4;
+  refresh();
+  Act.register(name,{solve:function(){
+    step=0;awaiting=false;predBox.innerHTML='';refresh();
+    press('cv');press('iodine');press('alcohol');
+    var cs=predBox.querySelectorAll('.choice');Array.prototype.forEach.call(cs,function(c){if(/thick peptidoglycan traps/.test(c.textContent))c.click();});
+    press('safranin');
+  }});
+})();
+
+/* --- 2.4 Match each problem organism to the approach that works (drag and drop) --- */
+Act.dnd('act-exceptMatch',{name:'exceptMatch',
+  pills:['Acid-fast stain','Dark-field microscopy','No microscopic alternative','Extend the counterstain time','Look for inclusion bodies','Giemsa or other tissue stain'],
+  rows:[
+    {text:'<b><i>Mycobacteria</i></b><br>Dye cannot penetrate because of excess lipid in the cell wall.',answer:'Acid-fast stain',
+     why:'Mycobacteria have an outer layer rich in mycolic acids that resists Gram dyes, so an acid-fast stain is used instead.'},
+    {text:'<b><i>Treponema pallidum</i></b><br>Too thin to be observed with a Gram stain.',answer:'Dark-field microscopy',
+     why:'Dark-field microscopy (or fluorescent antibody) makes the thin spiral visible.'},
+    {text:'<b><i>Mycoplasma pneumoniae</i></b><br>No cell wall, and very small.',answer:'No microscopic alternative',
+     why:'With no wall and a very small size, there is no reliable microscopic alternative. Molecular and other methods are used instead.'},
+    {text:'<b><i>Legionella pneumophila</i></b><br>Poor uptake of the red counterstain.',answer:'Extend the counterstain time',
+     why:'Because the counterstain is taken up poorly, extending the counterstain time is the workaround.'},
+    {text:'<b>Chlamydiae</b><br>Obligate intracellular parasites, and very small.',answer:'Look for inclusion bodies',
+     why:'Chlamydiae live inside host cells, so inclusion bodies in the cytoplasm are the clue.'},
+    {text:'<b>Rickettsiae</b><br>Obligate intracellular pathogens.',answer:'Giemsa or other tissue stain',
+     why:'Giemsa or other tissue stains are used for Rickettsiae.'}
+  ]});
+
+/* --- 2.5 Predict how selective each drug target is --- */
+(function(){
+  var OPT=['Selective: harms the bacterium and spares the patient','Toxic to the patient and misses the bacterium'];
+  function it(id,title,prompt,ans,why,drugs){
+    return {id:id,title:title,prompt:prompt,options:OPT,answer:ans,why:why,
+            reveal:drugs?'<p style="margin:0"><b>Drug classes:</b> '+drugs+'</p>':''};
+  }
+  Act.predict('act-targetProbe',{name:'targetProbe',
+    start:'Choose a target above. Predict what a drug aimed at it would do, and the reasoning appears after you commit.',
+    items:[
+      it('pg','Peptidoglycan cross-linking','A drug blocks cross-linking of peptidoglycan. What is the expected outcome?',0,
+        'Peptidoglycan is unique to bacteria, so human cells have nothing for the drug to block.','beta-lactams and glycopeptides.'),
+      it('rib70','70S ribosome','A drug binds the bacterial 70S ribosome. What is the expected outcome?',0,
+        'The bacterial 70S ribosome differs from the human 80S cytosolic ribosome, so the drug fits one and fits the other poorly.','macrolides, tetracyclines, and aminoglycosides.'),
+      it('folate','Folate synthesis','A drug blocks bacterial folate synthesis. What is the expected outcome?',0,
+        'Bacteria make their own folate, while humans obtain it from the diet. The pathway the drug blocks is absent in the patient.','sulfonamides and trimethoprim.'),
+      it('gyrase','DNA gyrase and topoisomerase','A drug inhibits bacterial DNA gyrase. What is the expected outcome?',0,
+        'These are bacterial enzymes, so the target belongs to the microbe.','fluoroquinolones.'),
+      it('mem','Bacterial membranes','A drug disrupts bacterial membranes. What is the expected outcome?',0,
+        'Bacterial membranes are structurally distinct from human membranes, which is what gives these drugs their selectivity. Human cells also have a plasma membrane, so the difference matters.','daptomycin and polymyxins.'),
+      it('rib80','80S cytosolic ribosome','A drug is built to bind the 80S cytosolic ribosome. What is the expected outcome?',1,
+        'Human cytosolic ribosomes are 80S. A drug shaped for that target would bind the patient&rsquo;s cells, while bacteria carry 70S ribosomes and would be missed.',''),
+      it('mito','Mitochondria','A drug is aimed at mitochondria. What is the expected outcome?',1,
+        'Bacteria have no mitochondria or other membrane-bound organelles, so the target exists only in the patient.','')
+    ]});
+})();
+
+/* ============================================================
+   MODULE 3 ACTIVITIES
+   ============================================================ */
+
+/* --- 3.1 Predict where each oxygen category grows --- */
+(function(){
+  function tube(kind){
+    var dots='',seed=7,i,W=60,H=160;
+    function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+    function put(n,y0,y1){for(i=0;i<n;i++)dots+='<circle cx="'+(14+rnd()*(W-28)).toFixed(1)+'" cy="'+(y0+rnd()*(y1-y0)).toFixed(1)+'" r="2.6" fill="#B57614"/>';}
+    if(kind==='top')put(34,32,46);
+    if(kind==='bottom')put(34,162,182);
+    if(kind==='even')put(40,34,182);
+    if(kind==='band')put(34,58,80);
+    if(kind==='grad'){put(26,32,52);put(16,52,84);put(9,84,120);put(4,120,160);}
+    return '<svg viewBox="0 0 90 210" width="90" height="210" role="img" aria-label="Test tube showing growth pattern">'+
+      '<rect x="15" y="24" width="60" height="170" rx="14" fill="#FBF3D6" stroke="#14203F" stroke-opacity=".45" stroke-width="3"/>'+
+      '<g transform="translate(15 0)">'+dots+'</g>'+
+      '<text x="45" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#42506E">air (O\u2082)</text></svg>';
+  }
+  function reveal(kind,text){return '<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">'+tube(kind)+'<div style="flex:1 1 220px">'+text+'</div></div>';}
+  var OPT=['At the top of the tube only','At the bottom of the tube only','Evenly throughout the tube','Densest at the top, thinning downward','In a band just below the surface'];
+  Act.predict('act-oxygenProbe',{name:'oxygenProbe',
+    start:'Choose an organism category above. Air is at the top of the tube. Predict where the growth will appear.',
+    items:[
+      {id:'aer',title:'Obligate aerobe',prompt:'Where does an obligate aerobe grow?',options:OPT,answer:0,
+       why:'It requires oxygen for growth, and oxygen is highest at the surface.',
+       reveal:reveal('top','<p style="margin:0">Aerobic growth gives a higher yield, but it requires enzymes that neutralize reactive oxygen species, typically superoxide dismutase and catalase.</p>')},
+      {id:'anaer',title:'Obligate anaerobe',prompt:'Where does an obligate anaerobe grow?',options:OPT,answer:1,
+       why:'It cannot grow in the presence of oxygen, so it grows where oxygen is lowest.',
+       reveal:reveal('bottom','<p style="margin:0">Deep, poorly oxygenated sites suit these organisms.</p>')},
+      {id:'fac',title:'Facultative anaerobe',prompt:'Where does a facultative anaerobe grow?',options:OPT,answer:3,
+       why:'It can use oxygen and grows better with it, but it can also grow without oxygen, so growth is densest at the top and continues below.',
+       reveal:reveal('grad','<p style="margin:0">Most familiar clinical bacteria, such as <i>E. coli</i>, are facultative anaerobes.</p>')},
+      {id:'micro',title:'Microaerophile',prompt:'Where does a microaerophile grow?',options:OPT,answer:4,
+       why:'It needs a low level of oxygen: too much at the surface and too little at the bottom.',
+       reveal:reveal('band','<p style="margin:0">The band settles at the depth where the oxygen concentration suits it.</p>')},
+      {id:'tol',title:'Aerotolerant anaerobe',prompt:'Where does an aerotolerant anaerobe grow?',options:OPT,answer:2,
+       why:'It tolerates oxygen but does not use it for growth, so the oxygen gradient does not change where it grows.',
+       reveal:reveal('even','<p style="margin:0">Obligate intracellular pathogens such as <i>Chlamydia</i>, <i>Rickettsia</i>, <i>Ehrlichia</i>, and <i>Anaplasma</i> need living host cells to grow, so a tube of medium alone cannot grow them.</p>')}
+    ]});
+})();
+
+/* --- 3.2 A C. difficile ward case, one decision at a time --- */
+Act.stages('act-sporeCase',{name:'sporeCase',stages:[
+  {lead:'<p>A hospitalized patient who recently received antibiotics develops watery diarrhea. The stool tests toxin-positive for <i>Clostridioides difficile</i>, a spore-forming bacterium. A nurse is about to leave the room.</p>',
+   prompt:'Which hand hygiene step removes the spores?',
+   options:['Alcohol-based hand rub','Soap-and-water handwashing','A longer application of alcohol-based hand rub'],answer:1,
+   why:'Alcohol-based hand rub does not kill spores. Soap-and-water handwashing removes them by mechanical action.',
+   reveal:'Environmental persistence promotes transmission through contaminated surfaces and hands.'},
+  {lead:'<p>Bed rails, a commode, and a doorknob in the room can carry spores for years.</p>',
+   prompt:'Which agent is needed for environmental disinfection?',
+   options:['Alcohol-based wipes','Plain water and detergent','Dilute bleach, a sporicidal agent'],answer:2,
+   why:'Spores resist heat, drying, radiation, and many disinfectants, so a sporicidal agent such as dilute bleach is needed.'},
+  {lead:'<p>The infection prevention team asks which bacterial genera a pharmacist should link to spore precautions.</p>',
+   prompt:'Which pair contains the key spore-forming genera for pharmacy practice?',
+   options:['Clostridioides and Bacillus','Staphylococcus and Streptococcus','Escherichia and Neisseria','Chlamydia and Rickettsia'],answer:0,
+   why:'Clostridioides (for example C. difficile) and Bacillus are the key spore-forming genera. Not all bacteria can form spores.',
+   reveal:'A spore is a dormant survival structure, not a reproductive one. A single cell forms one spore, so sporulation does not increase cell numbers.'}
+]});
+
+/* --- 3.3 Step through the three ways DNA moves between bacteria --- */
+(function(){
+  function sq(x,y,n,color,w){var d='M'+x+' '+y,i;for(i=0;i<n;i++)d+=(i===0?' q7 -14 14 0':' t14 0');return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="'+(w||4)+'" stroke-linecap="round"/>';}
+  function bg(){return '<rect x="2" y="2" width="636" height="226" rx="14" fill="#F6F8FE" stroke="#E0E7F3"/>';}
+  function phage(id,cx,cy,dir,dna){
+    var head=[],i,tail=dir>0?[cx+14,cx+42]:[cx-14,cx-42];
+    for(i=0;i<6;i++){var a=Math.PI/3*i;head.push((cx+15*Math.cos(a)).toFixed(1)+','+(cy+15*Math.sin(a)).toFixed(1));}
+    return '<g id="'+id+'"><line x1="'+tail[0]+'" y1="'+cy+'" x2="'+tail[1]+'" y2="'+cy+'" stroke="#2E7DA8" stroke-width="5"/>'+
+      '<path d="M'+tail[1]+' '+cy+' l'+(dir>0?6:-6)+' -9 M'+tail[1]+' '+cy+' l'+(dir>0?6:-6)+' 9" stroke="#2E7DA8" stroke-width="3" stroke-linecap="round" fill="none"/>'+
+      '<polygon points="'+head.join(' ')+'" fill="'+(dna?'#FFF4D6':'#DCEBF4')+'" stroke="#2E7DA8" stroke-width="3"/>'+
+      (dna?'<path d="M'+(cx-9)+' '+cy+' q4 -8 8 0 t8 0" fill="none" stroke="#B57614" stroke-width="3" stroke-linecap="round"/>':'')+'</g>';
+  }
+  function cellG(id,x,y,w,h,fill,stroke,label){
+    return '<g id="'+id+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(h/2)+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="5"/>'+
+      '<text x="'+(x+w/2)+'" y="'+(y-10)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#14203F">'+label+'</text></g>';
+  }
+  var tf=svgEl(bg()+
+    cellG('tf-donor',40,80,150,90,'#F0EBFA','#5B3D9E','Donor cell')+
+    '<g id="tf-dnaIn">'+sq(84,125,6,'#B57614')+'</g>'+
+    cellG('tf-rec',440,80,150,90,'#E6F2F8','#2E7DA8','Recipient cell')+
+    '<g id="tf-new">'+sq(486,125,6,'#B57614')+'</g>'+
+    '<g id="tf-frag">'+sq(50,204,3,'#B57614')+sq(112,210,3,'#B57614')+sq(160,202,2,'#B57614')+'</g>',
+    '0 0 640 230','Transformation: a donor cell breaks open, and a recipient takes up its naked DNA');
+  var td=svgEl(bg()+
+    cellG('td-donor',30,100,130,80,'#F0EBFA','#5B3D9E','Donor cell')+
+    '<g id="td-dna">'+sq(58,140,5,'#B57614')+'</g>'+
+    phage('td-phage',300,60,-1,false)+
+    phage('td-phage2',175,140,1,true)+
+    cellG('td-rec',470,100,140,80,'#E6F2F8','#2E7DA8','Recipient cell')+
+    '<g id="td-new">'+sq(500,140,5,'#B57614')+'</g>'+
+    '<text x="300" y="34" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2E7DA8" id="td-lbl">bacteriophage</text>',
+    '0 0 640 230','Transduction: a bacteriophage carries donor DNA to a recipient');
+  var cj=svgEl(bg()+
+    cellG('cj-donor',40,80,190,90,'#F0EBFA','#5B3D9E','Donor (F+)')+
+    '<circle cx="100" cy="125" r="17" fill="none" stroke="#B57614" stroke-width="5" id="cj-plasmid"/>'+
+    '<path id="cj-pilus" d="M232 125 H 398" stroke="#14203F" stroke-width="6" stroke-linecap="round"/>'+
+    '<g id="cj-recg" style="fill:#E6F2F8"><rect x="400" y="80" width="190" height="90" rx="45" fill="inherit" stroke="#2E7DA8" stroke-width="5"/></g>'+
+    '<text x="495" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#14203F">Recipient (F\u2212)</text>'+
+    '<circle cx="100" cy="125" r="17" fill="none" stroke="#B57614" stroke-width="5" id="cj-copy"/>',
+    '0 0 640 230','Conjugation: a pilus bridges two cells and a plasmid copy passes across');
+  Act.stepper('act-hgtSteps',{name:'hgtSteps',scenes:[
+    {id:'tf',label:'Transformation',intro:'Uptake of naked (free) DNA from the environment.',svg:tf,steps:[
+      {caption:'A donor bacterium carries a gene, shown in gold. A recipient that lacks it is nearby.',
+       set:{'tf-donor':{o:1},'tf-dnaIn':{o:1},'tf-frag':{o:0,t:[0,0]},'tf-new':{o:0},'tf-rec':{o:1}}},
+      {caption:'The donor cell dies and breaks open, releasing its DNA as naked fragments.',
+       set:{'tf-donor':{o:.18},'tf-dnaIn':{o:0},'tf-frag':{o:1}}},
+      {caption:'Naked DNA drifts through the environment. No cell contact and no virus are involved.',
+       set:{'tf-frag':{t:[210,0]}}},
+      {caption:'A recipient cell takes up a fragment from its surroundings.',
+       set:{'tf-frag':{t:[400,-72]}}},
+      {caption:'The fragment is incorporated into the recipient\u2019s DNA. The recipient now carries the new gene.',
+       set:{'tf-frag':{o:0},'tf-new':{o:1}}}]},
+    {id:'td',label:'Transduction',intro:'DNA transfer mediated by a bacteriophage, a virus that infects bacteria.',svg:td,steps:[
+      {caption:'A bacteriophage, a virus that infects bacteria, approaches a donor bacterium.',
+       set:{'td-donor':{o:1},'td-dna':{o:1},'td-phage':{o:1,t:[0,0]},'td-lbl':{o:1},'td-phage2':{o:0,t:[0,0]},'td-new':{o:0},'td-rec':{o:1}}},
+      {caption:'The phage attaches to the donor and infects it.',
+       set:{'td-phage':{t:[-100,80]},'td-lbl':{o:0}}},
+      {caption:'As new phages are assembled, one packages a piece of the donor\u2019s DNA by mistake, and the donor cell breaks open.',
+       set:{'td-donor':{o:.2},'td-dna':{o:.2},'td-phage':{o:0},'td-phage2':{o:1}}},
+      {caption:'The phage that carries donor DNA reaches a new recipient bacterium.',
+       set:{'td-phage2':{t:[250,0]}}},
+      {caption:'The phage injects the donor DNA into the recipient, which can then incorporate the new genes.',
+       set:{'td-phage2':{o:.25},'td-new':{o:1}}}]},
+    {id:'cj',label:'Conjugation',intro:'Direct cell-to-cell transfer through physical contact, with a pilus forming the bridge.',svg:cj,steps:[
+      {caption:'The donor (F+) carries a plasmid, shown in gold. The recipient (F\u2212) has none.',
+       set:{'cj-pilus':{o:0},'cj-copy':{o:0,t:[0,0]},'cj-plasmid':{o:1},'cj-recg':{c:'#E6F2F8'}}},
+      {caption:'The donor extends a pilus toward the recipient.',set:{'cj-pilus':{o:1}}},
+      {caption:'The pilin protein forms a bridge between the cells, and the donor makes a copy of the plasmid.',set:{'cj-copy':{o:1}}},
+      {caption:'The plasmid copy passes through the bridge into the recipient.',set:{'cj-copy':{t:[380,0]}}},
+      {caption:'Both cells now carry the plasmid. Plasmids can encode resistance genes, virulence genes, metabolic traits, and transfer machinery.',
+       set:{'cj-pilus':{o:.25},'cj-recg':{c:'#FFF1C7'}}}]}
+  ]});
+})();
+
+/* --- 3.4 The selection lab (predict, then manipulate a variable) --- */
+(function selectionLab(){
+  var host=$('act-selectionLab'),name='selectionLab',vkey=name+'_v';
+  var prog=Object.assign({withR:0,noR:0},state.activities[vkey]||{});
+  var scen='withR',S=99,R=1,phase=0,rounds=0,hist=[1],dead=0,unlocked=false;
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+
+
+  var seg=segControl([['withR','Starts with 1 resistant cell'],['noR','Starts with no resistant cells']],function(v){setScen(v);});
+  var row=el('div','lab-row');row.innerHTML='<span class="lab-label">Starting population</span>';row.appendChild(seg.box);
+  var fig=el('div','figure'),info=el('div','feedback show'),ctl=el('div','controls'),
+      go=el('button','btn','Give the drug'),rs=el('button','btn ghost','Reset'),cap=el('span','caption');
+  go.type=rs.type='button';cap.style.margin='0';ctl.appendChild(go);ctl.appendChild(rs);ctl.appendChild(cap);
+  [row,fig,info,ctl].forEach(function(x){lab.appendChild(x);});
+
+  /* the prediction gate is created after the lab UI exists, because a saved answer unlocks the lab immediately */
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a drug kills 9 of every 10 susceptible cells and cannot kill resistant cells. A population starts with 99 susceptible cells and 1 resistant cell. After four rounds of treatment and regrowth, roughly what share of the population is resistant?',
+    options:['About 1%, unchanged','About 10%','About 50%','Nearly all of it'],answer:3,
+    why:'Each round removes most of the susceptible cells but none of the resistant ones. The survivors regrow, so the resistant share climbs round after round.'},
+    function(){unlocked=true;paint();});
+
+  function setScen(v){scen=v;S=v==='withR'?99:100;R=v==='withR'?1:0;phase=0;rounds=0;hist=[R];dead=0;paint();}
+  function chart(){
+    var x0=40,y0=272,W=560,H=100,i,pts=[];
+    var s='<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+W)+'" y2="'+y0+'" stroke="#9CA9BC"/><line x1="'+x0+'" y1="'+(y0-H)+'" x2="'+x0+'" y2="'+y0+'" stroke="#9CA9BC"/>'+
+      '<text x="'+x0+'" y="'+(y0-H-8)+'" font-size="11.5" font-weight="700" fill="#42506E">% resistant</text><text x="'+(x0+W/2)+'" y="'+(y0+36)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#42506E">rounds of treatment</text>'+
+      '<text x="'+(x0-6)+'" y="'+(y0+4)+'" text-anchor="end" font-size="10.5" fill="#72809C">0</text><text x="'+(x0-6)+'" y="'+(y0-H+4)+'" text-anchor="end" font-size="10.5" fill="#72809C">100</text>';
+    for(i=0;i<=6;i++)s+='<text x="'+(x0+i*W/6)+'" y="'+(y0+16)+'" text-anchor="middle" font-size="10.5" fill="#72809C">'+i+'</text>';
+    hist.forEach(function(v,k){pts.push((x0+k*W/6).toFixed(1)+','+(y0-v/100*H).toFixed(1));});
+    s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="#E0A010" stroke-width="3.5" stroke-linejoin="round"/>';
+    hist.forEach(function(v,k){s+='<circle cx="'+(x0+k*W/6).toFixed(1)+'" cy="'+(y0-v/100*H).toFixed(1)+'" r="4.5" fill="#173F9A"/>';});
+    return s;
+  }
+  function dots(){
+    var s='',i,cols=25,total=100;
+    for(i=0;i<total;i++){
+      var cx=30+(i%cols)*24.5,cy=26+Math.floor(i/cols)*24,fill,stroke;
+      if(phase===0){
+        if(i<S){fill='#8FB4EE';stroke='#3F6FCF';}
+        else if(i<S+R){fill='#F5B82E';stroke='#B57614';}
+        else{fill='#fff';stroke='#DCE5F1';}
+      }else{
+        /* after the drug: susceptible survivors first, then dead slots, then resistant */
+        if(i<S){fill='#8FB4EE';stroke='#3F6FCF';}
+        else if(i<S+dead){fill='#F1F3F7';stroke='#C5CEDC';}
+        else if(i<S+dead+R){fill='#F5B82E';stroke='#B57614';}
+        else{fill='#fff';stroke='#DCE5F1';}
+      }
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="8.5" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2"/>';
+      if(phase===1&&i>=S&&i<S+dead)s+='<path d="M'+(cx-4)+' '+(cy-4)+' l8 8 M'+(cx+4)+' '+(cy-4)+' l-8 8" stroke="#9AA5B8" stroke-width="2" stroke-linecap="round"/>';
+    }
+    return s;
+  }
+  function paint(){
+    fig.innerHTML=svgEl('<rect x="2" y="2" width="636" height="316" rx="14" fill="#F6F8FE" stroke="#E0E7F3"/>'+dots()+
+      '<g font-size="11.5" fill="#42506E"><circle cx="30" cy="136" r="6" fill="#8FB4EE" stroke="#3F6FCF" stroke-width="2"/><text x="42" y="140">susceptible</text>'+
+      '<circle cx="128" cy="136" r="6" fill="#F5B82E" stroke="#B57614" stroke-width="2"/><text x="140" y="140">resistant</text>'+
+      '<circle cx="216" cy="136" r="6" fill="#F1F3F7" stroke="#C5CEDC" stroke-width="2"/><text x="228" y="140">killed by the drug</text></g>'+chart(),
+      '0 0 640 320','One hundred bacteria colored by susceptibility, and a chart of the percent resistant after each round of treatment');
+    go.textContent=phase===0?'Give the drug':'Let survivors regrow';
+    go.disabled=!unlocked||(phase===0&&rounds>=6);
+    rs.disabled=!unlocked;seg.buttons.withR.disabled=seg.buttons.noR.disabled=!unlocked;
+    seg.set(scen);
+    var msg;
+    if(!unlocked)msg='Answer the prediction above to unlock the lab.';
+    else if(phase===1)msg='<strong>The drug has been given.</strong> '+dead+' susceptible cells died. '+(R>0?'The '+R+' resistant cell'+(R>1?'s were':' was')+' unaffected.':'No resistant cells were present.')+' Now let the survivors regrow.';
+    else if(rounds===0)msg=scen==='withR'?'<strong>Round 0.</strong> One resistant cell sits among 99 susceptible cells (1% resistant). Give the drug.':'<strong>Round 0.</strong> Every cell is susceptible. Give the same drug and compare.';
+    else msg=scen==='withR'?'<strong>After round '+rounds+':</strong> '+R+'% of the population is resistant. The drug did not create the resistant cells; it removed the competition so they could multiply.':'<strong>After round '+rounds+':</strong> the population is still fully susceptible. With no resistant cell to select, the drug has nothing to favor. In practice, resistance could still arrive by mutation or gene transfer.';
+    info.className='feedback show';info.innerHTML=msg;
+    cap.textContent=(prog.withR>=4?'Resistant-cell run \u2713  ':'')+(prog.noR>=2?'No-resistant-cell run \u2713':'');
+  }
+  function step(){
+    if(!unlocked)return;
+    if(phase===0){
+      var s2=Math.round(S*0.1);dead=S-s2;S=s2;phase=1;paint();
+    }else{
+      var total=S+R,newR=total===0?0:Math.round(100*R/total);
+      R=newR;S=100-newR;dead=0;phase=0;rounds++;hist.push(R);
+      if(scen==='withR')prog.withR=Math.max(prog.withR,rounds);else prog.noR=Math.max(prog.noR,rounds);
+      Act.keep(vkey,{withR:prog.withR,noR:prog.noR});
+      if(prog.withR>=4&&prog.noR>=2&&!state.activities[name])Act.done(name,true);
+      paint();
+    }
+  }
+  go.onclick=step;rs.onclick=function(){setScen(scen);};
+  paint();
+  Act.register(name,{solve:function(){
+    gate.solve();setScen('withR');var i;for(i=0;i<4;i++){step();step();}
+    setScen('noR');for(i=0;i<2;i++){step();step();}
+  }});
+})();
+
+/* ============================================================
+   MODULE 4 ACTIVITIES
+   ============================================================ */
+
+/* --- 4.1 Tour the body (clickable figure) --- */
+(function(){
+  function mk(id,x,y,n,label,side){
+    var tx=side==='l'?x-20:x+20,anchor=side==='l'?'end':'start';
+    return '<g data-hs="'+id+'"><circle cx="'+x+'" cy="'+y+'" r="13" fill="#fff" stroke="#173F9A" stroke-width="3"/>'+
+      '<text x="'+x+'" y="'+(y+4.5)+'" text-anchor="middle" font-size="13" font-weight="800" fill="#173F9A">'+n+'</text>'+
+      '<text x="'+tx+'" y="'+(y+4.5)+'" text-anchor="'+anchor+'" font-size="13" font-weight="700" fill="#14203F" paint-order="stroke" stroke="#F3F6FC" stroke-width="4">'+label+'</text></g>';
+  }
+  var body=
+    '<g fill="#E8EEFC" stroke="#B9C8F0" stroke-width="3">'+
+      '<circle cx="320" cy="66" r="46"/><rect x="306" y="108" width="28" height="24" rx="8"/>'+
+      '<rect x="262" y="126" width="116" height="190" rx="38"/>'+
+      '<rect x="222" y="134" width="30" height="150" rx="15"/><rect x="388" y="134" width="30" height="150" rx="15"/>'+
+      '<rect x="270" y="300" width="42" height="118" rx="18"/><rect x="328" y="300" width="42" height="118" rx="18"/></g>'+
+    '<g fill="#CFE3F1" stroke="#7FB0CF" stroke-width="2"><ellipse cx="296" cy="176" rx="20" ry="32"/><ellipse cx="344" cy="176" rx="20" ry="32"/></g>'+
+    '<path d="M292 232 h56 v44 h-56z" fill="none" stroke="#D9A46A" stroke-width="11" stroke-linejoin="round"/>';
+  var svg=svgEl(body+
+    mk('nose',320,58,2,'Nose','l')+mk('mouth',320,92,3,'Mouth and throat','l')+
+    mk('skin',403,214,1,'Skin','r')+mk('lungs',320,176,4,'Lower airways','r')+
+    mk('colon',320,254,5,'Colon','r')+mk('bladder',320,292,6,'Bladder and urethra','r')+mk('vagina',320,330,7,'Vagina','r'),
+    '150 0 340 430','A simple body outline with seven numbered sites: skin, nose, mouth and throat, lower airways, colon, bladder and urethra, and vagina');
+  Act.explore('act-bodyMap',{name:'bodyMap',svg:svg,
+    ids:['skin','nose','mouth','lungs','colon','bladder','vagina'],
+    start:'Select a numbered site on the body, or one of the buttons below the figure.',
+    items:{
+      skin:{title:'1 \u00B7 Skin',html:'<p>Roughly 1,000\u201310,000 microbes per cm\u00B2. The predominant non-pathogenic organism is <i>Staphylococcus epidermidis</i>, which may become pathogenic on prosthetic devices.</p><p>The predominant pathogenic organism is <i>Staphylococcus aureus</i>, mainly nasal, which can cause skin and organ abscesses.</p>'},
+      nose:{title:'2 \u00B7 Nose',html:'<p><i>Staphylococcus aureus</i> is the resident organism listed for the nose. A person who carries it without symptoms is an asymptomatic carrier and may serve as a source of transmission.</p>'},
+      mouth:{title:'3 \u00B7 Mouth and throat',html:'<p>Viridans streptococci live here. They and other resident species can inhibit colonization by pathogens such as <i>Streptococcus pyogenes</i> and <i>Neisseria meningitidis</i>.</p>'},
+      lungs:{title:'4 \u00B7 Lower airways',html:'<p>Few organisms live in the lower bronchi and alveoli. This is a <b>low-biomass</b> environment, not a sterile one, so detecting organisms here does not by itself establish infection.</p>'},
+      colon:{title:'5 \u00B7 Colon',html:'<p>The colon holds the <b>majority</b> of the human microbiome, a dense and predominantly anaerobic community. <i>Bacteroides fragilis</i> and <i>Escherichia coli</i> are listed residents.</p><p><b>Colonization resistance</b> works here through competition for adhesion sites and nutrients, antimicrobial metabolites such as short-chain fatty acids, bacteriocins, and stimulation of host defenses. Gut bacteria also digest plant fiber into short-chain fatty acids and synthesize vitamin K and some B vitamins.</p>'},
+      bladder:{title:'6 \u00B7 Bladder and urethra',html:'<p>Healthy bladder urine is a low-biomass environment, not a sterile one. <i>S. epidermidis</i> is the resident organism listed for the urethra.</p>'},
+      vagina:{title:'7 \u00B7 Vagina',html:'<p><i>Lactobacillus</i> species and <i>E. coli</i> are listed residents. <i>Lactobacillus</i> maintains a low pH that limits pathogen growth. The vagina may also harbor organisms of fecal origin.</p>'}
+    }});
+  var bf=$('act-bodyMap').querySelector('.figure');if(bf){bf.style.maxWidth='430px';bf.style.margin='0 auto';}
+})();
+
+/* --- 4.2 Colonization, contamination, infection, or disease? (sort) --- */
+Act.sort('act-termSort',{name:'termSort',options:['Colonization','Contamination','Infection','Disease'],
+  rows:[
+    {text:'<i>S. aureus</i> grows in a healthy nurse\u2019s nose. There is no tissue injury and no symptoms.',answer:'Colonization',
+     why:'Presence or growth of an organism without attributable tissue injury or disease is colonization. A carrier can still be a source of transmission.'},
+    {text:'A blood culture grows skin bacteria because the skin was not cleaned before the draw. The patient is well.',answer:'Contamination',
+     why:'The organism came from an external source during collection and was never growing in the patient.'},
+    {text:'<i>S. pyogenes</i> has invaded throat tissue and the immune system is responding, but the patient has no symptoms.',answer:'Infection',
+     why:'Infection means the organism has invaded tissue and caused a host response. It can occur without symptoms.'},
+    {text:'A patient has fever, cough, and chest pain because <i>S. pneumoniae</i> has infected the lungs.',answer:'Disease',
+     why:'Disease is symptomatic illness resulting from infection.'},
+    {text:'Urine from an asymptomatic patient with a chronic catheter grows <i>E. coli</i>.',answer:'Colonization',
+     why:'Asymptomatic bacteriuria is colonization, not infection, so treatment is not automatically indicated.'},
+    {text:'A specimen picks up organisms from the environment during handling. The organism never grew in the patient.',answer:'Contamination',
+     why:'Contamination is a distinct idea from colonization: the organism was introduced from an external source.'},
+    {text:'A patient develops the fever and joint pain of rheumatic fever after infection with <i>S. pyogenes</i>.',answer:'Disease',
+     why:'This is symptomatic illness resulting from infection. In rheumatic fever, the immune response to the organism drives the symptoms.'}
+  ]});
+
+/* --- 4.3 Match the transmission term to its example --- */
+Act.dnd('act-travelMatch',{name:'travelMatch',
+  pills:['Fomite','Vertical transmission','Horizontal transmission','Reservoir','Source','Vector','Zoonosis'],
+  rows:[
+    {text:'A doorknob, towel, or bedsheet that carries microbes from one person to the next.',answer:'Fomite',why:'Fomites are inanimate objects used to transfer microbes.'},
+    {text:'A mother passes an infection to her child.',answer:'Vertical transmission',why:'Vertical transmission is from mother to child.'},
+    {text:'One person infects another who is not their offspring.',answer:'Horizontal transmission',why:'Horizontal transmission is person to person, not via offspring.'},
+    {text:'The normal habitat that maintains and multiplies the infectious agent.',answer:'Reservoir',why:'The reservoir is where the agent normally lives and multiplies.'},
+    {text:'The immediate origin of one patient\u2019s exposure, which may differ from the normal habitat.',answer:'Source',why:'The source is specific to one exposure and may differ from the reservoir.'},
+    {text:'A tick or other arthropod that carries an agent to a new host.',answer:'Vector',why:'A vector is a living organism, usually an arthropod, that transmits an infectious agent.'},
+    {text:'A disease that uses animals as its reservoir.',answer:'Zoonosis',why:'Zoonoses are diseases that use animals as reservoirs.'}
+  ]});
+
+/* --- 4.4 Complete the paragraph (fill in the blank) --- */
+Act.fill('act-virulenceFill',{name:'virulenceFill',
+  bank:['biofilm','collagenase','hyaluronidase','coagulase','IgA protease','capsule','leukocidins','catalase','transpeptidase','toxoid'],
+  answers:['biofilm','collagenase','hyaluronidase','coagulase','IgA protease','capsule','leukocidins'],
+  text:'Bacteria that adhere to an implanted device can form a {0}, a protective matrix of proteins, polysaccharides, and extracellular DNA that lowers antibiotic susceptibility. To spread through tissue, some bacteria secrete {1}, which degrades collagen, and {2}, which degrades hyaluronic acid. The enzyme {3} promotes a fibrin clot that can wall bacteria off from phagocytes, and {4} cleaves secretory IgA at mucosal surfaces. A {5} prevents phagocytes from adhering to the bacterium, while {6}, pore-forming toxins made by S. aureus, destroy neutrophils and macrophages.'});
+
+/* --- 4.5 Exotoxin, endotoxin, or immune-mediated damage? (sort) --- */
+Act.sort('act-toxinSort',{name:'toxinSort',options:['Exotoxin','Endotoxin (LPS)','Immune-mediated damage'],
+  rows:[
+    {text:'A secreted polypeptide. Diphtheria, cholera, and botulinum toxins are examples.',answer:'Exotoxin',
+     why:'Exotoxins are polypeptides secreted by Gram-positive and Gram-negative bacteria.'},
+    {text:'Part of the outer membrane of Gram-negative bacteria.',answer:'Endotoxin (LPS)',
+     why:'Endotoxin is lipopolysaccharide (LPS), a component of the Gram-negative outer membrane.'},
+    {text:'Can be treated with formaldehyde to make a toxoid for vaccines.',answer:'Exotoxin',
+     why:'Toxoids made from exotoxins are used in vaccines.'},
+    {text:'Its lipid A portion is the major inflammatory component, producing fever and shock.',answer:'Endotoxin (LPS)',
+     why:'Lipid A drives the inflammatory response. Endotoxin has lower toxicity than exotoxins.'},
+    {text:'Antibodies against the M protein cross-react with heart tissue.',answer:'Immune-mediated damage',
+     why:'Molecular mimicry against the M protein is especially important in the cardiac injury of rheumatic fever.'},
+    {text:'Tetanus and botulism can arise from this alone, with little tissue invasion.',answer:'Exotoxin',
+     why:'For some bacteria, the role in pathogenesis is solely to secrete an exotoxin.'},
+    {text:'Weakly antigenic, so it is not used to make toxoids.',answer:'Endotoxin (LPS)',
+     why:'Endotoxin is weakly antigenic and is not used to form toxoids.'},
+    {text:'The symptoms come from the host response to the organism, rather than from the organism itself.',answer:'Immune-mediated damage',
+     why:'In immunopathogenesis the immune response, not the organism, causes disease symptoms.'}
+  ]});
+
+/* --- 4.5b Look closer at the LPS molecule (clickable diagram; practice only, not required) --- */
+(function(){
+  var host=$('act-lpsExplore');
+  host.insertAdjacentHTML('beforebegin','<h3 style="margin:28px 0 8px">Look closer: the LPS molecule</h3><p class="try-note">Optional. Open each part to see how the three components fit together.</p>');
+  var heads='',tails='',i;
+  for(i=0;i<22;i++){var x=52+i*26;
+    tails+='<line x1="'+x+'" y1="212" x2="'+x+'" y2="236" stroke="#EBB2C6" stroke-width="2.4"/>';
+    heads+='<circle cx="'+x+'" cy="208" r="5" fill="#C2477A"/><circle cx="'+x+'" cy="240" r="5" fill="#C2477A"/>';}
+  function hex(cx,cy,fill,r){var p=[],k;for(k=0;k<6;k++){var a=Math.PI/3*k+Math.PI/6;p.push((cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1));}
+    return '<polygon points="'+p.join(' ')+'" fill="'+fill+'" stroke="#14203F" stroke-opacity=".35" stroke-width="1.5"/>';}
+  var oa='',k;
+  for(k=0;k<7;k++)oa+=hex(300+Math.sin(k*.7)*14,118-k*14,k%2?'#5B9BD5':'#7FB3E3',10);
+  var svg=svgEl(
+    '<rect x="2" y="2" width="636" height="286" rx="14" fill="#FBFCFE" stroke="#E0E7F3"/>'+
+    '<text x="24" y="28" font-size="11" font-weight="700" fill="#72809C" letter-spacing="1">OUTSIDE THE CELL</text>'+
+    '<text x="24" y="276" font-size="11" font-weight="700" fill="#72809C" letter-spacing="1">OUTER MEMBRANE OF A GRAM-NEGATIVE CELL</text>'+
+    tails+heads+
+    '<g data-hs="lipidA"><path d="M270 184 h60 v18 h-60z" fill="#E0668C" stroke="#C2477A" stroke-width="3" stroke-linejoin="round"/><line x1="276" y1="202" x2="276" y2="236" stroke="#C2477A" stroke-width="3"/><line x1="290" y1="202" x2="290" y2="236" stroke="#C2477A" stroke-width="3"/><line x1="310" y1="202" x2="310" y2="236" stroke="#C2477A" stroke-width="3"/><line x1="324" y1="202" x2="324" y2="236" stroke="#C2477A" stroke-width="3"/><text x="345" y="196" font-size="13" font-weight="700" fill="#14203F">Lipid A</text></g>'+
+    '<g data-hs="core">'+hex(288,164,'#F5B82E',11)+hex(312,164,'#F5B82E',11)+hex(300,144,'#F5B82E',11)+'<text x="345" y="158" font-size="13" font-weight="700" fill="#14203F">Core oligosaccharide</text></g>'+
+    '<g data-hs="oantigen">'+oa+'<text x="345" y="80" font-size="13" font-weight="700" fill="#14203F">O antigen</text></g>',
+    '0 0 640 290','A lipopolysaccharide molecule anchored in the outer membrane, with lipid A at the base, a core oligosaccharide, and a long O antigen chain');
+  Act.explore('act-lpsExplore',{name:'lpsExplore',svg:svg,ids:['lipidA','core','oantigen'],
+    start:'Select a part of the molecule, or one of the buttons below the figure.',
+    items:{
+      lipidA:{title:'Lipid A',html:'<p>The lipid anchor, embedded in the outer membrane. It is the <b>major inflammatory component</b> of LPS. Endotoxin produces fever and shock, and many endotoxins target the macrophage.</p>'},
+      core:{title:'Core oligosaccharide',html:'<p>The middle segment, linking lipid A to the O antigen. The order outward from the membrane is lipid A, core, then O antigen.</p><p>Some organisms, such as <i>Neisseria</i>, produce LOS (lipooligosaccharide) rather than full-length LPS.</p>'},
+      oantigen:{title:'O antigen',html:'<p>The polysaccharide chain that extends outward from the cell. It is the outermost part of LPS.</p>'}
+    }});
+})();
+
+/* ============================================================
+   MODULE 5 ACTIVITIES
+   ============================================================ */
+
+/* --- 5.1 Put the diagnostic sequence in order --- */
+Act.order('act-dxOrder',{name:'dxOrder',items:[
+  '<b>Specimen quality.</b> A well-collected specimen from the right site.',
+  '<b>Microscopy and Gram stain.</b> Shape, size, arrangement, and Gram reaction.',
+  '<b>Culture, or NAAT and antigen testing.</b> Growth, or molecular detection when culture or microscopy is difficult or slow.',
+  '<b>Organism identification.</b> Biochemical, molecular, or mass-spectrometry-based identification of the isolate.',
+  '<b>Susceptibility testing.</b> Which antimicrobials are likely to work.',
+  '<b>Clinical interpretation.</b> The result read together with the patient\u2019s clinical picture.'
+]});
+
+/* --- 5.2 Judge five real-world results --- */
+Act.sort('act-caseSort',{name:'caseSort',options:['Likely true pathogen','Likely colonizer or contaminant'],
+  rows:[
+    {text:'Sputum from a mildly ill outpatient grows a few colonies of <i>Streptococcus pneumoniae</i>.',answer:'Likely colonizer or contaminant',
+     why:'This is likely an upper-airway colonizer or contaminant. Interpret it with symptoms, not with the culture alone.'},
+    {text:'Two blood cultures from a hospitalized patient with an implanted catheter both grow <i>Staphylococcus epidermidis</i>.',answer:'Likely true pathogen',
+     why:'This is consistent with true catheter-associated bacteremia. Growth in multiple bottles argues against contamination.'},
+    {text:'Urine from an asymptomatic patient with a chronic catheter grows <i>E. coli</i>.',answer:'Likely colonizer or contaminant',
+     why:'Asymptomatic bacteriuria is colonization, not infection, so treatment is not automatically indicated.'},
+    {text:'Stool from a patient with diarrhea after antibiotics is toxin-positive for <i>Clostridioides difficile</i>.',answer:'Likely true pathogen',
+     why:'This is consistent with C. difficile infection given the clinical context. It is not a routine stool culture target.'},
+    {text:'Cerebrospinal fluid grows <i>Neisseria meningitidis</i>.',answer:'Likely true pathogen',
+     why:'CSF is normally sterile, so any growth there is treated as a true pathogen rather than a colonizer.'}
+  ]});
+
+/* --- 5.3 Set the MIC, read the report (manipulate a variable) --- */
+(function micLab(){
+  var host=$('act-micLab'),name='micLab',vkey=name+'_v';
+  var CONC=[0.25,0.5,1,2,4,8,16,32],seen=(state.activities[vkey]||[]).slice(),unlocked=false,idx=0;
+  function cat(i){return i<=3?'S':(i===4?'I':'R');}
+  var TEXT={
+    S:'<strong>Susceptible (S).</strong> The organism is likely to respond to standard dosing.',
+    I:'<strong>Intermediate, or increased exposure (I).</strong> The organism may respond at higher dosing, or where the drug concentrates at the infection site.',
+    R:'<strong>Resistant (R).</strong> The organism is unlikely to respond even at maximal safe dosing.'
+  };
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var sliderRow=el('div','lab-row'),lbl=el('span','lab-label','Isolate MIC'),val=el('span','stage-name');
+  var slider=document.createElement('input');slider.type='range';slider.min='0';slider.max='7';slider.step='1';slider.value='0';
+  slider.setAttribute('aria-label','Isolate MIC in micrograms per milliliter');slider.style.maxWidth='340px';
+  sliderRow.appendChild(lbl);sliderRow.appendChild(slider);sliderRow.appendChild(val);
+  var fig=el('div','figure'),report=el('div','report'),note=el('p','caption'),prog=el('p','caption');
+  [sliderRow,fig,report,note,prog].forEach(function(x){lab.appendChild(x);});
+
+  function wells(){
+    var s='<rect x="2" y="2" width="636" height="216" rx="14" fill="#F6F8FE" stroke="#E0E7F3"/>'+
+      '<text x="20" y="24" font-size="11" font-weight="700" fill="#72809C" letter-spacing="1">TWO-FOLD DILUTIONS OF THE DRUG (\u00B5g/mL)</text>',i;
+    for(i=0;i<8;i++){
+      var x=52+i*77,grow=i<idx;
+      s+='<circle cx="'+x+'" cy="82" r="27" fill="'+(grow?'#EAD9A2':'#F4F8FF')+'" stroke="'+(i===idx?'#E0A010':'#9CA9BC')+'" stroke-width="'+(i===idx?6:3)+'"/>';
+      if(grow)s+='<g fill="#B57614"><circle cx="'+(x-9)+'" cy="76" r="3"/><circle cx="'+(x+7)+'" cy="88" r="3"/><circle cx="'+(x+2)+'" cy="72" r="3"/><circle cx="'+(x-4)+'" cy="94" r="3"/><circle cx="'+(x+12)+'" cy="78" r="3"/></g>';
+      s+='<text x="'+x+'" y="132" text-anchor="middle" font-size="13" font-weight="700" fill="#14203F">'+CONC[i]+'</text>';
+      s+='<rect x="'+(x-34)+'" y="146" width="68" height="16" rx="8" fill="'+(cat(i)==='S'?'#2FA97A':cat(i)==='I'?'#F5B82E':'#D4536B')+'"/>'+
+         '<text x="'+x+'" y="158.5" text-anchor="middle" font-size="11" font-weight="800" fill="'+(cat(i)==='I'?'#1B2A57':'#fff')+'">'+cat(i)+'</text>';
+    }
+    s+='<text x="'+(52+idx*77)+'" y="52" text-anchor="middle" font-size="12" font-weight="800" fill="#7A5200">MIC</text>'+
+       '<path d="M'+(52+idx*77-7)+' 55 h14 l-7 8z" fill="#E0A010"/>'+
+       '<text x="20" y="196" font-size="12" fill="#42506E"><tspan font-weight="700">Cloudy</tspan> = growth   \u2022   <tspan font-weight="700">Clear</tspan> = growth inhibited   \u2022   The MIC is the first clear well.   \u2022   Made-up breakpoints: S \u2264 2, I = 4, R \u2265 8</text>';
+    return svgEl(s,'0 0 640 220','Eight wells with increasing drug concentrations. Wells below the MIC are cloudy and wells at or above it are clear.');
+  }
+  function paint(){
+    val.textContent=CONC[idx]+' \u00B5g/mL';
+    fig.innerHTML=wells();
+    var c=cat(idx);
+    report.innerHTML='<span class="sir '+c+'">'+c+'</span><div style="flex:1 1 260px">'+TEXT[c]+'</div>';
+    note.textContent='This describes the organism in a test tube. It does not account for biofilms, source control, or how well the drug reaches the infection site.';
+    slider.disabled=!unlocked;
+    if(unlocked&&seen.indexOf(c)===-1){seen.push(c);Act.keep(vkey,seen.slice());}
+    prog.textContent=unlocked?('Reports seen: '+['S','I','R'].filter(function(k){return seen.indexOf(k)>-1;}).join(', ')+' \u2014 '+seen.length+' of 3'):'Answer the prediction above to unlock the slider.';
+    if(unlocked&&seen.length>=3&&!state.activities[name])Act.done(name,true);
+  }
+  slider.oninput=function(){idx=Number(slider.value);paint();};
+
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: as an isolate\u2019s MIC for a drug rises from 0.25 to 32 \u00B5g/mL, what happens to the chance that standard dosing will work?',
+    options:['It rises, because the organism is more sensitive','It falls, because more drug is needed to stop the organism growing','It stays the same, because the MIC does not depend on the organism'],answer:1,
+    why:'A higher MIC means more drug is needed to inhibit growth, so standard dosing is less likely to reach an effective concentration.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){
+    gate.solve();[0,4,6].forEach(function(i){slider.value=String(i);slider.oninput();});
+  }});
+})();
+
+initWelcome();
+
+</script>
+<script src="shared/engine.js"></script>
+</body>
+</html>

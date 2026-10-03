@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bacteria IV · Other Pathogens — PHA3109 Study Companion</title>
+<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
+<style>
+/* ============================================================
+   THEME — Bacteria IV companion (graphite & saffron)
+   Only this page's look. shared/styles.css is untouched.
+   Meaning of the colors on this page:
+     graphite = this companion's primary (buttons, current section)
+     saffron  = highlight (hero accents, stat icons, hands-on marker)
+     green    = correct / complete (never repurposed as the accent)
+     rose     = incorrect / needs review
+   ============================================================ */
+:root{
+  --graphite:#262B36; --graphite-deep:#171B22; --graphite-bright:#3D4457;
+  --saffron:#E8930C; --saffron-deep:#C97800; --saffron-soft:#FDECC8; --saffron-ink:#7A4B04;
+
+  /* the "primary" family every shared component reads */
+  --green:#262B36; --green-bright:#3D4457; --green-soft:#EBEDF0; --green-line:#C9CCD3;
+
+  /* correct / complete keep a true green, so graphite never reads as "right" */
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-line:#BFE6D4; --ok-ink:#1C7554;
+
+  /* colors used in the module-1 envelope figure */
+  --wallA:#5B3D9E; --wallA-soft:#E9E2F7;
+  --wallB:#C97800; --wallB-soft:#FDECC8;
+  --mem:#2E7DA8;
+
+  --ink:#20242E; --ink-mid:#4B5262; --ink-soft:#7A8194;
+  --page:#F3F4F6; --line:#DEE1E6;
+  --shadow:0 2px 16px rgba(23,27,34,.10);
+  --graphite-ink:#262B36;
+
+  /* welcome page + sidebar + section tokens (companion-architecture.md §15-17)
+     — mapped straight from this companion's own graphite/saffron colors above */
+  --w-deep:var(--graphite-deep); --w-band:var(--graphite); --w-lift:var(--graphite-bright);
+  --w-hero-1:#ECEDF0; --w-hero-2:#F8F9FA; --w-hero-3:#FDECC8;
+  --w-hl:var(--saffron); --w-hl-hover:var(--saffron-deep); --w-hl-ink:var(--saffron-ink); --w-hl-strong:var(--graphite-bright); --w-on-hl:#2B1A02;
+  --w-hl-soft:var(--saffron-soft);
+  --w-art-1:#ECEDF0; --w-art-2:#FDECC8;
+  --w-check:var(--graphite-bright);
+  --w-kp-bg:#F5F6F8;
+  --w-shadow-rgb:23,27,34;
+  --w-t1-bg:#E7E9ED; --w-t1-fg:#3D4457;
+  --w-t2-bg:#FDECC8; --w-t2-fg:#8F5A05;
+  --w-t3-bg:#E9E2F7; --w-t3-fg:#5B3D9E;
+  --w-t4-bg:#E0F3EB; --w-t4-fg:#1C8A62;
+  --w-t5-bg:#DFF1F8; --w-t5-fg:#1D7FA6;
+  --w-t6-bg:#FCE6E6; --w-t6-fg:#B0342F;
+  --w-ring-track:#DCDFE4; --w-ring-fill:var(--saffron);
+}
+body{
+  background:
+    radial-gradient(900px 420px at 92% -8%, #E9EAED 0%, rgba(233,234,237,0) 62%),
+    radial-gradient(760px 380px at 2% -4%, #FDECC8 0%, rgba(253,236,200,0) 58%),
+    var(--page);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{color:var(--ink)}
+h2{letter-spacing:-.015em}
+
+/* --- shared components, re-inked from green to graphite / ok-green --- */
+.mod-head.current{background:var(--green-soft);color:var(--graphite-ink)}
+.mod-head.current .mod-badge{background:#fff;color:var(--graphite-ink)}
+.mod-head .mod-badge.done{background:var(--ok-soft);color:var(--ok-ink)}
+.sub button.current{background:var(--green-soft);color:var(--graphite-ink)}
+.sub button.done .dot{background:var(--ok)}
+.sub button.current .dot{background:var(--graphite-bright)}
+.ring-wrap{background:var(--green-soft)}
+.ring-num{color:var(--graphite-ink)}
+.ring-cap{color:var(--ink-mid)}
+.btn:hover{background:var(--graphite-deep)}
+.btn.ghost.on{background:var(--green-soft);border-color:var(--green-line);color:var(--graphite-ink)}
+.opt.sel{color:var(--graphite-ink)}
+.opt.reveal{border-color:var(--ok);color:var(--ok-ink)}
+.opt.sel.bad{background:var(--rose-soft)}
+.dnd-pill{color:var(--graphite-ink)}
+.dnd-ghost{color:var(--graphite-ink)}
+.dnd-row.correct{border-color:var(--ok);background:var(--ok-soft)}
+.dnd-row.correct .dnd-slot{border-color:var(--ok)}
+.choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback{border-left-color:var(--ok)}
+.feedback.miss{border-left-color:var(--rose)}
+.apply{background:var(--green-soft)}
+.apply .tag{background:#DADDE3;color:var(--graphite-ink)}
+.predict .tag{background:var(--saffron-soft);color:var(--saffron-ink)}
+.mod-badge.done,.home-num.done{background:var(--ok-soft);color:var(--ok-ink)}
+.home-status.done{color:var(--ok-ink)}
+.s-strong{color:var(--ok-ink)}
+.lock-dot.done{background:var(--ok)}
+.fc-front{background:linear-gradient(140deg,#EEF0F3,#FDECC8);border:1px solid var(--green-line)}
+.score-hero{background:linear-gradient(135deg,var(--graphite-bright),var(--graphite))}
+.score-hero .big{color:var(--saffron)}
+.reset:hover{color:var(--rose)}
+.back-to-hub{color:var(--graphite-bright)}
+input[type=range]{background:linear-gradient(90deg,var(--green-line),var(--graphite-bright))}
+input[type=range]::-webkit-slider-thumb{border-color:var(--graphite)}
+input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
+
+/* --- eyebrow/kicker, lede, and keypoints come from shared/sections.css --- */
+.box.clinical{background:#EFEBFC}
+
+/* --- HERO, STAT BAND, MODULE CARDS, WHY/HOW, CTA BANNER, MODULE BANNER,
+   and the hands-on card marker all come from shared/welcome.css,
+   shared/shell.css and shared/sections.css. These few rules are kept
+   because they use a color genuinely different from the shared token map. --- */
+.btn.outline{background:#fff;color:var(--graphite);border:1.5px solid var(--green-line)}
+.btn.outline:hover{background:var(--green-soft);color:var(--graphite-deep)}
+.mod-card .go{color:var(--graphite-bright)}
+.badge-hl{position:absolute;right:16px;top:16px;background:var(--saffron);color:#2B1A02;border-radius:12px;padding:9px 14px;
+  font-weight:800;line-height:1.1;text-align:center;box-shadow:0 6px 16px rgba(201,120,0,.35)}
+.badge-hl small{display:block;font-size:.62rem;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
+
+/* engine.js hardcodes #2FA97A for the "Strong" bar in the post-quiz
+   mastery breakdown — repoint it at this companion's own primary */
+.bd-fill{background:var(--green)!important}
+
+/* figure text inside SVG uses the page font */
+.figure svg text{font-family:var(--font)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3" width="7" height="18" rx="3.5"/><path d="M8.5 9h-3M8.5 13h-3M15.5 9h3M15.5 13h3"/></svg></div>
+      <div><div class="brand-title">Bacteria IV &middot; Outliers</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="18" fill="none" style="stroke:var(--w-ring-track)" stroke-width="5"/>
+        <circle id="ringFill" cx="22" cy="22" r="18" fill="none" style="stroke:var(--w-ring-fill)" stroke-width="5"
+                stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113"
+                transform="rotate(-90 22 22)"/>
+      </svg>
+      <div><div class="ring-num" id="ringPct">0%</div>
+      <div class="ring-cap">of the companion<br>complete</div></div>
+    </div>
+    <button class="reset" id="resetBtn">Clear my saved progress</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="topTitle">Welcome</h1><div class="meta" id="topMeta">Bacteria IV &middot; PHA3109 Microbiology &amp; Immunology</div></div>
+      <div class="pill" id="topPill">Not started</div>
+    </div>
+
+<section class="section welcome" data-key="start">
+  <div class="hero">
+    <div>
+      <div class="kicker">PHA3109 &middot; Microbiology &amp; Immunology</div>
+      <h2 class="hero-title">Spot the outlier.<span>Treat with reason.</span></h2>
+      <p>Bacteria IV &mdash; Other Pathogens. Predict, build, and diagnose your way through the microbes that break the usual rules: no simple stain, no ordinary growth rate, sometimes no cell wall at all. The lecture supplies the content; this companion supplies the practice.</p>
+      <div class="btn-row">
+        <button class="btn lg" data-go="m1home">Start Module 1</button>
+        <button class="btn lg outline" data-go="flashcards">Try the flashcards</button>
+      </div>
+      <div class="hero-note"><span class="hero-dots"><i style="background:#5B3D9E"></i><i style="background:#E8930C"></i><i style="background:#2E7DA8"></i></span>Built around the unusual biology that makes each of these pathogens hard to categorize</div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 400 400" role="img" aria-label="Illustration of atypical bacteria under a microscope: an acid-fast rod with a waxy halo, a coiled spirochete, and a cluster of small inclusion bodies">
+  <defs>
+    <radialGradient id="hg4" cx="45%" cy="35%" r="75%"><stop offset="0" stop-color="#3D4457"/><stop offset="1" stop-color="#171B22"/></radialGradient>
+  </defs>
+  <circle cx="200" cy="205" r="184" fill="none" stroke="#E8930C" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round"/>
+  <circle cx="200" cy="205" r="152" fill="url(#hg4)"/>
+  <circle cx="200" cy="205" r="152" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3"/>
+  <g transform="rotate(-14 173 215)">
+    <rect x="150" y="150" width="46" height="130" rx="23" fill="none" stroke="#E8930C" stroke-width="3" stroke-dasharray="2 5"/>
+    <rect x="158" y="160" width="30" height="110" rx="15" fill="#F2A83A"/>
+  </g>
+  <path d="M250 260 q10 -18 20 0 t20 0 t20 0 t20 0" fill="none" stroke="#B9A9E3" stroke-width="4" stroke-linecap="round" transform="rotate(6 280 260)"/>
+  <g fill="#7FB6D6" stroke="#DCEEF6" stroke-width="1.6">
+    <circle cx="250" cy="150" r="9"/><circle cx="266" cy="140" r="7"/><circle cx="270" cy="160" r="8"/>
+    <circle cx="284" cy="150" r="6"/><circle cx="258" cy="128" r="6"/>
+  </g>
+  <circle cx="322" cy="102" r="6" fill="#E8930C"/><circle cx="62" cy="290" r="5" fill="#3D4457"/><circle cx="352" cy="262" r="4" fill="#E8930C"/>
+  <g font-family="inherit" font-weight="700" font-size="13">
+    <rect x="10" y="98" width="108" height="30" rx="15" fill="#fff"/><circle cx="28" cy="113" r="6" fill="#E8930C"/><text x="42" y="118" fill="#14203F">Acid-fast +</text>
+    <rect x="272" y="318" width="112" height="30" rx="15" fill="#fff"/><circle cx="290" cy="333" r="6" fill="#7FB6D6"/><text x="304" y="338" fill="#14203F">No cell wall</text>
+  </g>
+</svg>
+      <div class="hero-badge"><b data-stat="modules">6</b><span>Modules</span></div>
+    </div>
+  </div>
+
+  <div class="statband" aria-label="What is inside this companion">
+    <div class="stat"><span data-ico="layers"></span><div><b data-stat="modules">6</b><span>Modules</span></div></div>
+    <div class="stat"><span data-ico="spark"></span><div><b data-stat="activities">29</b><span>Hands-on activities</span></div></div>
+    <div class="stat"><span data-ico="question"></span><div><b data-stat="questions">87</b><span>Quiz questions</span></div></div>
+    <div class="stat"><span data-ico="cards"></span><div><b data-stat="cards">61</b><span>Flashcards</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="sect-head"><div><div class="eyebrow">Your path</div><h2>Six modules, one recognition question each</h2></div></div>
+    <div class="mod-cards">
+      <button class="mod-card" data-go="m1home">
+        <span class="chip-ico tone-1" data-ico="microbe"></span>
+        <h3>Why does an unusual cell wall change everything?</h3><p>Mycobacteria: built to persist.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m2home">
+        <span class="chip-ico tone-2" data-ico="flask"></span>
+        <h3>Why do two look-alikes need opposite drugs?</h3><p>Structural outliers: filaments and no wall.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m3home">
+        <span class="chip-ico tone-3" data-ico="dna"></span>
+        <h3>Same shape, very different disease &mdash; why?</h3><p>Spirochetes: syphilis, Lyme, and the reaction that isn&rsquo;t an allergy.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m4home">
+        <span class="chip-ico tone-4" data-ico="shield"></span>
+        <h3>One organism, two cellular identities &mdash; why?</h3><p>Chlamydiae: the EB/RB lifecycle.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m5home">
+        <span class="chip-ico tone-5" data-ico="target"></span>
+        <h3>What does a tick bite actually tell you?</h3><p>Rickettsiae: vessels, vectors, and the outlier that isn&rsquo;t tick-borne.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m6home">
+        <span class="chip-ico tone-6" data-ico="question"></span>
+        <h3>No new organisms &mdash; just the clues, mixed together.</h3><p>Pathogen detective: integrating the outliers.</p><span class="go">Open module &rarr;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="why">
+      <div class="why-art"><svg viewBox="0 0 420 230" role="img" aria-label="Three steps: predict, interact, explain">
+  <g fill="none" stroke="#C9CCD3" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round">
+    <path d="M118 96 C 140 60, 170 60, 190 92"/><path d="M232 92 C 252 60, 282 60, 302 96"/>
+  </g>
+  <g>
+    <circle cx="80" cy="112" r="46" fill="#fff" stroke="#E8930C" stroke-width="4"/>
+    <text x="80" y="122" text-anchor="middle" font-size="34" font-weight="800" fill="#262B36">?</text>
+    <text x="80" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#20242E">1 Predict</text>
+    <circle cx="210" cy="112" r="46" fill="#262B36"/>
+    <path d="M196 96 v34 l9 -8 6 13 7 -3 -6 -13 12 -1 z" fill="#E8930C"/>
+    <text x="210" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#20242E">2 Interact</text>
+    <circle cx="340" cy="112" r="46" fill="#fff" stroke="#2FA97A" stroke-width="4"/>
+    <path d="M320 113 l14 14 26 -30" fill="none" stroke="#2FA97A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="340" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#20242E">3 Explain</text>
+  </g>
+</svg><div class="badge-hl"><small>Every section</small>Practice first</div></div>
+      <div>
+        <div class="eyebrow">How it works</div>
+        <h2>Not a repeat of the slides</h2>
+        <p>You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
+        <ul class="checks">
+          <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
+          <li><span><b>Interact.</b> Build a cell wall, branch a disease-progression pathway, or sort a case, then watch what your choices do.</span></li>
+          <li><span><b>Explain.</b> Every answer comes with the reasoning, not only right or wrong.</span></li>
+          <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
+          <li><span><b>Finish strong.</b> A cumulative Mastery Challenge unlocks once every module is complete.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-ico" data-ico="book"></div>
+    <div class="cta-body"><h2>Ready to begin?</h2><p>Start with the organism that breaks the acid-fast rules for a reason. Your progress saves in this browser as you go.</p></div>
+    <button class="btn hl lg" data-go="m1home">Start Module 1 &rarr;</button>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m1home">
+  <div class="modhero">
+    <div class="kicker">Module 1</div>
+    <h2>Mycobacteria: built to persist</h2>
+    <p>Mycobacterium tuberculosis breaks the usual staining rules, grows on its own timetable, and demands four drugs instead of one. Every one of those facts traces back to a single unusual structure: its cell wall.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Why does an unusual cell wall change everything about how this organism is identified, treated, and contained?</span></div>
+    <div class="ghost-num" aria-hidden="true">1</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Explain why the mycobacterial cell wall makes this organism acid-fast, slow-growing, and resistant to standard disinfectants.</li><li>Match each first-line TB drug to its mechanism of action and predict the effect of a resistance mutation.</li><li>Differentiate M. tuberculosis, MAC, and M. leprae by host, transmission, and treatment.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m1s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Built to persist: the acid-fast wall</span><span class="home-desc">Build the mycobacterial envelope layer by layer.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Infection, containment, and disease</span><span class="home-desc">Branch a case through latency, active disease, and reactivation.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Why four drugs?</span><span class="home-desc">Match each first-line drug to its mechanism.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Resistance lab</span><span class="home-desc">Predict what a resistance mutation does to therapy.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">TB, MAC, or leprosy?</span><span class="home-desc">Sort clinical vignettes into the right diagnosis.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 1 quiz</span><span class="home-desc">Eight questions, then a targeted round on anything you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s1">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 1</div>
+    <h2>The wall that won&rsquo;t wash out</h2>
+    <p class="lede">Mycobacterium tuberculosis is neither Gram-positive nor Gram-negative. Instead, it&rsquo;s identified by a stain that tests its cell wall directly &mdash; and that same wall explains almost everything else about how this organism behaves.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Acid-fast: the cell wall&rsquo;s lipid content (~60%) retains carbol fuchsin stain even after an acid-alcohol wash.</li>
+      <li>The wall is rich in mycolic acid, a long-chain fatty acid responsible for acid-fastness and for resistance to acids, bases, and drying.</li>
+      <li>M. tuberculosis is an obligate aerobe with a doubling time of about 18 hours &mdash; compare E. coli or S. aureus at roughly 20 minutes.</li>
+      <li>Virulence factors tied to this wall include cord factor (trehalose dimycolate), phthiocerol dimycocerosate, tuberculosis necrotizing toxin (TNT), and ESAT-6.</li>
+    </ul></div>
+    <div class="figure"><svg viewBox="0 0 720 230" role="img" aria-label="Cross-section of the mycobacterial cell envelope, from the cytoplasm at the bottom to the mycolic-acid layer at the top">
+  <rect x="140" y="170" width="280" height="45" rx="4" fill="var(--card)" stroke="var(--line)"/>
+  <text x="280" y="197" text-anchor="middle" font-size="12" fill="var(--ink-mid)">Cytoplasm</text>
+  <rect x="140" y="130" width="280" height="40" fill="var(--mem)"/>
+  <rect x="140" y="108" width="280" height="22" fill="#C9CCD3"/>
+  <rect x="140" y="78" width="280" height="30" fill="var(--wallA)"/>
+  <rect x="140" y="40" width="280" height="38" fill="var(--wallB)"/>
+  <line x1="420" y1="150" x2="450" y2="150" stroke="var(--ink-soft)"/>
+  <text x="456" y="154" font-size="13" fill="var(--ink)">Cytoplasmic membrane</text>
+  <line x1="420" y1="119" x2="450" y2="119" stroke="var(--ink-soft)"/>
+  <text x="456" y="123" font-size="13" fill="var(--ink)">Peptidoglycan layer</text>
+  <line x1="420" y1="93" x2="450" y2="93" stroke="var(--ink-soft)"/>
+  <text x="456" y="97" font-size="13" fill="var(--ink)">Arabinogalactan-mycolate layer</text>
+  <line x1="420" y1="59" x2="450" y2="59" stroke="var(--ink-soft)"/>
+  <text x="456" y="63" font-size="13" fill="var(--ink)">Mycolic acids / free lipids</text>
+</svg><p class="caption">The mycobacterial cell envelope, from the cytoplasm to the outermost mycolic acids.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Build the mycobacterial envelope</h2>
+    <p class="try-note">Drag each layer name onto its position, from the cytoplasm out. On a phone or with a keyboard, tap a label first, then tap the row it belongs to.</p>
+    <div id="act-mycoEnvelope"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c1"><p>Which feature of the mycobacterial cell wall is primarily responsible for acid-fastness?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1b"><p>Mycobacterium tuberculosis is best classified, with respect to the Gram stain, as which of the following?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1c"><p>If the lipid-rich outer layer were experimentally stripped from M. tuberculosis, carbol fuchsin retention after an acid-alcohol wash would most likely do what?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Acid-fast staining isn&rsquo;t just a lab curiosity &mdash; a positive smear is often the first clue in a differential diagnosis, guiding empiric isolation precautions before culture results return days to weeks later.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s2">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 2</div>
+    <h2>Infection, containment, and disease</h2>
+    <p class="lede">A single inhaled droplet can end in very different places. Which path a patient takes depends entirely on how well the immune system holds the line.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Airborne droplet nuclei reach the alveoli, where bacilli multiply inside alveolar macrophages.</li>
+      <li>Adequate containment forms a granuloma and produces latent TB infection: no symptoms, no transmission.</li>
+      <li>Inadequate containment allows active TB disease, which may be transmitted via respiratory droplets.</li>
+      <li>Only about 10% of latent infections progress to active disease &mdash; but reactivation can occur years later if immune control wanes.</li>
+    </ul></div>
+    <div class="figure"><svg viewBox="0 0 700 300" role="img" aria-label="Flowchart: airborne droplet nuclei reach the alveoli, bacilli multiply in alveolar macrophages, the host immune response either contains the infection as latent TB or fails to contain it as active TB disease, and latent infection can later reactivate into active disease">
+  <defs>
+    <marker id="mArrow4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L8 5L1 9" fill="none" stroke="var(--ink-soft)" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect x="30" y="30" width="220" height="50" rx="8" fill="var(--green-soft)" stroke="var(--line)"/>
+  <text x="140" y="50" text-anchor="middle" font-size="13" fill="var(--ink)">Airborne droplet nuclei</text>
+  <text x="140" y="67" text-anchor="middle" font-size="13" fill="var(--ink)">reach the alveoli</text>
+  <line x1="250" y1="55" x2="286" y2="55" stroke="var(--ink-soft)" marker-end="url(#mArrow4)"/>
+  <rect x="290" y="30" width="230" height="50" rx="8" fill="var(--green-soft)" stroke="var(--line)"/>
+  <text x="405" y="50" text-anchor="middle" font-size="13" fill="var(--ink)">Bacilli multiply in</text>
+  <text x="405" y="67" text-anchor="middle" font-size="13" fill="var(--ink)">alveolar macrophages</text>
+  <line x1="405" y1="80" x2="345" y2="112" stroke="var(--ink-soft)" marker-end="url(#mArrow4)"/>
+  <rect x="190" y="115" width="230" height="46" rx="8" fill="var(--wallA-soft)" stroke="var(--wallA)"/>
+  <text x="305" y="143" text-anchor="middle" font-size="13" fill="var(--ink)">Host immune response</text>
+  <line x1="260" y1="161" x2="200" y2="208" stroke="var(--ink-soft)" marker-end="url(#mArrow4)"/>
+  <line x1="350" y1="161" x2="440" y2="208" stroke="var(--ink-soft)" marker-end="url(#mArrow4)"/>
+  <rect x="40" y="210" width="250" height="66" rx="8" fill="var(--ok-soft)" stroke="var(--ok)"/>
+  <text x="165" y="233" text-anchor="middle" font-size="13" fill="var(--ink)">Containment in granuloma</text>
+  <text x="165" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ok-ink)">Latent TB infection</text>
+  <text x="165" y="266" text-anchor="middle" font-size="11" fill="var(--ink-mid)">No symptoms; does not transmit</text>
+  <rect x="380" y="210" width="270" height="66" rx="8" fill="var(--saffron-soft)" stroke="var(--saffron)"/>
+  <text x="515" y="233" text-anchor="middle" font-size="13" fill="var(--ink)">Inadequate containment</text>
+  <text x="515" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="var(--saffron-ink)">Active TB disease</text>
+  <text x="515" y="266" text-anchor="middle" font-size="11" fill="var(--ink-mid)">Active pulmonary TB may transmit</text>
+  <path d="M290 226 C 330 190, 360 190, 384 218" fill="none" stroke="var(--ink-soft)" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#mArrow4)"/>
+  <text x="337" y="196" text-anchor="middle" font-size="11" fill="var(--ink-mid)">Later reactivation</text>
+</svg><p class="caption">How a single exposure can lead to latency, active disease, or later reactivation.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Walk a case through containment</h2>
+    <p class="try-note">At each decision point, choose what happens next and see where the pathway leads.</p>
+    <div id="act-tbProgression"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c2"><p>A patient&rsquo;s macrophages successfully contain inhaled M. tuberculosis within a granuloma, and the patient remains asymptomatic. This clinical state is best described as which of the following?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2b"><p>Which statement about latent TB infection is accurate?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2c"><p>Reactivation of latent TB infection into active disease is most directly associated with which patient factor?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A patient with latent TB infection is not sick and cannot transmit the organism &mdash; but they are also not cured. That distinction is why preventive therapy exists as its own clinical decision, separate from treating active disease.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s3">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 3</div>
+    <h2>Why four drugs?</h2>
+    <p class="lede">Active TB is never treated with a single drug. Each of the four first-line agents hits a different target, which is exactly what keeps a mutant resistant to one drug from taking over the population.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>First-line drugs: isoniazid (INH), rifampin (RIF), pyrazinamide (PZA), and ethambutol (EMB).</li>
+      <li>The initial phase uses all four for 2 months; the continuation phase uses INH and RIF alone for 4 months.</li>
+      <li>Streptomycin can substitute for EMB in some countries, but is not considered first-line in the U.S.</li>
+      <li>Resistance to both INH and RIF defines MDR-TB; adding resistance to a fluoroquinolone and a Group A drug (bedaquiline or linezolid) defines XDR-TB.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match each drug to its mechanism</h2>
+    <p class="try-note">Drag each drug onto the mechanism it matches. On a phone or with a keyboard, tap a drug first, then tap the mechanism it belongs to.</p>
+    <div id="act-tbRegimenBuilder"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c3"><p>Isoniazid&rsquo;s mechanism of action against M. tuberculosis is best described as inhibition of which process?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c3b"><p>Which first-line agent&rsquo;s mechanism of action remains not fully established, despite its inclusion in standard therapy?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c3c"><p>Beta-lactam antibiotics are generally ineffective against M. tuberculosis primarily because the organism does what?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Monotherapy is never appropriate for active TB: a large bacillary population almost always contains a few organisms already resistant to any single drug, and treating with one agent selects for exactly those survivors.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s4">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 4</div>
+    <h2>Resistance lab</h2>
+    <p class="lede">Resistance in M. tuberculosis never arrives on a plasmid &mdash; this organism has none. Every resistant strain got that way through its own chromosomal mutation, which means the target a drug hits and the target a mutation breaks are often the very same gene.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Resistance originates from chromosomal mutations, not plasmid acquisition &mdash; M. tuberculosis has no plasmids.</li>
+      <li>A mutation in catalase-peroxidase (KatG) blocks the enzyme isoniazid needs for activation, conferring isoniazid resistance.</li>
+      <li>A mutation in a mycolic-acid-synthesis gene can also reduce isoniazid susceptibility, since that pathway is the drug&rsquo;s direct target.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the consequence</h2>
+    <p class="try-note">Read each mutation, predict what it does to therapy, then reveal the answer.</p>
+    <div id="act-tbResistanceLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c4"><p>A clinical M. tuberculosis isolate carries a mutation in the gene encoding catalase-peroxidase. This mutation most likely confers resistance to which drug?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4b"><p>M. tuberculosis develops antibiotic resistance primarily through which mechanism?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4c"><p>A strain resistant to both isoniazid and rifampin meets the definition of which classification?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Susceptibility testing matters before finalizing a regimen for exactly this reason: a strain can look identical on a smear while carrying a mutation that silently defeats one of the four first-line drugs.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s5">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 5</div>
+    <h2>TB, MAC, or leprosy?</h2>
+    <p class="lede">Three species share the genus Mycobacterium and very little else. Host immune status, growth pattern, and drug susceptibility are what actually tell them apart at the bedside.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>M. tuberculosis: causes classic pulmonary TB across a range of immune status; treated with standard four-drug therapy.</li>
+      <li>MAC (M. avium-intracellulare complex): the most common atypical mycobacterium; mainly affects patients with CD4 counts under 200 cells/&micro;L; highly resistant to standard anti-TB drugs.</li>
+      <li>M. leprae: causes leprosy; obligate intracellular with a 12&ndash;14 day doubling time; treated with rifampin, dapsone, and clofazimine.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match each case to its organism</h2>
+    <p class="try-note">Drag each organism onto the vignette it best fits. On a phone or with a keyboard, tap an organism first, then tap the case it belongs to.</p>
+    <div id="act-tbMacLeprosySort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c5"><p>A patient with a CD4 count below 200 cells/&micro;L develops pulmonary disease resembling tuberculosis, and cultures grow an organism resistant to most standard anti-tuberculosis drugs. This presentation is most consistent with which organism?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c5b"><p>Compared with M. tuberculosis, M. leprae is distinguished by which pair of features?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c5c"><p>First-line treatment of leprosy typically combines which three agents?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A CD4 count is often the single most useful piece of context in this differential: MAC is rare in an immunocompetent patient and common in one with advanced immunosuppression.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1quiz">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Mastery check</div>
+    <h2>Module 1 quiz</h2>
+    <p class="lede">Eight questions covering the acid-fast wall, disease progression, drug regimen, resistance, and the TB/MAC/leprosy differential. Miss something, and a short targeted round will let you practice exactly that.</p>
+    <div class="quiz-body" data-quiz="m1"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m2home">
+  <div class="modhero">
+    <div class="kicker">Module 2</div>
+    <h2>Structural outliers: filaments and no wall</h2>
+    <p>Actinomyces, Nocardia, and Mycoplasma are the organisms students most often confuse, because none of them fit the standard bacterial picture. Two look almost identical under the microscope but demand opposite treatment; the third has no cell wall at all.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Why does each of these organisms break a rule you thought was universal &mdash; and how does that change what you reach for on the shelf?</span></div>
+    <div class="ghost-num" aria-hidden="true">2</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Differentiate Actinomyces israelii from Nocardia asteroides by oxygen requirement, source, presentation, and treatment.</li><li>Trace each organism&rsquo;s route of infection from exposure to characteristic disease.</li><li>Explain why the absence of a cell wall makes Mycoplasma pneumoniae invisible to Gram stain and resistant to beta-lactams.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m2s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Actinomyces or Nocardia?</span><span class="home-desc">Sort clues by oxygen need, source, presentation, and drug.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Follow the infection</span><span class="home-desc">Explore two entry points and where each one leads.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Remove the cell wall</span><span class="home-desc">Predict what happens to staining, shape, and drug response.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Walking pneumonia case</span><span class="home-desc">Build a diagnosis from clues revealed one at a time.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 2 quiz</span><span class="home-desc">Eight questions, then a targeted round on anything you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s1">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 1</div>
+    <h2>Actinomyces or Nocardia?</h2>
+    <p class="lede">Under the microscope, these two organisms look almost the same &mdash; both form branching filaments that resemble fungal hyphae. Almost everything else about them is opposite.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Both form branching, Gram-positive filaments; some strains are weakly acid-fast.</li>
+      <li>Actinomyces israelii is anaerobic and lives as normal oral flora; disease follows mucosal trauma.</li>
+      <li>Nocardia asteroides is aerobic and lives in soil; disease follows inhalation.</li>
+      <li>Actinomycosis: a draining sinus tract with &ldquo;sulfur granules&rdquo; in the pus, treated with penicillin G. Nocardiosis: pneumonia that can spread from lung to brain, treated with TMP-SMX.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue to its organism</h2>
+    <p class="try-note">Read each clue and decide whether it points to Actinomyces or Nocardia.</p>
+    <div id="act-actinoNocardiaSort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c6"><p>Which organism is classically associated with a draining sinus tract containing &ldquo;sulfur granules&rdquo;?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6b"><p>Nocardia asteroides is best described, with respect to oxygen requirement and natural habitat, as which of the following?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6c"><p>A patient with a history of poor dentition and jaw trauma develops a slowly progressive abscess draining through the skin. Which organism and predisposing factor best fit this presentation?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">These two are a favorite exam pair precisely because the microscope can&rsquo;t tell them apart. The history &mdash; dental trauma versus soil exposure &mdash; is often the only real clue you get.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s2">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 2</div>
+    <h2>Follow the infection</h2>
+    <p class="lede">Same branching filaments, opposite starting point. One organism begins inside the patient; the other arrives from the outside world.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Actinomycosis begins with disruption of the oral mucosa &mdash; dental trauma, extraction, poor dentition.</li>
+      <li>Nocardiosis begins with inhalation of an environmental soil organism.</li>
+      <li>Nocardia characteristically disseminates from the lung to the brain.</li>
+      <li>Nocardiosis disproportionately affects immunocompromised patients; actinomycosis can occur in otherwise healthy people after trauma.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Explore two entry points</h2>
+    <p class="try-note">Select each site to see how the infection starts and where it goes from there.</p>
+    <div id="act-followInfection"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c7"><p>Actinomycosis most commonly begins after which event?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c7b"><p>Nocardiosis characteristically disseminates from the lungs to which secondary site?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c7c"><p>Which patient population is most at risk for nocardiosis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A patient&rsquo;s exposure history often does more diagnostic work here than any lab test &mdash; recent dental work points one way, gardening or construction dust the other.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s3">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 3</div>
+    <h2>Remove the cell wall</h2>
+    <p class="lede">Every bacterium you&rsquo;ve met so far has had a cell wall of some kind. Mycoplasma pneumoniae doesn&rsquo;t &mdash; and that single missing structure explains nearly everything unusual about it.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Mycoplasma pneumoniae is the smallest free-living organism and lacks a cell wall entirely.</li>
+      <li>Its membrane contains cholesterol &mdash; the only bacterial membrane known to do so.</li>
+      <li>It is termed &ldquo;atypical&rdquo; because it resists routine culture and its pneumonia doesn&rsquo;t resemble the classic pneumococcal picture.</li>
+      <li>Transmission is by respiratory droplet.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict before you reveal</h2>
+    <p class="try-note">For each property, predict what a missing cell wall would do, then check your reasoning.</p>
+    <div id="act-cellWallPredict"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c8"><p>Mycoplasma pneumoniae is unique among clinically important bacteria in that its cell membrane contains which lipid?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c8b"><p>Because Mycoplasma pneumoniae lacks a cell wall, which class of antibiotics is expected to be ineffective against it?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c8c"><p>Mycoplasma pneumoniae is termed an &ldquo;atypical&rdquo; pathogen primarily because of which pair of features?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Seeing a beta-lactam ordered for suspected atypical pneumonia should be an automatic pause: without a wall, there is no target for that entire drug class to hit.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s4">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 4</div>
+    <h2>Walking pneumonia case</h2>
+    <p class="lede">Real diagnosis rarely arrives as a single fact. Clues build one at a time &mdash; decide what you think after each one, then see whether the next clue changes your mind.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>M. pneumoniae attaches to respiratory epithelium and inhibits ciliary motion, causing necrosis, rather than invading cells directly.</li>
+      <li>A classic clue: imaging that looks worse than the patient does clinically.</li>
+      <li>First-line treatment is a macrolide; tetracyclines and fluoroquinolones are alternatives.</li>
+      <li>Crowded living situations favor droplet spread between people.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Build the diagnosis</h2>
+    <p class="try-note">Read each new clue, then answer what it points to before moving on.</p>
+    <div id="act-walkingPneumoniaCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c9"><p>Mycoplasma pneumoniae attaches to respiratory epithelium and causes disease primarily by doing what?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9b"><p>Which agent class is considered first-line for treating M. pneumoniae infection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9c"><p>M. pneumoniae is transmitted primarily by which route?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">&ldquo;Walking pneumonia&rdquo; earns its name here: patients are often well enough to be up and about, which is itself a diagnostic clue rather than a reassurance to ignore.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2quiz">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Mastery check</div>
+    <h2>Module 2 quiz</h2>
+    <p class="lede">Eight questions covering Actinomyces vs. Nocardia, infection pathways, the consequences of having no cell wall, and walking pneumonia identification. Miss something, and a short targeted round will let you practice exactly that.</p>
+    <div class="quiz-body" data-quiz="m2"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m3home">
+  <div class="modhero">
+    <div class="kicker">Module 3</div>
+    <h2>Spirochetes: same shape, very different disease</h2>
+    <p>Treponema pallidum and Borrelia burgdorferi are built from the same unusual blueprint &mdash; a thin, flexible, motile rod. From there, their exposure routes, disease courses, and treatments diverge almost completely.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Two organisms share a structure but not a disease &mdash; what actually determines how each one plays out, and what happens when treatment itself triggers a reaction?</span></div>
+    <div class="ghost-num" aria-hidden="true">3</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Describe the structure that gives spirochetes their shape and motility.</li><li>Stage syphilis and Lyme disease from initial exposure through late-stage findings.</li><li>Distinguish the Jarisch-Herxheimer reaction from a true drug allergy or anaphylaxis, and respond to each appropriately.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m3s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Build a spirochete</span><span class="home-desc">Label the structure that gives this organism its motion.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Stage the syphilis patient</span><span class="home-desc">Put the stages of syphilis in the correct order.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Follow Lyme disease</span><span class="home-desc">Decide when to intervene before the infection advances.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Syphilis or Lyme?</span><span class="home-desc">Sort clues by exposure, presentation, and treatment.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">Reaction detective</span><span class="home-desc">Tell a Jarisch-Herxheimer reaction apart from a true allergy.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 3 quiz</span><span class="home-desc">Eight questions, then a targeted round on anything you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s1">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 1</div>
+    <h2>Build a spirochete</h2>
+    <p class="lede">Treponema pallidum and Borrelia burgdorferi look almost nothing alike in the diseases they cause, but structurally they&rsquo;re built from the same unusual blueprint: a thin, flexible, motile rod wound around its own internal flagella.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Spirochetes are thin-walled, flexible, motile rods.</li>
+      <li>A blue outer membrane encloses the periplasmic space.</li>
+      <li>Periplasmic (endo)flagella wrap around the cell cylinder and anchor at both poles, producing the organism&rsquo;s corkscrew motion.</li>
+      <li>A thin peptidoglycan layer supports the cell cylinder from inside the outer membrane.</li>
+    </ul></div>
+    <div class="figure"><svg viewBox="0 0 640 200" role="img" aria-label="A coiled spirochete showing the outer membrane, periplasmic flagella wound around the cell cylinder, and the inner cell cylinder">
+  <path d="M60 100 Q100 40 140 100 T220 100 T300 100 T380 100 T460 100 T540 100" fill="none" stroke="var(--wallA)" stroke-width="22" stroke-linecap="round" opacity="0.25"/>
+  <path d="M60 100 Q100 40 140 100 T220 100 T300 100 T380 100 T460 100 T540 100" fill="none" stroke="var(--mem)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M64 100 Q104 48 144 100 T224 100 T304 100 T384 100 T464 100 T536 100" fill="none" stroke="var(--wallB)" stroke-width="3" stroke-dasharray="1 6" stroke-linecap="round"/>
+  <line x1="130" y1="150" x2="170" y2="118" stroke="var(--ink-soft)"/><text x="40" y="164" font-size="13" fill="var(--ink)">Outer membrane</text>
+  <line x1="300" y1="150" x2="300" y2="112" stroke="var(--ink-soft)"/><text x="250" y="164" font-size="13" fill="var(--ink)">Periplasmic flagella</text>
+  <line x1="460" y1="150" x2="460" y2="108" stroke="var(--ink-soft)"/><text x="430" y="164" font-size="13" fill="var(--ink)">Cell cylinder</text>
+</svg><p class="caption">A spirochete&rsquo;s coiled body: outer membrane, periplasmic flagella, and inner cell cylinder.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Label the structure</h2>
+    <p class="try-note">Drag each label onto the description it matches.</p>
+    <div id="act-spirocheteStructure"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c10"><p>Spirochetes are best described, with respect to overall structure, as which of the following?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10b"><p>What structure is directly responsible for a spirochete&rsquo;s characteristic corkscrew motility?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10c"><p>Which two organisms are the medically important spirochetes covered in this module?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Despite decades of use, Treponema pallidum has never developed documented resistance to penicillin &mdash; one reason benzathine penicillin G remains first-line therapy for syphilis at every stage.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s2">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 2</div>
+    <h2>Stage the syphilis patient</h2>
+    <p class="lede">Syphilis unfolds in stages, and the stage a patient is in determines what you&rsquo;d expect to find on exam &mdash; and sometimes which regimen applies.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Primary syphilis: a painless chancre at the site of inoculation, which may heal spontaneously even as the organism spreads through the bloodstream.</li>
+      <li>Secondary syphilis: systemic disease &mdash; fever, malaise, weight loss, and a maculopapular rash classically involving the palms and soles.</li>
+      <li>Tertiary syphilis: CNS involvement and cardiovascular lesions, occurring after a period of latency.</li>
+      <li>Congenital syphilis (vertical transmission): skin and bone lesions, hepatosplenomegaly, and stillbirth.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Put the stages in order</h2>
+    <p class="try-note">Arrange the course of untreated syphilis from earliest to latest.</p>
+    <div id="act-syphilisTimeline"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c11"><p>A patient presents with a painless genital ulcer that appeared three weeks after exposure. This finding is most consistent with which stage of syphilis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c11b"><p>Fever, malaise, weight loss, and a maculopapular rash weeks after an untreated genital ulcer describe which stage of syphilis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c11c"><p>CNS involvement and cardiovascular lesions, appearing after a period of latency, are characteristic of which stage of syphilis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A chancre that heals on its own is easy to mistake for resolution. It isn&rsquo;t &mdash; the organism is already spreading through the bloodstream, which is exactly why serologic screening, not symptom-watching, drives syphilis diagnosis.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s3">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 3</div>
+    <h2>Follow Lyme disease</h2>
+    <p class="lede">Lyme disease follows its own three-stage course, and unlike syphilis, prompt treatment can stop the pathway before it ever reaches the later stages.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Lyme disease is the most common vector-borne illness in the United States, transmitted by tick exposure.</li>
+      <li>Stage 1: erythema migrans, the expanding &ldquo;bullseye&rdquo; rash with central clearing.</li>
+      <li>Stage 2: neurologic and cardiac involvement, including myocarditis and meningitis.</li>
+      <li>Stage 3: arthritis and encephalopathy.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Walk the case forward</h2>
+    <p class="try-note">At each point, decide what stage this is and what should happen next.</p>
+    <div id="act-lymeProgression"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c12"><p>Which finding is the hallmark of stage 1 Lyme disease?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12b"><p>Myocarditis and meningitis, occurring weeks after an untreated tick bite, are characteristic of which stage of Lyme disease?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12c"><p>Which surface proteins are known virulence factors of Borrelia burgdorferi?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Unlike most infections in this course, Lyme disease gives you a genuine window to interrupt its own progression: treating stage 1 promptly is what keeps a patient from ever reaching stage 2 or 3.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s4">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 4</div>
+    <h2>Syphilis or Lyme?</h2>
+    <p class="lede">Both are spirochetes. Both cause a stereotyped skin finding early on. From there, almost everything about exposure, transmission, and treatment diverges.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>T. pallidum spreads by sexual contact and vertical (perinatal) transmission; humans are the only reservoir.</li>
+      <li>B. burgdorferi spreads by tick bite &mdash; a zoonotic infection, never person-to-person.</li>
+      <li>Syphilis&rsquo;s early lesion is a painless chancre; Lyme&rsquo;s early lesion is an expanding bullseye rash.</li>
+      <li>First-line therapy differs: benzathine penicillin G for syphilis; doxycycline or amoxicillin for Lyme.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue to its organism</h2>
+    <p class="try-note">Read each clue and decide whether it points to syphilis or Lyme disease.</p>
+    <div id="act-syphilisOrLyme"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c13"><p>Which feature distinguishes the transmission of syphilis from that of Lyme disease?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c13b"><p>A patient presents with an expanding, warm, erythematous rash with central clearing that appeared days after a hike. Which organism is most likely responsible?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c13c"><p>Which first-line treatment is correctly matched to its spirochetal disease?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Exposure history is often the fastest way to tell these two apart at the bedside: a sexual history points toward syphilis, an outdoor or tick history points toward Lyme &mdash; well before any lab result comes back.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s5">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 5</div>
+    <h2>Reaction detective</h2>
+    <p class="lede">Treating a spirochetal infection can trigger a reaction that looks alarming but isn&rsquo;t an allergy at all. Telling it apart from a true drug allergy, or from anaphylaxis, changes what you do next.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>The Jarisch-Herxheimer reaction follows antibiotic treatment of a high-spirochete-burden infection (syphilis, Lyme), from lysis of the organisms releasing endotoxin-like substances.</li>
+      <li>Onset is 24&ndash;72 hours after the first dose; more than half of treated patients are affected to some degree.</li>
+      <li>Management is supportive (antipyretics, IV fluids) &mdash; it is not an allergy and does not require stopping the antibiotic.</li>
+      <li>True allergy/intolerance and anaphylaxis have different onset patterns and treatments; anaphylaxis is a medical emergency.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Classify each case</h2>
+    <p class="try-note">Predict what each scenario represents before you check your answer.</p>
+    <div id="act-reactionDetective"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c14"><p>The Jarisch-Herxheimer reaction is caused by which mechanism?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14b"><p>Approximately when does the Jarisch-Herxheimer reaction typically begin relative to the first antibiotic dose?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14c"><p>Appropriate management of a confirmed Jarisch-Herxheimer reaction includes which approach?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Reflexively stopping the antibiotic at the first sign of fever can do more harm than good here &mdash; recognizing Jarisch-Herxheimer for what it is keeps the patient on effective therapy.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3quiz">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Mastery check</div>
+    <h2>Module 3 quiz</h2>
+    <p class="lede">Eight questions covering spirochete structure, syphilis and Lyme staging, the syphilis-versus-Lyme differential, and the Jarisch-Herxheimer reaction. Miss something, and a short targeted round will let you practice exactly that.</p>
+    <div class="quiz-body" data-quiz="m3"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m4home">
+  <div class="modhero">
+    <div class="kicker">Module 4</div>
+    <h2>Chlamydiae: one organism, two cellular identities</h2>
+    <p>Chlamydia doesn&rsquo;t just have an unusual structure &mdash; it has two of them. Understanding why it switches between an infectious form and a replicating form explains its diagnosis, its treatment, and why it can&rsquo;t be grown like an ordinary bacterium.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>If a single organism spends part of its life unable to infect and part of its life unable to replicate, what does that mean for how you interrupt it?</span></div>
+    <div class="ghost-num" aria-hidden="true">4</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Distinguish the elementary body from the reticulate body by function, infectivity, and location.</li><li>Sequence the chlamydial developmental cycle and predict the consequence of disrupting any one step.</li><li>Differentiate C. trachomatis, C. pneumoniae, and C. psittaci by host, transmission, and clinical presentation.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m4s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">EB or RB?</span><span class="home-desc">Sort clues about each form by function and location.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Build the chlamydial lifecycle</span><span class="home-desc">Put the five-step developmental cycle in order.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Break the lifecycle</span><span class="home-desc">Predict what happens when one step fails.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Which Chlamydia?</span><span class="home-desc">Sort exposure histories to the right species.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">C. trachomatis clinical challenge</span><span class="home-desc">Walk a case from screening through treatment.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 4 quiz</span><span class="home-desc">Eight questions, then a targeted round on anything you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s1">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 1</div>
+    <h2>EB or RB?</h2>
+    <p class="lede">Chlamydia lives a double life: one form built to travel and infect, another built to stay put and multiply. Neither form can do the other&rsquo;s job.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Chlamydiae are obligate intracellular organisms &mdash; they cannot grow independently and depend on the host cell for energy.</li>
+      <li>The elementary body (EB) is the infectious, extracellular form: metabolically inactive, but resistant to environmental stress.</li>
+      <li>The reticulate body (RB) is the non-infectious, intracellular form: metabolically active, replicating by binary fission.</li>
+      <li>The cell wall is rigid but lacks typical peptidoglycan &mdash; one more way this organism breaks the usual bacterial pattern.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue to its form</h2>
+    <p class="try-note">Read each description and decide: elementary body, or reticulate body?</p>
+    <div id="act-ebOrRb"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c15"><p>Which form of Chlamydia is responsible for initiating infection of a new host cell?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c15b"><p>Once inside the host cell, the elementary body converts into which form?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c15c"><p>Which form of Chlamydia actively replicates by binary fission?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Because Chlamydia depends entirely on the host cell for energy, it can&rsquo;t be cultured the way most bacteria can &mdash; which is exactly why diagnosis leans on inclusion staining, serology, or nucleic acid amplification instead of a standard culture plate.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s2">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 2</div>
+    <h2>Build the chlamydial lifecycle</h2>
+    <p class="lede">Five steps, always in the same order, always as a loop. Miss one, and the cycle can&rsquo;t continue to the next.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Attachment: the infectious EB contacts an epithelial cell.</li>
+      <li>Entry: the EB enters the cell within a membrane-bound inclusion.</li>
+      <li>Replication: inside the inclusion, the organism converts to RBs, which divide repeatedly.</li>
+      <li>Differentiation: RBs convert back into infectious EBs.</li>
+      <li>Release: EBs leave the cell by lysis or extrusion, ready to infect new cells.</li>
+    </ul></div>
+    <div class="figure"><svg viewBox="0 0 640 400" role="img" aria-label="The chlamydial developmental cycle arranged as a five-step loop: attachment, entry, replication, differentiation, and release">
+  <defs><marker id="mArrowC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L8 5L1 9" fill="none" stroke="var(--ink-soft)" stroke-width="1.6"/></marker></defs>
+  <path d="M352 62 Q460 90 515 148" fill="none" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#mArrowC)"/>
+  <path d="M545 205 Q555 290 500 335" fill="none" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#mArrowC)"/>
+  <path d="M448 372 Q320 396 205 372" fill="none" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#mArrowC)"/>
+  <path d="M140 335 Q85 290 95 205" fill="none" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#mArrowC)"/>
+  <path d="M125 148 Q180 90 288 62" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#mArrowC)"/>
+  <circle cx="320" cy="45" r="44" fill="var(--wallB-soft)" stroke="var(--wallB)" stroke-width="3"/><text x="320" y="41" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">1 Attach</text><text x="320" y="57" text-anchor="middle" font-size="10" fill="var(--ink-mid)">EB meets cell</text>
+  <circle cx="560" cy="175" r="44" fill="var(--w-t5-bg)" stroke="var(--w-t5-fg)" stroke-width="3"/><text x="560" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">2 Entry</text><text x="560" y="187" text-anchor="middle" font-size="10" fill="var(--ink-mid)">Into inclusion</text>
+  <circle cx="470" cy="365" r="44" fill="var(--wallA-soft)" stroke="var(--wallA)" stroke-width="3"/><text x="470" y="361" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">3 Replicate</text><text x="470" y="377" text-anchor="middle" font-size="10" fill="var(--ink-mid)">RBs divide</text>
+  <circle cx="170" cy="365" r="44" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="3"/><text x="170" y="361" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">4 Differentiate</text><text x="170" y="377" text-anchor="middle" font-size="10" fill="var(--ink-mid)">RB &#8594; EB</text>
+  <circle cx="80" cy="175" r="44" fill="var(--green-soft)" stroke="var(--graphite-bright)" stroke-width="3"/><text x="80" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">5 Release</text><text x="80" y="187" text-anchor="middle" font-size="10" fill="var(--ink-mid)">Lysis/extrusion</text>
+</svg><p class="caption">The chlamydial developmental cycle repeats as a loop, one infected cell at a time.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Put the cycle in order</h2>
+    <p class="try-note">Arrange the five steps from attachment to release.</p>
+    <div id="act-chlamydiaLifecycle"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c16"><p>What is the first step in the chlamydial developmental cycle?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c16b"><p>Where does replication of Chlamydia take place?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c16c"><p>By which two mechanisms can newly formed elementary bodies leave the host cell?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">This cycle takes roughly 48&ndash;72 hours to complete, which is part of why a short antibiotic course can fail to fully clear infection &mdash; treatment needs to cover the whole developmental window, not just a symptomatic snapshot of it.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s3">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 3</div>
+    <h2>Break the lifecycle</h2>
+    <p class="lede">Every stage of this cycle depends on the one before it. Predict what happens when a single step fails, before you see the answer.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Only the EB is infectious; only the RB replicates.</li>
+      <li>Blocking differentiation leaves RBs behind with no way to become infectious.</li>
+      <li>Blocking replication caps the number of organisms produced inside the inclusion.</li>
+      <li>Blocking release keeps the infection confined to the one cell it already occupies.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the consequence</h2>
+    <p class="try-note">Pick a step, predict what happens if it fails, then check your reasoning.</p>
+    <div id="act-breakLifecycle"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c17"><p>If reticulate bodies fail to differentiate back into elementary bodies, what is the most likely consequence for the infection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17b"><p>Binary fission occurs during which phase of the chlamydial life cycle?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17c"><p>Which step in the chlamydial life cycle allows the infection to spread to new host cells?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">There&rsquo;s no shortcut from attachment straight to release &mdash; every step depends on the one before it, which is part of why treatment needs to run long enough to interrupt an intracellular cycle, not just relieve symptoms.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s4">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 4</div>
+    <h2>Which Chlamydia?</h2>
+    <p class="lede">Three species, three very different exposure stories &mdash; even though the organism, the lifecycle, and the drug of choice are largely the same.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>C. trachomatis: humans only; sexual or perinatal transmission; urethritis, PID, conjunctivitis, trachoma.</li>
+      <li>C. pneumoniae: humans only; respiratory droplets; atypical pneumonia, bronchitis, sinusitis.</li>
+      <li>C. psittaci: birds are the natural host; inhaled dried droppings or secretions; psittacosis (&ldquo;parrot fever&rdquo;).</li>
+      <li>All three are treated with doxycycline; C. pneumoniae also responds to macrolides.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue to its species</h2>
+    <p class="try-note">Read each exposure history and decide which Chlamydia species fits.</p>
+    <div id="act-whichChlamydia"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c18"><p>Which Chlamydia species is transmitted by inhaling dried droppings or secretions from infected birds?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18b"><p>Which Chlamydia species is the only one transmissible between humans by sexual contact?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18c"><p>A patient who works at a poultry farm develops pneumonia. Which organism should be suspected?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">All three species are treated with doxycycline, so the real value of telling them apart isn&rsquo;t picking a different drug &mdash; it&rsquo;s recognizing the exposure, so you know what else to ask about and whether other contacts might be at risk.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s5">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 5</div>
+    <h2>C. trachomatis clinical challenge</h2>
+    <p class="lede">Most C. trachomatis infections never announce themselves. Walk this case from a routine screen through the treatment decision that follows.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Asymptomatic carriers are an important reservoir for ongoing transmission.</li>
+      <li>Non-gonococcal urethritis classically presents with a watery, nonpurulent discharge.</li>
+      <li>Roughly 10&ndash;30% of C. trachomatis infections are coinfected with Neisseria gonorrhoeae.</li>
+      <li>First-line treatment for nonpregnant patients is doxycycline 100 mg BID for 7 days, per current CDC guidance.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Walk the case forward</h2>
+    <p class="try-note">Decide what should happen at each step before the next clue appears.</p>
+    <div id="act-trachomatisCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c19"><p>Why is treating asymptomatic Chlamydia trachomatis infection still important?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c19b"><p>Which finding is classically associated with non-gonococcal urethritis caused by Chlamydia trachomatis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c19c"><p>What is the first-line treatment for Chlamydia trachomatis in a nonpregnant adult, per current CDC guidance?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Coinfection is common enough with N. gonorrhoeae that many clinicians treat empirically for both organisms at once rather than waiting on separate confirmatory tests.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4quiz">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Mastery check</div>
+    <h2>Module 4 quiz</h2>
+    <p class="lede">Eight questions covering EB vs. RB, the developmental cycle, what happens when it breaks, the three Chlamydia species, and C. trachomatis management. Miss something, and a short targeted round will let you practice exactly that.</p>
+    <div class="quiz-body" data-quiz="m4"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m5home">
+  <div class="modhero">
+    <div class="kicker">Module 5</div>
+    <h2>Rickettsiae: vessels, vectors, and the outlier</h2>
+    <p>Four organisms, four different vectors (or none at all), and one shared trick: they all live inside cells they shouldn&rsquo;t be able to reach. Recognizing which one fits a patient starts with a single question &mdash; what were they exposed to?</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>A febrile patient reports an animal or vector exposure &mdash; what single detail in that history does the most work to narrow the differential?</span></div>
+    <div class="ghost-num" aria-hidden="true">5</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Explain how endothelial cell damage produces the rash, headache, and severe complications of Rocky Mountain spotted fever.</li><li>Recognize why RMSF treatment cannot wait for the rash or lab confirmation.</li><li>Match Rickettsia, Ehrlichia, Anaplasma, and Coxiella to their vectors or exposure routes, and identify which one breaks the pattern.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m5s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">From endothelium to rash</span><span class="home-desc">Build the causal chain from infection to symptoms.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">RMSF clinical clock</span><span class="home-desc">Decide when to treat as a case unfolds day by day.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Vector match</span><span class="home-desc">Match each organism to its tick or exposure route.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Find the outlier</span><span class="home-desc">Identify which organism breaks the vector pattern.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">Shared tick problem</span><span class="home-desc">Decide which organisms could share one tick bite.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 5 quiz</span><span class="home-desc">Eight questions, then a targeted round on anything you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s1">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 1</div>
+    <h2>From endothelium to rash</h2>
+    <p class="lede">Almost every finding in Rocky Mountain spotted fever traces back to one starting point: a cell type most infections leave alone.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Rickettsiae are obligate intracellular organisms, difficult to see by light microscopy.</li>
+      <li>Rickettsia rickettsii invades endothelial cells lining small blood vessels.</li>
+      <li>Phospholipase D and a pore-forming hemolysin are believed to help the organism enter cells and escape the phagosome.</li>
+      <li>Vessel damage (vasculitis) increases capillary permeability, producing the rash, headache, and edema that follow.</li>
+    </ul></div>
+    <div class="figure"><svg viewBox="0 0 700 150" role="img" aria-label="Causal chain: intracellular invasion of endothelial cells leads to vasculitis, then increased capillary permeability, then systemic manifestations such as rash and headache">
+  <defs><marker id="mArrow5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L8 5L1 9" fill="none" stroke="var(--ink-soft)" stroke-width="1.6"/></marker></defs>
+  <rect x="10" y="40" width="150" height="62" rx="8" fill="var(--wallA-soft)" stroke="var(--wallA)"/><text x="85" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Intracellular</text><text x="85" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">invasion</text><text x="85" y="97" text-anchor="middle" font-size="10" fill="var(--ink-mid)">of endothelial cells</text>
+  <line x1="165" y1="71" x2="188" y2="71" stroke="var(--ink-soft)" marker-end="url(#mArrow5)"/>
+  <rect x="192" y="40" width="150" height="62" rx="8" fill="var(--w-t5-bg)" stroke="var(--w-t5-fg)"/><text x="267" y="74" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Vasculitis</text><text x="267" y="90" text-anchor="middle" font-size="10" fill="var(--ink-mid)">vessel wall inflamed</text>
+  <line x1="347" y1="71" x2="370" y2="71" stroke="var(--ink-soft)" marker-end="url(#mArrow5)"/>
+  <rect x="374" y="40" width="160" height="62" rx="8" fill="var(--saffron-soft)" stroke="var(--saffron)"/><text x="454" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Leaky</text><text x="454" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">capillaries</text><text x="454" y="97" text-anchor="middle" font-size="10" fill="var(--ink-mid)">increased permeability</text>
+  <line x1="539" y1="71" x2="562" y2="71" stroke="var(--ink-soft)" marker-end="url(#mArrow5)"/>
+  <rect x="566" y="40" width="130" height="62" rx="8" fill="var(--ok-soft)" stroke="var(--ok)"/><text x="631" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Systemic</text><text x="631" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">illness</text><text x="631" y="97" text-anchor="middle" font-size="10" fill="var(--ink-mid)">rash, headache, edema</text>
+</svg><p class="caption">One root cause, four downstream effects: how vessel damage becomes systemic illness.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Build the causal chain</h2>
+    <p class="try-note">Arrange the steps from initial infection to systemic illness.</p>
+    <div id="act-endotheliumToRash"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c20"><p>Rickettsia rickettsii causes disease primarily by invading which type of cell?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c20b"><p>Severe headache in Rocky Mountain spotted fever results most directly from which process?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c20c"><p>Which factors have been implicated in helping Rickettsia enter cells and escape the phagosome?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Almost every finding in Rocky Mountain spotted fever &mdash; the headache, the rash, the swelling, even the risk of circulatory collapse in severe cases &mdash; traces back to the same root cause: damaged, leaky blood vessels. That&rsquo;s a useful anchor when the presentation looks unfamiliar.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s2">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 2</div>
+    <h2>RMSF clinical clock</h2>
+    <p class="lede">This is one of the few infections in this companion where waiting for confirmation can cost a patient&rsquo;s life. Walk a case forward and decide when treatment should start.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Acute onset: fever, severe headache, myalgia, prostration.</li>
+      <li>The rash follows fever onset by 2-6 days &mdash; treatment should not wait for it.</li>
+      <li>Untreated disease can progress to CNS changes, disseminated intravascular coagulation, edema, and circulatory collapse.</li>
+      <li>Doxycycline is the treatment of choice, and no vaccine is available; prophylactic antibiotics are not recommended.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Advance the case day by day</h2>
+    <p class="try-note">At each point, decide what should happen next.</p>
+    <div id="act-rmsfClock"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c21"><p>In Rocky Mountain spotted fever, treatment with doxycycline should be started based on which of the following?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c21b"><p>How long after fever onset does the rash of RMSF classically appear?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c21c"><p>Untreated Rocky Mountain spotted fever can progress to which severe complications?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">This is one of the rare infections where waiting for lab confirmation can cost a patient&rsquo;s life &mdash; empiric doxycycline on clinical suspicion alone is the standard of care, even in children, where doxycycline is otherwise used cautiously.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s3">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 3</div>
+    <h2>Vector match</h2>
+    <p class="lede">Four organisms, four exposure stories. The vector &mdash; or lack of one &mdash; is often the fastest way to tell them apart.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Rickettsia rickettsii: Dermacentor tick; Rocky Mountain spotted fever.</li>
+      <li>Ehrlichia chaffeensis: lone star tick (Amblyomma americanum); human monocytropic ehrlichiosis.</li>
+      <li>Anaplasma phagocytophilum: blacklegged tick (Ixodes scapularis) &mdash; the same tick that carries Lyme disease; human granulocytic anaplasmosis.</li>
+      <li>Coxiella burnetii: not tick-borne in humans; livestock-associated aerosols or unpasteurized dairy; Q fever.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Drag each organism to its vector</h2>
+    <p class="try-note">Drag each organism onto the exposure route it belongs to. On a phone or with a keyboard, tap an organism first, then tap the clue it matches.</p>
+    <div id="act-vectorMatch"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c22"><p>Which tick is the classic vector for Ehrlichia chaffeensis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c22b"><p>Anaplasma phagocytophilum is transmitted by the same tick species responsible for which other disease covered in this course?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c22c"><p>Which organism in this module is not transmitted by a tick at all?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A shared vector matters clinically: a patient exposed to an Ixodes tick could plausibly have Lyme disease, anaplasmosis, or both at once, which is part of why some tick-borne panels test for multiple organisms together.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s4">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 4</div>
+    <h2>Find the outlier</h2>
+    <p class="lede">Three of these four organisms share a family resemblance in how they spread. One doesn&rsquo;t &mdash; and a second organism, barely related, breaks the pattern even further.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Coxiella burnetii breaks the tick pattern: it spreads through livestock-associated aerosols and unpasteurized dairy.</li>
+      <li>Coxiella also causes a distinct chronic disease &mdash; most often endocarditis &mdash; treated with hydroxychloroquine plus doxycycline for around 18 months.</li>
+      <li>A related outlier: Wolbachia, an intracellular bacterium living inside the roundworm Wuchereria bancrofti (which causes elephantiasis), is also treated with doxycycline &mdash; indirectly, by killing the bacteria the worm depends on.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict which one breaks the pattern</h2>
+    <p class="try-note">Read each question, commit to an answer, then check your reasoning.</p>
+    <div id="act-findOutlier"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c23"><p>What distinguishes Coxiella burnetii&rsquo;s transmission route from that of Rickettsia, Ehrlichia, and Anaplasma?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c23b"><p>Chronic Coxiella burnetii infection most often presents as which condition?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c23c"><p>Treatment of chronic Q fever endocarditis typically requires which approach?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">One more organism breaks the pattern even further: Wolbachia isn&rsquo;t tick-borne at all. It lives inside the roundworm Wuchereria bancrofti and makes the worm&rsquo;s disease worse. Doxycycline treats this infection indirectly &mdash; by killing the Wolbachia the worm depends on, not the worm itself.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s5">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 5</div>
+    <h2>Shared tick problem</h2>
+    <p class="lede">One tick bite, several possible organisms. Knowing which ones could plausibly share that same bite is what turns a single exposure history into a real differential.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Ixodes scapularis carries both Borrelia burgdorferi (Lyme disease) and Anaplasma phagocytophilum.</li>
+      <li>Rickettsia rickettsii and Ehrlichia chaffeensis use different tick species entirely (Dermacentor and the lone star tick, respectively).</li>
+      <li>Coxiella burnetii and Chlamydia psittaci aren&rsquo;t tick-borne at all.</li>
+      <li>Persistent symptoms despite treatment for one tick-borne illness can be a clue to a coinfection, not necessarily treatment failure.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort by shared exposure</h2>
+    <p class="try-note">Decide whether each organism could share an Ixodes scapularis bite with Lyme disease.</p>
+    <div id="act-sharedTick"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c24"><p>Which two organisms covered in this course share Ixodes scapularis as their tick vector?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c24b"><p>A patient with a confirmed Ixodes scapularis tick bite develops fever and joint pain. Which coinfection should be considered alongside Lyme disease?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c24c"><p>Which organism, despite being covered in this same module, is transmitted by a completely different route &mdash; not a tick bite at all?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When a patient reports a confirmed tick bite, the tick species and geographic region narrow the differential fast &mdash; but a single bite can sometimes carry more than one organism at once, which is why persistent or atypical symptoms after treatment can warrant testing for a coinfection rather than assuming treatment failure.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5quiz">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Mastery check</div>
+    <h2>Module 5 quiz</h2>
+    <p class="lede">Eight questions covering rickettsial pathogenesis, RMSF timing, vector matching, the Coxiella and Wolbachia outliers, and shared tick exposures. Miss something, and a short targeted round will let you practice exactly that.</p>
+    <div class="quiz-body" data-quiz="m5"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m6home">
+  <div class="modhero">
+    <div class="kicker">Module 6</div>
+    <h2>Pathogen detective: integrating the outliers</h2>
+    <p>This module introduces no new organisms. Instead, it puts everything from Modules 1&ndash;5 back on the table at once &mdash; the way a real differential diagnosis actually works, without modules to sort the clues into for you.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>When the clues arrive one at a time and nothing tells you which module they came from, what do you actually reach for first?</span></div>
+    <div class="ghost-num" aria-hidden="true">6</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Identify the one finding that doesn&rsquo;t fit a given organism, even when the other three are correct.</li><li>Move from a single exposure clue to a specific organism, and reason from a structural constraint to which drug classes are implausible.</li><li>Work an unknown-patient case end-to-end, committing to an answer before each new clue arrives.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m6s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">What doesn&rsquo;t fit?</span><span class="home-desc">Spot the finding that belongs to a different organism.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Exposure detective</span><span class="home-desc">Go from one clue straight to an organism.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Treatment constraint</span><span class="home-desc">Reason from biology to which drugs can&rsquo;t work.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Unknown patient</span><span class="home-desc">Work a case end-to-end, one clue at a time.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">Build your final recap</span><span class="home-desc">Fill in a cumulative summary from memory.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 6 quiz</span><span class="home-desc">Eight questions, then a targeted round on anything you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s1">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 1</div>
+    <h2>What doesn&rsquo;t fit?</h2>
+    <p class="lede">Three findings belong to an organism. One doesn&rsquo;t &mdash; it belongs to a different organism from a different module that happens to sound similar. Catching the swap is the whole skill.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Mycobacterium tuberculosis has an unusually lipid-rich wall &mdash; not no wall at all, which is Mycoplasma&rsquo;s trait.</li>
+      <li>Treponema pallidum spreads sexually and vertically &mdash; not by a tick, which is Borrelia&rsquo;s route.</li>
+      <li>Chlamydia trachomatis infects only humans &mdash; a bird reservoir belongs to C. psittaci instead.</li>
+      <li>Rickettsia rickettsii is tick-borne &mdash; unpasteurized dairy exposure belongs to Coxiella burnetii instead.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Spot the finding that doesn&rsquo;t belong</h2>
+    <p class="try-note">For each organism, predict which finding is actually borrowed from somewhere else.</p>
+    <div id="act-whatDoesntFit"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c25"><p>Mycoplasma pneumoniae is unusual among the organisms in this course because it lacks which structure entirely?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c25b"><p>Which feature is shared by both Actinomyces israelii and Nocardia asteroides, despite their differing oxygen requirements and treatments?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c25c"><p>Which organism in this course is correctly matched with its unusual feature?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Exam questions (and real patient histories) love to borrow one true fact from a look-alike organism. The fastest check: ask whether this specific fact belongs to <em>this</em> organism, or just sounds like it should.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s2">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 2</div>
+    <h2>Exposure detective</h2>
+    <p class="lede">One clue, one organism, as fast as you can get there. No case history, no lab values &mdash; just the exposure.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Bird exposure &rarr; Chlamydia psittaci.</li>
+      <li>Tick exposure with an expanding, clearing rash &rarr; Borrelia burgdorferi.</li>
+      <li>Mucosal disruption &rarr; a draining sinus tract &rarr; Actinomyces israelii.</li>
+      <li>Immunocompromised host &rarr; TB-like disease resistant to standard therapy &rarr; MAC.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>One clue, one organism</h2>
+    <p class="try-note">Read each minimal clue and name the organism as fast as you can.</p>
+    <div id="act-exposureDetective"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c26"><p>A patient with bird exposure develops pneumonia. Which organism is the most likely cause?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c26b"><p>A patient develops a draining sinus tract after dental trauma. Which organism is the most likely cause?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c26c"><p>An immunocompromised patient develops pulmonary disease resembling tuberculosis, but the isolate resists standard anti-tuberculosis drugs. Which organism is the most likely cause?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">In practice, you rarely get a full case history up front. Exposure is often the first &mdash; and sometimes only &mdash; clue you get before you need to act.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s3">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 3</div>
+    <h2>Treatment constraint</h2>
+    <p class="lede">Instead of asking which drug treats an organism, start from a single biological fact and reason forward to which drugs couldn&rsquo;t possibly work.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>No cell wall &rarr; beta-lactams have no target.</li>
+      <li>Obligate intracellular growth &rarr; routine culture won&rsquo;t recover the organism.</li>
+      <li>No plasmids &rarr; resistance can only arise by chromosomal mutation.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Reason from biology to pharmacology</h2>
+    <p class="try-note">Start from the constraint, predict the consequence, then check your reasoning.</p>
+    <div id="act-treatmentConstraint"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c27"><p>An organism has no cell wall at all. Which drug class is guaranteed to be ineffective against it?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c27b"><p>An organism cannot be grown on standard culture media because it is obligately intracellular. Which of these organisms fits that description?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c27c"><p>An organism has no plasmids. Which mechanism must be responsible for any antibiotic resistance it develops?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">This is the reasoning pattern worth keeping long after this course: a single structural fact can rule out an entire drug class before you ever look up a susceptibility report.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s4">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 4</div>
+    <h2>Unknown patient</h2>
+    <p class="lede">One case, four clues, revealed one at a time. Commit to an answer before each new clue arrives &mdash; that&rsquo;s how real diagnostic reasoning actually works.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Start from exposure, then let morphology, spread pattern, and treatment confirm or revise your answer.</li>
+      <li>A confident wrong answer early on is exactly the kind of gap worth catching before it happens with a real patient.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Work the case forward</h2>
+    <p class="try-note">Commit to an answer at each stage before the next clue appears.</p>
+    <div id="act-unknownPatient"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c28"><p>A patient with recent dental trauma develops a slowly draining jaw lesion with granular pus. What should this history suggest first?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c28b"><p>Branching, filamentous organisms with visible sulfur granules, recovered under anaerobic conditions, are most consistent with which organism?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c28c"><p>Which pattern of spread is characteristic of actinomycosis, distinguishing it from nocardiosis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Notice how much this case turns on history and pattern of spread rather than a single defining lab value &mdash; that&rsquo;s realistic, and it&rsquo;s why exposure questions come first in a real workup.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s5">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 5</div>
+    <h2>Build your final recap</h2>
+    <p class="lede">One last pass across the whole companion, from memory. Fill in each blank before checking your work.</p>
+    <div class="keypoints"><h4>Key points</h4><ul>
+      <li>Six modules, one recurring question: what is unusual about this organism, and how does that change recognition, treatment, or prevention?</li>
+      <li>The organisms that seemed hardest to tell apart almost always came down to exposure history, not the microscope.</li>
+    </ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Fill in the recap</h2>
+    <p class="try-note">Choose the organism or term that completes each blank.</p>
+    <div id="act-finalRecap"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<div class="cp-item" data-check="c29"><p>Which organism in this course lacks a cell wall entirely?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c29b"><p>Which organism&rsquo;s developmental cycle depends on distinct elementary and reticulate body forms?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c29c"><p>Which organism breaks the usual tick-vector pattern among the intracellular organisms in Module 5?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">If a blank here felt hard, that&rsquo;s useful information, not a failure &mdash; it&rsquo;s telling you exactly which module deserves another look before the Mastery Challenge.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6quiz">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Mastery check</div>
+    <h2>Module 6 quiz</h2>
+    <p class="lede">Eight questions that reach across every module &mdash; outliers, exposure-based identification, treatment constraints, and unknown-patient reasoning. Miss something, and a short targeted round will let you practice exactly that.</p>
+    <div class="quiz-body" data-quiz="m6"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="flashcards">
+  <div class="card">
+    <div class="eyebrow">Retrieval Practice</div>
+    <h2>Flashcards</h2>
+    <p class="lede">Sixty-one terms from all six modules &mdash; cell wall structure, drug mechanisms, resistance definitions, and the organisms that break the usual bacterial rules. Flip each card, then use Previous/Next to keep moving.</p>
+    <div class="fc-stage">
+      <div class="fc" id="fcCard" tabindex="0" role="button" aria-label="Flashcard. Press Enter to flip.">
+        <div class="fc-face fc-front"><div>
+          <div class="fc-term" id="fcFront"></div>
+          <div class="fc-hint">click, tap, or press Enter to flip</div>
+        </div></div>
+        <div class="fc-face fc-back"><div class="fc-def" id="fcBack"></div></div>
+      </div>
+    </div>
+    <div class="fc-bar">
+      <button class="btn ghost" id="fcPrev">Previous</button>
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn ghost" id="fcNext">Next</button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="final">
+  <div class="card">
+    <div class="eyebrow">Mastery Challenge</div>
+    <h2>25-question mastery exam</h2>
+    <p class="lede">A mixed set drawn from all six modules: recall, application, and integration. After you submit, any concept area you missed becomes a targeted practice round, drawing on fresh questions where possible.</p>
+    <div class="quiz-body" data-quiz="final"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit exam</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+  </main>
+</div>
+
+<script src="banks/bacteria4.js"></script>
+<script src="banks/bacteria4.manifest.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/helpers.js"></script>
+<script src="shared/activities.js"></script>
+<script src="shared/welcome.js"></script>
+<script>
+/* ============================================================
+   Content script for Bacteria IV.
+   First block: derive MODULES/FLOW/SECTION_REQ/etc. from MANIFEST
+   (companion-architecture.md §5) — copied verbatim, never hand-typed.
+   ============================================================ */
+var BADGES = {home:'&#8962;', m1:'1', m2:'2', m3:'3', m4:'4', m5:'5', m6:'6', flash:'&#10022;', final:'&#9733;'};
+
+var MODULES = MANIFEST.modules.map(function(m){
+  var mod = {id:m.id, badge:BADGES[m.id]||'&#8226;', title:m.title,
+             sections:m.sections.map(function(s){return {key:s.key,label:s.label};})};
+  if(m.unlockAfter) mod.unlockAfter = m.unlockAfter;
+  return mod;
+});
+
+var FLOW = []; MODULES.forEach(function(m){ m.sections.forEach(function(s){ FLOW.push(s); }); });
+
+var UNGRADED = [];
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(!s.checks && !s.activity && !s.quiz) UNGRADED.push(s.key);
+});});
+
+var SECTION_REQ = {}, QUIZ_KEY_FOR_SECTION = {};
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(s.checks || s.activity){
+    SECTION_REQ[s.key] = {checks:s.checks||[]};
+    if(s.activity) SECTION_REQ[s.key].activity = s.activity;
+  }
+  if(s.quiz) QUIZ_KEY_FOR_SECTION[s.key] = s.quiz;
+});});
+
+var AREA_SECTION = MANIFEST.areaSection;
+
+var MODULE_QUIZ_SIZE = 8;
+
+/* ============================================================
+   Module 1 activities — built with the shared Act toolkit.
+   ============================================================ */
+
+Act.dnd('act-mycoEnvelope', {name:'mycoEnvelope',
+  pills:['Cytoplasmic membrane','Peptidoglycan layer','Arabinogalactan-mycolate layer','Mycolic acids / free lipids (outermost)'],
+  rows:[
+    {text:'Innermost layer, directly enclosing the cytoplasm', answer:'Cytoplasmic membrane',
+     why:'The cytoplasmic membrane is the innermost boundary of the cell, the same role it plays in every bacterium.'},
+    {text:'A structural layer just outside the membrane, present but much thinner than in most Gram-positive bacteria', answer:'Peptidoglycan layer',
+     why:'Mycobacteria do have peptidoglycan, but it is a minor structural layer here rather than the dominant wall component it is in a true Gram-positive cell.'},
+    {text:'A carbohydrate-lipid scaffold linking the peptidoglycan to the outer lipid layers', answer:'Arabinogalactan-mycolate layer',
+     why:'Arabinogalactan is covalently attached to the peptidoglycan on one side and to mycolic acids on the other, forming the bridge between the two.'},
+    {text:'The outermost, waxy layer that retains carbol fuchsin stain and resists acids, bases, and drying', answer:'Mycolic acids / free lipids (outermost)',
+     why:'This outermost lipid layer is what makes the organism acid-fast and gives it its unusual environmental resistance.'}
+  ]});
+
+Act.stages('act-tbProgression', {name:'tbProgression', stages:[
+  {lead:'Airborne droplet nuclei reach the alveoli, where bacilli are engulfed by alveolar macrophages.',
+   prompt:'The host mounts an effective immune response and forms a well-organized granuloma. What is this patient\u2019s clinical state?',
+   options:['Latent TB infection \u2014 no symptoms, no transmission','Active pulmonary TB, immediately transmissible','Complete clearance of the organism, with no lasting infection','Conversion to a non-acid-fast form of the organism'],
+   answer:0,
+   why:'A successfully contained infection produces latent TB infection: the organism survives inside the granuloma, but the patient has no symptoms and does not transmit it.'},
+  {lead:'Years pass. This patient\u2019s immune control gradually weakens.',
+   prompt:'What is the most likely outcome for the contained infection?',
+   options:['Reactivation into active TB disease','Permanent latency with no further risk','Spontaneous clearance of the organism','Conversion into MAC infection'],
+   answer:0,
+   why:'Reactivation happens when waning immune control lets bacilli that were held in the granuloma resume active growth \u2014 the reason latent infection carries a lifetime risk, even after years of no symptoms.'},
+  {lead:'A different patient\u2019s initial immune response fails to contain the organism.',
+   prompt:'What is true of this patient\u2019s active pulmonary TB?',
+   options:['It may be transmitted to others via respiratory droplets','It cannot be transmitted until the patient reactivates a second time','It always resolves without any treatment','It converts automatically to latent infection within days'],
+   answer:0,
+   why:'Active pulmonary TB is the transmissible form of the disease \u2014 droplet nuclei from an infected, symptomatic patient are how the infection spreads to begin with.'}
+]});
+
+Act.dnd('act-tbRegimenBuilder', {name:'tbRegimenBuilder',
+  pills:['Isoniazid (INH)','Rifampin (RIF)','Pyrazinamide (PZA)','Ethambutol (EMB)'],
+  rows:[
+    {text:'Inhibits mycolic acid synthesis', answer:'Isoniazid (INH)',
+     why:'Isoniazid blocks the pathway that builds the wall responsible for acid-fastness \u2014 the same pathway a katG mutation can protect by blocking the drug\u2019s own activation.'},
+    {text:'Inhibits mRNA synthesis by blocking RNA polymerase', answer:'Rifampin (RIF)',
+     why:'Rifampin binds bacterial RNA polymerase directly, halting transcription.'},
+    {text:'Mechanism of action is not fully established, despite proven clinical efficacy', answer:'Pyrazinamide (PZA)',
+     why:'Pyrazinamide is unusual among the four first-line drugs in that its precise target is still not fully characterized.'},
+    {text:'Inhibits arabinogalactan synthesis', answer:'Ethambutol (EMB)',
+     why:'Ethambutol targets arabinogalactan synthesis, disrupting the same wall scaffold explored in the envelope activity.'}
+  ]});
+
+Act.predict('act-tbResistanceLab', {name:'tbResistanceLab', items:[
+  {id:'kat', title:'Catalase-peroxidase mutation',
+   prompt:'A strain acquires a mutation in the gene for catalase-peroxidase (KatG). What is the most likely therapeutic consequence?',
+   options:['Resistance to isoniazid, since this enzyme is required to activate the drug','Resistance to rifampin','Increased susceptibility to beta-lactams','Loss of acid-fast staining'],
+   answer:0,
+   why:'KatG converts isoniazid into its active form. Disable the enzyme, and the prodrug is never activated \u2014 the strain becomes resistant to isoniazid specifically, not to the other first-line drugs.'},
+  {id:'mycolic', title:'Mycolic-acid-synthesis mutation',
+   prompt:'A separate strain mutates a gene involved directly in mycolic acid synthesis. What is the most likely consequence?',
+   options:['Reduced susceptibility to isoniazid, which targets this pathway','Reduced susceptibility to rifampin only','Complete loss of the cell wall','Increased susceptibility to every first-line drug'],
+   answer:0,
+   why:'Isoniazid\u2019s target is mycolic acid synthesis itself, so a mutation anywhere in that pathway can blunt the drug\u2019s effect, independent of the katG activation step.'}
+]});
+
+Act.dnd('act-tbMacLeprosySort', {name:'tbMacLeprosySort',
+  pills:['M. tuberculosis','MAC (M. avium-intracellulare)','M. leprae'],
+  rows:[
+    {text:'Immunocompetent patient with a productive cough, a cavitary lesion on chest x-ray, and acid-fast bacilli on sputum smear', answer:'M. tuberculosis',
+     why:'A cavitary lung lesion with a positive acid-fast smear in an immunocompetent patient is the classic presentation of pulmonary TB.'},
+    {text:'Patient with AIDS and a CD4 count of 80 cells/\u00b5L presents with pulmonary disease resistant to standard anti-tuberculosis therapy', answer:'MAC (M. avium-intracellulare)',
+     why:'Severe immunosuppression plus resistance to standard TB drugs points to MAC, the most common atypical mycobacterial infection in this population.'},
+    {text:'Patient with slowly progressive, disfiguring skin lesions, caused by an organism with an unusually long 12-14 day doubling time', answer:'M. leprae',
+     why:'That doubling time is distinctive to M. leprae, and skin/nerve involvement over a long course is the hallmark of leprosy.'}
+  ]});
+
+/* ============================================================
+   Module 2 activities.
+   ============================================================ */
+
+Act.sort('act-actinoNocardiaSort', {name:'actinoNocardiaSort',
+  options:['Actinomyces israelii','Nocardia asteroides'],
+  rows:[
+    {text:'Anaerobic organism that is part of the normal oral flora', answer:'Actinomyces israelii',
+     why:'Actinomyces lives harmlessly in the mouth as an anaerobe until trauma gives it a way in.'},
+    {text:'Aerobic organism found in soil', answer:'Nocardia asteroides',
+     why:'Nocardia is an environmental aerobe, acquired by inhalation rather than carried as normal flora.'},
+    {text:'Classic presentation: a draining sinus tract with sulfur granules', answer:'Actinomyces israelii',
+     why:'Sulfur granules in a draining abscess are the signature finding of actinomycosis.'},
+    {text:'Classic presentation: pneumonia that disseminates from lung to brain in an immunocompromised patient', answer:'Nocardia asteroides',
+     why:'Lung-to-brain spread in an immunocompromised host is the classic nocardiosis pattern.'},
+    {text:'First-line treatment: penicillin G', answer:'Actinomyces israelii',
+     why:'Actinomycosis responds to penicillin G, unlike Nocardia, which needs a completely different drug.'},
+    {text:'First-line treatment: trimethoprim-sulfamethoxazole (TMP-SMX)', answer:'Nocardia asteroides',
+     why:'Nocardiosis is treated with TMP-SMX rather than penicillin, despite the two organisms\u2019 similar appearance under the microscope.'}
+  ]});
+
+(function(){
+  var svg = '<svg viewBox="0 0 640 220" role="img" aria-label="Two entry points: the oral cavity and jaw, and the lungs">'+
+    '<g data-hs="oral"><circle cx="170" cy="110" r="72" fill="var(--wallA-soft)" stroke="var(--wallA)" stroke-width="3"/>'+
+    '<text x="170" y="104" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">Oral cavity</text>'+
+    '<text x="170" y="124" text-anchor="middle" font-size="12" fill="var(--ink-mid)">/ jaw</text></g>'+
+    '<g data-hs="lungs"><circle cx="470" cy="110" r="72" fill="var(--w-t5-bg)" stroke="var(--w-t5-fg)" stroke-width="3"/>'+
+    '<text x="470" y="104" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">Lungs</text>'+
+    '<text x="470" y="124" text-anchor="middle" font-size="12" fill="var(--ink-mid)">(inhaled)</text></g>'+
+    '</svg>';
+  Act.explore('act-followInfection', {name:'followInfection', svg:svg,
+    ids:['oral','lungs'],
+    start:'Select a site, or one of the buttons below the figure.',
+    items:{
+      oral:{title:'Oral cavity / jaw \u2014 Actinomyces', html:'<p>Actinomyces israelii lives as normal anaerobic flora of the mouth. Trauma \u2014 dental work, a jaw fracture, poor dentition \u2014 breaches the mucosa and lets it invade adjacent tissue.</p><p>The organism forms branching filaments surrounded by inflammation, producing a slowly enlarging abscess with a <b>draining sinus tract</b> and characteristic <b>sulfur granules</b> in the pus.</p><p><i>Treatment:</i> penicillin G. No vaccine.</p>'},
+      lungs:{title:'Lungs \u2014 Nocardia', html:'<p>Nocardia asteroides is an aerobic soil organism, acquired by <b>inhalation</b> rather than carried as normal flora.</p><p>It characteristically <b>disseminates from the lung to the brain</b>, producing abscesses, and disproportionately affects <b>immunocompromised</b> patients.</p><p><i>Treatment:</i> trimethoprim-sulfamethoxazole (TMP-SMX). No vaccine.</p>'}
+    }});
+})();
+
+Act.predict('act-cellWallPredict', {name:'cellWallPredict', items:[
+  {id:'gram', title:'Gram stain result',
+   prompt:'If a bacterium has no cell wall at all, what would you predict for its Gram stain result?',
+   options:['It will not take up either Gram stain reliably, since the stain depends on peptidoglycan','It will stain strongly Gram-positive','It will stain strongly Gram-negative','It will stain acid-fast instead'],
+   answer:0,
+   why:'The Gram stain distinguishes cell walls by their peptidoglycan content and structure. An organism with no wall at all, like Mycoplasma, cannot be reliably classified by Gram stain.'},
+  {id:'shape', title:'Cell morphology',
+   prompt:'Without a rigid peptidoglycan wall to hold its shape, what would you predict about this organism\u2019s morphology?',
+   options:['Pleomorphic \u2014 variable, not fixed to a single shape','A perfectly rigid rod, identical to a typical bacillus','A rigid coccus with a distinct capsule','Unchanged from a normal walled bacterium'],
+   answer:0,
+   why:'The cell wall is what gives most bacteria their fixed shape. Without one, Mycoplasma is pleomorphic, taking on variable, irregular forms.'},
+  {id:'drug', title:'Antibiotic susceptibility',
+   prompt:'Which class of antibiotics would you predict to be completely ineffective against this wall-less organism?',
+   options:['Beta-lactams, since they target peptidoglycan cross-linking','Macrolides, since they target the ribosome','Tetracyclines, since they target the ribosome','Fluoroquinolones, since they target DNA gyrase'],
+   answer:0,
+   why:'Beta-lactams work by blocking peptidoglycan cross-linking. An organism with no peptidoglycan at all, like Mycoplasma, has no target for these drugs and is inherently resistant to the entire class.'}
+]});
+
+Act.stages('act-walkingPneumoniaCase', {name:'walkingPneumoniaCase', stages:[
+  {lead:'A 19-year-old college student presents with a gradual onset of low-grade fever, headache, and a persistent dry cough over the past week.',
+   prompt:'Based on this alone, what should you suspect?',
+   options:['An atypical, walking pneumonia is possible, but more clues are needed','Definitely bacterial pneumococcal pneumonia','Definitely viral bronchitis, no further workup needed','Definitely tuberculosis'],
+   answer:0,
+   why:'A gradual onset with headache and a dry, nonproductive cough is a classic early picture for atypical pneumonia, though it isn\u2019t yet specific to one organism.'},
+  {lead:'A chest x-ray shows patchy infiltrates that look far worse than the patient appears clinically \u2014 the patient is not in acute distress despite the imaging findings.',
+   prompt:'This mismatch between x-ray severity and clinical appearance is classically associated with which kind of pathogen?',
+   options:['An atypical organism such as Mycoplasma pneumoniae','Streptococcus pneumoniae','Staphylococcus aureus','Haemophilus influenzae'],
+   answer:0,
+   why:'This exact mismatch \u2014 looking worse on film than at the bedside \u2014 is a textbook clue for atypical pneumonia pathogens like Mycoplasma, distinguishing it from typical bacterial pneumonias.'},
+  {lead:'The patient lives in a crowded dormitory, and a roommate had similar symptoms two weeks earlier. Sputum Gram stain shows no organisms, and routine bacterial culture is negative.',
+   prompt:'Putting all the clues together, which organism best explains this presentation?',
+   options:['Mycoplasma pneumoniae','Streptococcus pneumoniae','Legionella pneumophila','Mycobacterium tuberculosis'],
+   answer:0,
+   why:'Droplet spread in close quarters, a negative Gram stain (no cell wall to stain), and negative routine culture (it resists standard isolation methods) all point specifically to Mycoplasma pneumoniae \u2014 the classic cause of "walking pneumonia."'}
+]});
+
+/* ============================================================
+   Module 3 activities.
+   ============================================================ */
+
+Act.dnd('act-spirocheteStructure', {name:'spirocheteStructure',
+  pills:['Outer membrane','Periplasmic flagella','Cell cylinder / inner membrane'],
+  rows:[
+    {text:'The outermost boundary, enclosing the periplasmic space', answer:'Outer membrane',
+     why:'The outer membrane is the spirochete\u2019s outer boundary, wrapping around everything else, including the flagella, inside it.'},
+    {text:'Wrap around the cell cylinder and anchor at both poles, producing the organism\u2019s corkscrew motion', answer:'Periplasmic flagella',
+     why:'Unlike ordinary bacterial flagella that project outward, these flagella stay inside the outer membrane, winding around the cylinder to drive movement.'},
+    {text:'The inner structural core, supported by a thin peptidoglycan layer', answer:'Cell cylinder / inner membrane',
+     why:'The cell cylinder is the innermost structural core that the periplasmic flagella coil around.'}
+  ]});
+
+Act.order('act-syphilisTimeline', {name:'syphilisTimeline', items:[
+  '<b>Primary syphilis.</b> A painless chancre appears at the inoculation site and may heal on its own.',
+  '<b>Secondary syphilis.</b> The organism spreads through the bloodstream, producing fever, malaise, and a maculopapular rash.',
+  '<b>Latency.</b> No outward symptoms, but the infection persists untreated.',
+  '<b>Tertiary syphilis.</b> CNS involvement and cardiovascular lesions appear, sometimes years later.'
+]});
+
+Act.stages('act-lymeProgression', {name:'lymeProgression', stages:[
+  {lead:'A patient is bitten by an Ixodes tick and develops an expanding, oval, erythematous rash with central clearing five days later.',
+   prompt:'What stage of Lyme disease does this represent, and what should happen next?',
+   options:['Stage 1 (erythema migrans); doxycycline or amoxicillin now can prevent progression','Stage 2; the patient needs IV ceftriaxone immediately','Stage 3; the damage is already permanent','This is not Lyme disease, since no fever is present'],
+   answer:0,
+   why:'Erythema migrans is the hallmark of early, stage 1 Lyme disease. Prompt oral doxycycline or amoxicillin at this stage can prevent the infection from ever advancing further.'},
+  {lead:'A different patient never received treatment for an unrecognized rash. Weeks later, they develop facial palsy and heart palpitations.',
+   prompt:'What stage has this patient progressed to?',
+   options:['Stage 2, with neurologic and cardiac involvement','Stage 1, unchanged','Stage 3, with joint damage only','A drug reaction, unrelated to the tick bite'],
+   answer:0,
+   why:'Untreated Lyme disease can progress to stage 2, marked by neurologic findings like facial palsy and cardiac findings like myocarditis as the organism disseminates further.'},
+  {lead:'Still untreated, months later this patient develops recurrent joint swelling and cognitive difficulty.',
+   prompt:'What stage has this patient now reached?',
+   options:['Stage 3, with arthritis and encephalopathy','Stage 1, with a new erythema migrans rash','Full recovery with no further disease','Stage 2, unchanged from before'],
+   answer:0,
+   why:'Stage 3 Lyme disease is marked by arthritis and encephalopathy \u2014 the late consequence of an infection that was never interrupted at an earlier, more treatable stage.'}
+]});
+
+Act.sort('act-syphilisOrLyme', {name:'syphilisOrLyme',
+  options:['Syphilis (Treponema pallidum)','Lyme disease (Borrelia burgdorferi)'],
+  rows:[
+    {text:'A painless genital ulcer appears three weeks after sexual contact', answer:'Syphilis (Treponema pallidum)',
+     why:'A painless chancre three weeks after sexual exposure is the classic primary lesion of syphilis.'},
+    {text:'An expanding bullseye rash appears five days after a tick bite', answer:'Lyme disease (Borrelia burgdorferi)',
+     why:'Erythema migrans days after a tick bite is the signature early finding of Lyme disease.'},
+    {text:'Transmission occurs only between humans, including vertically from mother to infant', answer:'Syphilis (Treponema pallidum)',
+     why:'Humans are the only reservoir for T. pallidum, which can also cross the placenta to cause congenital syphilis.'},
+    {text:'Transmission requires an arthropod vector and is not spread person-to-person', answer:'Lyme disease (Borrelia burgdorferi)',
+     why:'Lyme disease is a zoonotic infection requiring an Ixodes tick vector \u2014 it does not spread directly between people.'},
+    {text:'First-line treatment is benzathine penicillin G', answer:'Syphilis (Treponema pallidum)',
+     why:'Benzathine penicillin G remains first-line for syphilis at every stage, with no documented resistance ever reported.'},
+    {text:'First-line treatment is doxycycline or amoxicillin', answer:'Lyme disease (Borrelia burgdorferi)',
+     why:'Lyme disease is treated with doxycycline or amoxicillin, reserving ceftriaxone for late or severe disease.'}
+  ]});
+
+Act.predict('act-reactionDetective', {name:'reactionDetective', items:[
+  {id:'jh', title:'Case 1',
+   prompt:'A patient develops fever, chills, low blood pressure, and a flare-up of their rash 36 hours after the first dose of penicillin for secondary syphilis. What is this most likely to be?',
+   options:['Jarisch-Herxheimer reaction','A true drug allergy','Anaphylaxis','An unrelated viral illness'],
+   answer:0,
+   why:'Onset 24-72 hours after the first dose, with fever, chills, low blood pressure, and a rash flare, is classic for the Jarisch-Herxheimer reaction \u2014 expected with treatment of a high-spirochete-burden infection like syphilis.'},
+  {id:'allergy', title:'Case 2',
+   prompt:'A different patient develops mouth tingling, nausea, and mild wheezing two days into a course of doxycycline for Lyme disease. What is this most likely to be?',
+   options:['A mild allergy or intolerance','Jarisch-Herxheimer reaction','Anaphylaxis','A normal side effect requiring no attention'],
+   answer:0,
+   why:'Onset over minutes to days, with tingling, GI upset, and mild wheezing, fits a mild allergic or intolerance reaction rather than the fever and rigors of Jarisch-Herxheimer or the airway compromise of anaphylaxis.'},
+  {id:'anaphylaxis', title:'Case 3',
+   prompt:'Fifteen minutes after a penicillin injection, a patient develops facial swelling, a weak pulse, and difficulty breathing. What is this, and what should happen immediately?',
+   options:['Anaphylaxis; give epinephrine immediately','Jarisch-Herxheimer reaction; give antipyretics and observe','A mild allergy; give an antihistamine and reassess in a few hours','A normal injection site reaction; no action needed'],
+   answer:0,
+   why:'Rapid onset within minutes, with facial swelling, a weak pulse, and airway compromise, is anaphylaxis \u2014 a medical emergency requiring immediate epinephrine, not observation.'}
+]});
+
+/* ============================================================
+   Module 4 activities.
+   ============================================================ */
+
+Act.sort('act-ebOrRb', {name:'ebOrRb',
+  options:['Elementary body (EB)','Reticulate body (RB)'],
+  rows:[
+    {text:'The infectious, extracellular form that attaches to and enters host epithelial cells', answer:'Elementary body (EB)',
+     why:'The EB is built to survive outside the cell and initiate a new infection \u2014 the job the metabolically inactive RB can\u2019t do.'},
+    {text:'Metabolically inert outside the cell, resistant to environmental stress', answer:'Elementary body (EB)',
+     why:'That environmental resistance is exactly what lets the EB survive the trip between host cells.'},
+    {text:'The non-infectious, intracellular form that replicates by binary fission inside the inclusion', answer:'Reticulate body (RB)',
+     why:'Only the RB divides. It trades infectivity for the ability to multiply once safely inside a cell.'},
+    {text:'Differentiates back into the infectious form before the cell releases new organisms', answer:'Reticulate body (RB)',
+     why:'The RB must convert back into EBs before release \u2014 without that step, nothing infectious leaves the cell.'}
+  ]});
+
+Act.order('act-chlamydiaLifecycle', {name:'chlamydiaLifecycle', items:[
+  '<b>Attachment.</b> The infectious elementary body (EB) contacts and attaches to an epithelial cell.',
+  '<b>Entry.</b> The EB enters the cell within a membrane-bound inclusion.',
+  '<b>Replication.</b> Inside the inclusion, the EB converts to a reticulate body (RB), which divides repeatedly.',
+  '<b>Differentiation.</b> RBs convert back into infectious elementary bodies.',
+  '<b>Release.</b> EBs leave the cell by lysis or extrusion, ready to infect new cells.'
+]});
+
+Act.predict('act-breakLifecycle', {name:'breakLifecycle', items:[
+  {id:'diff', title:'Differentiation fails',
+   prompt:'If RBs fail to differentiate back into EBs, what would you predict happens to the infection?',
+   options:['No new infectious particles are produced, and the cell cannot spread infection to new cells','The cell immediately dies from RB overgrowth','EBs are released directly without conversion','The organism reverts to extracellular replication'],
+   answer:0,
+   why:'EBs are the only infectious form. Without differentiation back into EBs, the RBs inside the inclusion have no way to produce particles capable of infecting a new cell.'},
+  {id:'replicate', title:'Replication fails',
+   prompt:'If RBs fail to replicate inside the inclusion, what would you predict happens?',
+   options:['The infection cannot expand, since RBs are the only form that divides','EBs continue multiplying instead','The inclusion produces more EBs than usual','Nothing changes, since EBs also replicate'],
+   answer:0,
+   why:'Only the RB form divides by binary fission. Without RB replication, there is no way to increase the number of organisms inside the cell.'},
+  {id:'release', title:'Release fails',
+   prompt:'If EBs are never released from the cell by lysis or extrusion, what would you predict happens to the infection?',
+   options:['The infection stays confined to that one cell and cannot spread further','The RBs immediately become infectious instead','The host cell is unaffected either way','The elementary bodies convert back into reticulate bodies indefinitely'],
+   answer:0,
+   why:'Release is what allows newly formed EBs to reach and infect additional cells. Without it, the infection can\u2019t spread beyond the originally infected cell, even though the cycle completed inside it.'}
+]});
+
+Act.sort('act-whichChlamydia', {name:'whichChlamydia',
+  options:['Chlamydia trachomatis','Chlamydia pneumoniae','Chlamydia psittaci'],
+  rows:[
+    {text:'Transmitted by sexual contact or perinatally from mother to infant; humans are the only host', answer:'Chlamydia trachomatis',
+     why:'C. trachomatis is the only one of the three spread sexually or perinatally.'},
+    {text:'Transmitted by respiratory droplets between humans; causes atypical (\u201cwalking\u201d) pneumonia', answer:'Chlamydia pneumoniae',
+     why:'C. pneumoniae spreads human-to-human by droplet, producing a pneumonia picture much like Mycoplasma\u2019s.'},
+    {text:'Transmitted by inhaling dried droppings or secretions from infected birds; not spread person-to-person', answer:'Chlamydia psittaci',
+     why:'C. psittaci is the outlier of the three: its reservoir is birds, not humans.'},
+    {text:'Causes urethritis, pelvic inflammatory disease, conjunctivitis, and trachoma', answer:'Chlamydia trachomatis',
+     why:'These are the classic C. trachomatis disease presentations, tied to its sexual and perinatal transmission routes.'},
+    {text:'Causes psittacosis (\u201cparrot fever\u201d)', answer:'Chlamydia psittaci',
+     why:'Psittacosis is named for its bird reservoir and is caused specifically by C. psittaci.'},
+    {text:'Natural host is birds, particularly parrots and poultry', answer:'Chlamydia psittaci',
+     why:'This is the defining feature that separates C. psittaci from the other two, human-only species.'}
+  ]});
+
+Act.stages('act-trachomatisCase', {name:'trachomatisCase', stages:[
+  {lead:'A 22-year-old sexually active patient is screened during a routine visit and tests positive for Chlamydia trachomatis, despite having no symptoms.',
+   prompt:'What should guide the next step in this case?',
+   options:['Treat regardless of symptoms, since asymptomatic carriers are an important reservoir for transmission','No treatment is needed if the patient has no symptoms','Repeat testing in one year with no treatment now','Treat only if a partner also tests positive'],
+   answer:0,
+   why:'Asymptomatic infection is common with C. trachomatis, and asymptomatic carriers are an important reservoir for ongoing transmission, so treatment is appropriate even without symptoms.'},
+  {lead:'A different patient presents with dysuria and a watery, nonpurulent urethral discharge.',
+   prompt:'This presentation is most consistent with which condition?',
+   options:['Non-gonococcal urethritis from C. trachomatis','Gonococcal urethritis, which always produces thick purulent discharge and rules out Chlamydia','A viral infection unrelated to Chlamydia','Tertiary syphilis'],
+   answer:0,
+   why:'A watery, nonpurulent discharge is the classic presentation of non-gonococcal urethritis, commonly caused by C. trachomatis; purulent discharge is more typical of gonococcal infection, though the two frequently coexist.'},
+  {lead:'Because roughly 10-30% of C. trachomatis infections are coinfected with Neisseria gonorrhoeae, the clinician considers empiric therapy.',
+   prompt:'What is the recommended treatment approach for this nonpregnant patient?',
+   options:['Doxycycline 100 mg twice daily for 7 days, with coverage for possible gonococcal coinfection','A single dose of penicillin G only','No antibiotic, since Chlamydia resolves without treatment','TMP-SMX for 7 days'],
+   answer:0,
+   why:'Per current CDC guidance, doxycycline 100 mg BID for 7 days is first-line for nonpregnant patients with C. trachomatis, and suspected gonococcal coinfection should be treated as well given how often the two occur together.'}
+]});
+
+/* ============================================================
+   Module 5 activities.
+   ============================================================ */
+
+Act.order('act-endotheliumToRash', {name:'endotheliumToRash', items:[
+  '<b>Intracellular invasion.</b> Rickettsia rickettsii invades and replicates inside endothelial cells lining small blood vessels.',
+  '<b>Vasculitis.</b> Infected endothelial cells are damaged, triggering inflammation of the vessel wall.',
+  '<b>Increased capillary permeability.</b> Damaged vessels leak fluid and blood into surrounding tissue.',
+  '<b>Systemic manifestations.</b> The resulting rash, headache, and, in severe cases, edema or circulatory collapse follow directly from this vascular injury.'
+]});
+
+Act.stages('act-rmsfClock', {name:'rmsfClock', stages:[
+  {lead:'Day 1-2: A patient who was recently hiking develops sudden fever, severe headache, and myalgia. No rash is present yet.',
+   prompt:'What should happen at this point?',
+   options:['Begin doxycycline empirically based on history and exam; do not wait for the rash','Wait for the rash to appear before starting any treatment','Order a rickettsial antibody titer and wait for results before treating','Reassure the patient that this is a normal viral illness'],
+   answer:0,
+   why:'Waiting for the rash to appear before treating Rocky Mountain spotted fever can delay therapy dangerously. Doxycycline should be started empirically based on the clinical picture and exposure history alone.'},
+  {lead:'Day 3-4: The patient did not receive treatment. A maculopapular rash now appears, starting on the wrists and ankles.',
+   prompt:'What does this rash timing tell you?',
+   options:['This is the expected 2-6 day delay between fever onset and rash in RMSF, and treatment is now overdue','This rules out RMSF, since the rash should have appeared on day 1','This is now a different diagnosis entirely','No further action is needed since the rash has appeared'],
+   answer:0,
+   why:'The rash of RMSF classically follows fever onset by 2 to 6 days. By the time it appears, treatment is already overdue and should be started immediately.'},
+  {lead:'Day 6-7: Still untreated, the patient develops confusion and signs of disseminated intravascular coagulation.',
+   prompt:'What does this progression represent?',
+   options:['Severe, potentially fatal disease from ongoing vascular injury and delayed treatment','A normal resolution phase that requires no further intervention','A separate, unrelated infection','Evidence that antibiotics would no longer help'],
+   answer:0,
+   why:'Untreated RMSF can progress to severe, life-threatening disease with CNS changes and DIC, driven by the same vascular injury that started days earlier \u2014 doxycycline remains the appropriate treatment even at this stage, and earlier treatment prevents ever reaching it.'}
+]});
+
+Act.dnd('act-vectorMatch', {name:'vectorMatch',
+  pills:['Rickettsia rickettsii','Ehrlichia chaffeensis','Anaplasma phagocytophilum','Coxiella burnetii'],
+  rows:[
+    {text:'Vector: Dermacentor tick; causes Rocky Mountain spotted fever', answer:'Rickettsia rickettsii',
+     why:'Dermacentor ticks are the classic vector for R. rickettsii and RMSF.'},
+    {text:'Vector: lone star tick (Amblyomma americanum); causes human monocytropic ehrlichiosis', answer:'Ehrlichia chaffeensis',
+     why:'The lone star tick is specific to Ehrlichia chaffeensis among this group.'},
+    {text:'Vector: blacklegged tick (Ixodes scapularis) \u2014 the same tick that transmits Lyme disease; causes human granulocytic anaplasmosis', answer:'Anaplasma phagocytophilum',
+     why:'Sharing a vector with Borrelia burgdorferi is what makes anaplasmosis a realistic Lyme coinfection.'},
+    {text:'Not tick-borne in humans; acquired by inhaling aerosols from infected livestock or unpasteurized dairy; causes Q fever', answer:'Coxiella burnetii',
+     why:'Coxiella burnetii is the one organism here with no tick involvement at all.'}
+  ]});
+
+Act.predict('act-findOutlier', {name:'findOutlier', items:[
+  {id:'vector', title:'The vector question',
+   prompt:'Three of these four organisms share a tick vector. Which one breaks that pattern, and how is it actually transmitted?',
+   options:['Coxiella burnetii; acquired by inhaling aerosols from infected livestock or unpasteurized dairy, not from a tick bite','Rickettsia rickettsii; acquired from mosquito bites','Ehrlichia chaffeensis; acquired from contaminated water','Anaplasma phagocytophilum; acquired from bird droppings'],
+   answer:0,
+   why:'Coxiella burnetii is the outlier: despite belonging to this same intracellular-organism family, it spreads through livestock-associated aerosols and unpasteurized dairy, not a tick bite.'},
+  {id:'chronic', title:'The chronic disease question',
+   prompt:'Which of these four organisms is most associated with a distinct chronic disease presentation, beyond its acute illness?',
+   options:['Coxiella burnetii, which can cause chronic infection presenting as endocarditis','Rickettsia rickettsii, which always becomes chronic if untreated','Ehrlichia chaffeensis, which never resolves without lifelong therapy','Anaplasma phagocytophilum, which causes chronic arthritis'],
+   answer:0,
+   why:'Coxiella burnetii is unique among this group in causing a recognized chronic disease, most often presenting as endocarditis, treated very differently (hydroxychloroquine plus doxycycline for 18 months) from its acute illness.'}
+]});
+
+Act.sort('act-sharedTick', {name:'sharedTick',
+  options:['Same tick (Ixodes scapularis)','Different vector or route'],
+  rows:[
+    {text:'Borrelia burgdorferi (Lyme disease)', answer:'Same tick (Ixodes scapularis)',
+     why:'Lyme disease is the reference point for this activity \u2014 its tick is the one every other organism here is being compared against.'},
+    {text:'Anaplasma phagocytophilum (anaplasmosis)', answer:'Same tick (Ixodes scapularis)',
+     why:'Anaplasmosis shares Lyme disease\u2019s exact tick vector, making coinfection a real possibility.'},
+    {text:'Rickettsia rickettsii (Rocky Mountain spotted fever) \u2014 a different tick species (Dermacentor)', answer:'Different vector or route',
+     why:'RMSF uses a Dermacentor tick, not Ixodes, so it could not come from the same bite as Lyme disease.'},
+    {text:'Ehrlichia chaffeensis (ehrlichiosis) \u2014 a different tick species (the lone star tick)', answer:'Different vector or route',
+     why:'Ehrlichiosis requires a lone star tick, a different species entirely from Ixodes scapularis.'},
+    {text:'Coxiella burnetii (Q fever) \u2014 not tick-borne at all', answer:'Different vector or route',
+     why:'Q fever has no tick vector whatsoever \u2014 it cannot share a bite with anything.'},
+    {text:'Chlamydia psittaci (psittacosis) \u2014 spread by inhaling bird droppings, not a tick', answer:'Different vector or route',
+     why:'Psittacosis comes from bird exposure, completely unrelated to any tick bite.'}
+  ]});
+
+/* ============================================================
+   Module 6 activities.
+   ============================================================ */
+
+Act.predict('act-whatDoesntFit', {name:'whatDoesntFit', items:[
+  {id:'myco', title:'Mycobacterium tuberculosis',
+   prompt:'Which of the following does NOT fit Mycobacterium tuberculosis?',
+   options:['No cell wall at all','Acid-fast staining','A mycolic-acid-rich cell wall','Slow growth (~18-hour doubling time)'],
+   answer:0,
+   why:'M. tuberculosis has an unusually lipid-rich cell wall, not no wall at all \u2014 that description belongs to Mycoplasma pneumoniae from Module 2, a different organism that happens to sound similar.'},
+  {id:'trep', title:'Treponema pallidum',
+   prompt:'Which of the following does NOT fit Treponema pallidum?',
+   options:['Transmission requires a tick vector','A painless primary chancre','A three-stage disease course','Corkscrew motility via periplasmic flagella'],
+   answer:0,
+   why:'T. pallidum spreads by sexual contact and vertical transmission, not a tick vector \u2014 that route belongs to Borrelia burgdorferi, the other spirochete in this course.'},
+  {id:'trach', title:'Chlamydia trachomatis',
+   prompt:'Which of the following does NOT fit Chlamydia trachomatis?',
+   options:['A natural host of birds','Sexual and perinatal transmission','An elementary body and a reticulate body','Treatment with doxycycline'],
+   answer:0,
+   why:'A bird reservoir belongs to Chlamydia psittaci, not C. trachomatis, which infects only humans.'},
+  {id:'rick', title:'Rickettsia rickettsii',
+   prompt:'Which of the following does NOT fit Rickettsia rickettsii?',
+   options:['Transmission through unpasteurized dairy','Invasion of endothelial cells','A rash that follows fever by several days','Treatment with doxycycline'],
+   answer:0,
+   why:'Unpasteurized dairy is the exposure route for Coxiella burnetii, not R. rickettsii, which is tick-borne.'}
+]});
+
+Act.stages('act-exposureDetective', {name:'exposureDetective', stages:[
+  {lead:'Clue: bird exposure \u2192 pneumonia.',
+   prompt:'Which organism does this describe?',
+   options:['Chlamydia psittaci','Chlamydia pneumoniae','Mycoplasma pneumoniae','Coxiella burnetii'],
+   answer:0,
+   why:'Bird exposure is the signature clue for Chlamydia psittaci and psittacosis.'},
+  {lead:'Clue: tick exposure \u2192 an expanding erythematous rash with central clearing.',
+   prompt:'Which organism does this describe?',
+   options:['Borrelia burgdorferi','Rickettsia rickettsii','Ehrlichia chaffeensis','Treponema pallidum'],
+   answer:0,
+   why:'An expanding rash with central clearing after a tick bite is erythema migrans, the hallmark of Lyme disease.'},
+  {lead:'Clue: mucosal disruption \u2192 a draining sinus tract.',
+   prompt:'Which organism does this describe?',
+   options:['Actinomyces israelii','Nocardia asteroides','Mycobacterium tuberculosis','Mycoplasma pneumoniae'],
+   answer:0,
+   why:'A draining sinus tract following mucosal trauma is the classic presentation of actinomycosis.'},
+  {lead:'Clue: an immunocompromised patient \u2192 pulmonary disease resembling tuberculosis, resistant to standard anti-TB drugs.',
+   prompt:'Which organism does this describe?',
+   options:['Mycobacterium avium-intracellulare complex (MAC)','Mycobacterium tuberculosis','Nocardia asteroides','Coxiella burnetii'],
+   answer:0,
+   why:'TB-like disease that resists standard anti-tuberculosis therapy in an immunocompromised patient points to MAC.'}
+]});
+
+Act.predict('act-treatmentConstraint', {name:'treatmentConstraint', items:[
+  {id:'nowall', title:'No cell wall',
+   prompt:'An organism has no cell wall at all. Which drug class is guaranteed to be ineffective against it?',
+   options:['Beta-lactams','Macrolides','Tetracyclines','Fluoroquinolones'],
+   answer:0,
+   why:'Beta-lactams work exclusively by disrupting peptidoglycan cross-linking. Without any cell wall to target, this entire drug class has nothing to act on.'},
+  {id:'obligate', title:'Obligate intracellular',
+   prompt:'An organism can only replicate inside a host cell and cannot be grown on standard culture media. What does this tell you about how it should be diagnosed?',
+   options:['Diagnosis will rely on serology, inclusion staining, or nucleic acid amplification rather than routine culture','Diagnosis will always rely on a Gram stain','Diagnosis is impossible for this kind of organism','Diagnosis requires acid-fast staining specifically'],
+   answer:0,
+   why:'Obligate intracellular organisms like Chlamydia and the rickettsial group can\u2019t be grown on standard media, so diagnosis leans on methods that don\u2019t require independent growth.'},
+  {id:'noplasmid', title:'No plasmids',
+   prompt:'An organism\u2019s genome contains no plasmids at all. What does this tell you about how it could develop antibiotic resistance?',
+   options:['Resistance can only arise through chromosomal mutation, not plasmid acquisition','Resistance is impossible for this organism','Resistance will always be transferred from other bacteria','Resistance will never develop to any drug'],
+   answer:0,
+   why:'This is exactly the situation with M. tuberculosis: with no plasmids, every documented resistance mechanism traces back to a chromosomal mutation.'}
+]});
+
+Act.stages('act-unknownPatient', {name:'unknownPatient', stages:[
+  {lead:'A 45-year-old landscaper presents with a 3-week history of low-grade fever and a slowly enlarging, non-tender lump on the jaw that has just begun draining thick, yellow, granular pus. He had a molar extracted about six weeks ago.',
+   prompt:'Based on the exposure and initial presentation alone, what is the leading category of organism?',
+   options:['An organism from normal oral flora, activated by mucosal trauma','An obligate intracellular organism acquired from an animal','A tick-borne spirochete','A wall-less atypical organism'],
+   answer:0,
+   why:'Recent dental trauma plus a slowly progressive draining lesion points toward an organism that lives as normal oral flora and becomes invasive only after a break in the mucosa.'},
+  {lead:'A sample of the pus is examined and shows granular, branching, filamentous organisms with visible \u201csulfur granules,\u201d and culture requires anaerobic conditions.',
+   prompt:'Given this new information, which organism fits best?',
+   options:['Actinomyces israelii','Nocardia asteroides','Mycobacterium tuberculosis','Treponema pallidum'],
+   answer:0,
+   why:'Branching filaments with sulfur granules, recovered under anaerobic conditions, is the classic laboratory picture of Actinomyces israelii.'},
+  {lead:'The infection has tracked along tissue planes toward the neck without respecting normal anatomic boundaries, but has not spread to distant organs.',
+   prompt:'Which statement about this pattern of spread is accurate?',
+   options:['This local, tissue-plane spread without hematogenous dissemination is typical of actinomycosis','This pattern is inconsistent with Actinomyces and should prompt reconsidering Nocardia','This pattern indicates the infection has become disseminated to the brain','This pattern is diagnostic of tuberculosis'],
+   answer:0,
+   why:'Actinomycosis characteristically spreads locally along tissue planes rather than through the bloodstream \u2014 a key difference from Nocardia, which favors hematogenous spread to the brain.'},
+  {lead:'The treatment team selects a first-line antibiotic.',
+   prompt:'Which agent is the appropriate choice?',
+   options:['Penicillin G','Trimethoprim-sulfamethoxazole','Doxycycline','Rifampin, isoniazid, pyrazinamide, and ethambutol together'],
+   answer:0,
+   why:'Penicillin G remains first-line for actinomycosis \u2014 a useful reminder that despite the dramatic presentation, the treatment is comparatively simple once the organism is correctly identified.'}
+]});
+
+Act.fill('act-finalRecap', {name:'finalRecap',
+  text:'Across this companion, the organism that lacks a cell wall entirely is {0}. Actinomyces israelii and {1} look nearly identical under the microscope but require opposite first-line drugs. {2} breaks Module 5\u2019s usual tick-vector pattern by spreading through livestock-associated aerosols instead. The reaction that can follow antibiotic treatment of a high-spirochete-burden infection, without being a true drug allergy, is the {3} reaction. The mycobacterium most associated with severely immunocompromised patients is {4}. And the organism whose developmental cycle depends on distinct elementary and reticulate body forms is {5}.',
+  bank:['Mycoplasma pneumoniae','Nocardia asteroides','Coxiella burnetii','Jarisch-Herxheimer','MAC (M. avium-intracellulare complex)','Chlamydia trachomatis','Rickettsia rickettsii','Treponema pallidum','Ehrlichia chaffeensis'],
+  answers:['Mycoplasma pneumoniae','Nocardia asteroides','Coxiella burnetii','Jarisch-Herxheimer','MAC (M. avium-intracellulare complex)','Chlamydia trachomatis']
+});
+
+initWelcome();
+</script>
+<script src="shared/engine.js"></script>
+</body>
+</html>

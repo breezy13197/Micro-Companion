@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bacteria III &middot; Cocci and Rods &mdash; PHA3109 Study Companion</title>
+<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
+<style>
+/* ============================================================
+   THEME — Bacteria III companion: "Ink & Coral"
+   Only this page's look. shared/*.css are untouched.
+   Meaning of the colors on this page:
+     ink (green family)  = this companion's primary (buttons, current section)
+     coral (--w-hl)      = highlight (hero accents, stat icons, eyebrows)
+     true green (--ok)   = correct / complete, same on every companion
+     rose                = incorrect / needs review, same on every companion
+   ============================================================ */
+:root{
+  /* the "primary" family every shared component reads */
+  --green:#12333A; --green-bright:#1F5C67; --green-deep:#0A2226;
+  --green-soft:#E4EEF0; --green-line:#BFDADD;
+
+  /* correct / complete keep the true green, so ink never reads as "right" */
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-ink:#1C7554;
+
+  /* welcome page + sidebar + section tokens (see companion-architecture.md §15-17) */
+  --w-deep:#12333A; --w-band:#1F5C67; --w-lift:#2E7A86;
+  --w-hero-1:#FFEDE6; --w-hero-2:#FFDCCB; --w-hero-3:#E4EEF0;
+  --w-hl:#FF6B4A; --w-hl-hover:#E85A3B; --w-hl-ink:#96301A; --w-hl-strong:#96301A; --w-on-hl:#12333A;
+  --w-hl-soft:#FFE3DA;
+  --w-art-1:#FFEDE6; --w-art-2:#E4EEF0; --w-art-line:#F3B9A6;
+  --w-check:#FF6B4A;
+  --w-kp-bg:#FFF3EE;
+  --w-ring-track:#DCEEF0; --w-ring-fill:#FF6B4A;
+  --w-shadow-rgb:18,51,58;
+  --w-t1-bg:#FFE3DA; --w-t1-fg:#B23A1D;
+  --w-t2-bg:#FFD3BE; --w-t2-fg:#96301A;
+  --w-t3-bg:#E4EEF0; --w-t3-fg:#175A66;
+  --w-t4-bg:#D3E6E9; --w-t4-fg:#12333A;
+  --w-t5-bg:#FFEFE8; --w-t5-fg:#8A4630;
+  --w-t6-bg:#DCEAEC; --w-t6-fg:#2E7A86;
+}
+body{
+  background:
+    radial-gradient(900px 420px at 92% -8%, #E4EEF0 0%, rgba(228,238,240,0) 62%),
+    radial-gradient(760px 380px at 2% -4%, #FFEDE6 0%, rgba(255,237,230,0) 58%),
+    var(--page);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{color:var(--ink)}
+h2{letter-spacing:-.015em}
+
+/* --- shared components, re-inked from green to ink / coral / ok-green --- */
+.mod-head.current{background:var(--green-soft);color:var(--green)}
+.mod-head .mod-title-text{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}
+.mod-head.current .mod-badge{background:#fff;color:var(--green)}
+.mod-head .mod-badge.done{background:var(--ok-soft);color:var(--ok-ink)}
+.sub button.current{background:var(--green-soft);color:var(--green)}
+.sub button.done .dot{background:var(--ok)}
+.ring-wrap{background:var(--green-soft)}
+.ring-num{color:var(--green)}
+.ring-cap{color:var(--ink-mid)}
+.btn:hover{background:var(--green-deep)}
+.btn.ghost.on{background:var(--green-soft);border-color:var(--green-line);color:var(--green)}
+.opt.sel{color:var(--green)}
+.opt.reveal{border-color:var(--ok);color:var(--ok-ink)}
+.opt.sel.bad{background:var(--rose-soft)}
+.dnd-pill{color:var(--green)}
+.dnd-ghost{color:var(--green)}
+.dnd-row.correct{border-color:var(--ok);background:var(--ok-soft)}
+.dnd-row.correct .dnd-slot{border-color:var(--ok)}
+.choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback{border-left-color:var(--ok)}
+.feedback.miss{border-left-color:var(--rose)}
+.apply{background:var(--green-soft)}
+.apply .tag{background:#D3E6E9;color:var(--green)}
+.predict .tag{background:#FFD9C4;color:var(--w-hl-ink)}
+.mod-badge.done,.home-num.done{background:var(--ok-soft);color:var(--ok-ink)}
+.home-status.done{color:var(--ok-ink)}
+.s-strong{color:var(--ok-ink)}
+.lock-dot.done{background:var(--ok)}
+.fc-front{background:linear-gradient(140deg,#EAF3F4,#FFEFE8);border:1px solid var(--green-line)}
+.score-hero{background:linear-gradient(135deg,var(--green-bright),var(--green))}
+.score-hero .big{color:var(--w-hl)}
+.reset:hover{color:var(--rose)}
+.back-to-hub{color:var(--green-bright)}
+input[type=range]{background:linear-gradient(90deg,var(--green-line),var(--green-bright))}
+input[type=range]::-webkit-slider-thumb{border-color:var(--green)}
+input[type=range]::-moz-range-thumb{border-color:var(--green)}
+
+/* topic-specific: thumbnail micrographs inside the genus-sorting activity */
+.mic-thumb{display:block;width:100%;max-width:220px;border-radius:10px;margin-bottom:8px}
+
+/* the flowchart activity's selected-node glow, re-inked from activities.js's
+   default gold (see companion-architecture.md §5: needs a more specific
+   selector than the toolkit's own to win at equal specificity) */
+.act-explore .act-hs.on{filter:drop-shadow(0 0 5px rgba(255,107,74,.95))}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6.5"/><path d="M14.6 14.6L20 20"/></svg></div>
+      <div><div class="brand-title">Cocci &amp; Rods</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="18" fill="none" style="stroke:var(--w-ring-track)" stroke-width="5"/>
+        <circle id="ringFill" cx="22" cy="22" r="18" fill="none" style="stroke:var(--w-ring-fill)" stroke-width="5"
+                stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113"
+                transform="rotate(-90 22 22)"/>
+      </svg>
+      <div><div class="ring-num" id="ringPct">0%</div>
+      <div class="ring-cap">of the companion<br>complete</div></div>
+    </div>
+    <button class="reset" id="resetBtn">Clear my saved progress</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="topTitle">Welcome</h1><div class="meta" id="topMeta">Bacteria III &middot; PHA3109 Microbiology &amp; Immunology</div></div>
+      <div class="pill" id="topPill">Not started</div>
+    </div>
+
+<!-- ============================================================
+     WELCOME (START HERE) PAGE
+     ============================================================ -->
+<section class="section welcome" data-key="start">
+
+  <div class="hero">
+    <div>
+      <div class="kicker">PHA3109 &middot; Microbiology &amp; Immunology</div>
+      <h2 class="hero-title">Sort the cocci.<span>Outsmart the rods.</span></h2>
+      <p>Cocci and rods, told apart by their virulence, their disease, and the one lab test that separates each organism from its closest look-alike. The lecture supplies the content; this companion supplies the practice.</p>
+      <div class="btn-row">
+        <button class="btn lg" data-go="m1s1">Start Module 1</button>
+        <button class="btn lg outline" data-go="flashcards">Try the flashcards</button>
+      </div>
+      <div class="hero-note"><span class="hero-dots"><i style="background:#12333A"></i><i style="background:#FF6B4A"></i><i style="background:#2E7A86"></i></span>Built around five questions asked of every organism: identify, explain, diagnose, treat, and differentiate</div>
+    </div>
+    <div class="hero-art">
+<svg viewBox="0 0 400 400" role="img" aria-label="Illustration of a magnified dish showing clustered cocci and chained cocci on either side of a branching identification path">
+  <defs>
+    <radialGradient id="dishGrad" cx="45%" cy="35%" r="75%"><stop offset="0" stop-color="#1F5C67"/><stop offset="1" stop-color="#0A2226"/></radialGradient>
+  </defs>
+  <circle cx="200" cy="205" r="184" fill="none" stroke="#FF6B4A" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round"/>
+  <circle cx="200" cy="205" r="152" fill="url(#dishGrad)"/>
+  <circle cx="200" cy="205" r="152" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="3"/>
+  <g fill="#FF6B4A">
+    <circle cx="140" cy="150" r="13"/><circle cx="163" cy="140" r="13"/><circle cx="160" cy="167" r="13"/>
+    <circle cx="130" cy="174" r="13"/><circle cx="152" cy="186" r="13"/>
+  </g>
+  <text x="148" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Clusters</text>
+  <g fill="#fff">
+    <circle cx="233" cy="243" r="12"/><circle cx="255" cy="250" r="12"/>
+    <circle cx="277" cy="257" r="12"/><circle cx="299" cy="264" r="12"/>
+  </g>
+  <text x="266" y="292" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Chains</text>
+  <g fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.4" stroke-dasharray="1 7" stroke-linecap="round">
+    <path d="M200 205 L148 165"/>
+    <path d="M200 205 L264 253"/>
+  </g>
+  <circle cx="200" cy="205" r="10" fill="#fff"/>
+  <text x="200" y="209" text-anchor="middle" font-size="12" font-weight="800" fill="#12333A">?</text>
+  <g font-family="inherit" font-weight="700" font-size="13">
+    <rect x="10" y="332" width="122" height="30" rx="15" fill="#fff"/><circle cx="28" cy="347" r="6" fill="#FF6B4A"/><text x="42" y="352" fill="#12333A">Catalase +</text>
+    <rect x="144" y="332" width="132" height="30" rx="15" fill="#fff"/><circle cx="162" cy="347" r="6" fill="#12333A"/><text x="176" y="352" fill="#12333A">Catalase &minus;</text>
+  </g>
+</svg>
+      <div class="hero-badge"><b data-stat="modules">0</b><span>Modules</span></div>
+    </div>
+  </div>
+
+  <div class="statband" aria-label="What is inside this companion">
+    <div class="stat"><span data-ico="layers"></span><div><b data-stat="modules">0</b><span>Modules</span></div></div>
+    <div class="stat"><span data-ico="spark"></span><div><b data-stat="activities">0</b><span>Hands-on activities</span></div></div>
+    <div class="stat"><span data-ico="question"></span><div><b data-stat="questions">0</b><span>Quiz questions</span></div></div>
+    <div class="stat"><span data-ico="cards"></span><div><b data-stat="cards">0</b><span>Flashcards</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="sect-head"><div><div class="eyebrow">Your path</div><h2>Six modules, one identification question each</h2></div></div>
+    <div class="mod-cards" style="--w-cols:3">
+      <button class="mod-card" type="button" data-go="m1s1">
+        <span class="chip-ico tone-1"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5-5"/></svg></span>
+        <h3>Sorting the Gram-Positive Cocci</h3>
+        <p>How can I identify an unknown gram-positive coccus?</p>
+        <span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" type="button" data-go="m2s1">
+        <span class="chip-ico tone-3"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 11l-6.6 2.1L12 20l-2.4-6.9L3 11l6.6-2.1z"/></svg></span>
+        <h3>Staphylococci &amp; Streptococci in Disease</h3>
+        <p>Once I know the organism, what disease does it cause &mdash; and why?</p>
+        <span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" type="button" data-go="m3s1">
+        <span class="chip-ico tone-5"><svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="6.5"/><circle cx="15" cy="12" r="6.5"/></svg></span>
+        <h3>The Neisseria Challenge</h3>
+        <p>How do two similar gram-negative cocci lead to very different clinical decisions?</p>
+        <span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" type="button" data-go="m4s1">
+        <span class="chip-ico tone-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9 16h-18z"/><path d="M12 10v4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg></span>
+        <h3>Gram-Positive Rods &amp; Toxin Syndromes</h3>
+        <p>Is this infection caused primarily by invasion, toxin, spores, or disrupted flora?</p>
+        <span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" type="button" data-go="m5s1">
+        <span class="chip-ico tone-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3.5 4.5 6 8 6 11.5a6 6 0 0 1-12 0c0-3.5 2.5-7 6-11.5z"/></svg></span>
+        <h3>Enteric Gram-Negative Rods</h3>
+        <p>Can the clinical presentation tell me where and how the organism is acting?</p>
+        <span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" type="button" data-go="m6s1">
+        <span class="chip-ico tone-6"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="7" cy="8" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="17" cy="8" r="2"/><ellipse cx="12" cy="15" rx="5" ry="4"/></svg></span>
+        <h3>Respiratory, Zoonotic &amp; Integrative Pathogens</h3>
+        <p>How do patient context and site of infection narrow the organism and treatment?</p>
+        <span class="go">Open module &rarr;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="why">
+      <div class="why-art">
+<svg viewBox="0 0 420 230" role="img" aria-label="Three steps: predict, interact, explain">
+  <g fill="none" style="stroke:var(--w-art-line)" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round">
+    <path d="M118 96 C 140 60, 170 60, 190 92"/><path d="M232 92 C 252 60, 282 60, 302 96"/>
+  </g>
+  <g>
+    <circle cx="80" cy="112" r="46" fill="#fff" style="stroke:var(--w-hl)" stroke-width="4"/>
+    <text x="80" y="122" text-anchor="middle" font-size="34" font-weight="800" style="fill:var(--w-deep)">?</text>
+    <text x="80" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">1 Predict</text>
+    <circle cx="210" cy="112" r="46" style="fill:var(--w-band)"/>
+    <path d="M196 96 v34 l9 -8 6 13 7 -3 -6 -13 12 -1 z" style="fill:var(--w-hl)"/>
+    <text x="210" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">2 Interact</text>
+    <circle cx="340" cy="112" r="46" fill="#fff" style="stroke:var(--ok)" stroke-width="4"/>
+    <path d="M320 113 l14 14 26 -30" fill="none" style="stroke:var(--ok)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="340" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">3 Explain</text>
+  </g>
+</svg>
+        <div class="badge-hl"><small>Every section</small>Practice first</div>
+      </div>
+      <div>
+        <div class="eyebrow">How it works</div>
+        <h2>Not a repeat of the slides</h2>
+        <p class="lede">You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
+        <ul class="checks">
+          <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
+          <li><span><b>Interact.</b> Sort real organisms by their actual lab results &mdash; catalase, coagulase, novobiocin, hemolysis &mdash; the same tests a microbiology bench runs.</span></li>
+          <li><span><b>Explain.</b> Every answer comes with the reasoning, not just right or wrong.</span></li>
+          <li><span><b>Differentiate.</b> Look-alike organisms get side-by-side practice, not just a side-by-side table.</span></li>
+          <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-ico" data-ico="book"></div>
+    <div class="cta-body"><h2>Ready to begin?</h2><p>Start with the test every microbiology bench runs first: catalase. Your progress saves in this browser as you go.</p></div>
+    <button class="btn hl lg" data-go="m1s1">Start Module 1 &rarr;</button>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 1 · SECTION 1 — Staph or strep, at a glance
+     ============================================================ -->
+<!-- ============================================================
+     MODULE 1 OVERVIEW
+     (added during the standardization pass — every other module
+     already had one; Module 1 used to open directly on Section 1)
+     ============================================================ -->
+<section class="section modhome" data-key="m1home">
+  <div class="modhero">
+    <div class="kicker">Module 1</div>
+    <h2>Sorting the Gram-Positive Cocci</h2>
+    <p>Before any disease or drug enters the picture, a gram-positive coccus has to be placed: Staphylococcus, Streptococcus, or Enterococcus, and then the specific species within that genus. This module builds that identification path one bench test at a time.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How can I identify an unknown gram-positive coccus?</span></div>
+    <div class="ghost-num" aria-hidden="true">1</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Tell Staphylococcus apart from Streptococcus and Enterococcus by growth arrangement and the catalase test.</span></li>
+      <li><span>Use coagulase and novobiocin to sort the staphylococci down to species.</span></li>
+      <li><span>Use hemolysis pattern and a confirmatory test to sort the streptococci and enterococcus down to species.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m1s1">
+        <span class="home-num">1</span>
+        <span class="home-body">
+          <span class="home-title">Staph or strep, at a glance</span>
+          <span class="home-desc">Sort an unknown gram-positive coccus by arrangement and the catalase test.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m1s2">
+        <span class="home-num">2</span>
+        <span class="home-body">
+          <span class="home-title">Sorting the staphylococci</span>
+          <span class="home-desc">Use coagulase and novobiocin to take a Staphylococcus to species.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m1s3">
+        <span class="home-num">3</span>
+        <span class="home-body">
+          <span class="home-title">Sorting the streptococci and enterococcus</span>
+          <span class="home-desc">Use hemolysis and one confirmatory test to take a chain-forming coccus to species.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m1quiz">
+        <span class="home-num">&#10003;</span>
+        <span class="home-body">
+          <span class="home-title">Module 1 quiz</span>
+          <span class="home-desc">Ten questions, then a targeted round on what you missed.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s1">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 1</div>
+    <h2>Staph or strep, at a glance</h2>
+    <p class="lede">Every gram-positive coccus in this lecture eventually sorts into one of three genera: Staphylococcus, Streptococcus, or Enterococcus. Before any biochemical test, two things are visible on the bench and under the microscope &mdash; and they're often your fastest clue.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Arrangement:</b> Staphylococcus grows in grape-like clusters; Streptococcus (and Enterococcus) grow in chains or pairs.</li>
+        <li><b>Catalase:</b> bubbles on hydrogen peroxide mean Staphylococcus; no bubbles means Streptococcus or Enterococcus.</li>
+        <li>Both genera are facultative anaerobes, so oxygen tolerance alone will not separate them &mdash; you need catalase.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue to its genus</h2>
+    <p class="try-note">Two of these clues are real micrographs from this lecture. Pick the genus each clue points to, then check your work.</p>
+    <div id="act-genusID"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c1a">
+        <p>A gram-positive coccus recovered from a wound culture produces bubbles when hydrogen peroxide is added to the colony. Which genus does this catalase-positive result indicate?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c1b">
+        <p>On Gram stain, a coccus growing in long chains is most consistent with which genus?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 1 · SECTION 2 — Sorting the staphylococci
+     ============================================================ -->
+<section class="section" data-key="m1s2">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 2</div>
+    <h2>Sorting the staphylococci</h2>
+    <p class="lede">Once catalase tells you a coccus is a Staphylococcus, two more bench tests take you the rest of the way to a species: coagulase, and &mdash; for the coagulase-negative pair &mdash; novobiocin.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Coagulase</b> splits S. aureus (positive; clots plasma) from the coagulase-negative staphylococci.</li>
+        <li><b>Novobiocin</b> splits the coagulase-negative pair: S. epidermidis is susceptible (device infections); S. saprophyticus is resistant (UTI in young women).</li>
+        <li>Only S. aureus produces exotoxins among the three; S. epidermidis and S. saprophyticus do not.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Walk the staph identification flowchart</h2>
+    <p class="try-note">Click each box, in order from top to bottom, to see what that test result means. Open every box to finish.</p>
+    <div id="act-staphTree"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c2a">
+        <p>Which single test result distinguishes Staphylococcus aureus from the coagulase-negative staphylococci (S. epidermidis and S. saprophyticus)?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c2b">
+        <p>A hospitalized patient develops an infection at the site of a central venous catheter. Culture grows a coagulase-negative, novobiocin-susceptible Staphylococcus. Which organism is the most likely cause?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c2c">
+        <p>A young woman with a urinary tract infection has a coagulase-negative Staphylococcus that resists novobiocin. Which organism is the most likely cause?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 1 · SECTION 3 — Sorting the streptococci and enterococcus
+     ============================================================ -->
+<section class="section" data-key="m1s3">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 3</div>
+    <h2>Sorting the streptococci and enterococcus</h2>
+    <p class="lede">Streptococcus and Enterococcus share the catalase-negative, chain-forming pattern from Section 1. Hemolysis on blood agar is the next branch point, and one confirmatory test per branch finishes the job.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Beta-hemolysis</b> (complete clearing) splits into bacitracin-sensitive group A strep and bacitracin-resistant, CAMP-positive group B strep.</li>
+        <li><b>Alpha-hemolysis</b> (partial, green) splits into optochin-sensitive S. pneumoniae and optochin-resistant viridans streptococci.</li>
+        <li><b>Gamma-hemolysis</b> (no clearing) and a colon origin point toward Enterococcus.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Build the strep and enterococcus identification tree</h2>
+    <p class="try-note">Match each clue to the organism it identifies.</p>
+    <div id="act-strepTree"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c3a">
+        <p>An isolate produces complete clearing of red blood cells on blood agar and is sensitive to bacitracin. Which organism does this pattern indicate?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c3b">
+        <p>An alpha-hemolytic, gram-positive diplococcus is inhibited by optochin. Which organism is most consistent with this result?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c3c">
+        <p>A gram-positive coccus isolated from a urinary tract infection is catalase-negative, nonhemolytic, and part of normal colon flora. Which genus is this?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 1 QUIZ
+     ============================================================ -->
+<section class="section" data-key="m1quiz">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Mastery check</div>
+    <h2>Module 1 quiz</h2>
+    <p class="lede">Ten questions drawn from everything in this module. Answer every question, then submit to see your score and a breakdown by concept area.</p>
+    <div class="quiz-body" data-quiz="m1"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 2 OVERVIEW
+     ============================================================ -->
+<section class="section modhome" data-key="m2home">
+  <div class="modhero">
+    <div class="kicker">Module 2</div>
+    <h2>Staphylococci &amp; Streptococci in Disease</h2>
+    <p>Every virulence factor in this lecture earns its place because it explains a specific disease or complication. This module connects each toxin and enzyme in S. aureus and the streptococci to the clinical picture it produces, including the immune-mediated complications that show up weeks after the infection itself is gone.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Once I know the organism, what disease does it cause &mdash; and why?</span></div>
+    <div class="ghost-num" aria-hidden="true">2</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Match each S. aureus virulence factor and toxin to the disease or clinical finding it causes.</span></li>
+      <li><span>Trace a group A strep infection from pyogenic spread through toxigenic and immune-mediated complications, and explain why antibiotics prevent one but not the other.</span></li>
+      <li><span>Connect pneumococcus, viridans streptococci, enterococcus, and group B strep to their signature disease, and select the right vaccine or treatment.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m2s1">
+        <span class="home-num">1</span>
+        <span class="home-body">
+          <span class="home-title">S. aureus: from factor to disease</span>
+          <span class="home-desc">Drag each virulence factor onto the disease it causes.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m2s2">
+        <span class="home-num">2</span>
+        <span class="home-body">
+          <span class="home-title">Group A strep: a case that unfolds</span>
+          <span class="home-desc">Follow a single patient from sore throat to a complication that shows up weeks later.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m2s3">
+        <span class="home-num">3</span>
+        <span class="home-body">
+          <span class="home-title">The rest of the gram-positive cocci in disease</span>
+          <span class="home-desc">Pneumococcus, viridans strep, enterococcus, and group B strep &mdash; predict the right call before you see it.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m2quiz">
+        <span class="home-num">&#10003;</span>
+        <span class="home-body">
+          <span class="home-title">Module 2 quiz</span>
+          <span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 2 · SECTION 1 — S. aureus: from factor to disease
+     ============================================================ -->
+<section class="section" data-key="m2s1">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 1</div>
+    <h2>S. aureus: from factor to disease</h2>
+    <p class="lede">S. aureus causes more different diseases than any other organism in this lecture, and almost every one traces back to a single named toxin or enzyme. Learn the factor, and the disease follows.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Protein A</b> blocks complement activation by binding IgG, reducing opsonization.</li>
+        <li>Three toxins drive three distinct diseases: <b>TSST-1</b> (toxic shock, a superantigen), <b>enterotoxin</b> (fast-onset food poisoning, pre-formed in food), and <b>exfoliatin</b> (scalded skin syndrome, a protease).</li>
+        <li><b>Coagulase</b> clots plasma to wall off infection; it is also the test that identifies S. aureus (Module 1).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match each factor to its consequence</h2>
+    <p class="try-note">Drag each virulence factor onto the row describing what it does.</p>
+    <div id="act-aureusMap"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c4a">
+        <p>Which Staphylococcus aureus toxin acts as a superantigen and causes toxic shock syndrome?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c4b">
+        <p>Which Staphylococcus aureus toxin is a protease that cleaves desmoglein, causing the skin to separate in scalded skin syndrome?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c4c">
+        <p>Which enzyme allows Staphylococcus aureus to wall off an infected site by clotting plasma around it?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 2 · SECTION 2 — Group A strep: a case that unfolds
+     ============================================================ -->
+<section class="section" data-key="m2s2">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 2</div>
+    <h2>Group A strep: a case that unfolds</h2>
+    <p class="lede">A single group A strep infection can cause three different kinds of trouble on three different timelines: pyogenic spread while the bacteria are actively growing, toxigenic disease from a superantigen, and immune-mediated complications that show up weeks later, after the throat infection is long gone.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>M protein</b> is explicitly the single most important S. pyogenes virulence factor: it blocks phagocytosis by inactivating C3b.</li>
+        <li><b>Erythrogenic toxin</b> and <b>pyrogenic exotoxin A</b> are superantigens; they cause the scarlet fever rash and toxic shock, respectively.</li>
+        <li><b>Rheumatic fever</b> and <b>glomerulonephritis</b> are immune-mediated, appearing weeks after the infection &mdash; antibiotics for the throat infection reliably prevent the first, not the second.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Follow the case</h2>
+    <p class="try-note">Answer each question to move the case forward. You can't get this one wrong for long &mdash; a miss just asks you to try again.</p>
+    <div id="act-gasCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c5a">
+        <p>Which Group A Streptococcus virulence factor is most responsible for resisting phagocytosis by inactivating complement component C3b?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c5b">
+        <p>A child develops pharyngitis with a sandpaper-like rash. Which toxin, acting as a superantigen, produces this rash?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c5c">
+        <p>Three weeks after an untreated group A streptococcal throat infection, a patient develops dark urine and edema. What is the most likely explanation?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 2 · SECTION 3 — The rest of the gram-positive cocci in disease
+     ============================================================ -->
+<section class="section" data-key="m2s3">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 3</div>
+    <h2>The rest of the gram-positive cocci in disease</h2>
+    <p class="lede">Pneumococcus, viridans streptococci, enterococcus, and group B strep each have one clinical picture worth knowing cold. These are the decisions a pharmacist actually makes once the organism is known.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li>The <b>pneumococcal capsule</b> is the major antiphagocytic factor; a missing spleen leaves patients unable to clear it efficiently.</li>
+        <li><b>Viridans streptococci</b> are oral flora linked to subacute endocarditis; <b>Enterococcus</b> is colon flora linked to UTI and endocarditis, including vancomycin-resistant strains treated with linezolid or daptomycin.</li>
+        <li><b>Group B strep</b> colonizes the vagina; a positive prenatal screen means antibiotics during labor, not at the time of the screen.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the pharmacist's call</h2>
+    <p class="try-note">Pick a scenario, make your prediction, then see what happens. Every scenario needs an answer to finish.</p>
+    <div id="act-pharmLens2"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c6a">
+        <p>Which Streptococcus pneumoniae virulence factor is most responsible for resisting phagocytosis?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c6b">
+        <p>A patient who has undergone splenectomy is at increased risk for severe infection with which organism?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c6c">
+        <p>A pregnant woman who screens positive for group B Streptococcus during prenatal care should receive which intervention?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 2 QUIZ
+     ============================================================ -->
+<section class="section" data-key="m2quiz">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Mastery check</div>
+    <h2>Module 2 quiz</h2>
+    <p class="lede">Ten questions drawn from everything in this module. Answer every question, then submit to see your score and a breakdown by concept area.</p>
+    <div class="quiz-body" data-quiz="m2"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 3 OVERVIEW
+     ============================================================ -->
+<section class="section modhome" data-key="m3home">
+  <div class="modhero">
+    <div class="kicker">Module 3</div>
+    <h2>The Neisseria Challenge</h2>
+    <p>Neisseria meningitidis and Neisseria gonorrhoeae look almost identical under the microscope &mdash; both are gram-negative diplococci &mdash; but everything that matters clinically is different: where they live in the body, how they spread, what they cause, and how you treat and prevent them. This module is built around telling them apart and making the right call for each.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do two similar gram-negative cocci lead to very different clinical decisions?</span></div>
+    <div class="ghost-num" aria-hidden="true">3</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Distinguish N. meningitidis from N. gonorrhoeae using virulence factors, portal of entry, and the one lab test that separates them.</span></li>
+      <li><span>Manage a meningococcal case from empiric treatment through contact prophylaxis and long-term vaccination.</span></li>
+      <li><span>Select the right gonorrhea regimen based on chlamydia status and drug allergy, and explain how gonorrhea is prevented without a vaccine.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m3s1">
+        <span class="home-num">1</span>
+        <span class="home-body">
+          <span class="home-title">Meningococcus or gonococcus?</span>
+          <span class="home-desc">Sort the clues &mdash; virulence factors, portal of entry, and diagnosis &mdash; to the right organism.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m3s2">
+        <span class="home-num">2</span>
+        <span class="home-body">
+          <span class="home-title">Meningococcus: treatment, prophylaxis, and vaccines</span>
+          <span class="home-desc">Follow a college outbreak from the emergency department to the whole dormitory.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m3s3">
+        <span class="home-num">3</span>
+        <span class="home-body">
+          <span class="home-title">Gonococcus: treatment and prevention</span>
+          <span class="home-desc">Predict the right regimen for five real prescribing decisions.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m3quiz">
+        <span class="home-num">&#10003;</span>
+        <span class="home-body">
+          <span class="home-title">Module 3 quiz</span>
+          <span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 3 · SECTION 1 — Meningococcus or gonococcus?
+     ============================================================ -->
+<section class="section" data-key="m3s1">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 1</div>
+    <h2>Meningococcus or gonococcus?</h2>
+    <p class="lede">Both organisms are gram-negative diplococci, so a Gram stain alone will not tell them apart. Everything else does: where they enter the body, what protects them from the immune system, and one simple sugar test.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li>Portal of entry: <b>N. meningitidis</b> is respiratory; <b>N. gonorrhoeae</b> is genital (or vertical, at birth).</li>
+        <li>Signature virulence factor: a <b>polysaccharide capsule</b> and <b>Factor H binding protein</b> for meningococcus; <b>pili</b> for gonococcus. Both share IgA protease and endotoxin.</li>
+        <li>Diagnosis: <b>maltose fermentation</b> separates them (meningococcus positive, gonococcus negative); gonococcus is classically seen inside neutrophils on a genital Gram stain.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue to its organism</h2>
+    <p class="try-note">Every clue belongs to one of the two Neisseria species.</p>
+    <div id="act-neisseriaID"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c7a">
+        <p>Which laboratory test separates Neisseria meningitidis from Neisseria gonorrhoeae?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c7b">
+        <p>A urethral Gram stain shows gram-negative diplococci inside neutrophils. Which organism does this finding suggest?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c7c">
+        <p>Which virulence factor is unique to Neisseria meningitidis among the two Neisseria species in this lecture, and is also a vaccine target?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 3 · SECTION 2 — Meningococcus: treatment, prophylaxis, vaccines
+     ============================================================ -->
+<section class="section" data-key="m3s2">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 2</div>
+    <h2>Meningococcus: treatment, prophylaxis, and vaccines</h2>
+    <p class="lede">A single meningococcal case triggers three separate decisions: what to give the patient, what to give the people around them, and what protects everyone else going forward.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Treatment:</b> ceftriaxone or penicillin G.</li>
+        <li><b>Prophylaxis for close contacts:</b> rifampin, ceftriaxone, or ciprofloxacin &mdash; substitute azithromycin for ciprofloxacin where resistant strains have appeared.</li>
+        <li><b>Vaccines:</b> MenACWY (age 11-12, booster at 16) and MenB (shared decision, ideally 16-18); a combined MenABCWY product also exists.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Follow the case</h2>
+    <p class="try-note">Answer each question to move the case forward. A miss just asks you to try again.</p>
+    <div id="act-meningoCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c8a">
+        <p>Which two drugs are first-line treatment for Neisseria meningitidis infection?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c8b">
+        <p>A college student is diagnosed with meningococcal meningitis. Her roommate has no symptoms. What is the appropriate action for the roommate?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c8c">
+        <p>Which meningococcal vaccine specifically targets Factor H binding protein?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 3 · SECTION 3 — Gonococcus: treatment and prevention
+     ============================================================ -->
+<section class="section" data-key="m3s3">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 3</div>
+    <h2>Gonococcus: treatment and prevention</h2>
+    <p class="lede">Gonorrhea treatment comes down to a short list of if-then decisions: what's the allergy status, has chlamydia been ruled out, and when does the patient need to come back?</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Standard treatment:</b> ceftriaxone 500 mg IM, single dose. Add <b>doxycycline</b> only if chlamydia has not been excluded.</li>
+        <li><b>Cephalosporin allergy:</b> gentamicin plus azithromycin.</li>
+        <li><b>Prevention:</b> no vaccine exists &mdash; condoms and treating symptomatic patients and partners are the mainstay; erythromycin ointment prevents newborn conjunctivitis.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the pharmacist's call</h2>
+    <p class="try-note">Pick a scenario, make your prediction, then see what happens.</p>
+    <div id="act-gonoLens"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c9a">
+        <p>What is the standard treatment for uncomplicated gonococcal infection?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c9b">
+        <p>A patient is treated for gonococcal infection, and chlamydia has not been excluded. What should be added to the ceftriaxone?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c9c">
+        <p>How is gonococcal conjunctivitis in newborns prevented?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 3 QUIZ
+     ============================================================ -->
+<section class="section" data-key="m3quiz">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Mastery check</div>
+    <h2>Module 3 quiz</h2>
+    <p class="lede">Ten questions drawn from everything in this module. Answer every question, then submit to see your score and a breakdown by concept area.</p>
+    <div class="quiz-body" data-quiz="m3"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 4 OVERVIEW
+     ============================================================ -->
+<section class="section modhome" data-key="m4home">
+  <div class="modhero">
+    <div class="kicker">Module 4</div>
+    <h2>Gram-Positive Rods &amp; Toxin Syndromes</h2>
+    <p>This module's organisms cause disease through four very different mechanisms: a three-part exotoxin that gets in through the skin or lungs (anthrax), neurotoxins that hijack the nervous system in opposite directions (botulism and tetanus), spores that exploit a course of antibiotics (C. difficile), and toxins that shut down protein synthesis or help a cell hide inside another cell (diphtheria and Listeria). Sorting infections by mechanism, not just by organism name, is what makes the rest of this module's facts stick.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Is this infection caused primarily by invasion, toxin, spores, or disrupted flora?</span></div>
+    <div class="ghost-num" aria-hidden="true">4</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Identify anthrax's two portals of entry and the three parts of its exotoxin.</span></li>
+      <li><span>Tell botulism, tetanus, and gas gangrene apart by toxin mechanism, clinical presentation, and treatment.</span></li>
+      <li><span>Trace C. difficile infection from antibiotic exposure to treatment and prevention, and connect Listeria and diphtheria to their signature virulence factors.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m4s1">
+        <span class="home-num">1</span>
+        <span class="home-body">
+          <span class="home-title">Anthrax: which door did it come through?</span>
+          <span class="home-desc">Open each portal of entry to see how anthrax gets in and what happens next.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m4s2">
+        <span class="home-num">2</span>
+        <span class="home-body">
+          <span class="home-title">The toxin mechanism challenge</span>
+          <span class="home-desc">Sort botulism, tetanus, and gas gangrene by how their toxins actually work.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m4s3">
+        <span class="home-num">3</span>
+        <span class="home-body">
+          <span class="home-title">C. difficile: the antibiotic-associated cycle</span>
+          <span class="home-desc">Put the steps of a C. difficile infection in the right order.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m4s4">
+        <span class="home-num">4</span>
+        <span class="home-body">
+          <span class="home-title">Listeria and diphtheria: two more invaders</span>
+          <span class="home-desc">Match each virulence factor and test to the organism it belongs to.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m4quiz">
+        <span class="home-num">&#10003;</span>
+        <span class="home-body">
+          <span class="home-title">Module 4 quiz</span>
+          <span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 4 · SECTION 1 — Anthrax: which door did it come through?
+     ============================================================ -->
+<section class="section" data-key="m4s1">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 1</div>
+    <h2>Anthrax: which door did it come through?</h2>
+    <p class="lede">Bacillus anthracis causes the same disease however it enters, but which door the spores came through changes everything about how it presents and how urgently it needs treatment. (Its cousin B. cereus causes a milder story: food poisoning from spores that germinate in improperly reheated food, such as rice, via two different enterotoxins.)</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li>The exotoxin has three parts: <b>protective antigen</b> (binds host cells and delivers the other two), <b>edema factor</b> (an adenylate cyclase that raises cAMP), and <b>lethal factor</b> (a protease that causes cell death).</li>
+        <li><b>Cutaneous</b> anthrax (spores enter a wound) is nearly all cases and produces a black eschar. <b>Pulmonary</b> anthrax (spores inhaled) is rare but far more dangerous.</li>
+        <li>The vaccine's immunogen is protective antigen itself.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Open each door</h2>
+    <p class="try-note">Click each portal of entry to see how it presents and how it's treated. Open both to finish.</p>
+    <div id="act-anthraxDoors"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c10a">
+        <p>Which portal of entry accounts for nearly all cases of anthrax and produces a black eschar?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c10b">
+        <p>Which component of the B. anthracis exotoxin is an adenylate cyclase that raises intracellular cAMP?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 4 · SECTION 2 — The toxin mechanism challenge
+     ============================================================ -->
+<section class="section" data-key="m4s2">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 2</div>
+    <h2>The toxin mechanism challenge</h2>
+    <p class="lede">Botulism and tetanus are a classic look-alike pair: both toxins cut proteins that release neurotransmitter, but they act in opposite directions. Gas gangrene works by an entirely different mechanism &mdash; destroying membranes directly rather than touching the nervous system at all.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Botulinum toxin</b> blocks acetylcholine release &rarr; descending, <b>flaccid</b> paralysis. Treated with antitoxin and respiratory support.</li>
+        <li><b>Tetanus toxin</b> blocks glycine and GABA release in the spinal cord &rarr; <b>spastic</b> paralysis, lockjaw, opisthotonos. Metronidazole is often preferred over penicillin, which may antagonize GABA.</li>
+        <li><b>C. perfringens</b> alpha toxin (lecithinase) destroys cell membranes directly &rarr; gas gangrene, tissue destruction. Treated with penicillin G plus debridement.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue by toxin mechanism</h2>
+    <p class="try-note">Every clue belongs to one of the three toxin syndromes.</p>
+    <div id="act-toxinChallenge"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c11a">
+        <p>Which toxin blocks release of acetylcholine at the neuromuscular junction, producing descending flaccid paralysis?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c11b">
+        <p>Which toxin blocks release of the inhibitory neurotransmitters glycine and GABA, producing spastic paralysis and opisthotonos?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c11c">
+        <p>Why is metronidazole often preferred over penicillin in the treatment of tetanus?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 4 · SECTION 3 — C. difficile: the antibiotic-associated cycle
+     ============================================================ -->
+<section class="section" data-key="m4s3">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 3</div>
+    <h2>C. difficile: the antibiotic-associated cycle</h2>
+    <p class="lede">C. difficile is unusual in this lecture: the antibiotic itself sets up the infection. Everything about diagnosis, treatment, and prevention follows from that one fact.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li>Test only patients with <b>new, unexplained diarrhea</b> &mdash; colonization without symptoms is common.</li>
+        <li>Treatment: <b>fidaxomicin</b> preferred (initial and recurrent episodes); oral <b>vancomycin</b> acceptable; <b>metronidazole</b> reserved. Stop the causative antibiotic if possible.</li>
+        <li>Spores resist alcohol hand rub &mdash; <b>soap and water</b> is required, along with contact precautions and a sporicidal cleaner.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Put the cycle in order</h2>
+    <p class="try-note">Arrange these five steps from the start of the cycle to the end.</p>
+    <div id="act-cdiffCycle"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c12a">
+        <p>Why do broad-spectrum antibiotics like clindamycin and fluoroquinolones increase the risk of C. difficile infection?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c12b">
+        <p>Which agent is preferred for an initial episode of C. difficile infection?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c12c">
+        <p>Why does hand hygiene for C. difficile rely on soap and water rather than alcohol-based hand rub?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 4 · SECTION 4 — Listeria and diphtheria: two more invaders
+     ============================================================ -->
+<section class="section" data-key="m4s4">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 4</div>
+    <h2>Listeria and diphtheria: two more invaders</h2>
+    <p class="lede">Two organisms, two very different ways of taking over a cell: Listeria breaks out of the compartment meant to destroy it, while diphtheria toxin shuts down the host cell's protein-making machinery entirely.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Listeria:</b> internalin attaches, listeriolysin escapes the phagosome. Causes meningitis and sepsis in immunosuppressed adults, newborns, and pregnant women. Treated with ampicillin &plusmn; gentamicin (or TMP-SMX).</li>
+        <li><b>C. diphtheriae:</b> club-shaped, "Chinese-letter" arrangement, no spores. Toxin ADP-ribosylates EF-2, halting protein synthesis &mdash; the same target as Pseudomonas exotoxin A.</li>
+        <li>Diphtheria diagnosis: tellurite agar culture plus the Elek test. Treatment: antitoxin plus penicillin or erythromycin; prevented by the toxoid vaccine (DTaP/Tdap/Td).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match each factor to its organism</h2>
+    <p class="try-note">Drag each virulence factor or test onto the row it belongs to.</p>
+    <div id="act-listeriaDipMap"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c13a">
+        <p>Which virulence factor allows Listeria monocytogenes to escape the phagosome after being engulfed by a host cell?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c13b">
+        <p>Which patient populations are at greatest risk for severe Listeria infection?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c13c">
+        <p>How does diphtheria toxin disrupt the host cell?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 4 QUIZ
+     ============================================================ -->
+<section class="section" data-key="m4quiz">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Mastery check</div>
+    <h2>Module 4 quiz</h2>
+    <p class="lede">Ten questions drawn from everything in this module. Answer every question, then submit to see your score and a breakdown by concept area.</p>
+    <div class="quiz-body" data-quiz="m4"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 5 OVERVIEW
+     ============================================================ -->
+<section class="section modhome" data-key="m5home">
+  <div class="modhero">
+    <div class="kicker">Module 5</div>
+    <h2>Enteric Gram-Negative Rods</h2>
+    <p>Seven organisms, one gut, and a small set of questions that sort almost all of them: is the diarrhea watery or bloody? Is the organism acting through a toxin, or by invading tissue? And where in the GI tract does it actually strike? Learn to ask these questions first, and the organism usually follows.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Can the clinical presentation tell me where and how the organism is acting?</span></div>
+    <div class="ghost-num" aria-hidden="true">5</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Compare ETEC and EHEC by toxin mechanism, presentation, and the treatments to avoid in each.</span></li>
+      <li><span>Match Salmonella, Shigella, Klebsiella, Vibrio cholerae, Campylobacter, and H. pylori to their signature feature, complication, or treatment.</span></li>
+      <li><span>Sort watery versus bloody diarrhea by site and mechanism, and identify H. pylori as the stomach outlier.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m5s1">
+        <span class="home-num">1</span>
+        <span class="home-body">
+          <span class="home-title">E. coli: same organism, opposite diarrheas</span>
+          <span class="home-desc">Follow two patients &mdash; one with watery diarrhea, one with bloody &mdash; through two very different E. coli stories.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m5s2">
+        <span class="home-num">2</span>
+        <span class="home-body">
+          <span class="home-title">Salmonella, Shigella, and Klebsiella</span>
+          <span class="home-desc">Match each clue to the organism it identifies.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m5s3">
+        <span class="home-num">3</span>
+        <span class="home-body">
+          <span class="home-title">Vibrio, Campylobacter, and H. pylori</span>
+          <span class="home-desc">Predict the mechanism, complication, or treatment for five real scenarios.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m5s4">
+        <span class="home-num">4</span>
+        <span class="home-body">
+          <span class="home-title">Where the enteric bacteria strike</span>
+          <span class="home-desc">Click through the GI tract to see which organisms strike where, and why.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m5quiz">
+        <span class="home-num">&#10003;</span>
+        <span class="home-body">
+          <span class="home-title">Module 5 quiz</span>
+          <span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 5 · SECTION 1 — E. coli: same organism, opposite diarrheas
+     ============================================================ -->
+<section class="section" data-key="m5s1">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 1</div>
+    <h2>E. coli: same organism, opposite diarrheas</h2>
+    <p class="lede">Most E. coli is harmless gut flora. Two pathogenic strains tell almost opposite stories: one causes watery diarrhea through a toxin, the other causes bloody diarrhea through a different toxin entirely &mdash; with a treatment trap that makes the difference worth knowing cold.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>ETEC:</b> LT toxin raises cAMP, ST toxin raises cGMP &mdash; both act on the small intestine, causing watery diarrhea. Rehydration is the mainstay.</li>
+        <li><b>EHEC (O157:H7):</b> Shiga toxin inhibits protein synthesis, causing bloody diarrhea and risking hemolytic uremic syndrome (HUS).</li>
+        <li>In EHEC, <b>avoid antimotility drugs</b>, and use antibiotics cautiously &mdash; both may precipitate HUS.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Follow two patients</h2>
+    <p class="try-note">Answer each question to move the case forward. A miss just asks you to try again.</p>
+    <div id="act-ecoliCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c14a">
+        <p>Which E. coli pathotype produces LT and ST toxins that cause watery, non-bloody diarrhea?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c14b">
+        <p>Why should antimotility drugs like loperamide be avoided in suspected EHEC infection?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 5 · SECTION 2 — Salmonella, Shigella, and Klebsiella
+     ============================================================ -->
+<section class="section" data-key="m5s2">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 2</div>
+    <h2>Salmonella, Shigella, and Klebsiella</h2>
+    <p class="lede">Three gram-negative rods with three very different signatures &mdash; one survives inside immune cells, one spreads with almost nothing, and one is defined by a capsule so large it changes the look of the sputum.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Salmonella:</b> non-lactose fermenter, H<sub>2</sub>S positive, survives inside macrophages. Non-typhoidal disease from poultry/eggs; S. Typhi causes typhoid fever.</li>
+        <li><b>Shigella:</b> tiny infectious dose (10-200 organisms); S. dysenteriae makes Shiga toxin &rarr; bloody, mucoid dysentery.</li>
+        <li><b>Klebsiella:</b> large capsule, mucoid colonies, currant-jelly sputum in pneumonia (classically with alcohol use disorder); resistance (ESBL, carbapenem-resistant) drives therapy.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match each clue to its organism</h2>
+    <p class="try-note">Pick the organism each clue points to, then check your work.</p>
+    <div id="act-entericMap"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c15a">
+        <p>Which organism is described as non-lactose fermenting and able to survive inside macrophages?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c15b">
+        <p>Which organism has an extremely small infectious dose of only 10-200 organisms?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c15c">
+        <p>Which organism's large polysaccharide capsule produces mucoid colonies and is linked to "currant-jelly" sputum in pneumonia?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 5 · SECTION 3 — Vibrio, Campylobacter, and H. pylori
+     ============================================================ -->
+<section class="section" data-key="m5s3">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 3</div>
+    <h2>Vibrio, Campylobacter, and H. pylori</h2>
+    <p class="lede">Three curved gram-negative rods, three distinct stories: a toxin mechanism worth knowing cold, a complication that shows up weeks later, and an organism that survives in an environment nothing else in this course does &mdash; the stomach.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Vibrio cholerae:</b> cholera toxin locks Gs "on," raising cAMP &rarr; profuse, rice-water diarrhea. Rehydration is life-saving.</li>
+        <li><b>Campylobacter jejuni:</b> curved "gull-wing" rod from poultry/unpasteurized milk. Can trigger Guillain-Barr\u00e9 syndrome or reactive arthritis weeks later.</li>
+        <li><b>H. pylori:</b> urease neutralizes stomach acid. Causes gastritis, peptic ulcer, gastric cancer, and MALT lymphoma; treated with bismuth quadruple therapy.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the mechanism or the call</h2>
+    <p class="try-note">Pick a scenario, make your prediction, then see what happens.</p>
+    <div id="act-entericLens"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c16a">
+        <p>Which mechanism explains the profuse, "rice-water" diarrhea of cholera?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c16b">
+        <p>Which organism is a recognized trigger for Guillain-Barr&eacute; syndrome, appearing weeks after the initial gastrointestinal illness?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c16c">
+        <p>How does Helicobacter pylori survive the acidic environment of the stomach?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 5 · SECTION 4 — Where the enteric bacteria strike
+     ============================================================ -->
+<section class="section" data-key="m5s4">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 4</div>
+    <h2>Where the enteric bacteria strike</h2>
+    <p class="lede">Every organism in this module sorts by two questions: watery or bloody, and where. Answer those first, and the organism (and the treatment trap) usually follows.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Watery</b> diarrhea usually means a toxin acting on the <b>small intestine</b> (ETEC, cholera), without invading tissue.</li>
+        <li><b>Bloody</b> diarrhea usually means invasion or Shiga toxin in the <b>colon</b> (Shigella, Salmonella, Campylobacter, EHEC).</li>
+        <li><b>H. pylori</b> is the outlier: it lives in the <b>stomach</b> itself.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Click through the GI tract</h2>
+    <p class="try-note">Open each site to see which organisms strike there and why. Open all three to finish.</p>
+    <div id="act-giMap"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c17a">
+        <p>Watery diarrhea, without blood, most often reflects a toxin acting on which site?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c17b">
+        <p>Bloody diarrhea most often reflects invasion or Shiga toxin acting at which site?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c17c">
+        <p>Which organism from this module is the outlier that lives in the stomach itself rather than causing diarrhea from the small intestine or colon?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 5 QUIZ
+     ============================================================ -->
+<section class="section" data-key="m5quiz">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Mastery check</div>
+    <h2>Module 5 quiz</h2>
+    <p class="lede">Ten questions drawn from everything in this module. Answer every question, then submit to see your score and a breakdown by concept area.</p>
+    <div class="quiz-body" data-quiz="m5"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 6 OVERVIEW
+     ============================================================ -->
+<section class="section modhome" data-key="m6home">
+  <div class="modhero">
+    <div class="kicker">Module 6</div>
+    <h2>Respiratory, Zoonotic &amp; Integrative Pathogens</h2>
+    <p>This final content module covers the organisms most defined by who the patient is and where they've been: an opportunist that strikes the already-vulnerable (Pseudomonas), two organisms prevented by routine childhood vaccines (H. influenzae, B. pertussis), two zoonotic laboratory hazards from animal exposure (tularemia, plague), and the anaerobes that live wherever oxygen doesn't reach. It closes by tying the whole course together: which organisms share a capsule, why Listeria is the exception, and how patient age changes empiric treatment.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do patient context and site of infection narrow the organism and treatment?</span></div>
+    <div class="ghost-num" aria-hidden="true">6</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks">
+      <li><span>Connect Pseudomonas's virulence factors and hospital/CF context to its treatment challenges.</span></li>
+      <li><span>Compare H. influenzae and B. pertussis as vaccine-preventable respiratory pathogens, and tularemia and plague as zoonotic laboratory hazards.</span></li>
+      <li><span>Explain why anaerobic infections need specific antibiotic choices, and why Listeria changes empiric meningitis coverage by patient age.</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+      <button class="home-item" data-goto="m6s1">
+        <span class="home-num">1</span>
+        <span class="home-body">
+          <span class="home-title">Pseudomonas: the opportunist</span>
+          <span class="home-desc">Match each virulence factor to what it actually does.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m6s2">
+        <span class="home-num">2</span>
+        <span class="home-body">
+          <span class="home-title">H. influenzae and B. pertussis</span>
+          <span class="home-desc">Put the stages of pertussis in the right order.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m6s3">
+        <span class="home-num">3</span>
+        <span class="home-body">
+          <span class="home-title">Tularemia and plague: zoonotic hazards</span>
+          <span class="home-desc">Sort the clues to the right zoonotic organism.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m6s4">
+        <span class="home-num">4</span>
+        <span class="home-body">
+          <span class="home-title">Anaerobes and the big picture</span>
+          <span class="home-desc">Predict the right call across five integrative scenarios.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+      <button class="home-item" data-goto="m6quiz">
+        <span class="home-num">&#10003;</span>
+        <span class="home-body">
+          <span class="home-title">Module 6 quiz</span>
+          <span class="home-desc">Mixed-difficulty questions, then a targeted round on anything you missed.</span>
+        </span>
+        <span class="home-status">Not started</span>
+      </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 6 · SECTION 1 — Pseudomonas: the opportunist
+     ============================================================ -->
+<section class="section" data-key="m6s1">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 1</div>
+    <h2>Pseudomonas: the opportunist</h2>
+    <p class="lede">Pseudomonas rarely troubles a healthy person. It strikes when the host is already vulnerable &mdash; immunocompromised, on a ventilator, living with cystic fibrosis, or recovering from a burn &mdash; and it is notoriously hard to clear once it arrives.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li>Chronically infects most adults with cystic fibrosis; contaminates IV fluids and respiratory equipment; a major cause of hospital-acquired infection.</li>
+        <li><b>Exotoxin A</b> ADP-ribosylates EF-2 &mdash; the same mechanism as diphtheria toxin. <b>Pyocyanin</b> (the blue-green pigment) damages respiratory cilia.</li>
+        <li>Often resistant to many antibiotics; combination therapy or newer reserved agents (ceftazidime-avibactam and similar) are needed for difficult strains.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match each factor to what it does</h2>
+    <p class="try-note">Drag each virulence factor onto the row describing its effect.</p>
+    <div id="act-pseudoMap"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c18a">
+        <p>Which Pseudomonas aeruginosa toxin shares its exact mechanism (ADP-ribosylation of EF-2) with diphtheria toxin?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c18b">
+        <p>Which patient population is most classically, chronically infected by Pseudomonas aeruginosa?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 6 · SECTION 2 — H. influenzae and B. pertussis
+     ============================================================ -->
+<section class="section" data-key="m6s2">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 2</div>
+    <h2>H. influenzae and B. pertussis</h2>
+    <p class="lede">Two respiratory organisms, both dramatically reduced by routine childhood vaccination &mdash; and both still worth knowing cold, because unvaccinated and undervaccinated patients still get sick.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>H. influenzae</b> is one of three encapsulated pyogens (with pneumococcus and meningococcus); type b is most antigenic. Treated with ceftriaxone.</li>
+        <li><b>B. pertussis</b> produces pertussis toxin (ADP-ribosylates Gi &rarr; lymphocytosis), adenylate cyclase toxin, and tracheal cytotoxin. Diagnosed by PCR; treated with a macrolide.</li>
+        <li>Tdap is given in <b>every</b> pregnancy, to transfer protective antibodies to a newborn too young to be vaccinated directly.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Put the stages of pertussis in order</h2>
+    <p class="try-note">Arrange these three stages from earliest to latest.</p>
+    <div id="act-pertussisStages"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c19a">
+        <p>Haemophilus influenzae is considered one of the three important "encapsulated pyogens," along with which two organisms?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c19b">
+        <p>Which stage of pertussis is the patient most contagious?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c19c">
+        <p>Why is Tdap recommended during every pregnancy, not just once?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 6 · SECTION 3 — Tularemia and plague: zoonotic hazards
+     ============================================================ -->
+<section class="section" data-key="m6s3">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 3</div>
+    <h2>Tularemia and plague: zoonotic hazards</h2>
+    <p class="lede">Both organisms come from animals, and both are laboratory hazards \u2014 the lab needs to know before it processes a specimen you suspect contains either one.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li><b>Francisella tularensis</b> (tularemia): reservoir is rabbits, deer, and ticks. Endotoxin only, no exotoxin. Treated with a fluoroquinolone or doxycycline.</li>
+        <li><b>Yersinia pestis</b> (plague): reservoir is rodents. Antiphagocytic capsule, endotoxin, exotoxin, and Yops. Treated with gentamicin or a fluoroquinolone.</li>
+        <li>Both are laboratory hazards, like anthrax &mdash; notify the lab whenever you suspect either one.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Sort each clue to its organism</h2>
+    <p class="try-note">Every clue belongs to one of the two zoonotic organisms.</p>
+    <div id="act-zoonoticID"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c20a">
+        <p>Which zoonotic organism's reservoir includes rabbits, deer, and ticks?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c20b">
+        <p>A laboratory technician is handling a specimen suspected to contain Francisella tularensis or Yersinia pestis. What is an important safety step?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c20c">
+        <p>Which antibiotic class is first-line for plague (Yersinia pestis)?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 6 · SECTION 4 — Anaerobes and the big picture
+     ============================================================ -->
+<section class="section" data-key="m6s4">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 4</div>
+    <h2>Anaerobes and the big picture</h2>
+    <p class="lede">This closing section does two things: covers the anaerobes that live wherever oxygen doesn't reach, and ties the whole course together around one question &mdash; which organisms have a capsule, and what happens with the one classic meningitis cause that doesn't.</p>
+    <div class="keypoints">
+      <h4>Key points</h4>
+      <ul>
+        <li>Anaerobic abscesses: foul-smelling discharge, gas, necrotic tissue. Mouth anaerobes &rarr; aspiration/lung/brain abscess; colon anaerobes (B. fragilis) &rarr; intra-abdominal abscess.</li>
+        <li>Aminoglycosides fail against anaerobes because their uptake is oxygen-dependent.</li>
+        <li>The three classic encapsulated pyogens (pneumococcus, meningococcus, H. influenzae) resist phagocytosis via their capsule. <b>Listeria is the exception</b> &mdash; not encapsulated, escapes the phagosome via listeriolysin, and needs ampicillin, added specifically in newborns and in adults over 50 or immunocompromised.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the call</h2>
+    <p class="try-note">Pick a scenario, make your prediction, then see what happens.</p>
+    <div id="act-integrativeLens"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+      <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+      <div class="cp-item" data-check="c21a">
+        <p>What is the major antiphagocytic virulence factor shared by the three classic encapsulated pyogens (S. pneumoniae, N. meningitidis, and H. influenzae)?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c21b">
+        <p>Why is Listeria monocytogenes an exception among the classic causes of bacterial meningitis?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+      <div class="cp-item" data-check="c21c">
+        <p>Which two patient groups require ampicillin to be added to empiric meningitis coverage, specifically for Listeria?</p>
+        <div class="choices"></div><div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MODULE 6 QUIZ
+     ============================================================ -->
+<section class="section" data-key="m6quiz">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Mastery check</div>
+    <h2>Module 6 quiz</h2>
+    <p class="lede">Ten questions drawn from everything in this module. Answer every question, then submit to see your score and a breakdown by concept area.</p>
+    <div class="quiz-body" data-quiz="m6"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     FLASHCARDS
+     ============================================================ -->
+<section class="section" data-key="flashcards">
+  <div class="card">
+    <div class="eyebrow">Retrieval Practice</div>
+    <h2>Flashcards</h2>
+    <p class="lede">Quick review of the tests and terms from Modules 1 through 6.</p>
+    <div class="fc-stage">
+      <div class="fc" id="fcCard" tabindex="0" role="button" aria-label="Flashcard. Press Enter to flip.">
+        <div class="fc-face fc-front"><div>
+          <div class="fc-term" id="fcFront"></div>
+          <div class="fc-hint">click, tap, or press Enter to flip</div>
+        </div></div>
+        <div class="fc-face fc-back"><div class="fc-def" id="fcBack"></div></div>
+      </div>
+    </div>
+    <div class="fc-bar">
+      <button class="btn ghost" id="fcPrev">Previous</button>
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn ghost" id="fcNext">Next</button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<!-- ============================================================
+     MASTERY CHALLENGE (cumulative final exam)
+     Locked (unlockAfter:'*') until every other gradable module is
+     complete. engine.js builds the lock card automatically from
+     MODULES — no extra markup needed here for that.
+     ============================================================ -->
+<section class="section" data-key="final">
+  <div class="card">
+    <div class="eyebrow">Mastery Challenge</div>
+    <h2>Cumulative Mastery Challenge</h2>
+    <p class="lede">Twenty-five questions drawn from every module in this companion &mdash; eight on core concepts, ten application, seven that ask you to put two ideas together, the same mix the rest of this companion has been building toward. Submit to see your score and, if anything's shaky, a targeted practice round on exactly those concepts.</p>
+    <div class="quiz-body" data-quiz="final"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit exam</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+  </main>
+</div>
+
+<script src="banks/bacteria3.js"></script>
+<script src="banks/bacteria3.manifest.js"></script>
+<script src="banks/bacteria3.images.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/helpers.js"></script>
+<script src="shared/activities.js"></script>
+<script src="shared/welcome.js"></script>
+<script>
+/* ============================================================
+   CONTENT SCRIPT — derives structure from MANIFEST (copy this
+   derivation block verbatim into any new companion; see
+   companion-architecture.md §5), then builds this topic's own
+   activities, then calls initWelcome() last.
+   ============================================================ */
+var BADGES = {home:'&#8962;', m1:'1', m2:'2', m3:'3', m4:'4', m5:'5', m6:'6', flash:'&#10022;', final:'&#9733;'};
+
+var MODULES = MANIFEST.modules.map(function(m){
+  var mod = {id:m.id, badge:BADGES[m.id]||'&#8226;', title:m.title,
+             sections:m.sections.map(function(s){return {key:s.key,label:s.label};})};
+  if(m.unlockAfter) mod.unlockAfter = m.unlockAfter;
+  return mod;
+});
+
+var FLOW = []; MODULES.forEach(function(m){ m.sections.forEach(function(s){ FLOW.push(s); }); });
+
+var UNGRADED = [];
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(!s.checks && !s.activity && !s.quiz) UNGRADED.push(s.key);
+});});
+
+var SECTION_REQ = {}, QUIZ_KEY_FOR_SECTION = {};
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(s.checks || s.activity){
+    SECTION_REQ[s.key] = {checks:s.checks||[]};
+    if(s.activity) SECTION_REQ[s.key].activity = s.activity;
+  }
+  if(s.quiz) QUIZ_KEY_FOR_SECTION[s.key] = s.quiz;
+});});
+
+var AREA_SECTION = MANIFEST.areaSection;
+
+var MODULE_QUIZ_SIZE = 8;
+var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
+
+/* ---- Module 1 activities ---- */
+Act.sort('act-genusID', {name:'genusID', options:['Staphylococcus','Streptococcus'], rows:[
+  {text:'<img class="mic-thumb" src="'+B3IMG.staphClusters+'" alt="Electron micrograph of round bacteria growing in tight, grape-like clusters"><span>Round cells growing in tight, irregular clusters.</span>',
+   answer:'Staphylococcus', why:'These clustered cocci are Staphylococcus \u2014 the arrangement microbiologists compare to a bunch of grapes.'},
+  {text:'<img class="mic-thumb" src="'+B3IMG.strepChains+'" alt="Electron micrograph of round bacteria growing in a chain"><span>Round cells growing in a chain.</span>',
+   answer:'Streptococcus', why:'Chains of cocci are the hallmark of Streptococcus (and, less prominently, Enterococcus).'},
+  {text:'This genus is catalase-positive.', answer:'Staphylococcus',
+   why:'Catalase splits the two genera: Staphylococcus produces bubbles when hydrogen peroxide is added; Streptococcus does not.'},
+  {text:'This genus is catalase-negative.', answer:'Streptococcus',
+   why:'Streptococcus (and Enterococcus) lack catalase, unlike Staphylococcus.'}
+]});
+
+Act.explore('act-staphTree', {name:'staphTree',
+  start:'Click a box on the flowchart, starting at the top, to see what each stop means.',
+  ids:['coagulase','aureus','cons','novobiocin','epidermidis','saprophyticus'],
+  items:{
+    coagulase:{title:'Coagulase test', html:'<p>Does the organism clot plasma? A positive result identifies <b>S. aureus</b>. A negative result means one of the coagulase-negative staphylococci, and a second test (novobiocin) is needed to tell them apart.</p>'},
+    aureus:{title:'S. aureus', html:'<p>Coagulase-positive. The most virulent staphylococcus: causes toxic shock syndrome, food poisoning, scalded skin syndrome, and serious skin and bloodstream infections. Produces staphyloxanthin, a pigment that helps it survive inside neutrophils.</p>'},
+    cons:{title:'Coagulase-negative staphylococci', html:'<p>Two species share a negative coagulase result: <b>S. epidermidis</b> and <b>S. saprophyticus</b>. Novobiocin susceptibility is the test that tells them apart.</p>'},
+    novobiocin:{title:'Novobiocin test', html:'<p>Is growth inhibited by novobiocin? Susceptible points to <b>S. epidermidis</b>. Resistant points to <b>S. saprophyticus</b>.</p>'},
+    epidermidis:{title:'S. epidermidis', html:'<p>Novobiocin-susceptible. Normal skin flora that becomes pathogenic on a foreign device surface (catheters, prosthetic joints), where it builds a protective biofilm. Hospital-acquired; does not produce exotoxins.</p>'},
+    saprophyticus:{title:'S. saprophyticus', html:'<p>Novobiocin-resistant. A classic, community-acquired cause of urinary tract infection in young, sexually active women. Does not produce exotoxins.</p>'}
+  },
+  svg:'<svg viewBox="0 0 820 440" role="img" aria-label="Flowchart: Staphylococcus splits by coagulase into S. aureus or the coagulase-negative staphylococci, which split by novobiocin into S. epidermidis or S. saprophyticus">'+
+    '<g fill="none" stroke="#12333A" stroke-width="2">'+
+      '<path d="M380,61 L380,95" marker-end="url(#b3arrow)"/>'+
+      '<path d="M380,139 L380,160 L160,160 L160,185" marker-end="url(#b3arrow)"/>'+
+      '<path d="M380,139 L380,160 L630,160 L630,185" marker-end="url(#b3arrow)"/>'+
+      '<path d="M630,235 L630,275" marker-end="url(#b3arrow)"/>'+
+      '<path d="M630,319 L630,340 L485,340 L485,360" marker-end="url(#b3arrow)"/>'+
+      '<path d="M630,319 L630,340 L700,340 L700,360" marker-end="url(#b3arrow)"/>'+
+    '</g>'+
+    '<defs><marker id="b3arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#12333A"/></marker></defs>'+
+    '<text x="270" y="152" font-size="12" font-weight="700" fill="#96301A">Positive</text>'+
+    '<text x="640" y="152" font-size="12" font-weight="700" fill="#96301A">Negative</text>'+
+    '<text x="345" y="332" font-size="12" font-weight="700" fill="#96301A">Susceptible</text>'+
+    '<text x="705" y="332" font-size="12" font-weight="700" fill="#96301A">Resistant</text>'+
+    '<g><rect x="280" y="15" width="200" height="46" rx="8" fill="#E4EEF0" stroke="#BFDADD" stroke-width="1.5"/>'+
+      '<text x="380" y="34" text-anchor="middle" font-size="14" font-weight="700" fill="#12333A">Staphylococcus</text>'+
+      '<text x="380" y="50" text-anchor="middle" font-size="11" fill="#12333A">catalase-positive</text></g>'+
+    '<g data-hs="coagulase" tabindex="0"><rect x="280" y="95" width="200" height="44" rx="8" fill="#fff" stroke="#FF6B4A" stroke-width="2" stroke-dasharray="4 3"/>'+
+      '<text x="380" y="122" text-anchor="middle" font-size="14" font-weight="700" fill="#96301A">Coagulase test</text></g>'+
+    '<g data-hs="aureus" tabindex="0"><rect x="60" y="185" width="200" height="50" rx="8" fill="#E4EEF0" stroke="#12333A" stroke-width="1.5"/>'+
+      '<text x="160" y="215" text-anchor="middle" font-size="14" font-weight="700" fill="#12333A">S. aureus</text></g>'+
+    '<g data-hs="cons" tabindex="0"><rect x="520" y="185" width="220" height="50" rx="8" fill="#E4EEF0" stroke="#12333A" stroke-width="1.5"/>'+
+      '<text x="630" y="207" text-anchor="middle" font-size="13" font-weight="700" fill="#12333A">Coagulase-negative</text>'+
+      '<text x="630" y="223" text-anchor="middle" font-size="13" font-weight="700" fill="#12333A">staphylococci</text></g>'+
+    '<g data-hs="novobiocin" tabindex="0"><rect x="520" y="275" width="220" height="44" rx="8" fill="#fff" stroke="#FF6B4A" stroke-width="2" stroke-dasharray="4 3"/>'+
+      '<text x="630" y="302" text-anchor="middle" font-size="14" font-weight="700" fill="#96301A">Novobiocin test</text></g>'+
+    '<g data-hs="epidermidis" tabindex="0"><rect x="390" y="360" width="190" height="50" rx="8" fill="#E4EEF0" stroke="#12333A" stroke-width="1.5"/>'+
+      '<text x="485" y="390" text-anchor="middle" font-size="13" font-weight="700" fill="#12333A">S. epidermidis</text></g>'+
+    '<g data-hs="saprophyticus" tabindex="0"><rect x="605" y="360" width="190" height="50" rx="8" fill="#E4EEF0" stroke="#12333A" stroke-width="1.5"/>'+
+      '<text x="700" y="390" text-anchor="middle" font-size="13" font-weight="700" fill="#12333A">S. saprophyticus</text></g>'+
+  '</svg>'
+});
+
+Act.sort('act-strepTree', {name:'strepTree', options:['S. pyogenes (group A)','S. agalactiae (group B)','S. pneumoniae','Viridans streptococci','Enterococcus'], rows:[
+  {text:'Beta-hemolytic; bacitracin-sensitive.', answer:'S. pyogenes (group A)',
+   why:'Bacitracin sensitivity is what separates group A from group B among the beta-hemolytic streptococci.'},
+  {text:'Beta-hemolytic; bacitracin-resistant; CAMP-positive.', answer:'S. agalactiae (group B)',
+   why:'Bacitracin resistance plus a positive CAMP test identifies group B strep.'},
+  {text:'Alpha-hemolytic; optochin-sensitive; capsule visible around gram-positive diplococci on Gram stain.', answer:'S. pneumoniae',
+   why:'Optochin sensitivity, plus a visible capsule, identifies S. pneumoniae.'},
+  {text:'Alpha-hemolytic; optochin-resistant.', answer:'Viridans streptococci',
+   why:'The viridans group shares alpha-hemolysis with pneumococcus but resists optochin.'},
+  {text:'Nonhemolytic (gamma); normal colon flora; a frequent cause of urinary tract infection and endocarditis.', answer:'Enterococcus',
+   why:'Gamma-hemolysis and a colon origin point to Enterococcus.'},
+  {text:'Colonizes the vagina and is screened for during pregnancy to prevent neonatal sepsis.', answer:'S. agalactiae (group B)',
+   why:'Group B strep is the reason for prenatal screening; a mother who screens positive receives antibiotics during labor.'}
+]});
+
+/* ---- Module 2 activities ---- */
+Act.dnd('act-aureusMap', {name:'aureusMap', pills:['Protein A','TSST-1','Enterotoxin','Exfoliatin','Coagulase'], rows:[
+  {text:'Blocks IgG-mediated complement activation, reducing opsonization.', answer:'Protein A',
+   why:'Protein A binds the Fc portion of IgG, preventing complement activation.'},
+  {text:'A superantigen that triggers toxic shock syndrome.', answer:'TSST-1',
+   why:'TSST-1 causes massive, nonspecific T-cell activation and cytokine release.'},
+  {text:'A pre-formed, heat-stable toxin causing rapid-onset food poisoning.', answer:'Enterotoxin',
+   why:'Because the toxin is already present in the food, illness starts within hours and antibiotics do not help.'},
+  {text:'A protease that cleaves desmoglein, causing scalded skin syndrome.', answer:'Exfoliatin',
+   why:'Exfoliatin separates the skin\u2019s outer layer by breaking down the proteins that hold it together.'},
+  {text:'Clots plasma to wall off the infected site.', answer:'Coagulase',
+   why:'Coagulase is also the bench test that identifies S. aureus among the staphylococci (Module 1).'}
+]});
+
+Act.stages('act-gasCase', {name:'gasCase', stages:[
+  {lead:'<p><b>Day 1.</b> An 8-year-old presents with a sore throat, fever, and a red, sandpaper-textured rash. Throat culture grows beta-hemolytic, gram-positive cocci in chains, sensitive to bacitracin.</p>',
+   prompt:'Which toxin is most directly responsible for the sandpaper rash?',
+   options:['Erythrogenic toxin','Streptolysin O','M protein','DNase'], answer:0,
+   why:'Erythrogenic toxin is a superantigen that produces the diffuse, sandpaper-textured rash of scarlet fever.'},
+  {lead:'<p><b>Day 1, continued.</b> The child is treated with a full course of penicillin and recovers within a week.</p>',
+   prompt:'Which complication does this timely antibiotic treatment reliably prevent?',
+   options:['Rheumatic fever','Glomerulonephritis','Scarlet fever itself, retroactively','Toxic shock syndrome'], answer:0,
+   why:'Antibiotic treatment of the initial strep throat infection is well established to prevent rheumatic fever.'},
+  {lead:'<p><b>Three weeks later.</b> The child returns with dark, tea-colored urine and swelling around the eyes, despite having completed the antibiotic course exactly as prescribed.</p>',
+   prompt:'What is the most likely explanation for this new presentation?',
+   options:['An immune-mediated complication (glomerulonephritis) that antibiotics do not reliably prevent','A new, separate group A strep infection','Antibiotic-resistant bacteria persisting in the throat','A drug reaction to the penicillin course'], answer:0,
+   why:'Glomerulonephritis is immune-mediated and can occur even after appropriate antibiotic treatment of the original infection, because it results from the immune response rather than ongoing bacterial invasion.'},
+  {lead:'<p><b>Looking back.</b> Two different problems, two different timelines, from the same original infection.</p>',
+   prompt:'Which virulence factor is described as the single most important virulence factor for Streptococcus pyogenes, and let the original throat infection establish itself?',
+   options:['M protein','Erythrogenic toxin','Streptokinase','IgG-degrading enzyme'], answer:0,
+   why:'M protein is explicitly the most important virulence factor for S. pyogenes: it inactivates C3b and prevents phagocytosis.'}
+]});
+
+Act.predict('act-pharmLens2', {name:'pharmLens2',
+  start:'Choose a scenario, make your prediction, then see what happens.',
+  items:[
+    {id:'splenectomy', title:'Post-splenectomy patient',
+     prompt:'A patient without a spleen is at greatest risk for severe infection with which organism from this lecture?',
+     options:['Streptococcus pneumoniae','Viridans streptococci','Enterococcus faecalis','Staphylococcus epidermidis'], answer:0,
+     why:'The spleen clears encapsulated organisms from the blood; without it, S. pneumoniae causes more severe, harder-to-clear infection.'},
+    {id:'gbs-mom', title:'GBS-positive pregnancy',
+     prompt:'A pregnant patient screens positive for group B Streptococcus. What is the standard intervention?',
+     options:['Antibiotics during labor','Antibiotics immediately at the time of the positive screen','No treatment unless the newborn becomes symptomatic','Antifungal prophylaxis before delivery'], answer:0,
+     why:'Intrapartum antibiotics (given during labor) are the standard way to prevent group B strep transmission and neonatal sepsis.'},
+    {id:'vre', title:'Vancomycin-resistant Enterococcus',
+     prompt:'A patient has a bloodstream infection with vancomycin-resistant Enterococcus faecium. Which agent is an appropriate choice?',
+     options:['Linezolid or daptomycin','Vancomycin at a higher dose','Ampicillin plus ceftriaxone','Penicillin G alone'], answer:0,
+     why:'VRE (mostly E. faecium) is treated with linezolid or daptomycin, since resistance comes from an altered cell-wall target that vancomycin can no longer bind.'},
+    {id:'oldvax', title:'Unvaccinated older adult',
+     prompt:'A 66-year-old who has never received a pneumococcal vaccine presents for a routine visit. What is the current recommendation?',
+     options:['PCV20 or PCV21 alone, or PCV15 followed by PPSV23','PPSV23 alone, which remains the routine first choice','No vaccine is recommended after age 65','A single dose of any pneumococcal vaccine, repeated annually'], answer:0,
+     why:'Adults 50 and older receive PCV20 or PCV21 alone, or PCV15 followed a year later by PPSV23; PPSV23 alone is no longer routinely recommended.'},
+    {id:'endocarditis', title:'Endocarditis after a dental visit',
+     prompt:'A patient develops subacute endocarditis several weeks after a dental procedure. Which organism is the classic cause?',
+     options:['Viridans streptococci','Streptococcus pneumoniae','Streptococcus agalactiae','Staphylococcus epidermidis'], answer:0,
+     why:'Viridans streptococci are normal oral flora that can enter the bloodstream during dental work and cause subacute endocarditis, often on previously damaged heart valves.'}
+  ]
+});
+
+/* ---- Module 3 activities ---- */
+Act.sort('act-neisseriaID', {name:'neisseriaID', options:['Neisseria meningitidis','Neisseria gonorrhoeae'], rows:[
+  {text:'Ferments maltose.', answer:'Neisseria meningitidis',
+   why:'Maltose fermentation is the test that separates the two Neisseria species.'},
+  {text:'Does not ferment maltose.', answer:'Neisseria gonorrhoeae',
+   why:'A negative maltose result, in a gram-negative diplococcus, points to the gonococcus.'},
+  {text:'Portal of entry is the respiratory tract.', answer:'Neisseria meningitidis',
+   why:'Airborne transmission leads to nasopharynx colonization, which can spread to the meninges or bloodstream.'},
+  {text:'Portal of entry is the genital tract.', answer:'Neisseria gonorrhoeae',
+   why:'Gonorrhea is transmitted sexually (or vertically, from mother to newborn at birth).'},
+  {text:'Has a polysaccharide capsule that is also a vaccine target.', answer:'Neisseria meningitidis',
+   why:'The capsule resists phagocytosis and is the immunogen behind the MenACWY vaccines.'},
+  {text:'Uses pili to attach to mucosal cells and resist phagocytosis.', answer:'Neisseria gonorrhoeae',
+   why:'Only piliated gonococci are pathogenic; pili are this organism\u2019s signature attachment factor.'},
+  {text:'Classically seen inside neutrophils on a Gram stain from a genital specimen.', answer:'Neisseria gonorrhoeae',
+   why:'Intracellular gram-negative diplococci on a urethral or cervical smear is a hallmark finding for gonorrhea.'}
+]});
+
+Act.stages('act-meningoCase', {name:'meningoCase', stages:[
+  {lead:'<p><b>The scene.</b> A college freshman living in a dormitory develops fever, headache, and a petechial rash that does not fade under pressure. She is brought to the emergency department and appears acutely ill.</p>',
+   prompt:'Given the rash and dormitory setting, which empiric antibiotic should be started immediately?',
+   options:['Ceftriaxone','Doxycycline','Vancomycin alone','Azithromycin'], answer:0,
+   why:'Ceftriaxone (or penicillin G) is first-line empiric treatment for suspected meningococcal disease, and should not be delayed while awaiting confirmation.'},
+  {lead:'<p><b>Confirmed.</b> Blood cultures grow Neisseria meningitidis. The patient\u2019s roommate, who shares an unventilated dorm room, has no symptoms.</p>',
+   prompt:'What should be done for the asymptomatic roommate?',
+   options:['Chemoprophylaxis with rifampin, ceftriaxone, or ciprofloxacin','Nothing, since the roommate has no symptoms','The same ceftriaxone course as the patient','Vaccination only, no antibiotics'], answer:0,
+   why:'Close contacts receive chemoprophylaxis to eliminate nasopharyngeal carriage, regardless of symptoms, because they are at substantially higher risk of secondary disease.'},
+  {lead:'<p><b>One week later.</b> The patient has recovered. Public health follows up about the rest of the dormitory floor, none of whom are considered close contacts.</p>',
+   prompt:'What longer-term prevention step is most appropriate for the wider dormitory population going forward?',
+   options:['Ensuring they are up to date on MenACWY (and considering MenB)','Chemoprophylaxis for the entire dormitory','No further action is ever needed for a college population','A course of doxycycline for everyone on the floor'], answer:0,
+   why:'Outbreaks like this are exactly why MenACWY is recommended at 11-12 with a booster at 16, and why MenB is discussed as a shared decision \u2014 college dormitories are a recognized higher-risk setting.'},
+  {lead:'<p><b>Looking back.</b> One patient, three separate decisions: what to give her, what to give her roommate, and what protects everyone else.</p>',
+   prompt:'Which virulence factor made it possible for this organism to invade the bloodstream and cause the petechial rash in the first place?',
+   options:['Endotoxin','Pili','Exfoliatin','M protein'], answer:0,
+   why:'Endotoxin (and outer membrane proteins) from N. meningitidis triggers fever and shock, and is responsible for the petechial/purpuric rash of meningococcemia.'}
+]});
+
+Act.predict('act-gonoLens', {name:'gonoLens',
+  start:'Choose a scenario, make your prediction, then see what happens.',
+  items:[
+    {id:'uncomplicated', title:'Uncomplicated infection',
+     prompt:'A patient has an uncomplicated gonococcal infection with no cephalosporin allergy, and chlamydia has been excluded. What is the standard treatment?',
+     options:['Ceftriaxone 500 mg IM, single dose','Ceftriaxone plus doxycycline for 7 days','Azithromycin single dose','Doxycycline alone for 7 days'], answer:0,
+     why:'Ceftriaxone 500 mg IM as a single dose is standard when chlamydia has been excluded; doxycycline is added only when it has not.'},
+    {id:'chlamydia-unknown', title:'Chlamydia not excluded',
+     prompt:'A patient is treated for gonorrhea, but chlamydia testing results are not back yet. What should be added?',
+     options:['Doxycycline 100 mg twice daily for 7 days','Azithromycin as routine dual therapy','A second dose of ceftriaxone','Nothing, wait for the chlamydia result'], answer:0,
+     why:'Doxycycline is added whenever chlamydia has not been excluded; routine azithromycin dual therapy has been dropped from current guidance.'},
+    {id:'allergy', title:'Cephalosporin allergy',
+     prompt:'A patient with a documented cephalosporin allergy needs treatment for gonorrhea. What is the alternative regimen?',
+     options:['Gentamicin plus azithromycin','Doxycycline alone','Penicillin G','Vancomycin'], answer:0,
+     why:'Gentamicin plus azithromycin is the recommended alternative for patients who cannot receive a cephalosporin.'},
+    {id:'newborn', title:'Newborn prevention',
+     prompt:'What prevents gonococcal conjunctivitis in a newborn delivered to a mother with untreated gonorrhea?',
+     options:['Erythromycin ointment applied at birth','A maternal vaccine given during pregnancy','Oral ceftriaxone for the newborn','There is no effective prevention'], answer:0,
+     why:'Erythromycin ointment applied to the newborn\u2019s eyes at birth is the standard prevention for gonococcal conjunctivitis.'},
+    {id:'followup', title:'Follow-up testing',
+     prompt:'A patient successfully treated for urogenital gonorrhea asks when they should be retested for reinfection.',
+     options:['About 3 months after treatment','Immediately after finishing the antibiotic','Only if symptoms return','At 24 hours post-treatment'], answer:0,
+     why:'Retesting for reinfection about 3 months after treatment is recommended; a test of cure at 7-14 days is reserved specifically for pharyngeal infection.'}
+  ]
+});
+
+/* ---- Module 4 activities ---- */
+Act.explore('act-anthraxDoors', {name:'anthraxDoors',
+  start:'Click each door to see how anthrax gets in and what happens next.',
+  ids:['cutaneous','pulmonary'],
+  items:{
+    cutaneous:{title:'Cutaneous anthrax', html:'<p>Spores in soil enter through a break in the skin. This is nearly all anthrax cases, and produces the classic black eschar \u2014 a necrotic lesion covered by a crust, caused by the exotoxin. Treated with ciprofloxacin, levofloxacin, or doxycycline (or penicillin if susceptible) for 7-10 days.</p>'},
+    pulmonary:{title:'Pulmonary (inhalation) anthrax', html:'<p>Spores are inhaled. This is the rare but deadly route, starting like a flu-like illness before rapidly progressing. Treated with two bactericidal drugs from different classes plus a protein synthesis inhibitor for 2 weeks or longer, plus antitoxin (monoclonal preferred).</p>'}
+  },
+  svg:'<svg viewBox="0 0 640 320" role="img" aria-label="Two doors: cutaneous anthrax and pulmonary anthrax">'+
+    '<g data-hs="cutaneous" tabindex="0">'+
+      '<rect x="70" y="30" width="200" height="250" rx="10" fill="#FFE3DA" stroke="#96301A" stroke-width="2.5"/>'+
+      '<circle cx="245" cy="155" r="7" fill="#96301A"/>'+
+      '<text x="170" y="305" text-anchor="middle" font-size="15" font-weight="700" fill="#12333A">Cutaneous</text>'+
+    '</g>'+
+    '<g data-hs="pulmonary" tabindex="0">'+
+      '<rect x="370" y="30" width="200" height="250" rx="10" fill="#E4EEF0" stroke="#12333A" stroke-width="2.5"/>'+
+      '<circle cx="395" cy="155" r="7" fill="#12333A"/>'+
+      '<text x="470" y="305" text-anchor="middle" font-size="15" font-weight="700" fill="#12333A">Pulmonary</text>'+
+    '</g>'+
+  '</svg>'
+});
+
+Act.sort('act-toxinChallenge', {name:'toxinChallenge',
+  options:['Botulism (flaccid paralysis)','Tetanus (spastic paralysis)','Gas gangrene (tissue destruction)'], rows:[
+  {text:'Blocks release of acetylcholine at the neuromuscular junction.', answer:'Botulism (flaccid paralysis)',
+   why:'Without acetylcholine release, muscles cannot contract, producing limp, descending paralysis.'},
+  {text:'Blocks release of the inhibitory neurotransmitters glycine and GABA in the spinal cord.', answer:'Tetanus (spastic paralysis)',
+   why:'Without inhibitory signals, motor neurons fire without their normal brakes.'},
+  {text:'Lecithinase (alpha toxin) destroys cell membranes directly.', answer:'Gas gangrene (tissue destruction)',
+   why:'This is a direct membrane-destroying mechanism, not a nervous-system effect.'},
+  {text:'Produces descending, limp paralysis.', answer:'Botulism (flaccid paralysis)',
+   why:'Classic botulism progresses from the cranial nerves downward.'},
+  {text:'Produces muscle spasms, lockjaw, and opisthotonos (an arched back).', answer:'Tetanus (spastic paralysis)',
+   why:'These are the hallmark findings of spastic paralysis from tetanus toxin.'},
+  {text:'Treated with penicillin G and surgical wound debridement.', answer:'Gas gangrene (tissue destruction)',
+   why:'Removing dead tissue is essential because antibiotics alone cannot reach avascular necrotic tissue.'},
+  {text:'Treated with antitoxin and respiratory support.', answer:'Botulism (flaccid paralysis)',
+   why:'Respiratory support matters because the paralysis can reach the muscles of breathing.'},
+  {text:'Metronidazole is preferred over penicillin, in part because penicillin may antagonize GABA.', answer:'Tetanus (spastic paralysis)',
+   why:'Penicillin\u2019s possible GABA antagonism works against the goal of restoring inhibitory tone.'}
+]});
+
+Act.order('act-cdiffCycle', {name:'cdiffCycle', items:[
+  'Broad-spectrum antibiotics (such as clindamycin, fluoroquinolones, or cephalosporins) suppress the normal colon flora.',
+  'C. difficile spores, resistant to stomach acid, survive and germinate in the disrupted colon.',
+  'Vegetative C. difficile releases toxin that damages the colon mucosa.',
+  'Inflammation progresses to pseudomembranous colitis, causing watery diarrhea 4-9 days after starting antibiotics.',
+  'Spores shed in stool contaminate the environment and hands, spreading to the next patient \u2014 alcohol hand rub does not kill them, so soap and water is required.'
+]});
+
+Act.dnd('act-listeriaDipMap', {name:'listeriaDipMap',
+  pills:['Internalin','Listeriolysin','Diphtheria toxin','Tellurite agar','Elek test'], rows:[
+  {text:'Facilitates Listeria\u2019s attachment to human cell surfaces.', answer:'Internalin',
+   why:'Internalin is the first step: getting the organism onto (and into) a host cell.'},
+  {text:'Lets Listeria escape the phagosome after it is engulfed.', answer:'Listeriolysin',
+   why:'Escaping the phagosome lets Listeria survive and replicate inside the host cell.'},
+  {text:'ADP-ribosylates EF-2, shutting down protein synthesis in the host cell.', answer:'Diphtheria toxin',
+   why:'This is the same mechanism used by Pseudomonas exotoxin A, covered later in this course.'},
+  {text:'Selective culture medium used to grow C. diphtheriae from a throat swab.', answer:'Tellurite agar',
+   why:'Tellurite agar helps C. diphtheriae stand out from normal throat flora.'},
+  {text:'Confirms that a C. diphtheriae isolate actually produces toxin.', answer:'Elek test',
+   why:'Not every C. diphtheriae strain is toxigenic \u2014 the Elek test (or PCR) checks specifically for toxin production.'}
+]});
+
+/* ---- Module 5 activities ---- */
+Act.stages('act-ecoliCase', {name:'ecoliCase', stages:[
+  {lead:'<p><b>Patient A.</b> A college student returns from a study-abroad trip in Mexico with watery diarrhea, mild cramping, and no fever, three days after arriving.</p>',
+   prompt:'Which E. coli toxin mechanism best explains watery diarrhea from contaminated food or water?',
+   options:['Heat-labile (LT) or heat-stable (ST) toxin raising cAMP or cGMP in the small intestine','Shiga toxin inhibiting protein synthesis in colon cells','Direct bacterial invasion of the colon wall','A superantigen triggering systemic cytokine release'], answer:0,
+   why:'ETEC produces LT (raises cAMP) and ST (raises cGMP) toxins that act on the small intestine, driving fluid into the lumen and causing watery, non-bloody diarrhea.'},
+  {lead:'<p><b>Patient A, continued.</b> Her symptoms are mild, and she is otherwise healthy.</p>',
+   prompt:'What is the most appropriate first-line management?',
+   options:['Rehydration; antibiotics are not needed for mild illness','Immediate azithromycin, regardless of severity','Loperamide alone, with no rehydration','IV vancomycin'], answer:0,
+   why:'Rehydration is the mainstay of ETEC treatment; antibiotics (azithromycin, a fluoroquinolone, or rifaximin) are reserved for moderate to severe illness.'},
+  {lead:'<p><b>Patient B.</b> A different patient develops bloody diarrhea, fever, and abdominal cramping three days after eating undercooked ground beef at a barbecue.</p>',
+   prompt:'Which organism and mechanism best explain this presentation?',
+   options:['Enterohemorrhagic E. coli (O157:H7), producing Shiga toxin','Enterotoxigenic E. coli, producing LT toxin','Vibrio cholerae, producing cholera toxin','Helicobacter pylori, producing urease'], answer:0,
+   why:'EHEC (O157:H7) is transmitted through undercooked beef and produces Shiga toxin, which inhibits protein synthesis and causes bloody diarrhea \u2014 unlike the watery diarrhea of ETEC.'},
+  {lead:'<p><b>Patient B, continued.</b> The care team considers giving loperamide for symptom control and an antibiotic to shorten the illness.</p>',
+   prompt:'Why should both of these be used with great caution (or avoided) in suspected EHEC infection?',
+   options:['Both may increase the risk of precipitating hemolytic uremic syndrome (HUS)','Loperamide is contraindicated only in pregnancy, and antibiotics are simply ineffective','Both interact dangerously with oral rehydration solution','There is no reason to avoid either \u2014 this is outdated advice'], answer:0,
+   why:'Antimotility drugs and antibiotics are both approached cautiously (or avoided) in suspected EHEC infection because they may increase the release of Shiga toxin and precipitate HUS.'}
+]});
+
+Act.sort('act-entericMap', {name:'entericMap',
+  options:['Salmonella','Shigella','Klebsiella'], rows:[
+  {text:'Non-lactose fermenter that survives inside macrophages.', answer:'Salmonella',
+   why:'Surviving inside macrophages helps explain how Salmonella can cause systemic disease (typhoid fever), not just gastroenteritis.'},
+  {text:'Non-typhoidal disease comes from poultry, eggs, or reptiles.', answer:'Salmonella',
+   why:'Non-typhoidal Salmonella gastroenteritis is classically foodborne, from these sources.'},
+  {text:'Has an extremely small infectious dose of just 10-200 organisms.', answer:'Shigella',
+   why:'This tiny infectious dose is why Shigella spreads so efficiently person-to-person.'},
+  {text:'S. dysenteriae produces Shiga toxin, causing bloody, mucoid diarrhea.', answer:'Shigella',
+   why:'This is the same Shiga toxin family that gives EHEC its name and its bloody-diarrhea presentation.'},
+  {text:'Large polysaccharide capsule produces mucoid colonies and \u201ccurrant-jelly\u201d sputum.', answer:'Klebsiella',
+   why:'The thick capsule is both a virulence factor and the reason for the distinctive sputum appearance.'},
+  {text:'Causes pneumonia classically in patients with alcohol use disorder.', answer:'Klebsiella',
+   why:'Aspiration risk in alcohol use disorder is part of why Klebsiella pneumonia is classically linked to this population.'}
+]});
+
+Act.predict('act-entericLens', {name:'entericLens',
+  start:'Choose a scenario, make your prediction, then see what happens.',
+  items:[
+    {id:'cholera-mech', title:'Cholera toxin mechanism',
+     prompt:'Which mechanism explains the profuse, "rice-water" diarrhea of cholera?',
+     options:['ADP-ribosylation locks a G protein on, raising cAMP and driving fluid into the lumen','Direct invasion and destruction of colon epithelial cells','A superantigen triggering systemic shock','Blockade of acetylcholine release'], answer:0,
+     why:'Cholera toxin ADP-ribosylates and locks Gs "on," raising cAMP and causing massive fluid secretion into the small intestine.'},
+    {id:'campy-complication', title:'A complication weeks later',
+     prompt:'Several weeks after a Campylobacter jejuni gastroenteritis episode, a patient develops ascending muscle weakness. What is this complication?',
+     options:['Guillain-Barr\u00e9 syndrome','Hemolytic uremic syndrome','Toxic shock syndrome','Rheumatic fever'], answer:0,
+     why:'Campylobacter infection is a recognized trigger for Guillain-Barr\u00e9 syndrome, an immune-mediated complication that appears weeks after the gastrointestinal illness.'},
+    {id:'hpylori-mech', title:'Surviving stomach acid',
+     prompt:'How does Helicobacter pylori survive in the acidic environment of the stomach?',
+     options:['Urease converts urea to ammonia, neutralizing acid nearby','It secretes a heat-labile toxin that raises stomach pH globally','It forms spores that resist acid','It lives exclusively above the mucus layer, avoiding acid entirely'], answer:0,
+     why:'H. pylori\u2019s urease enzyme converts urea to ammonia, neutralizing the acid in its immediate surroundings and allowing it to colonize the gastric mucosa.'},
+    {id:'hpylori-tx', title:'Treating H. pylori',
+     prompt:'What is first-line treatment for H. pylori infection?',
+     options:['Bismuth quadruple therapy: a PPI, bismuth, tetracycline, and a nitroimidazole for 10-14 days','A single dose of azithromycin','Oral rehydration alone, since the infection is self-limited','Doxycycline monotherapy for 3 days'], answer:0,
+     why:'Bismuth quadruple therapy (PPI, bismuth, tetracycline, and a nitroimidazole) for 10-14 days is first-line, with cure confirmed 4 or more weeks later.'},
+    {id:'vibrio-tx', title:'Treating cholera',
+     prompt:'What is the single most life-saving intervention for a patient with severe cholera?',
+     options:['Rehydration (oral or IV)', 'Doxycycline alone, without fluids', 'Loperamide to reduce fluid losses', 'Broad-spectrum antibiotics without fluids'], answer:0,
+     why:'Rehydration is life-saving in cholera; antibiotics such as doxycycline or azithromycin shorten the illness but do not replace the need for aggressive fluid replacement.'}
+  ]
+});
+
+Act.explore('act-giMap', {name:'giMap',
+  start:'Click each site to see which organisms strike there and why.',
+  ids:['stomach','smallbowel','colon'],
+  items:{
+    stomach:{title:'Stomach', html:'<p><b>Helicobacter pylori</b> is the outlier: it lives in the stomach itself, surviving the acid with urease. It causes gastritis and peptic ulcer disease, and is linked to gastric cancer and MALT lymphoma.</p>'},
+    smallbowel:{title:'Small intestine', html:'<p>Toxins acting here cause <b>watery</b> diarrhea, without invading the tissue: <b>ETEC</b> (LT/ST toxins) and <b>Vibrio cholerae</b> (cholera toxin) both work by raising cAMP or cGMP and driving fluid into the lumen.</p>'},
+    colon:{title:'Colon', html:'<p>Invasion or Shiga toxin acting here causes <b>bloody</b> diarrhea: <b>Shigella</b>, <b>Salmonella</b>, <b>Campylobacter</b>, and <b>EHEC</b> (Shiga toxin) all strike the colon.</p>'}
+  },
+  svg:'<svg viewBox="0 0 500 420" role="img" aria-label="Simplified GI tract: stomach, small intestine, and colon">'+
+    '<defs><marker id="b3arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#12333A"/></marker></defs>'+
+    '<g fill="none" stroke="#12333A" stroke-width="2"><path d="M250 100 L250 140" marker-end="url(#b3arrow2)"/><path d="M250 220 L250 260" marker-end="url(#b3arrow2)"/></g>'+
+    '<g data-hs="stomach" tabindex="0"><rect x="120" y="20" width="260" height="80" rx="38" fill="#FFE3DA" stroke="#96301A" stroke-width="2"/>'+
+      '<text x="250" y="58" text-anchor="middle" font-size="16" font-weight="700" fill="#12333A">Stomach</text>'+
+      '<text x="250" y="78" text-anchor="middle" font-size="11" fill="#96301A">the outlier</text></g>'+
+    '<g data-hs="smallbowel" tabindex="0"><rect x="120" y="140" width="260" height="80" rx="16" fill="#E4EEF0" stroke="#12333A" stroke-width="2"/>'+
+      '<text x="250" y="178" text-anchor="middle" font-size="16" font-weight="700" fill="#12333A">Small intestine</text>'+
+      '<text x="250" y="198" text-anchor="middle" font-size="11" fill="#12333A">watery diarrhea</text></g>'+
+    '<g data-hs="colon" tabindex="0"><rect x="120" y="260" width="260" height="80" rx="16" fill="#D3E6E9" stroke="#12333A" stroke-width="2"/>'+
+      '<text x="250" y="298" text-anchor="middle" font-size="16" font-weight="700" fill="#12333A">Colon</text>'+
+      '<text x="250" y="318" text-anchor="middle" font-size="11" fill="#12333A">bloody diarrhea</text></g>'+
+  '</svg>'
+});
+
+/* ---- Module 6 activities ---- */
+Act.dnd('act-pseudoMap', {name:'pseudoMap',
+  pills:['Endotoxin','Exotoxin A','Elastase & proteases','Pyocyanin'], rows:[
+  {text:'Like other gram-negative bacteria, causes septic shock and sepsis.', answer:'Endotoxin',
+   why:'Endotoxin (lipopolysaccharide) triggers the same septic-shock cascade seen with any gram-negative bacteremia.'},
+  {text:'ADP-ribosylates EF-2, blocking protein synthesis and causing tissue necrosis \u2014 the same mechanism as diphtheria toxin.', answer:'Exotoxin A',
+   why:'Exotoxin A and diphtheria toxin hit the exact same target (EF-2) despite coming from unrelated organisms.'},
+  {text:'Mediate the organism\u2019s invasion into surrounding tissue.', answer:'Elastase & proteases',
+   why:'These enzymes break down host tissue, helping the organism spread locally.'},
+  {text:'This blue-green pigment damages the mucosal cells and cilia of the respiratory tract.', answer:'Pyocyanin',
+   why:'Pyocyanin is also the pigment that gives a Pseudomonas culture plate its characteristic blue-green color.'}
+]});
+
+Act.order('act-pertussisStages', {name:'pertussisStages', items:[
+  'Catarrhal stage (1-2 weeks): cold-like symptoms; the patient is most contagious now, before the classic cough even appears.',
+  'Paroxysmal stage: weeks of severe coughing fits, often ending in a high-pitched \u201cwhoop\u201d and sometimes vomiting.',
+  'Convalescent stage: the cough gradually resolves, though it may linger for weeks to months.'
+]});
+
+Act.sort('act-zoonoticID', {name:'zoonoticID',
+  options:['Francisella tularensis','Yersinia pestis'], rows:[
+  {text:'Reservoir includes rabbits, deer, and ticks.', answer:'Francisella tularensis',
+   why:'This is the classic tularemia exposure history \u2014 hunters and trappers are at particular risk.'},
+  {text:'Reservoir is rodents.', answer:'Yersinia pestis',
+   why:'Plague is transmitted from rodents, classically via flea bites.'},
+  {text:'Produces endotoxin only; no exotoxin.', answer:'Francisella tularensis',
+   why:'Unlike Y. pestis, F. tularensis does not produce an exotoxin.'},
+  {text:'Produces an antiphagocytic capsule, endotoxin, exotoxin, and Yops.', answer:'Yersinia pestis',
+   why:'Y. pestis has a notably larger virulence-factor arsenal than F. tularensis.'},
+  {text:'First-line treatment is a fluoroquinolone or doxycycline; aminoglycoside for severe disease.', answer:'Francisella tularensis',
+   why:'This mirrors the plague regimen closely, but the emphasis is reversed: doxycycline is more central here.'},
+  {text:'First-line treatment is gentamicin or a fluoroquinolone; doxycycline is an alternative.', answer:'Yersinia pestis',
+   why:'Speed matters in plague; gentamicin and fluoroquinolones are the primary first-line choices.'}
+]});
+
+Act.predict('act-integrativeLens', {name:'integrativeLens',
+  start:'Choose a scenario, make your prediction, then see what happens.',
+  items:[
+    {id:'abscess-source', title:'An abscess with foul-smelling discharge',
+     prompt:'A patient develops a foul-smelling, gas-containing abscess after aspiration. Which group of organisms is most likely involved?',
+     options:['Anaerobes, likely more than one type together','A single aerobic gram-positive coccus','A single aerobic gram-negative rod','A virus'], answer:0,
+     why:'Foul-smelling discharge and gas in tissue are classic clinical clues for anaerobic infection, and most abscesses contain more than one type of anaerobe.'},
+    {id:'bfragilis-tx', title:'Treating a B. fragilis abscess',
+     prompt:'An intra-abdominal abscess grows Bacteroides fragilis. Why might a beta-lactam alone fail?',
+     options:['B. fragilis may produce beta-lactamase','B. fragilis is intrinsically resistant to all antibiotics','Beta-lactams cannot penetrate abscess walls under any circumstances','B. fragilis is not actually a pathogen'], answer:0,
+     why:'B. fragilis may produce beta-lactamase, which can inactivate some beta-lactam antibiotics unless a beta-lactamase inhibitor or an alternative agent (such as metronidazole or clindamycin) is used.'},
+    {id:'aminoglycoside-anaerobe', title:'An antibiotic that will not work here',
+     prompt:'Why are aminoglycosides like gentamicin ineffective against anaerobic infections?',
+     options:['Their uptake into bacterial cells depends on oxygen, which anaerobes lack','Anaerobes destroy aminoglycosides with a specific enzyme','Aminoglycosides only treat viral infections','Anaerobes have no ribosomes for aminoglycosides to target'], answer:0,
+     why:'Aminoglycoside uptake into bacterial cells is an oxygen-dependent process, so these drugs are ineffective in the low-oxygen environment where anaerobes live.'},
+    {id:'listeria-exception', title:'The meningitis exception',
+     prompt:'Unlike the other classic causes of bacterial meningitis, Listeria monocytogenes is not encapsulated. How does it avoid destruction after being engulfed by a phagocyte?',
+     options:['Listeriolysin lets it escape the phagosome','It hides inside red blood cells instead','It sheds its cell wall to become invisible to immune cells','It produces a capsule only inside the phagosome'], answer:0,
+     why:'Listeria escapes the phagosome using listeriolysin, letting it survive and replicate inside the host cell \u2014 a completely different strategy from the antiphagocytic capsules of the other classic meningitis-causing organisms.'},
+    {id:'empiric-elderly', title:'Empiric coverage in an older adult',
+     prompt:'A 68-year-old with suspected bacterial meningitis needs empiric antibiotic coverage. Why is ampicillin added to the usual regimen?',
+     options:['To cover Listeria monocytogenes, which cephalosporins do not cover','Because ampicillin is more effective against pneumococcus than ceftriaxone','To treat a presumed viral co-infection','Because vancomycin is contraindicated in this age group'], answer:0,
+     why:'Age over 50 (and immunocompromise) adds Listeria to the list of likely meningitis pathogens, and since cephalosporins do not cover Listeria, ampicillin is added specifically for this coverage.'}
+  ]
+});
+
+initWelcome();
+</script>
+<script src="shared/engine.js"></script>
+</body>
+</html>

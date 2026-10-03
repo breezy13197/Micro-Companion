@@ -1,0 +1,31 @@
+/* ============================================================
+   CONTENT SECTION PAGES — reusable, color-neutral stylesheet
+   ------------------------------------------------------------
+   The small marks that make every section page look like part of
+   the same family: the eyebrow label with its colored bar, the
+   larger lead paragraph, the "Key points" box, and the hands-on
+   card with its colored top edge.
+
+   Contains NO colors of its own. It reads the --w-* tokens each
+   companion defines (the same ones the welcome page and sidebar
+   kits use), plus one added here: --w-kp-bg. See README.md.
+
+   Look follows bacteria1.html. Unlike the welcome and sidebar
+   kits, these rules apply to every page on purpose.
+   ============================================================ */
+
+/* the eyebrow: the small uppercase label above a heading, with a short colored bar */
+.eyebrow,.kicker{display:flex;align-items:center;gap:10px;font-size:.72rem;font-weight:750;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.eyebrow::before,.kicker::before{content:"";width:26px;height:3px;border-radius:2px;background:var(--w-hl);flex:0 0 26px}
+.eyebrow.hands{color:var(--w-hl-ink)}                       /* the tinted label on hands-on cards */
+
+/* the lead paragraph: the first paragraph under a page heading */
+.lede{font-size:1.06rem;color:var(--ink-mid);max-width:66ch}
+
+/* the "Key points" box */
+.keypoints{background:var(--w-kp-bg);border-left:4px solid var(--w-hl)}
+
+/* the hands-on card: a colored top edge, and a slightly larger instruction line */
+.hands-card{border-top:4px solid var(--w-hl)}
+.try-note{font-size:.9rem;color:var(--ink-soft);margin:0 0 12px}

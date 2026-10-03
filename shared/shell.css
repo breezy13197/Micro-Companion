@@ -1,0 +1,59 @@
+/* ============================================================
+   SIDEBAR + MODULE OVERVIEW PAGES — reusable, color-neutral stylesheet
+   ------------------------------------------------------------
+   Contains NO colors of its own. Every color comes from the --w-* tokens
+   each companion defines in its :root block: the same tokens the welcome
+   page uses, plus three added for the sidebar (--w-hl-soft, --w-ring-track,
+   --w-ring-fill). See README.md in this folder.
+
+   Look and layout follow the sidebar and module overview pages in
+   bacteria1.html. The sidebar rules refine the shared styles.css; the
+   overview rules are scoped under .modhome so nothing else is affected.
+   ============================================================ */
+
+/* ---------- SIDEBAR ---------- */
+.brand-mark{background:linear-gradient(140deg,var(--w-band),var(--w-lift));color:var(--w-hl)}
+.brand-mark svg{width:22px;height:22px}
+.brand-title,.topbar h1{color:var(--w-deep)}
+/* module titles wrap instead of being cut off with "..." (on narrow screens they truncate again, below) */
+.mod-head .mod-title-text{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}
+.mod-head.current .mod-badge{background:#fff;color:var(--green)}
+.sub button.current .dot{background:var(--w-hl-strong)}
+
+/* ---------- TOP BAR ---------- */
+.pill{background:var(--w-hl-soft);color:var(--w-hl-ink)}
+
+/* ---------- MODULE OVERVIEW PAGES ---------- */
+.modhome .eyebrow,.modhome .kicker{display:flex;align-items:center;gap:10px;font-size:.72rem;font-weight:750;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.modhome .eyebrow::before,.modhome .kicker::before{content:"";width:26px;height:3px;border-radius:2px;background:var(--w-hl);flex:0 0 26px}
+
+/* the banner */
+.modhome .modhero{position:relative;overflow:hidden;color:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow);
+  padding:32px 34px;margin-bottom:20px;background:linear-gradient(120deg,var(--w-deep),var(--w-band) 55%,var(--w-lift))}
+.modhome .modhero .kicker{color:var(--w-hl)}
+.modhome .modhero h2{color:#fff;font-size:1.7rem;margin:.1em 0 .4em;max-width:24ch}
+.modhome .modhero p{color:rgba(255,255,255,.86);max-width:62ch;margin:0}
+.modhome .ghost-num{position:absolute;right:18px;bottom:-30px;font-size:9.5rem;font-weight:900;line-height:1;
+  color:rgba(255,255,255,.07);pointer-events:none;user-select:none}
+.modhome .q-strip{display:flex;gap:10px;align-items:flex-start;margin-top:16px;background:rgba(255,255,255,.1);
+  border-radius:12px;padding:11px 14px;max-width:62ch;font-size:.88rem;color:rgba(255,255,255,.92)}
+.modhome .q-strip b{color:var(--w-hl);white-space:nowrap}
+
+/* "By the end you can" */
+.modhome .goal-card h3{margin-bottom:6px}
+.modhome .checks{list-style:none;padding:0;margin:14px 0 6px}
+.modhome .checks li{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px;font-size:.95rem}
+.modhome .checks li>span{flex:1 1 auto;min-width:0}
+.modhome .checks li::before{content:"";flex:0 0 18px;height:18px;margin-top:3px;border-radius:50%;
+  background:var(--w-check) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.6 2.6L13 6.6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+
+/* ---------- RESPONSIVE (same breakpoint as bacteria1.html) ---------- */
+@media (max-width:900px){
+  .mod-head .mod-title-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .modhome .modhero{padding:24px 20px}
+  .modhome .ghost-num{font-size:6rem}
+}
+@media (max-width:520px){
+  .modhome .q-strip{flex-direction:column;gap:4px}
+}
