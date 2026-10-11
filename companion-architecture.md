@@ -53,6 +53,7 @@ Everything below follows from these three points.
     engine.js          nav, checkpoints, quizzes, flashcards, completion — one copy
     welcome.css         the Start page's layout, color-neutral — one copy; see §15
     welcome.js           draws Start-page icons, live counts, and button wiring — one copy; see §15.3
+    menu.js              phone-size "Menu" button that collapses the side menu; injects its own CSS; loaded last by every companion and by index.html
     shell.css            the sidebar, top bar, and module overview pages, color-neutral — one copy; see §16
     sections.css         the small marks every content page shares (eyebrow, lede, keypoints, hands-card) — one copy; see §17
   banks/

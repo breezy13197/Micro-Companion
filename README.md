@@ -42,7 +42,7 @@ companions/
     viruses1.js     viruses1.manifest.js
     viruses2.js     viruses2.manifest.js
   shared/
-    activities.js  engine.js  helpers.js  storage.js  welcome.js
+    activities.js  engine.js  helpers.js  menu.js  storage.js  welcome.js
     sections.css   shell.css  styles.css  welcome.css
 ```
 
@@ -81,6 +81,12 @@ You should see a table like this:
 3. The **Integration & review** row is always open. Start an exam with only that ticked to try the integration questions.
 
 **What this does:** Steps 1 and 2 confirm the companions and the hub are sharing progress through the browser, and that the back link works. Step 3 confirms the exam builder works.
+
+---
+
+## On phones
+
+On a narrow screen the left-hand menu folds away behind a **Menu** button, so the page content is visible straight away. Tap it to open the list; it closes by itself when you pick a section. On a computer the menu is always open, as before. This is done by `shared/menu.js`, which every page loads at the very end. If you ever copy a page to a new folder, copy that file too.
 
 ---
 
