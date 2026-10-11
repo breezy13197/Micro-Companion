@@ -448,17 +448,19 @@ var HUB = { topics:[], byId:{}, missing:[] };
    below with its topic id. Titles contain a colon on purpose: the hub shows
    the part before it as the short name ("Bacteria II"). */
 HUB.META = {
-  bacteria1:{ title:'Bacteria I: Introduction', kicker:'BACTERIA I \u2014 INTRODUCTION', tag1:'Know the microbe.', tag2:'Choose the drug.',
+  bacteria1:{ title:'Bacteria I: Introduction', kicker:'BACTERIA I — INTRODUCTION', tag1:'Know the microbe.', tag2:'Choose the drug.',
     ink:'#0F1F4D', head2:'#1F4FD1', accent:'#1F4FD1', soft:'#B9C9F3', warm:'#F2B632', tintA:'#EAF1FD', tintB:'#FDF5E3', plateHi:'#3A66E0', track:'#E3E8F4' },
-  bacteria2:{ title:'Bacteria II: Antibacterials', kicker:'BACTERIA II \u2014 ANTIBACTERIALS', tag1:'Know the target.', tag2:'Outwit resistance.',
+  bacteria2:{ title:'Bacteria II: Antibacterials', kicker:'BACTERIA II — ANTIBACTERIALS', tag1:'Know the target.', tag2:'Outwit resistance.',
     ink:'#3D2620', head2:'#1F7FBF', accent:'#3B9FE0', soft:'#B5DCF5', warm:'#E88A3A', tintA:'#E6F2FB', tintB:'#F7EFEA', plateHi:'#7A5044', track:'#ECE6E3' },
-  bacteria3:{ title:'Bacteria III: Cocci and rods', kicker:'BACTERIA III \u2014 COCCI & RODS', tag1:'Sort the cocci.', tag2:'Outsmart the rods.',
+  bacteria3:{ title:'Bacteria III: Cocci and rods', kicker:'BACTERIA III — COCCI & RODS', tag1:'Sort the cocci.', tag2:'Outsmart the rods.',
     ink:'#13303A', head2:'#9A2E1C', accent:'#EF6A4C', soft:'#F8C2B4', warm:'#EF6A4C', tintA:'#FFE8DF', tintB:'#EEF0F0', plateHi:'#2A6070', track:'#F1E4DF' },
-  bacteria4:{ title:'Bacteria IV: Other pathogens', kicker:'BACTERIA IV \u2014 OTHER PATHOGENS', tag1:'Spot the outlier.', tag2:'Treat with reason.',
-    ink:'#23262F', head2:'#3C4356', accent:'#E8920F', soft:'#F6D59C', warm:'#E8920F', tintA:'#EFF0F3', tintB:'#FCF0D9', plateHi:'#4A5064', track:'#EBE7DF' },
-  viruses1:{ title:'Viruses I: Introduction', kicker:'VIRUSES I \u2014 INTRODUCTION', tag1:'Build the virus.', tag2:'Then outsmart it.',
+  bacteria4:{ title:'Bacteria IV: Other pathogens', kicker:'BACTERIA IV — OTHER PATHOGENS', tag1:'Spot the outlier.', tag2:'Treat with reason.',
+    ink:'#23262F', head2:'#E8930C', accent:'#E8920F', soft:'#F6D59C', warm:'#E8920F', tintA:'#EFF0F3', tintB:'#FCF0D9', plateHi:'#4A5064', track:'#EBE7DF' },
+  viruses1:{ title:'Viruses I: Introduction', kicker:'VIRUSES I — INTRODUCTION', tag1:'Build the virus.', tag2:'Then outsmart it.',
     ink:'#2E1040', head2:'#7B2FA0', accent:'#7B2FA0', soft:'#D8C2E3', warm:'#A5C73A', tintA:'#F8F2FB', tintB:'#F3F8DA', plateHi:'#6A2A86', track:'#EFE3F6' },
-  hub:{ title:'Integration & review', kicker:'INTEGRATION \u2014 ACROSS LECTURES', tag1:'Join the lectures.', tag2:'Answer across topics.',
+  viruses2:{ title:'Viruses II: Antivirals and Vaccines', kicker:'VIRUSES II — ANTIVIRALS & VACCINES', tag1:'Find the target.', tag2:'Stop the virus.',
+    ink:'#3E0B18', head2:'#8C1F3C', accent:'#9A2745', soft:'#EBC3CC', warm:'#4FD1E8', tintA:'#FBEDF0', tintB:'#E0F7FB', plateHi:'#7A1F38', track:'#F0DDE1' },
+  hub:{ title:'Integration & review', kicker:'INTEGRATION — ACROSS LECTURES', tag1:'Join the lectures.', tag2:'Answer across topics.',
     ink:'#212529', head2:'#6c757d', accent:'#495057', soft:'#adb5bd', warm:'#6c757d', tintA:'#e9ecef', tintB:'#f8f9fa', plateHi:'#6c757d', track:'#dee2e6' }
 };
 HUB.capture = function(expected){
@@ -508,6 +510,10 @@ HUB.capture = function(expected){
 <script src="banks/viruses1.js"></script>
 <script src="banks/viruses1.manifest.js"></script>
 <script>HUB.capture('viruses1');</script>
+
+<script src="banks/viruses2.js"></script>
+<script src="banks/viruses2.manifest.js"></script>
+<script>HUB.capture('viruses2');</script>
 
 <!-- The hub's own bank has no companion page, so it has no manifest. -->
 <script src="banks/hub.js"></script>
@@ -1132,6 +1138,29 @@ function collectFlags(){
   return out;
 }
 
+/* How many different (companion, concept area) pairs a list of drawn
+   questions touches. Used by the exam setup summary. */
+function areaCount(items){
+  var seen = {}, n = 0;
+  items.forEach(function(x){
+    var k = areaKey(x.topic, x.q.area || "General");
+    if(!seen[k]){ seen[k] = 1; n++; }
+  });
+  return n;
+}
+/* ---- THE EXAM DRAW (stratified by concept area) ----
+   Still random, but no longer a pure lottery:
+     Step 1. Every concept area among the chosen companions gets one
+             question before any area gets a second, so no area can be
+             left out by bad luck. If the exam has fewer slots than there
+             are areas, areas are taken companion by companion in rotation,
+             so every companion is represented before any gets a second area.
+     Step 2. Remaining slots are filled from the same ordered list
+             (unseen questions first when that option is on), steering
+             toward the areas that have the fewest questions so far.
+   The exam size, level filter, unlock gating and the unseen-first option
+   all work exactly as before, because every candidate still comes out of
+   poolFor(). */
 function buildExam(opts){
   var items = poolFor(opts.topics, opts.levels);
   if(opts.preferUnseen){
@@ -1142,7 +1171,55 @@ function buildExam(opts){
   } else {
     items = shuffle(items);
   }
-  return items.slice(0, opts.count);
+  var count = opts.count;
+  if(items.length <= count) return shuffle(items);
+
+  /* Group by (companion, area). Each group keeps the order set above, so
+     its first member is the best candidate (least seen, or random). */
+  var groups = {}, byTopic = {}, topicOrder = [];
+  items.forEach(function(x){
+    var k = areaKey(x.topic, x.q.area || "General");
+    if(!groups[k]){
+      groups[k] = [];
+      if(!byTopic[x.topic]){ byTopic[x.topic] = []; topicOrder.push(x.topic); }
+      byTopic[x.topic].push(k);
+    }
+    groups[k].push(x);
+  });
+  /* Rotate across companions: one area from each in turn. */
+  var lists = shuffle(topicOrder).map(function(t){ return shuffle(byTopic[t]); });
+  var areaOrder = [], more = true, r = 0;
+  while(more){
+    more = false;
+    lists.forEach(function(l){ if(r < l.length){ areaOrder.push(l[r]); more = true; } });
+    r++;
+  }
+
+  var picked = [], used = {}, areaN = {};
+  function take(x){
+    var k = areaKey(x.topic, x.q.area || "General");
+    used[x.q.id + "@" + x.topic] = 1; picked.push(x); areaN[k] = (areaN[k] || 0) + 1;
+  }
+  /* Step 1: one question per area. */
+  for(var a = 0; a < areaOrder.length && picked.length < count; a++){
+    take(groups[areaOrder[a]][0]);
+  }
+  /* Step 2: fill the remaining slots. */
+  while(picked.length < count){
+    var best = null, bestTier = 0, bestN = 0;
+    for(var i = 0; i < items.length; i++){
+      var x = items[i];
+      if(used[x.q.id + "@" + x.topic]) continue;
+      var tier = (opts.preferUnseen && seenCount(x.q.id) > 0) ? 1 : 0;
+      var n = areaN[areaKey(x.topic, x.q.area || "General")] || 0;
+      if(best === null || tier < bestTier || (tier === bestTier && n < bestN)){
+        best = x; bestTier = tier; bestN = n;
+      }
+    }
+    if(best === null) break;
+    take(best);
+  }
+  return shuffle(picked);
 }
 function buildAdaptive(opts){
   var weak = rankedWeak(0.5).filter(function(e){
@@ -1250,7 +1327,7 @@ function paintRail(){
    "Worth revisiting" strip, then one card per companion listing its modules.
    Every number comes from the same progressFor()/weaknessMap() code the
    rest of the hub uses, so this page can never disagree with the exams. */
-function stripModule(title){ return String(title).replace(/^Module\s+\d+\s*[\u00b7:.\-\u2013\u2014]\s*/i, ""); }
+function stripModule(title){ return String(title).replace(/^Module\s+\d+\s*[·:.\-–—]\s*/i, ""); }
 function metaOf(id){ return (HUB.META && HUB.META[id]) || { ink:"#212529", head2:"#6c757d", accent:"#495057", soft:"#adb5bd",
   warm:"#6c757d", tintA:"#e9ecef", tintB:"#f8f9fa", plateHi:"#6c757d", track:"#dee2e6", kicker:"", tag1:"", tag2:"" }; }
 function shortName(id){
@@ -1360,7 +1437,7 @@ function renderDash(){
   var head = el("div",{class:"d-head"});
   var top = el("div",{class:"d-top"});
   var left = el("div");
-  left.appendChild(el("div",{class:"d-kick", html:'<i></i>PHA3109 \u00b7 MICROBIOLOGY & IMMUNOLOGY'}));
+  left.appendChild(el("div",{class:"d-kick", html:'<i></i>PHA3109 · MICROBIOLOGY & IMMUNOLOGY'}));
   var h1 = el("h1",{class:"d-h1"});
   var nComp = HUB.topics.filter(function(t){ return t.id !== "hub"; }).length;
   var numWords = ["No","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
@@ -1375,9 +1452,9 @@ function renderDash(){
   var fresh = rt && rt.p.pct === 0 && !rt.p.state.lastSection;
   var rbox = el("div",{class:"d-resume"});
   if(rt){
-    var ttl = rt.where ? (stripModule(rt.where.module) + (rt.where.label ? " \u2014 " + rt.where.label : "")) : "Open the companion";
+    var ttl = rt.where ? (stripModule(rt.where.module) + (rt.where.label ? " — " + rt.where.label : "")) : "Open the companion";
     rbox.appendChild(el("div",{},[
-      el("div",{class:"rk", text:(fresh ? "START HERE" : "CONTINUE") + " \u00b7 " + shortName(rt.p.topic.id).toUpperCase()}),
+      el("div",{class:"rk", text:(fresh ? "START HERE" : "CONTINUE") + " · " + shortName(rt.p.topic.id).toUpperCase()}),
       el("div",{class:"rt", text:ttl})
     ]));
     rbox.appendChild(el("a",{class:"btn primary", href: rt.p.topic.file || "#", text: fresh ? "Start" : "Resume"}));
@@ -1427,7 +1504,7 @@ function renderDash(){
     weak.forEach(function(e){
       rv.appendChild(el("div",{class:"ri"},[
         el("b",{text:e.area}),
-        el("span",{text: shortName(e.topic) + (e.why[0] ? " \u00b7 " + e.why[0] : "")})
+        el("span",{text: shortName(e.topic) + (e.why[0] ? " · " + e.why[0] : "")})
       ]));
     });
   } else {
@@ -1450,7 +1527,7 @@ function renderDash(){
   stat("Modules complete", modsDone, "of " + modsAll);
   stat("Questions met", seenN, "of " + totalQ);
   stat("Hub exams taken", attempts);
-  stat("Average hub score", attempts ? avg + "%" : "\u2014");
+  stat("Average hub score", attempts ? avg + "%" : "—");
   M.appendChild(stats);
 
   /* ---- companion cards ---- */
@@ -1474,7 +1551,7 @@ function renderDash(){
     var last = H.history.slice(-8);
     var sp = el("div",{class:"spark"});
     last.forEach(function(a){
-      var b = el("div",{class:"b", title: fmtDate(a.ts) + " \u2014 " + a.pct + "%"});
+      var b = el("div",{class:"b", title: fmtDate(a.ts) + " — " + a.pct + "%"});
       b.style.height = Math.max(8, a.pct) + "%";
       b.appendChild(el("i",{text:a.pct + "%"}));
       sp.appendChild(b);
@@ -1485,8 +1562,8 @@ function renderDash(){
       var reviewable = !!(a.items && a.items.length);
       hist.appendChild(el("div",{class:"histrow"},[
         el("span",{class:"chip" + (a.pct>=80?" ok":a.pct>=60?" warn":" bad"), text:a.pct + "%"}),
-        el("span",{class:"hd", text:(a.mode === "adaptive" ? "Adaptive review" : a.mode === "flagged" ? "Flagged questions" : "Practice exam") + " \u00b7 " +
-          a.total + " questions \u00b7 " + a.topics.map(function(t){ return HUB.byId[t] ? shortName(t) : t; }).join(", ")}),
+        el("span",{class:"hd", text:(a.mode === "adaptive" ? "Adaptive review" : a.mode === "flagged" ? "Flagged questions" : "Practice exam") + " · " +
+          a.total + " questions · " + a.topics.map(function(t){ return HUB.byId[t] ? shortName(t) : t; }).join(", ")}),
         el("span",{class:"hs", text:fmtDate(a.ts)}),
         reviewable ? el("button",{class:"btn small", text:"Review", onclick:function(){ openAttempt(a); }}) : null
       ]));
@@ -1534,7 +1611,7 @@ function assessmentStripEl(p, meta){
     strip.appendChild(c);
   }
   cell("Practice completed", a.pTotal ? a.pDone + " of " + a.pTotal + " sections" : "None", a.pTotal && a.pDone === a.pTotal ? "ok" : "");
-  cell("Assessment results", a.qTaken ? a.qTaken + " of " + a.qTotal + " quizzes \u00b7 avg best " + a.avg + "%" : "No quizzes taken", a.qTaken ? "ok" : "");
+  cell("Assessment results", a.qTaken ? a.qTaken + " of " + a.qTotal + " quizzes · avg best " + a.avg + "%" : "No quizzes taken", a.qTaken ? "ok" : "");
   cell("Review pending", a.review ? a.review + (a.review === 1 ? " concept" : " concepts") + (a.due ? " (" + a.due + " recheck due)" : "") : "None", a.review ? "warn" : (a.qTaken ? "ok" : ""));
   return strip;
 }
@@ -1566,7 +1643,7 @@ function companionCard(p){
       var isFinal = isFinalMod(m);
       var status_ = m.pct === 100 ? "Complete" : m.pct > 0 ? "In progress" : "Not started";
       var row = el("div",{class:"d-mrow", title:m.title},[
-        el("span",{class:"mn", text: isFinal ? "\u2605" : String(i+1)}),
+        el("span",{class:"mn", text: isFinal ? "★" : String(i+1)}),
         el("span",{class:"mt", text: stripModule(m.title)}),
         moduleCellsEl(m, meta),
         el("span",{class:"ms", text:status_})
@@ -1582,12 +1659,12 @@ function companionCard(p){
   c.appendChild(mods);
   if(p.hasManifest) c.appendChild(assessmentStripEl(p, meta));
   if(!status.unlocked){
-    c.appendChild(el("div",{class:"d-lock"},[ el("span",{class:"chip warn", text: p.hasManifest ? "Hub exams unlock at 100%" : "Hub exams locked \u2014 no manifest"}) ]));
+    c.appendChild(el("div",{class:"d-lock"},[ el("span",{class:"chip warn", text: p.hasManifest ? "Hub exams unlock at 100%" : "Hub exams locked — no manifest"}) ]));
   }
 
   var fm = flashMastered(t);
   var foot = el("div",{class:"d-cfoot"});
-  foot.appendChild(el("span",{class:"fl", html:'Flashcards \u00b7 <b>' + fm.pct + '%</b> mastered'}));
+  foot.appendChild(el("span",{class:"fl", html:'Flashcards · <b>' + fm.pct + '%</b> mastered'}));
   var btns = el("div",{class:"d-cbtns"});
   var nx = firstIncompleteModule(p);
   var label = p.pct === 100 ? "Review" : p.pct === 0 ? "Start Module 1" : (nx ? "Continue " + (/^final/i.test(nx.m.id) ? "final exam" : "Module " + (nx.idx+1)) : "Open");
@@ -1624,7 +1701,7 @@ function integrationCard(t, progs){
     var n = t.pool.filter(function(q){ return homeTopics(q).indexOf(p.topic.id) > -1; }).length;
     var pm = metaOf(p.topic.id);
     var row = el("div",{class:"d-mrow"},[
-      el("span",{class:"mn"},[ el("i",{style:"display:block;width:10px;height:10px;border-radius:50%;background:" + pm.warm}) ]),
+      el("span",{class:"mn"},[ el("i",{style:"display:block;width:10px;height:10px;border-radius:50%;background:" + pm.accent}) ]),
       el("span",{class:"mt", text:shortName(p.topic.id)}),
       el("span",{}),
       el("span",{class:"ms", text: n === 0 ? "none yet" : n + (n === 1 ? " question" : " questions")})
@@ -1636,7 +1713,7 @@ function integrationCard(t, progs){
 
   var fm = flashMastered(t);
   var foot = el("div",{class:"d-cfoot"});
-  foot.appendChild(el("span",{class:"fl", html:'Flashcards \u00b7 <b>' + fm.pct + '%</b> mastered'}));
+  foot.appendChild(el("span",{class:"fl", html:'Flashcards · <b>' + fm.pct + '%</b> mastered'}));
   var btns = el("div",{class:"d-cbtns"});
   var go = el("button",{class:"d-cta", text:"Practice integration", onclick:function(){ EXAMSETUP.topics = ["hub"]; setView("exam"); }});
   go.style.background = meta.ink;
@@ -1864,19 +1941,26 @@ function renderExamSetup(adaptive){
   function refreshSummary(){
     right.innerHTML = "";
     right.appendChild(el("h3",{text:"Your exam"}));
-    var avail = poolFor(EXAMSETUP.topics, EXAMSETUP.levels).length;
+    var availItems = poolFor(EXAMSETUP.topics, EXAMSETUP.levels);
+    var avail = availItems.length;
     var real = Math.min(EXAMSETUP.count, avail);
+    var nAreas = areaCount(availItems);
     var dl = el("dl");
     function pair(k,v){ dl.appendChild(el("dt",{text:k})); dl.appendChild(el("dd",{text:v})); }
     pair("Companions", EXAMSETUP.topics.length);
     pair("Questions", real + (real < EXAMSETUP.count ? " (all there are)" : ""));
+    if(!adaptive && nAreas){
+      pair("Concept areas", real >= nAreas ? "all " + nAreas + " covered" : real + " of " + nAreas + " (not enough room for all)");
+    }
     pair("Levels", EXAMSETUP.levels.length ? EXAMSETUP.levels.join(", ") : "mixed");
     pair("Time", EXAMSETUP.timed ? EXAMSETUP.minutes + " min" : "untimed");
     if(adaptive) pair("Targets", "your weakest areas");
     right.appendChild(dl);
     right.appendChild(el("div",{class:"lead", style:"margin:16px 0 0", text:
       avail === 0 ? "Pick at least one companion to draw from."
-      : "Questions are drawn fresh each time, and the answer choices are reshuffled, so retaking never gives the same paper twice."}));
+      : adaptive ? "Questions are drawn fresh each time, and the answer choices are reshuffled, so retaking never gives the same paper twice."
+      : "Questions are drawn fresh each time, and the answer choices are reshuffled, so retaking never gives the same paper twice. " +
+        "Every concept area gets a question before any area gets a second one, so no topic is skipped by chance."}));
     var go = el("button",{class:"btn primary", style:"width:100%;margin-top:16px",
       text: adaptive ? "Start adaptive review" : "Start exam", onclick:function(){
         if(!avail){ toast("Choose at least one companion first."); return; }
@@ -2054,7 +2138,7 @@ function renderExam(){
   card.appendChild(box);
 
   var nav = el("div",{class:"qnav"});
-  var back = el("button",{class:"btn", text:"\u2190 Back", onclick:function(){ if(EXAM.i>0){ EXAM.i--; renderExam(); } }});
+  var back = el("button",{class:"btn", text:"← Back", onclick:function(){ if(EXAM.i>0){ EXAM.i--; renderExam(); } }});
   back.disabled = EXAM.i === 0;
   var mid = el("div",{class:"row"},[
     el("button",{class:"btn" + (EXAM.flags[EXAM.i]?" primary":""), text: EXAM.flags[EXAM.i] ? "Flagged" : "Flag for later",
@@ -2063,7 +2147,7 @@ function renderExam(){
   ]);
   var next = EXAM.i === EXAM.items.length - 1
     ? el("button",{class:"btn primary", text:"Finish and submit", onclick:function(){ gradeExam(false); }})
-    : el("button",{class:"btn primary", text:"Next \u2192", onclick:function(){ EXAM.i++; renderExam(); }});
+    : el("button",{class:"btn primary", text:"Next →", onclick:function(){ EXAM.i++; renderExam(); }});
   nav.appendChild(back); nav.appendChild(mid); nav.appendChild(next);
   card.appendChild(nav);
 
@@ -2191,14 +2275,14 @@ function renderResults(score, correct, byArea, byTopic, rows, auto){
       var label = "";
       t.manifest.modules.forEach(function(m){ m.sections.forEach(function(s){ if(s.key === sec) label = s.label; }); });
       links.appendChild(el("div",{style:"margin:4px 0"},[
-        el("a",{href: t.file, text: t.title.split(":")[0] + " \u2014 " + (label || sec)})
+        el("a",{href: t.file, text: t.title.split(":")[0] + " — " + (label || sec)})
       ]));
     });
     Object.keys(hubLinks).forEach(function(h){
       var ht = HUB.byId[h];
       if(!ht || !ht.file) return;
       links.appendChild(el("div",{style:"margin:4px 0"},[
-        el("a",{href: ht.file, text: shortName(h) + " \u2014 review for: " + hubLinks[h].join("; ")})
+        el("a",{href: ht.file, text: shortName(h) + " — review for: " + hubLinks[h].join("; ")})
       ]));
     });
     links.appendChild(el("div",{style:"margin-top:8px;font-size:12.5px", text:
@@ -2258,10 +2342,10 @@ function reviewListEl(rows){
     box.appendChild(el("div",{class:"qmeta"}, meta));
     var topicId = r.item.topic;
     var fbtn = el("button",{class:"btn small", style:"float:right;margin-left:12px",
-      text: isFlagged(topicId, q.id) ? "\u2605 Flagged" : "\u2606 Flag for review"});
+      text: isFlagged(topicId, q.id) ? "★ Flagged" : "☆ Flag for review"});
     fbtn.onclick = function(){
       var on = toggleFlag(topicId, q.id);
-      fbtn.textContent = on ? "\u2605 Flagged" : "\u2606 Flag for review";
+      fbtn.textContent = on ? "★ Flagged" : "☆ Flag for review";
     };
     box.appendChild(fbtn);
     box.appendChild(el("div",{class:"rstem", text:q.stem}));
@@ -2383,10 +2467,10 @@ function renderDeck(){
   M.appendChild(stage);
 
   var bar = el("div",{class:"fcbar"});
-  bar.appendChild(el("button",{class:"btn", text:"\u2190 Previous", onclick:function(){
+  bar.appendChild(el("button",{class:"btn", text:"← Previous", onclick:function(){
     DECK.i = (DECK.i - 1 + DECK.cards.length) % DECK.cards.length; DECK.flipped = false; renderDeck(); }}));
   bar.appendChild(el("span",{class:"fccount", text:"Card " + (DECK.i+1) + " of " + DECK.cards.length}));
-  bar.appendChild(el("button",{class:"btn", text:"Next \u2192", onclick:function(){
+  bar.appendChild(el("button",{class:"btn", text:"Next →", onclick:function(){
     DECK.i = (DECK.i + 1) % DECK.cards.length; DECK.flipped = false; renderDeck(); }}));
   M.appendChild(bar);
 
@@ -2411,7 +2495,7 @@ function renderFlagged(){
     M.appendChild(el("div",{class:"card"},[
       el("div",{class:"empty"},[
         el("strong",{text:"Nothing flagged yet"}),
-        el("span",{text:"After you grade a module quiz or mastery exam inside a companion, each question gets a \u201cFlag for review\u201d button. You can also flag questions during a hub exam. Everything you flag, from either place, collects here."})
+        el("span",{text:"After you grade a module quiz or mastery exam inside a companion, each question gets a “Flag for review” button. You can also flag questions during a hub exam. Everything you flag, from either place, collects here."})
       ])
     ]));
     paintRail();
@@ -2592,13 +2676,13 @@ function openAttempt(a){
 function renderPastAttempt(a, correct, byArea, byTopic, rows, missing){
   var M = $("main"); M.innerHTML = "";
   M.appendChild(el("div",{class:"actions", style:"margin-bottom:16px"},[
-    el("button",{class:"btn", text:"\u2190 Back to history", onclick:function(){ setView("history"); }})
+    el("button",{class:"btn", text:"← Back to history", onclick:function(){ setView("history"); }})
   ]));
 
   var hero = el("div",{class:"scorehero"});
   hero.appendChild(el("div",{},[ el("div",{class:"big", text:a.pct + "%"}) ]));
   hero.appendChild(el("div",{style:"flex:1 1 280px"},[
-    el("h2",{text: attemptLabel(a) + " \u00b7 " + a.correct + " of " + a.total + " correct"}),
+    el("h2",{text: attemptLabel(a) + " · " + a.correct + " of " + a.total + " correct"}),
     el("p",{text:"Taken " + fmtDate(a.ts) + ". The explanations below are the current ones from each question bank."})
   ]));
   M.appendChild(hero);
@@ -2628,7 +2712,7 @@ function renderPastAttempt(a, correct, byArea, byTopic, rows, missing){
     Object.keys(byArea).forEach(function(k){
       var b = byArea[k], p = pct(b.got, b.total);
       if(p < 100) weakAreas.push(b);
-      bd2.appendChild(bdRow(b.area + "  \u00b7  " + (HUB.byId[b.topic] ? HUB.byId[b.topic].title.split(":")[0] : b.topic),
+      bd2.appendChild(bdRow(b.area + "  ·  " + (HUB.byId[b.topic] ? HUB.byId[b.topic].title.split(":")[0] : b.topic),
         p, b.got, b.total, null));
     });
     c2.appendChild(bd2); M.appendChild(c2);
@@ -2727,7 +2811,7 @@ function renderBackupPreview(host, payload){
   catch(e){ when = "unknown date"; }
 
   host.appendChild(el("div",{class:"note"},[
-    el("div",{style:"font-weight:650;margin-bottom:3px", text: payload.label ? "Backup: \u201c"+payload.label+"\u201d" : "Backup file"}),
+    el("div",{style:"font-weight:650;margin-bottom:3px", text: payload.label ? "Backup: “"+payload.label+"”" : "Backup file"}),
     el("div",{text:"Made " + when + "."})
   ]));
 
@@ -2801,9 +2885,68 @@ function renderHelp(){
   + '<p class="lead">Each companion counts a section as done when every checkpoint in it has been answered correctly and any activity in it has been submitted, and counts a quiz as done once submitted at any score. The hub applies exactly the same rules, so the percentage here matches the ring inside the companion itself.</p>'
   + '<h3 style="margin-top:22px">Building an exam</h3>'
   + '<p class="lead">Pick which companions to draw from, how many questions, and whether to run a clock. A timed paper submits itself when time runs out. Questions and their answer choices are reshuffled every time, so the same settings never produce the same paper twice.</p>'
+  + '<p class="lead">The draw is random, but it is not a pure lottery: every concept area in the companions you picked gets one question before any area gets a second, so no topic is skipped by chance. If you ask for fewer questions than there are concept areas, the hub takes areas from each companion in turn, so every companion is represented before any one of them gets a second area. The setup screen tells you how many areas your exam covers. The remaining questions are filled in at random, favoring the areas with the fewest questions so far.</p>'
   + '<h3 style="margin-top:22px">The adaptive review</h3>'
   + '<p class="lead">This builds a set aimed at your weak spots rather than a random one. It looks at how you answered each concept area: your answers in hub exams, and your answers to every quiz question inside the companions (module quizzes, mastery exams, and practice rounds). Areas with the largest gap get the most questions, and it prefers questions you have not met before. A section you simply have not studied yet is not counted as a weakness.</p>'
   + '<h3 style="margin-top:22px">The hub question bank</h3>'
   + '<p class="lead">Alongside the companion banks there is a bank belonging to the hub itself, listed as "Integration &amp; review". Every question in it deliberately draws on two or more Bacteria companions at once, for example a drug from Bacteria II together with the organism it treats from Bacteria III or IV. Those questions appear nowhere inside a companion. After a miss, the results page points you back to the companions the question drew on.</p>'
   + '<h3 style="margin-top:22px">Why some companions are locked</h3>'
-  + '<p class="lead">A companion\u2019s own questions only become available for hub exams and adaptive review once that companion reaches 100% \u2014 the same figure shown on its progress ring. Below 100%, sit
+  + '<p class="lead">A companion’s own questions only become available for hub exams and adaptive review once that companion reaches 100% — the same figure shown on its progress ring. Below 100%, sitting a hub exam on it would let you skip the checkpoints, activities and quizzes that companion is built to walk you through, so the hub keeps its questions out of the pool until that work is actually done. A companion with no manifest file is treated the same way, since the hub has no way to confirm its progress at all. This does not apply to the hub’s own "Integration &amp; review" bank, which is never gated, or to flashcards, which stay open regardless of progress since they are a study aid rather than a graded round.</p>'
+  + '<h3 style="margin-top:22px">If a companion is missing from the dashboard</h3>'
+  + '<p class="lead">The hub loads each bank as a separate file. If one fails to load, a red note appears at the top of the dashboard naming it. That almost always means the file is not in the banks folder next to this page, or its name is spelled differently.</p>';
+  M.appendChild(c);
+
+  var c2 = el("div",{class:"card pad", style:"margin-top:16px"});
+  c2.appendChild(el("h3",{text:"What is loaded right now"}));
+  var tb = el("table",{class:"tbl"});
+  tb.appendChild(el("tr",{},[el("th",{text:"Bank"}),el("th",{class:"num",text:"Questions"}),
+    el("th",{class:"num",text:"Checkpoints"}),el("th",{class:"num",text:"Cards"}),el("th",{text:"Structure map"}),
+    el("th",{text:"Hub exams"})]));
+  HUB.topics.forEach(function(t){
+    var us = unlockStatus(t.id);
+    tb.appendChild(el("tr",{},[
+      el("td",{text:t.title}),
+      el("td",{class:"num", text:String(t.pool.length)}),
+      el("td",{class:"num", text:String(Object.keys(t.checkpoints).length)}),
+      el("td",{class:"num", text:String(t.cards.length)}),
+      el("td",{}, [el("span",{class:"chip" + (t.manifest ? " ok" : ""), text: t.manifest ? "manifest loaded" : (t.id==="hub" ? "not needed" : "missing")})]),
+      el("td",{}, [el("span",{class:"chip" + (us.unlocked ? " ok" : " warn"),
+        text: us.unlocked ? "unlocked" : (us.pct === null ? "locked" : "locked · " + us.pct + "%")})])
+    ]));
+  });
+  c2.appendChild(tb);
+  c2.appendChild(el("div",{class:"actions", style:"margin-top:18px"},[
+    el("button",{class:"btn danger", text:"Clear my hub history", onclick:function(){
+      if(!confirm("Clear your hub exam history, question history and flashcard marks?\n\nThis does not touch your progress inside the companions themselves.")) return;
+      H = blankHub(); saveHub(); toast("Hub history cleared."); setView("dash");
+    }})
+  ]));
+  M.appendChild(c2);
+  paintRail();
+}
+
+/* =================================================================== BOOT = */
+function render(){
+  if(VIEW === "dash") renderDash();
+  else if(VIEW === "companions") renderCompanions();
+  else if(VIEW === "exam") renderExamSetup(false);
+  else if(VIEW === "adaptive") renderExamSetup(true);
+  else if(VIEW === "cards") renderCards();
+  else if(VIEW === "flagged") renderFlagged();
+  else if(VIEW === "history") renderHistory();
+  else if(VIEW === "backup") renderBackup();
+  else renderHelp();
+}
+window.addEventListener("beforeunload", function(e){
+  persistExam();   /* a refresh or closed tab no longer loses the exam */
+});
+if(!HUB.topics.length){
+  $("main").innerHTML = '<div class="card pad"><div class="empty"><strong>No question banks loaded</strong>' +
+    '<span>hub.html expects a folder called <code>banks</code> sitting next to it, holding each companion’s ' +
+    '<code>.js</code> bank file and its <code>.manifest.js</code> file. None of them were found.</span></div></div>';
+} else {
+  render();
+}
+</script>
+</body>
+</html>

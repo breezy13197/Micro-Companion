@@ -82,7 +82,7 @@ function buildLockCard(mod){
     '<h2>Locked</h2>'+
     '<p>&#8220;'+mod.title+'&#8221; unlocks once the following are complete:</p>'+
     '<ul class="lock-list"></ul>'+
-    '<button class="btn lock-go" type="button">Take me to what\u2019s left</button>';
+    '<button class="btn lock-go" type="button">Take me to what’s left</button>';
   return card;
 }
 var LOCKED_SECTIONS={};
@@ -334,7 +334,7 @@ document.querySelectorAll('[data-check]').forEach(function(host){
         if(ord[pos]===cp.answer)b.classList.add('right');
       });
       fb.className='feedback show';
-      fb.innerHTML='<strong>That\u2019s it.</strong>'+cp.why;
+      fb.innerHTML='<strong>That’s it.</strong>'+cp.why;
       state.checks[id]=realIdx;saveState();paintNav();
     }else{
       box.querySelectorAll('.choice').forEach(function(b){b.classList.remove('right','wrong');});
@@ -453,7 +453,7 @@ function paintCard(){
     fcTagEl.style.display=(fcMode==='review'&&rcs.length)?'':'none';
     if(fcMode==='review'&&rcs.length&&rcs[Math.min(fcIdx,rcs.length-1)]){
       var rc0=rcs[Math.min(fcIdx,rcs.length-1)];
-      fcTagEl.textContent='Related to: '+rc0.area+' \u00b7 '+rc0.label;
+      fcTagEl.textContent='Related to: '+rc0.area+' · '+rc0.label;
     }
   }
   if(empty){document.getElementById('fcCount').textContent='';return;}
@@ -654,17 +654,83 @@ function buildMyCards(){
   paintSwitch();paintList();
 }
 try{buildMyCards();}catch(e){try{console.error('My cards panel failed to build:',e);}catch(_){}}
+/* ------------------------------------------------------------
+   THE MASTERY EXAM DRAW (stratified by concept area)
+   The exam is still a random draw, but it is no longer a pure lottery:
+     Step 1. Every concept area in POOL gets one question, so no area
+             can be left out. The level for each area's question
+             (concept / application / integration) is chosen to keep
+             the overall FINAL_EXAM_MIX on track.
+     Step 2. The remaining slots are filled at random, steering toward
+             the modules and areas that have the fewest questions so far.
+             This keeps modules balanced and respects the level mix.
+   If a companion has more concept areas than exam slots, full coverage
+   is impossible, so the areas are taken module by module in rotation
+   (every module is represented before any module gets a second area)
+   and a note is written to the browser console.
+   The exam size and level mix still come from FINAL_EXAM_MIX, exactly
+   as before. A companion that does not define it gets the same
+   defaults it always had. Nothing else in this file needs to change.
+   ------------------------------------------------------------ */
 function sampleFrom(list,n){return shuffle(list).slice(0,n);}
 function buildFinalSet(){
   var mix=(typeof FINAL_EXAM_MIX!=='undefined')?FINAL_EXAM_MIX:{concept:8,application:10,integration:7};
-  var total=Object.keys(mix).reduce(function(s,k){return s+mix[k];},0);
-  var picked=[];
-  Object.keys(mix).forEach(function(lv){
-    picked=picked.concat(sampleFrom(POOL.filter(function(q){return q.level===lv;}),mix[lv]));
+  var levels=Object.keys(mix);
+  var total=levels.reduce(function(s,k){return s+mix[k];},0);
+  var need={};levels.forEach(function(lv){need[lv]=mix[lv];});
+  var picked=[],used={},areaN={},modN={};
+
+  function take(q){
+    used[q.id]=1;picked.push(q);
+    areaN[q.area]=(areaN[q.area]||0)+1;
+    modN[q.m]=(modN[q.m]||0)+1;
+    if(need[q.level]!==undefined)need[q.level]--;
+  }
+  function unusedIn(area){return POOL.filter(function(q){return q.area===area&&!used[q.id];});}
+
+  /* ---- Step 1: one question from every concept area ---- */
+  var byMod={},modOrder=[];
+  POOL.forEach(function(q){
+    if(!q.area)return;
+    var m=q.m;
+    if(!byMod[m]){byMod[m]=[];modOrder.push(m);}
+    if(byMod[m].indexOf(q.area)<0)byMod[m].push(q.area);
   });
-  if(picked.length<total){
-    var rest=POOL.filter(function(q){return picked.indexOf(q)===-1;});
-    picked=picked.concat(sampleFrom(rest,total-picked.length));
+  var lists=shuffle(modOrder).map(function(m){return shuffle(byMod[m]);});
+  var areaOrder=[],more=true,r=0;
+  while(more){                          /* take one area from each module in turn */
+    more=false;
+    lists.forEach(function(l){if(r<l.length){areaOrder.push(l[r]);more=true;}});
+    r++;
+  }
+  if(areaOrder.length>total){
+    try{console.warn('Mastery exam: '+areaOrder.length+' concept areas but only '+total+
+      ' exam questions, so not every area can appear. Raise FINAL_EXAM_MIX to cover them all.');}catch(e){}
+  }
+  areaOrder.forEach(function(area){
+    if(picked.length>=total)return;
+    var cands=shuffle(unusedIn(area));
+    if(!cands.length)return;
+    var best=cands[0],bestScore=-Infinity;
+    cands.forEach(function(q){              /* prefer the level the exam still needs most */
+      var s=(need[q.level]!==undefined)?need[q.level]:-1;
+      if(s>bestScore){bestScore=s;best=q;}
+    });
+    take(best);
+  });
+
+  /* ---- Step 2: fill the remaining slots ---- */
+  while(picked.length<total){
+    var rest=POOL.filter(function(q){return !used[q.id];});
+    if(!rest.length)break;
+    var wanted=rest.filter(function(q){return need[q.level]>0;});
+    var cands2=shuffle(wanted.length?wanted:rest);
+    var pick=cands2[0];
+    cands2.forEach(function(q){             /* fewest in its module, then fewest in its area */
+      var a=(modN[q.m]||0)-(modN[pick.m]||0);
+      if(a<0||(a===0&&(areaN[q.area]||0)<(areaN[pick.area]||0)))pick=q;
+    });
+    take(pick);
   }
   return shuffle(picked);
 }
