@@ -21,9 +21,9 @@ This document exists so that every companion built after this one — pharmacoki
 >
 > This correction also adds §6.4, the back-to-hub link — a new required shell element, not a pre-existing one this document had simply missed.
 >
-> **Eighth addition (a feature, not a correction).** Students can now write their own flashcards. They are created, edited and deleted **inside each companion** and are **view-only in the hub**. The panel is built by `shared/engine.js` itself, injected into the existing flashcards section, so no companion's HTML had to change and every companion, including ones already built, gets it as soon as it loads the updated shared files. The cards live in a new `state.myCards` field (§9) and are deliberately outside the completion model, every quiz, and every hub exam. §7, §9, §12, and a new §14.10 describe it; `storage.js`, `engine.js`, `styles.css`, and `hub.html` changed, and the hub keeps a second, deliberate copy of the cleaning rule (§14.10 explains why). It was checked by running the real shared files, and the real hub, in a simulated browser — not written from memory of them.
+> **Eighth addition (a feature, not a correction).** Students can now write their own flashcards. They are created, edited and deleted **inside each companion** and are **view-only in the hub**. The panel is built by `shared/engine.js` itself, injected into the existing flashcards section, so no companion's HTML had to change and every companion, including ones already built, gets it as soon as it loads the updated shared files. The cards live in a new `state.myCards` field (§9) and are deliberately outside the completion model, every quiz, and every hub exam. §7, §9, §12, and a new §14.10 describe it; `storage.js`, `engine.js`, `styles.css`, and `index.html` changed, and the hub keeps a second, deliberate copy of the cleaning rule (§14.10 explains why). It was checked by running the real shared files, and the real hub, in a simulated browser — not written from memory of them.
 
-> **Ninth addition (assessment fixes — a behavior change in `shared/`, not a gap).** Four defects in how quizzes record and report evidence were fixed together, in `shared/engine.js`, `shared/storage.js`, `shared/styles.css`, and in `hub.html`'s own exam runner. (1) *Adaptive review declared success early*: after a targeted round the engine rebuilt its list of weak areas only from the round's own questions, so a missed concept that never got a follow-up question vanished and the page said "Every concept area is solid." Missed concepts now live on a persistent **review queue** (`state.pending`, §8, §9) and leave it only when answered correctly later. (2) *Repeated Submit inflated evidence*: `grade()` added to `areaStats` and added another Flag button on every call. Grading now happens once per attempt (§8). (3) *Completion and mastery were conflated in the UI*: they are still separate in the rules; each quiz page now shows **practice completed**, **assessment result**, and **review pending** as three indicators (§8). (4) *A refresh lost an unfinished quiz*: attempts are now saved on every answer (§9). The hub's exam runner got the same treatment (§14.11). No existing key changed meaning; every new field is added to `blank` in `loadState()` and cleaned on load, so no `v2` bump was needed. All of it was checked by running the real files in a simulated browser (see the new items in §12), not written from memory of them.
+> **Ninth addition (assessment fixes — a behavior change in `shared/`, not a gap).** Four defects in how quizzes record and report evidence were fixed together, in `shared/engine.js`, `shared/storage.js`, `shared/styles.css`, and in `index.html`'s own exam runner. (1) *Adaptive review declared success early*: after a targeted round the engine rebuilt its list of weak areas only from the round's own questions, so a missed concept that never got a follow-up question vanished and the page said "Every concept area is solid." Missed concepts now live on a persistent **review queue** (`state.pending`, §8, §9) and leave it only when answered correctly later. (2) *Repeated Submit inflated evidence*: `grade()` added to `areaStats` and added another Flag button on every call. Grading now happens once per attempt (§8). (3) *Completion and mastery were conflated in the UI*: they are still separate in the rules; each quiz page now shows **practice completed**, **assessment result**, and **review pending** as three indicators (§8). (4) *A refresh lost an unfinished quiz*: attempts are now saved on every answer (§9). The hub's exam runner got the same treatment (§14.11). No existing key changed meaning; every new field is added to `blank` in `loadState()` and cleaned on load, so no `v2` bump was needed. All of it was checked by running the real files in a simulated browser (see the new items in §12), not written from memory of them.
 
 > **Tenth addition (spaced re-checks, review-linked flashcards, hub dashboard indicators).** Three follow-ons to the assessment fixes above, in the same shared files and the hub. (1) *Fixed is not mastered.* A concept answered correctly after a miss no longer simply leaves the review queue (one right answer can be luck): it is scheduled for a re-check after 2 days, and if that holds, once more after 7 days; only then is it counted as **mastered**. Missing it at any point puts it back on the list (§8, §9). (2) *Flashcards feed from review.* A third flashcard deck, "For your review list", shows the cards that belong to the concepts currently needing attention, and the review panel links to it (§7, §8). (3) *The hub dashboard* now shows the same three separate indicators on every companion card (§14.12). New saved fields `spaced` and `mastered` follow the same rule as before: added to `blank` in `loadState()`, cleaned on load, no `v2` bump. Tested by running the real files in a simulated browser; the review-linked flashcard matching is a heuristic and is the one part that should be spot-checked against real card sets (§8).
 
@@ -65,7 +65,7 @@ Everything below follows from these three points.
   enzymes.html            this topic's markup + its own content script, which DERIVES its structure from enzymes.manifest.js
   pharmacokinetics.html
   ...
-  hub.html                loads every bank + manifest in /banks; dashboard, exams, flashcards — see §14
+  index.html                loads every bank + manifest in /banks; dashboard, exams, flashcards — see §14
 ```
 
 **`shared/`** never becomes topic-specific. If a change to `engine.js` only makes sense for one companion, it doesn't belong in `engine.js` — it belongs in that companion's own content script. The same goes for `activities.js`: a builder that only makes sense for one topic belongs in that topic's content script, registered with `Act.register()` (§5).
@@ -356,11 +356,11 @@ Two classes you'll see in `engine.js` are *created* by it rather than looked for
 
 ### 6.4 The back-to-hub link
 
-Every companion's sidebar opens with a plain link back to `hub.html`, sitting above `.brand`:
+Every companion's sidebar opens with a plain link back to `index.html`, sitting above `.brand`:
 
 ```html
 <aside class="sidebar">
-  <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+  <a class="back-to-hub" href="index.html"><span class="arrow">&larr;</span>Back to hub</a>
   <div class="brand">...</div>
   ...
 </aside>
@@ -368,7 +368,7 @@ Every companion's sidebar opens with a plain link back to `hub.html`, sitting ab
 
 `.back-to-hub`, `.back-to-hub:hover`, and `.back-to-hub .arrow` are already defined in `shared/styles.css` (color defaults to `--green`, so it needs no per-companion setup) — a companion may override just the `color` if it wants a brighter accent than `--green` gives it, the way Bacteria I (`--royal`) and Bacteria III (`--green-bright`) do. `engine.js` does not touch this element — it is a plain link, not a DOM hook, so a missing or renamed `.back-to-hub` breaks nothing else on the page. It is still required on every companion: it's the only way back to the dashboard once a student is inside one.
 
-`href` is always the plain relative filename `hub.html`, never a full path — every companion's `.html` file, `hub.html`, and both `banks/` and `shared/` all live in one flat folder together (§2), so this link, and the `banks/…` paths `hub.html` itself loads, only work when that flat layout is kept.
+`href` is always the plain relative filename `index.html`, never a full path — every companion's `.html` file, `index.html`, and both `banks/` and `shared/` all live in one flat folder together (§2), so this link, and the `banks/…` paths `index.html` itself loads, only work when that flat layout is kept.
 
 ---
 
@@ -831,7 +831,7 @@ Anything that would make a bank file harder to read in isolation, or make a shar
 
 ## 14. The hub, and the manifest file each companion needs to feed it
 
-The hub (`hub.html`) is the student's entry point: one dashboard showing progress across every companion, one place to build a practice exam or an adaptive review pulling from any combination of companions, one shared flashcard deck, and its own small bank of cross-topic questions. It is a sixth kind of page in this project, alongside the `shared/` files, the per-topic banks, the per-topic HTML pages, and BankBridge — and like BankBridge, it is a standalone tool that reads companion output without ever being loaded by, or loading, a companion page itself.
+The hub (`index.html`) is the student's entry point: one dashboard showing progress across every companion, one place to build a practice exam or an adaptive review pulling from any combination of companions, one shared flashcard deck, and its own small bank of cross-topic questions. It is a sixth kind of page in this project, alongside the `shared/` files, the per-topic banks, the per-topic HTML pages, and BankBridge — and like BankBridge, it is a standalone tool that reads companion output without ever being loaded by, or loading, a companion page itself.
 
 ### 14.1 Why a hub needs more than the bank files
 
@@ -891,11 +891,11 @@ Because the manifest is now the single source of this structure rather than one 
 
 `banks/hub.js` is a bank file like any other — same five fields, same ID rules from §4, same writing standard from §10 — with one difference: it has no companion page of its own, so `CHECKPOINTS` is always empty, and it needs no manifest, since the hub is not one of the companions it reports progress on. Its `POOL` questions each carry an `m` field pointing at a companion's `topic` id rather than a module id, because the hub uses that to decide which companion's page to send a student back to after a miss. Its reason for existing is that a hub built only from stitching together the four companion banks would only ever test one topic per question; deliberately writing items that require two topics at once (a drug's kinetics *and* the physiology it acts on, say) is practice a single-topic companion structurally cannot offer, and is the kind of integration a live lecture has the least time for.
 
-**Hub question `m` field can name several companions.** In `banks/hub.js`, `m` is a companion topic id, or several ids joined by `+` with no spaces (for example `bacteria2+bacteria4`). `homeTopics(q)` in `hub.html` splits it. It is used in two places:
+**Hub question `m` field can name several companions.** In `banks/hub.js`, `m` is a companion topic id, or several ids joined by `+` with no spaces (for example `bacteria2+bacteria4`). `homeTopics(q)` in `index.html` splits it. It is used in two places:
 1. `poolFor()`: when specific unlocked companions are picked alongside the hub bank, a hub question is offered if **any** of its companions is among them.
 2. The results page: a missed hub question sends the student back to **every** companion it names ("Where to go back to").
 
-**Per-companion look lives in `hub.html`.** `HUB.META` holds each companion's display title, tagline, and mockup colors. The manifest's single `accent` only supplies one dark ink color. Viruses I is the fifth companion and follows this pattern. To add another, add a `HUB.META` block and three lines (bank, manifest, `HUB.capture('id')`) in the bank-loading section. The headline ("Five companions.") and the hero ring row adjust to the number of companions automatically.
+**Per-companion look lives in `index.html`.** `HUB.META` holds each companion's display title, tagline, and mockup colors. The manifest's single `accent` only supplies one dark ink color. Viruses I is the fifth companion and follows this pattern. To add another, add a `HUB.META` block and three lines (bank, manifest, `HUB.capture('id')`) in the bank-loading section. The headline ("Five companions.") and the hero ring row adjust to the number of companions automatically.
 
 **Module counts.** Headlines count numbered modules only. The final exam is shown as a starred row and an arc segment, and it counts toward the percentage.
 
@@ -943,7 +943,7 @@ If a future change needs the hub to write anything else into companion storage, 
 
 ### 14.9 Adaptive review: how a weak area is actually detected
 
-`weaknessMap()` (in `hub.html`) is what every "what should this student review" surface reads from — the dashboard's "Your weakest area right now is…" line, the adaptive-round builder's "What this round will target" preview, and `buildAdaptive()`'s actual question selection all go through it, directly or via `rankedWeak()`. It blends evidence from every companion's stored state (never anything a companion computes fresh — `companionState()` reads storage the same read-only way the rest of the hub does) into one entry per `(topic, area)` pair.
+`weaknessMap()` (in `index.html`) is what every "what should this student review" surface reads from — the dashboard's "Your weakest area right now is…" line, the adaptive-round builder's "What this round will target" preview, and `buildAdaptive()`'s actual question selection all go through it, directly or via `rankedWeak()`. It blends evidence from every companion's stored state (never anything a companion computes fresh — `companionState()` reads storage the same read-only way the rest of the hub does) into one entry per `(topic, area)` pair.
 
 **Two things this function must never conflate**, because both are live bugs it used to have:
 
@@ -972,13 +972,13 @@ Students write cards inside a companion (§9, §7). The hub lets them **study** 
 
 **How the hub keeps them straight.** A student's card is filed under the id `my:<companionId>:<cardId>` in the hub's own `known`/`again` marks (`H.cards`). The `my:` prefix and the companion id mean it can never collide with a course card's id (`B1-001`), or with the same short id in another companion. These cards are **not** in a topic's `cards` list, so `flashMastered()` and the "Flashcards · N% mastered" figures on the dashboard still count course cards only.
 
-**A second copy of the cleaning rule — on purpose.** The hub does not load `storage.js`, so `hub.html` carries its own `MYCARD_LIMITS` and `cleanMyCards()`. It has to, because the hub reads card text straight from storage, and that text can come from a backup file as well as from a companion page. If you change a limit or a rule in one place, **change both**. When this feature was built, both copies were run against the same 25 messy inputs (wrong types, bad ids, over-long text, duplicates, 250 cards) and produced identical output; if you ever edit one, repeat that comparison rather than assuming they still match.
+**A second copy of the cleaning rule — on purpose.** The hub does not load `storage.js`, so `index.html` carries its own `MYCARD_LIMITS` and `cleanMyCards()`. It has to, because the hub reads card text straight from storage, and that text can come from a backup file as well as from a companion page. If you change a limit or a rule in one place, **change both**. When this feature was built, both copies were run against the same 25 messy inputs (wrong types, bad ids, over-long text, duplicates, 250 cards) and produced identical output; if you ever edit one, repeat that comparison rather than assuming they still match.
 
 **Card text is never HTML.** Card text is written to the page with `textContent` (the hub's `el()` helper with the `text` option), never `innerHTML`. A card whose front is `<img src=x onerror=...>` shows those literal characters and nothing runs. The one place the hub uses `innerHTML` near this feature, `renderHelp()`, only contains fixed text.
 
 **Stale marks are cleaned up.** When a student deletes a card in a companion, any "known" or "review" mark the hub kept for it would be left behind and would inflate the "Marked known" count. `pruneOwnCardMarks()` runs when the Flashcards view opens and removes marks for cards that no longer exist. It deliberately **skips** a companion that isn't loaded in this hub, and one whose saved text can't be read at all, rather than guessing and deleting marks by mistake.
 
-**Backup and restore.** A student's cards are stored inside each companion's saved data, so they are in the backup file automatically and a restore replaces them along with that companion's progress. Three consequences are handled in `hub.html`:
+**Backup and restore.** A student's cards are stored inside each companion's saved data, so they are in the backup file automatically and a restore replaces them along with that companion's progress. Three consequences are handled in `index.html`:
 
 - `validateCompanionRaw()` rejects a companion whose `myCards`, if present, is not a list. A rejected companion is skipped on restore and the existing data is left alone, the same rule as every other malformed field. Individual bad cards inside a valid list are not rejected; `cleanMyCards()` drops them on the next read.
 - The backup page and the restore preview each show a "Flashcards you wrote yourself" row.

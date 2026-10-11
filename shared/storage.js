@@ -21,7 +21,7 @@ var storageWorks=(function(){try{localStorage.setItem('__t','1');localStorage.re
 
    The hub has its own copy of MYCARD_LIMITS and cleanMyCards() (it
    does not load this file). If you change a limit or a rule here,
-   change it in hub.html too — see §9 and §14.10 of
+   change it in index.html too — see §9 and §14.10 of
    companion-architecture.md.
    ------------------------------------------------------------ */
 var MYCARD_LIMITS={front:120,back:300,count:200};

@@ -6,73 +6,81 @@ This guide assumes no coding experience. Each step says **what to do** and **wha
 
 ## What you are getting
 
-Two files:
+A set of web pages that students open in a browser. No installation, no server, no accounts.
 
 | File | What it is |
 |---|---|
-| `hub.html` | The hub page itself. Students open this one. |
-| `banks/hub.js` | The hub's own question bank: 38 questions and 25 flashcards that each need **two or more lectures** at once. |
+| `index.html` | The hub page itself. Students open this one first. |
+| `bacteria1.html` to `bacteria4.html` | The four Bacteria companions (study pages for each lecture). |
+| `viruses1.html`, `viruses2.html` | The two Viruses companions. |
+| `banks/` | The questions and flashcards, plus a small "manifest" file per companion that describes its sections. |
+| `shared/` | Code and styling shared by every companion. |
 
-Everything else the hub needs (the four Bacteria question banks and their "manifest" files) you already have.
+`banks/hub.js` is the hub's own question bank: 38 questions and 25 flashcards that each need **two or more Bacteria lectures** at once. (There are no integration questions that involve the Viruses lectures yet.)
 
 ---
 
 ## Step 1. Put the files in the right folders
 
-The hub finds its data by **file name and folder position**. If a file is in the wrong place, the hub cannot see it.
-
-Your `companions` folder should look like this:
+The hub finds its data by **file name and folder position**. If a file is in the wrong place, the hub cannot see it. Keep everything together in one folder, like this:
 
 ```
 companions/
-  hub.html                     <- NEW (from this package)
+  index.html                   <- the hub (students open this one)
   bacteria1.html
   bacteria2.html
   bacteria3.html
   bacteria4.html
+  viruses1.html
+  viruses2.html
   banks/
-    hub.js                     <- NEW (from this package)
-    bacteria1.js
-    bacteria1.manifest.js
-    bacteria2.js
-    bacteria2.manifest.js
-    bacteria3.js
-    bacteria3.manifest.js
-    bacteria4.js
-    bacteria4.manifest.js
+    hub.js
+    bacteria1.js    bacteria1.manifest.js
+    bacteria2.js    bacteria2.manifest.js
+    bacteria3.js    bacteria3.manifest.js    bacteria3.images.js
+    bacteria4.js    bacteria4.manifest.js
+    viruses1.js     viruses1.manifest.js
+    viruses2.js     viruses2.manifest.js
   shared/
-    (the shared files your companions already use)
+    activities.js  engine.js  helpers.js  storage.js  welcome.js
+    sections.css   shell.css  styles.css  welcome.css
 ```
 
-**What this does:** `hub.html` reads each companion's saved progress from the browser, and reads the questions from the files in `banks/`. Because it looks for exact names, `bacteria2.manifest.js` must be spelled exactly that way.
+**What this does:** `index.html` reads each companion's saved progress from the browser, and reads the questions from the files in `banks/`. Because it looks for exact names, `bacteria2.manifest.js` must be spelled exactly that way. Each companion page's **Back to hub** link goes to `index.html`, so keep that file name.
 
-If a **`hub.html` from the biochemistry course** is already in this folder, rename or move it first. Otherwise you will overwrite it.
+**Why `index.html`?** Web hosts such as GitHub Pages open a file called `index.html` automatically when someone visits your site's address, so students do not need to type a file name.
+
+If an `index.html` from another course is already in this folder, rename or move it first. Otherwise you will overwrite it.
 
 ## Step 2. Open the hub and check it
 
-1. Open `hub.html` in a browser (Chrome, Edge, or Firefox).
-2. You should see the four rings (Bacteria I to IV) and the "Integration" card at the bottom.
+1. Open `index.html` in a browser (Chrome, Edge, or Firefox).
+2. You should see six rings (Bacteria I to IV, Viruses I and II) and the "Integration" card at the bottom.
 3. Click **How this works** in the left menu, then scroll to **What is loaded right now**.
 
-You should see this table:
+You should see a table like this:
 
 | Bank | Questions | Structure map |
 |---|---|---|
 | Bacteria I: Introduction | 77 | manifest loaded |
 | Bacteria II: Antibacterials | 91 | manifest loaded |
 | Bacteria III: Cocci and rods | 62 | manifest loaded |
-| Bacteria IV: Other pathogens | 40 | manifest loaded |
+| Bacteria IV: Other pathogens | 87 | manifest loaded |
+| Viruses I: Introduction | 98 | manifest loaded |
+| Viruses II: Antivirals and Vaccines | 106 | manifest loaded |
 | Integration & review | 38 | not needed |
+
+(The question counts will change when you add or remove questions. What matters is that every row says "manifest loaded".)
 
 **What this does:** This table is the hub's own health check. If a row says "missing" or a red note appears on the dashboard, a file is misnamed or in the wrong folder. Go back to Step 1.
 
 ## Step 3. Try a student's-eye test
 
-1. Open `bacteria1.html`, answer a few checkpoints, then go back to `hub.html` and refresh. Bacteria I's ring should now show progress.
-2. In the hub, click **Build an exam**. Bacteria I to IV will show as **locked**. That is on purpose (see below).
-3. The **Integration & review** row is always open. Start an exam with only that ticked to try the new questions.
+1. Open `bacteria1.html`, answer a few checkpoints, then click **Back to hub** in the top-left of the page. You should land on the hub. Bacteria I's ring should now show progress (refresh the page if it does not).
+2. In the hub, click **Build an exam**. The six companions will show as **locked**. That is on purpose (see below).
+3. The **Integration & review** row is always open. Start an exam with only that ticked to try the integration questions.
 
-**What this does:** Steps 1 and 2 confirm the hub is reading real progress from the companions. Step 3 confirms the exam builder works.
+**What this does:** Steps 1 and 2 confirm the companions and the hub are sharing progress through the browser, and that the back link works. Step 3 confirms the exam builder works.
 
 ---
 
@@ -88,7 +96,7 @@ You should see this table:
 
 The hub uses the **Gram stain** scheme you chose: aubergine `#3B1758` and safranin pink `#E8437F`. The four companions keep their own colors inside their cards, taken from your Claude Design mockup.
 
-To change the hub's colors later, open `hub.html` in a text editor and search for `--accent:` (near the top). That block controls the whole hub.
+To change the hub's colors later, open `index.html` in a text editor and search for `--accent:` (near the top). That block controls the whole hub.
 
 ## The Integration question bank
 
