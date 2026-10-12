@@ -7,7 +7,7 @@
 <style>
 /* ============================================================
    MICROBIOLOGY STUDY HUB v1.2 — design tokens
-   Neutral gray scale. The hub itself has no color of its own, so the four
+   Neutral gray scale. The hub itself has no color of its own, so the seven
    companions' colors are the only color on the page and a student can tell
    "I am in the hub" by the absence of it. To adjust a gray, change it on
    the first lines of :root; everything else reads from those variables.
@@ -460,6 +460,8 @@ HUB.META = {
     ink:'#2E1040', head2:'#7B2FA0', accent:'#7B2FA0', soft:'#D8C2E3', warm:'#A5C73A', tintA:'#F8F2FB', tintB:'#F3F8DA', plateHi:'#6A2A86', track:'#EFE3F6' },
   viruses2:{ title:'Viruses II: Antivirals and Vaccines', kicker:'VIRUSES II — ANTIVIRALS & VACCINES', tag1:'Find the target.', tag2:'Stop the virus.',
     ink:'#3E0B18', head2:'#8C1F3C', accent:'#9A2745', soft:'#EBC3CC', warm:'#4FD1E8', tintA:'#FBEDF0', tintB:'#E0F7FB', plateHi:'#7A1F38', track:'#F0DDE1' },
+   viruses3:{ title:'Viruses III: Herpes to Flu', kicker:'VIRUSES III — HERPES TO FLU', tag1:'Name the virus.', tag2:'Predict the course.',
+    ink:'#073540', head2:'#0F6F80', accent:'#0B5563', soft:'#A9D2D9', warm:'#FF9F6B', tintA:'#E3F2F4', tintB:'#FFF0E6', plateHi:'#1A7F92', track:'#D5E8EB' },
   hub:{ title:'Integration & review', kicker:'INTEGRATION — ACROSS LECTURES', tag1:'Join the lectures.', tag2:'Answer across topics.',
     ink:'#212529', head2:'#6c757d', accent:'#495057', soft:'#adb5bd', warm:'#6c757d', tintA:'#e9ecef', tintB:'#f8f9fa', plateHi:'#6c757d', track:'#dee2e6' }
 };
@@ -514,6 +516,10 @@ HUB.capture = function(expected){
 <script src="banks/viruses2.js"></script>
 <script src="banks/viruses2.manifest.js"></script>
 <script>HUB.capture('viruses2');</script>
+
+<script src="banks/viruses3.js"></script>
+<script src="banks/viruses3.manifest.js"></script>
+<script>HUB.capture('viruses3');</script>   
 
 <!-- The hub's own bank has no companion page, so it has no manifest. -->
 <script src="banks/hub.js"></script>
