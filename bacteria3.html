@@ -98,12 +98,54 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
    default gold (see companion-architecture.md §5: needs a more specific
    selector than the toolkit's own to win at equal specificity) */
 .act-explore .act-hs.on{filter:drop-shadow(0 0 5px rgba(255,107,74,.95))}
+/* ---------- custom simulations (catalase, blood agar, toxin, acid-fast, resistance, RMSF clock) ----------
+   Uses only this companion's tokens: --green family = primary, --w-hl = highlight, --ok/--rose = right/wrong. */
+.sim-step{margin:4px 0 14px;padding:11px 14px;border-left:4px solid var(--w-hl);background:var(--w-hl-soft);border-radius:0 10px 10px 0;font-size:.92rem;color:var(--ink)}
+.sim-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.sim-label{font-size:.74rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.sim-row .sim-label{margin-bottom:0}
+.sim-val{font-weight:800;color:var(--green);min-width:4.5ch}
+.sim-seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.sim-seg button{border:0;background:transparent;padding:8px 14px;font-size:.86rem;color:var(--ink-mid);border-right:1.5px solid var(--line)}
+.sim-seg button:last-child{border-right:0}
+.sim-seg button.on{background:var(--green);color:#fff;font-weight:650}
+.sim-seg button:disabled{opacity:.45;cursor:not-allowed}
+.sim-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start;margin:4px 0}
+.sim-fig{margin:0 0 6px !important;padding:12px !important}
+.sim-fig svg,.sim-fig img{display:block;width:100%;height:auto}
+.sim-fig .mic-thumb{max-width:none}
+.sim-plate svg{max-width:340px;margin:0 auto}
+.sim-col{min-width:0}
+.sim-block{margin:0 0 14px}
+.sim-block .q-stem{margin-bottom:4px}
+.sim-block .choices{margin:8px 0}
+.sim-bars{display:grid;gap:8px;margin:12px 0}
+.sim-bar{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 3.5em;gap:10px;align-items:center;font-size:.86rem;color:var(--ink-mid);margin:8px 0}
+.sim-bar b{color:var(--ink);text-align:right}
+.sim-track{display:block;height:12px;border-radius:99px;background:#E9EEF1;overflow:hidden}
+.sim-track i{display:block;height:100%;border-radius:99px;transition:width .25s}
+.sim-reagents{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.sim-reagent{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px 8px 8px;font-weight:650;font-size:.9rem;color:var(--ink)}
+.sim-reagent i{width:24px;height:32px;border-radius:6px 6px 9px 9px;display:block;border:2px solid rgba(0,0,0,.2)}
+.sim-reagent:hover:not(:disabled){border-color:var(--green)}
+.sim-reagent.used{background:var(--ok-soft);border-color:var(--ok)}
+.sim-reagent:disabled{cursor:default}
+.sim-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.8rem;color:var(--ink-mid);margin:2px 0 6px}
+.sim-legend i{display:inline-block;width:16px;height:9px;border-radius:5px;margin-right:6px;vertical-align:1px}
+.sim-find{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:6px}
+.sim-find li{position:relative;padding:7px 10px 7px 30px;border:1.5px solid var(--line);border-radius:10px;font-size:.86rem;color:var(--ink-soft);background:#fff;margin:0}
+.sim-find li::before{content:"";position:absolute;left:10px;top:50%;width:11px;height:11px;margin-top:-5.5px;border-radius:50%;border:2px solid var(--line)}
+.sim-find li.on{color:var(--ink);border-color:var(--rose);background:var(--rose-soft);font-weight:600}
+.sim-find li.on::before{background:var(--rose);border-color:var(--rose)}
+.cb-bub{animation:cbRise 1.7s ease-in infinite;transform-box:fill-box}
+@keyframes cbRise{0%{transform:translateY(4px);opacity:0}15%{opacity:1}100%{transform:translateY(-34px);opacity:0}}
+@media (max-width:760px){.sim-two{grid-template-columns:1fr}.sim-bar{grid-template-columns:1fr 3.5em}.sim-bar .sim-track{grid-column:1/-1;grid-row:2}}
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="sidebar">
-    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <a class="back-to-hub" href="index.html"><span class="arrow">&larr;</span>Back to hub</a>
     <div class="brand">
       <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6.5"/><path d="M14.6 14.6L20 20"/></svg></div>
       <div><div class="brand-title">Cocci &amp; Rods</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
@@ -252,7 +294,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
         <p class="lede">You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
         <ul class="checks">
           <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
-          <li><span><b>Interact.</b> Sort real organisms by their actual lab results &mdash; catalase, coagulase, novobiocin, hemolysis &mdash; the same tests a microbiology bench runs.</span></li>
+          <li><span><b>Interact.</b> Run the bench tests yourself: add hydrogen peroxide, read a blood agar plate, place an antibiotic disk, or dose a synapse with a toxin.</span></li>
           <li><span><b>Explain.</b> Every answer comes with the reasoning, not just right or wrong.</span></li>
           <li><span><b>Differentiate.</b> Look-alike organisms get side-by-side practice, not just a side-by-side table.</span></li>
           <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
@@ -300,7 +342,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
         <span class="home-num">1</span>
         <span class="home-body">
           <span class="home-title">Staph or strep, at a glance</span>
-          <span class="home-desc">Sort an unknown gram-positive coccus by arrangement and the catalase test.</span>
+          <span class="home-desc">Read a Gram stain, run a catalase test, and call the genus.</span>
         </span>
         <span class="home-status">Not started</span>
       </button>
@@ -316,7 +358,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
         <span class="home-num">3</span>
         <span class="home-body">
           <span class="home-title">Sorting the streptococci and enterococcus</span>
-          <span class="home-desc">Use hemolysis and one confirmatory test to take a chain-forming coccus to species.</span>
+          <span class="home-desc">Incubate on blood agar, read the hemolysis, place a disk, and identify the organism.</span>
         </span>
         <span class="home-status">Not started</span>
       </button>
@@ -349,8 +391,8 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
   </div>
   <div class="card hands-card">
     <div class="eyebrow hands">Hands-on</div>
-    <h2>Sort each clue to its genus</h2>
-    <p class="try-note">Two of these clues are real micrographs from this lecture. Pick the genus each clue points to, then check your work.</p>
+    <h2>The catalase bench</h2>
+    <p class="try-note">Three unknown gram-positive cocci. Two of the Gram stains are real micrographs from this lecture. For each isolate, predict the genus from the arrangement, add hydrogen peroxide, and make the call. Use the buttons to switch isolates, and identify all three to finish.</p>
     <div id="act-genusID"></div>
   </div>
   <div class="card">
@@ -431,8 +473,8 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
   </div>
   <div class="card hands-card">
     <div class="eyebrow hands">Hands-on</div>
-    <h2>Build the strep and enterococcus identification tree</h2>
-    <p class="try-note">Match each clue to the organism it identifies.</p>
+    <h2>The blood agar bench</h2>
+    <p class="try-note">Five catalase-negative isolates. For each one, incubate it on blood agar, read the hemolysis, choose the confirmatory disk, and identify the organism. Each step unlocks the next, and a wrong pick lets you try again. Identify all five to finish.</p>
     <div id="act-strepTree"></div>
   </div>
   <div class="card">
@@ -922,7 +964,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
         <span class="home-num">2</span>
         <span class="home-body">
           <span class="home-title">The toxin mechanism challenge</span>
-          <span class="home-desc">Sort botulism, tetanus, and gas gangrene by how their toxins actually work.</span>
+          <span class="home-desc">Dose a synapse with three toxins and watch what the muscle does.</span>
         </span>
         <span class="home-status">Not started</span>
       </button>
@@ -1013,8 +1055,8 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
   </div>
   <div class="card hands-card">
     <div class="eyebrow hands">Hands-on</div>
-    <h2>Sort each clue by toxin mechanism</h2>
-    <p class="try-note">Every clue belongs to one of the three toxin syndromes.</p>
+    <h2>Turn up the toxin</h2>
+    <p class="try-note">Make a prediction first. Then choose a toxin and drag the dose slider up, and watch the two synapses, the muscle, and the tissue cells change.</p>
     <div id="act-toxinChallenge"></div>
   </div>
   <div class="card">
@@ -1746,16 +1788,146 @@ var MODULE_QUIZ_SIZE = 8;
 var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
 
 /* ---- Module 1 activities ---- */
-Act.sort('act-genusID', {name:'genusID', options:['Staphylococcus','Streptococcus'], rows:[
-  {text:'<img class="mic-thumb" src="'+B3IMG.staphClusters+'" alt="Electron micrograph of round bacteria growing in tight, grape-like clusters"><span>Round cells growing in tight, irregular clusters.</span>',
-   answer:'Staphylococcus', why:'These clustered cocci are Staphylococcus \u2014 the arrangement microbiologists compare to a bunch of grapes.'},
-  {text:'<img class="mic-thumb" src="'+B3IMG.strepChains+'" alt="Electron micrograph of round bacteria growing in a chain"><span>Round cells growing in a chain.</span>',
-   answer:'Streptococcus', why:'Chains of cocci are the hallmark of Streptococcus (and, less prominently, Enterococcus).'},
-  {text:'This genus is catalase-positive.', answer:'Staphylococcus',
-   why:'Catalase splits the two genera: Staphylococcus produces bubbles when hydrogen peroxide is added; Streptococcus does not.'},
-  {text:'This genus is catalase-negative.', answer:'Streptococcus',
-   why:'Streptococcus (and Enterococcus) lack catalase, unlike Staphylococcus.'}
-]});
+/* ---- Module 1 · Section 1: the catalase bench (custom simulation) ----
+   Three unknown gram-positive cocci. For each one the student reads the
+   Gram stain, predicts the genus from the arrangement, runs the catalase
+   test, and makes the final call. Same activity name as before (genusID),
+   so the manifest and saved progress keep working. */
+(function catalaseBench(){
+  var host=document.getElementById('act-genusID'),name='genusID',vkey=name+'_v';
+  if(!host)return;
+  var done_=Object.assign({},state.activities[vkey]||{});
+  var ISO=[
+    {id:'A',label:'Isolate A',src:'Wound culture',arr:0,cat:true,
+     slide:'<img class="mic-thumb" src="'+B3IMG.staphClusters+'" alt="Gram stain micrograph of round bacteria in tight, grape-like clusters">',
+     note:'Round cells in tight, irregular clusters.'},
+    {id:'B',label:'Isolate B',src:'Throat swab',arr:1,cat:false,
+     slide:'<img class="mic-thumb" src="'+B3IMG.strepChains+'" alt="Gram stain micrograph of round bacteria in a chain">',
+     note:'Round cells lined up in chains.'},
+    {id:'C',label:'Isolate C',src:'Urine culture',arr:2,cat:false,
+     slide:(function(){
+       var s='<svg viewBox="0 0 220 150" role="img" aria-label="Gram stain sketch of round purple cells lying singly and in pairs, with no clear arrangement">'+
+             '<rect x="2" y="2" width="216" height="146" rx="12" fill="#F4EEF8" stroke="#D9CCE6"/>';
+       [[40,40],[52,46],[110,30],[170,52],[182,58],[70,100],[140,96],[152,104],[95,72],[190,118],[30,118]].forEach(function(p){
+         s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="6" fill="#5B3D9E" stroke="#3E2A73" stroke-width="1.5"/>';});
+       return s+'</svg>';})(),
+     note:'Round cells lying singly and in pairs. The arrangement is hard to call.'}
+  ];
+  var PRED=['Staphylococcus','Streptococcus or Enterococcus','I can’t tell from the arrangement'];
+  var CALL=['Staphylococcus','Streptococcus or Enterococcus'];
+  var PRED_WHY=[
+    'Tight, grape-like clusters are the classic Staphylococcus arrangement. Catalase will confirm it.',
+    'Chains point to Streptococcus (or Enterococcus). Catalase will confirm it.',
+    'Singles and pairs fit either genus. This is exactly when the catalase test does the deciding.'];
+  var mem={};ISO.forEach(function(i){mem[i.id]={pred:null,drop:false,called:!!done_[i.id]};});
+  var cur='A';
+
+  var chips=el('div','act-chips'),panel=el('div'),prog=el('p','caption');
+  host.appendChild(chips);host.appendChild(panel);host.appendChild(prog);
+
+  function catSVG(iso,m){
+    var dropped=m.drop,pos=iso.cat,i,b='';
+    var s='<svg viewBox="0 0 260 170" role="img" aria-label="Glass slide with a smear of colony'+(dropped?(pos?' fizzing with bubbles after hydrogen peroxide was added':' with no bubbles after hydrogen peroxide was added'):' and a dropper of hydrogen peroxide above it')+'">'+
+      '<rect x="14" y="96" width="232" height="56" rx="6" fill="#EEF5F7" stroke="#A9C3C9" stroke-width="2"/>'+
+      '<ellipse cx="130" cy="124" rx="42" ry="12" fill="#E9E2CF" stroke="#C9BC98" stroke-width="2"/>';
+    if(dropped){
+      s+='<ellipse cx="130" cy="122" rx="52" ry="16" fill="#CFE7F2" fill-opacity=".75" stroke="#7FB6D6" stroke-width="1.5"/>';
+      if(pos){
+        var B=[[100,118,5,0],[118,112,4,.3],[134,120,6,.6],[150,114,4,.15],[160,121,5,.9],[112,124,3,1.1],[142,110,3,.45],[126,106,4,1.3],[168,112,3,.75]];
+        B.forEach(function(p){b+='<circle class="cb-bub" style="animation-delay:'+p[3]+'s" cx="'+p[0]+'" cy="'+p[1]+'" r="'+p[2]+'" fill="#fff" stroke="#5FA2C7" stroke-width="1.5"/>';});
+        s+=b+'<text x="130" y="80" text-anchor="middle" font-size="15" font-weight="800" fill="#96301A">Bubbles: catalase positive</text>';
+      }else{
+        s+='<text x="130" y="80" text-anchor="middle" font-size="15" font-weight="800" fill="#12333A">No bubbles: catalase negative</text>';
+      }
+    }else{
+      s+='<g><rect x="120" y="12" width="20" height="40" rx="4" fill="#fff" stroke="#12333A" stroke-width="2"/>'+
+         '<rect x="114" y="6" width="32" height="10" rx="4" fill="#12333A"/>'+
+         '<path d="M126 52 L134 52 L131 62 L129 62 Z" fill="#12333A"/>'+
+         '<circle cx="130" cy="72" r="5" fill="#7FB6D6"/></g>'+
+         '<text x="200" y="40" font-size="12" font-weight="700" fill="#4A5C68">H₂O₂</text>';
+    }
+    return s+'</svg>';
+  }
+  function paintChips(){
+    chips.innerHTML='';
+    ISO.forEach(function(i){
+      var b=el('button','act-chip'+(i.id===cur?' on':'')+(done_[i.id]?' done':''),i.label);b.type='button';
+      b.onclick=function(){cur=i.id;paint();};chips.appendChild(b);
+    });
+    var n=ISO.filter(function(i){return done_[i.id];}).length;
+    prog.textContent=n>=ISO.length?'All three isolates identified. ✓':n+' of 3 isolates identified.';
+  }
+  function paint(){
+    paintChips();
+    var iso=ISO.filter(function(i){return i.id===cur;})[0],m=mem[cur],finished=!!done_[cur];
+    if(finished){m.drop=true;}
+    panel.innerHTML='';
+    panel.appendChild(el('div','sim-step','<b>'+iso.label+'.</b> '+iso.src+'. Gram stain: gram-positive cocci. Work through the three steps below.'));
+    var grid=el('div','sim-two');
+    var a=el('div','figure sim-fig','<div class="sim-label">Gram stain</div>'+iso.slide+'<p class="caption" style="margin-top:6px">'+iso.note+'</p>');
+    var b=el('div','figure sim-fig','<div class="sim-label">Catalase test</div>'+catSVG(iso,m));
+    grid.appendChild(a);grid.appendChild(b);panel.appendChild(grid);
+
+    /* step 1: predict from the arrangement */
+    var s1=el('div','sim-block');s1.appendChild(el('p','q-stem','Step 1. From the arrangement alone, what do you predict?'));
+    var ch=el('div','choices'),fb=el('div','feedback');
+    PRED.forEach(function(t,k){
+      var bt=el('button','choice','<span class="mark">'+LETTERS[k]+'</span>'+t);bt.type='button';
+      if(m.pred!==null||finished){bt.disabled=true;if(k===iso.arr)bt.classList.add('right');else if(k===m.pred)bt.classList.add('wrong');}
+      bt.onclick=function(){if(m.pred!==null)return;m.pred=k;paint();};
+      ch.appendChild(bt);
+    });
+    s1.appendChild(ch);
+    if(m.pred!==null||finished){
+      var right=m.pred===iso.arr;
+      fb.className='feedback show'+(right||finished?'':' miss');
+      fb.innerHTML='<strong>'+(finished&&m.pred===null?'Arrangement':(right?'Good prediction.':'Not quite. The better reading is highlighted.'))+'</strong>'+PRED_WHY[iso.arr];
+    }
+    s1.appendChild(fb);panel.appendChild(s1);
+
+    /* step 2: add hydrogen peroxide */
+    if(m.pred!==null||finished){
+      var s2=el('div','sim-block');s2.appendChild(el('p','q-stem','Step 2. Run the catalase test.'));
+      var go=el('button','btn',m.drop?'Hydrogen peroxide added':'Add a drop of hydrogen peroxide');go.type='button';go.disabled=m.drop;
+      go.onclick=function(){m.drop=true;paint();};
+      s2.appendChild(go);
+      if(m.drop){
+        s2.appendChild(el('p','caption',iso.cat
+          ?'Catalase breaks hydrogen peroxide down into water and oxygen gas. The oxygen is what bubbles.'
+          :'No catalase, so the hydrogen peroxide is not broken down and no oxygen bubbles form.'));
+      }
+      panel.appendChild(s2);
+    }
+    /* step 3: final call */
+    if(m.drop){
+      var s3=el('div','sim-block');s3.appendChild(el('p','q-stem','Step 3. Make the call: which genus is it?'));
+      var ch3=el('div','choices'),fb3=el('div','feedback'),ans=iso.cat?0:1;
+      CALL.forEach(function(t,k){
+        var bt=el('button','choice','<span class="mark">'+LETTERS[k]+'</span>'+t);bt.type='button';
+        if(finished){bt.disabled=true;if(k===ans)bt.classList.add('right');}
+        bt.onclick=function(){
+          if(done_[cur])return;
+          if(k===ans){done_[cur]=true;Act.keep(vkey,Object.assign({},done_));
+            if(ISO.every(function(i){return done_[i.id];})&&!state.activities[name])Act.done(name,true);
+            paint();}
+          else{ch3.querySelectorAll('.choice').forEach(function(x){x.classList.remove('wrong');});bt.classList.add('wrong');
+            fb3.className='feedback show miss';fb3.innerHTML='<strong>Not quite. Try again.</strong>Look at the slide: '+(iso.cat?'bubbles mean catalase is present.':'no bubbles means catalase is absent.');}
+        };
+        ch3.appendChild(bt);
+      });
+      s3.appendChild(ch3);
+      if(finished){fb3.className='feedback show';fb3.innerHTML='<strong>'+CALL[ans]+'.</strong>'+
+        (iso.cat?'Catalase positive. Coagulase and novobiocin (Section 2) would take it to species.'
+                :'Catalase negative. Hemolysis on blood agar (Section 3) is the next branch point.'+(iso.id==='C'?' A catalase-negative coccus from urine is a reminder that Enterococcus, colon flora and a common cause of urinary tract infection, sorts here too.':''));}
+      s3.appendChild(fb3);panel.appendChild(s3);
+    }
+  }
+  paint();
+  Act.register(name,{solve:function(){
+    ISO.forEach(function(i){mem[i.id].pred=i.arr;mem[i.id].drop=true;done_[i.id]=true;});
+    Act.keep(vkey,Object.assign({},done_));Act.done(name,true);paint();
+  }});
+})();
 
 Act.explore('act-staphTree', {name:'staphTree',
   start:'Click a box on the flowchart, starting at the top, to see what each stop means.',
@@ -1801,20 +1973,142 @@ Act.explore('act-staphTree', {name:'staphTree',
   '</svg>'
 });
 
-Act.sort('act-strepTree', {name:'strepTree', options:['S. pyogenes (group A)','S. agalactiae (group B)','S. pneumoniae','Viridans streptococci','Enterococcus'], rows:[
-  {text:'Beta-hemolytic; bacitracin-sensitive.', answer:'S. pyogenes (group A)',
-   why:'Bacitracin sensitivity is what separates group A from group B among the beta-hemolytic streptococci.'},
-  {text:'Beta-hemolytic; bacitracin-resistant; CAMP-positive.', answer:'S. agalactiae (group B)',
-   why:'Bacitracin resistance plus a positive CAMP test identifies group B strep.'},
-  {text:'Alpha-hemolytic; optochin-sensitive; capsule visible around gram-positive diplococci on Gram stain.', answer:'S. pneumoniae',
-   why:'Optochin sensitivity, plus a visible capsule, identifies S. pneumoniae.'},
-  {text:'Alpha-hemolytic; optochin-resistant.', answer:'Viridans streptococci',
-   why:'The viridans group shares alpha-hemolysis with pneumococcus but resists optochin.'},
-  {text:'Nonhemolytic (gamma); normal colon flora; a frequent cause of urinary tract infection and endocarditis.', answer:'Enterococcus',
-   why:'Gamma-hemolysis and a colon origin point to Enterococcus.'},
-  {text:'Colonizes the vagina and is screened for during pregnancy to prevent neonatal sepsis.', answer:'S. agalactiae (group B)',
-   why:'Group B strep is the reason for prenatal screening; a mother who screens positive receives antibiotics during labor.'}
-]});
+/* ---- Module 1 · Section 3: the blood agar bench (custom simulation) ----
+   Five catalase-negative, chain-forming isolates. Incubate on blood agar,
+   read the hemolysis, choose the confirmatory disk, then identify. */
+(function bloodAgarBench(){
+  var host=document.getElementById('act-strepTree'),name='strepTree',vkey=name+'_v';
+  if(!host)return;
+  var done_=Object.assign({},state.activities[vkey]||{});
+  var ORGS=['S. pyogenes (group A)','S. agalactiae (group B)','S. pneumoniae','Viridans streptococci','Enterococcus'];
+  var HEMO=[['beta','Beta: complete clearing around colonies'],['alpha','Alpha: partial, green-brown discoloration'],['gamma','Gamma: no change in the agar']];
+  var TESTS=[['bac','Bacitracin disk'],['opt','Optochin disk'],['none','No disk needed: hemolysis and source are enough']];
+  var ISO=[
+    {id:1,label:'Isolate 1',src:'Throat swab from a child with pharyngitis',hemo:'beta',test:'bac',sens:true,org:0,
+     end:'Beta-hemolytic and bacitracin-sensitive: group A strep, S. pyogenes.'},
+    {id:2,label:'Isolate 2',src:'Sputum from an adult with pneumonia',hemo:'alpha',test:'opt',sens:true,org:2,
+     end:'Alpha-hemolytic and optochin-sensitive: S. pneumoniae. On Gram stain it is a lancet-shaped diplococcus with a capsule.'},
+    {id:3,label:'Isolate 3',src:'Urine from a catheterized patient',hemo:'gamma',test:'none',sens:null,org:4,
+     end:'Nonhemolytic (gamma) and from the urinary tract: Enterococcus, normal colon flora and a frequent cause of urinary tract infection and endocarditis.'},
+    {id:4,label:'Isolate 4',src:'Prenatal vaginal-rectal screening swab',hemo:'beta',test:'bac',sens:false,org:1,
+     end:'Beta-hemolytic and bacitracin-resistant: group B strep, S. agalactiae. A positive CAMP test confirms it. A positive prenatal screen means antibiotics during labor.'},
+    {id:5,label:'Isolate 5',src:'Blood culture after a dental procedure',hemo:'alpha',test:'opt',sens:false,org:3,
+     end:'Alpha-hemolytic and optochin-resistant: viridans streptococci, oral flora linked to subacute endocarditis.'}
+  ];
+  var TESTHINT={
+    beta:'For a beta-hemolytic isolate, bacitracin separates group A (sensitive) from group B (resistant).',
+    alpha:'For an alpha-hemolytic isolate, optochin separates S. pneumoniae (sensitive) from the viridans group (resistant).',
+    gamma:'A gamma-hemolytic isolate needs no disk here. In this lecture, no hemolysis plus a colon or urinary source points to Enterococcus.'};
+  var mem={};ISO.forEach(function(i){mem[i.id]={inc:false,hemo:null,test:null,org:null};});
+  var cur=1;
+
+  /* deterministic colony positions inside the plate */
+  var COL=[],seed=31;
+  function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+  while(COL.length<46){var x=40+rnd()*240,y=40+rnd()*240;if(Math.pow(x-160,2)+Math.pow(y-160,2)<108*108)COL.push([x,y]);}
+  var DISK=[205,118];
+
+  function plateSVG(iso,m,showDisk){
+    var s='<svg viewBox="0 0 320 352" role="img" aria-label="Blood agar plate'+(m.inc?' with colonies':' before incubation')+'">'+
+      '<circle cx="160" cy="160" r="150" fill="#ECEFF1" stroke="#9AA7AE" stroke-width="3"/>'+
+      '<circle cx="160" cy="160" r="136" fill="#9E1B32"/>'+
+      '<circle cx="160" cy="160" r="136" fill="none" stroke="#7A1426" stroke-width="2"/>';
+    if(!m.inc)return s+'<text x="160" y="166" text-anchor="middle" font-size="15" font-weight="700" fill="#FCE3E7">Not yet incubated</text></svg>';
+    var zone=showDisk&&iso.sens===true;
+    COL.forEach(function(p){
+      var inZone=zone&&Math.pow(p[0]-DISK[0],2)+Math.pow(p[1]-DISK[1],2)<46*46;
+      if(inZone)return;
+      if(iso.hemo==='beta')s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="11" fill="#F6D9B4" fill-opacity=".85"/>';
+      if(iso.hemo==='alpha')s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="10" fill="#5E7A2E" fill-opacity=".7"/>';
+    });
+    COL.forEach(function(p){
+      var inZone=zone&&Math.pow(p[0]-DISK[0],2)+Math.pow(p[1]-DISK[1],2)<46*46;
+      if(inZone)return;
+      s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.6" fill="#F7F4EC" stroke="#CFC8B6" stroke-width="1"/>';
+    });
+    if(showDisk&&iso.test!=='none'){
+      if(zone)s+='<circle cx="'+DISK[0]+'" cy="'+DISK[1]+'" r="46" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 5"/>';
+      s+='<circle cx="'+DISK[0]+'" cy="'+DISK[1]+'" r="12" fill="#fff" stroke="#12333A" stroke-width="2"/>'+
+         '<text x="'+DISK[0]+'" y="'+(DISK[1]+5)+'" text-anchor="middle" font-size="13" font-weight="800" fill="#12333A">'+(iso.test==='bac'?'B':'O')+'</text>';
+      s+='<rect x="36" y="318" width="248" height="28" rx="14" fill="#fff" stroke="#BFDADD"/>'+
+         '<text x="160" y="337" text-anchor="middle" font-size="13" font-weight="800" fill="#12333A">'+(zone?'Zone of inhibition: sensitive':'Grows right up to the disk: resistant')+'</text>';
+    }
+    return s+'</svg>';
+  }
+  function paintChips(){
+    chips.innerHTML='';
+    ISO.forEach(function(i){
+      var b=el('button','act-chip'+(i.id===cur?' on':'')+(done_[i.id]?' done':''),i.label);b.type='button';
+      b.onclick=function(){cur=i.id;paint();};chips.appendChild(b);
+    });
+    var n=ISO.filter(function(i){return done_[i.id];}).length;
+    prog.textContent=n>=ISO.length?'All five isolates identified. ✓':n+' of 5 isolates identified.';
+  }
+  function choiceSet(opts,ansKey,picked,locked,onPick){
+    var box=el('div','choices');
+    opts.forEach(function(o,k){
+      var bt=el('button','choice','<span class="mark">'+LETTERS[k]+'</span>'+o[1]);bt.type='button';
+      if(locked){bt.disabled=true;if(o[0]===ansKey)bt.classList.add('right');}
+      else if(picked===o[0]&&o[0]!==ansKey)bt.classList.add('wrong');
+      bt.onclick=function(){if(!locked)onPick(o[0]);};
+      box.appendChild(bt);
+    });
+    return box;
+  }
+  var chips=el('div','act-chips'),panel=el('div'),prog=el('p','caption');
+  host.appendChild(chips);host.appendChild(panel);host.appendChild(prog);
+
+  function paint(){
+    paintChips();
+    var iso=ISO.filter(function(i){return i.id===cur;})[0],m=mem[cur],fin=!!done_[cur];
+    if(fin){m.inc=true;m.hemo=iso.hemo;m.test=iso.test;m.org=iso.org;}
+    var hemoOK=m.hemo===iso.hemo,testOK=m.test===iso.test;
+    panel.innerHTML='';
+    panel.appendChild(el('div','sim-step','<b>'+iso.label+'.</b> '+iso.src+'. Gram-positive cocci in chains or pairs, catalase negative.'));
+    var grid=el('div','sim-two'),left=el('div','figure sim-fig sim-plate'),right=el('div','sim-col');
+    left.innerHTML='<div class="sim-label">Blood agar plate</div>'+plateSVG(iso,m,testOK);
+    grid.appendChild(left);grid.appendChild(right);panel.appendChild(grid);
+
+    var s1=el('div','sim-block');s1.appendChild(el('p','q-stem','Step 1. Streak the isolate on blood agar and incubate overnight.'));
+    var inc=el('button','btn',m.inc?'Incubated':'Incubate overnight');inc.type='button';inc.disabled=m.inc;
+    inc.onclick=function(){m.inc=true;paint();};s1.appendChild(inc);right.appendChild(s1);
+    if(!m.inc)return;
+
+    var s2=el('div','sim-block');s2.appendChild(el('p','q-stem','Step 2. Read the hemolysis around the colonies.'));
+    s2.appendChild(choiceSet(HEMO,iso.hemo,m.hemo,hemoOK,function(k){m.hemo=k;paint();}));
+    if(m.hemo){var f2=el('div','feedback show'+(hemoOK?'':' miss'));
+      f2.innerHTML=hemoOK?'<strong>Read correctly.</strong>'+(iso.hemo==='beta'?'The red cells around each colony are completely lysed, so the agar clears.':iso.hemo==='alpha'?'The red cells are only partly lysed, leaving a green-brown discoloration.':'The agar around the colonies is unchanged.')
+                         :'<strong>Look again.</strong>Compare the color right around the colonies with the rest of the plate.';
+      s2.appendChild(f2);}
+    right.appendChild(s2);
+    if(!hemoOK)return;
+
+    var s3=el('div','sim-block');s3.appendChild(el('p','q-stem','Step 3. Choose the confirmatory test for this branch.'));
+    s3.appendChild(choiceSet(TESTS,iso.test,m.test,testOK,function(k){m.test=k;paint();}));
+    if(m.test){var f3=el('div','feedback show'+(testOK?'':' miss'));
+      f3.innerHTML=(testOK?'<strong>Right test.</strong>':'<strong>Not for this branch.</strong>')+TESTHINT[iso.hemo]+
+        (testOK&&iso.test!=='none'?' The disk is on the plate now: look for a clear zone around it.':'');
+      s3.appendChild(f3);}
+    right.appendChild(s3);
+    if(!testOK)return;
+
+    var s4=el('div','sim-block');s4.appendChild(el('p','q-stem','Step 4. Identify the organism.'));
+    s4.appendChild(choiceSet(ORGS.map(function(o,k){return [k,o];}),iso.org,m.org,fin,function(k){
+      m.org=k;
+      if(k===iso.org){done_[cur]=true;Act.keep(vkey,Object.assign({},done_));
+        if(ISO.every(function(i){return done_[i.id];})&&!state.activities[name])Act.done(name,true);}
+      paint();
+    }));
+    if(m.org!==null){var f4=el('div','feedback show'+(m.org===iso.org?'':' miss'));
+      f4.innerHTML=m.org===iso.org?'<strong>Identified.</strong>'+iso.end:'<strong>Not quite. Try again.</strong>Combine the hemolysis pattern with the disk result'+(iso.test==='none'?' and the source.':'.');
+      s4.appendChild(f4);}
+    right.appendChild(s4);
+  }
+  paint();
+  Act.register(name,{solve:function(){
+    ISO.forEach(function(i){done_[i.id]=true;});Act.keep(vkey,Object.assign({},done_));Act.done(name,true);paint();
+  }});
+})();
 
 /* ---- Module 2 activities ---- */
 Act.dnd('act-aureusMap', {name:'aureusMap', pills:['Protein A','TSST-1','Enterotoxin','Exfoliatin','Coagulase'], rows:[
@@ -1960,25 +2254,128 @@ Act.explore('act-anthraxDoors', {name:'anthraxDoors',
   '</svg>'
 });
 
-Act.sort('act-toxinChallenge', {name:'toxinChallenge',
-  options:['Botulism (flaccid paralysis)','Tetanus (spastic paralysis)','Gas gangrene (tissue destruction)'], rows:[
-  {text:'Blocks release of acetylcholine at the neuromuscular junction.', answer:'Botulism (flaccid paralysis)',
-   why:'Without acetylcholine release, muscles cannot contract, producing limp, descending paralysis.'},
-  {text:'Blocks release of the inhibitory neurotransmitters glycine and GABA in the spinal cord.', answer:'Tetanus (spastic paralysis)',
-   why:'Without inhibitory signals, motor neurons fire without their normal brakes.'},
-  {text:'Lecithinase (alpha toxin) destroys cell membranes directly.', answer:'Gas gangrene (tissue destruction)',
-   why:'This is a direct membrane-destroying mechanism, not a nervous-system effect.'},
-  {text:'Produces descending, limp paralysis.', answer:'Botulism (flaccid paralysis)',
-   why:'Classic botulism progresses from the cranial nerves downward.'},
-  {text:'Produces muscle spasms, lockjaw, and opisthotonos (an arched back).', answer:'Tetanus (spastic paralysis)',
-   why:'These are the hallmark findings of spastic paralysis from tetanus toxin.'},
-  {text:'Treated with penicillin G and surgical wound debridement.', answer:'Gas gangrene (tissue destruction)',
-   why:'Removing dead tissue is essential because antibiotics alone cannot reach avascular necrotic tissue.'},
-  {text:'Treated with antitoxin and respiratory support.', answer:'Botulism (flaccid paralysis)',
-   why:'Respiratory support matters because the paralysis can reach the muscles of breathing.'},
-  {text:'Metronidazole is preferred over penicillin, in part because penicillin may antagonize GABA.', answer:'Tetanus (spastic paralysis)',
-   why:'Penicillin\u2019s possible GABA antagonism works against the goal of restoring inhibitory tone.'}
-]});
+/* ---- Module 4 · Section 2: the toxin dose lab (predict, then manipulate a variable) ---- */
+(function toxinLab(){
+  var host=document.getElementById('act-toxinChallenge'),name='toxinChallenge',vkey=name+'_v';
+  if(!host)return;
+  var seen=Object.assign({},state.activities[vkey]||{});
+  var tox='none',dose=0,unlocked=false;
+  var TOX=[['none','No toxin'],['bot','Botulinum toxin'],['tet','Tetanus toxin'],['alpha','C. perfringens alpha toxin']];
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var step=el('div','sim-step'),row1=el('div','sim-row'),row2=el('div','sim-row'),
+      slider=document.createElement('input'),val=el('span','sim-val'),fig=el('div','figure sim-fig'),
+      bars=el('div','sim-bars'),msg=el('div','feedback show'),note=el('p','caption'),chips=el('div','act-chips');
+  slider.type='range';slider.min='0';slider.max='100';slider.step='10';slider.value='0';
+  slider.setAttribute('aria-label','Toxin dose');slider.style.flex='1 1 220px';
+  row1.innerHTML='<span class="sim-label">Toxin</span>';
+  var seg=el('div','sim-seg'),segBtns={};
+  TOX.forEach(function(t){var b=el('button',null,t[1]);b.type='button';b.onclick=function(){tox=t[0];if(tox==='none')dose=0;slider.value=String(dose);paint();};seg.appendChild(b);segBtns[t[0]]=b;});
+  row1.appendChild(seg);
+  row2.innerHTML='<span class="sim-label">Dose</span>';row2.appendChild(slider);row2.appendChild(val);
+  note.textContent='Teaching model: bar lengths and drawings show direction and relative size, not measured values.';
+  [step,row1,row2,fig,bars,msg,note,chips].forEach(function(x){lab.appendChild(x);});
+
+  function levels(){
+    var d=tox==='none'?0:dose;
+    return {ach:tox==='bot'?100-d:100, inh:tox==='tet'?100-d:100, mem:tox==='alpha'?100-d:100};
+  }
+  function tone(L){
+    if(L.ach<=40)return 'flaccid';
+    if(L.inh<=40)return 'spastic';
+    if(L.ach<=70)return 'weak';
+    if(L.inh<=70)return 'stiff';
+    return 'normal';
+  }
+  function dots(x0,y0,w,n,col){var s='',i;for(i=0;i<n;i++)s+='<circle cx="'+(x0+10+(i%5)*(w-20)/4).toFixed(1)+'" cy="'+(y0+(i<5?0:12))+'" r="4.5" fill="'+col+'"/>';return s;}
+  function vesicles(x0,y0,n,col){var s='',i;for(i=0;i<n;i++)s+='<circle cx="'+(x0+(i%5)*24)+'" cy="'+(y0+Math.floor(i/5)*18)+'" r="7" fill="#fff" stroke="'+col+'" stroke-width="2"/><circle cx="'+(x0+(i%5)*24)+'" cy="'+(y0+Math.floor(i/5)*18)+'" r="2.5" fill="'+col+'"/>';return s;}
+  function svg(){
+    var L=levels(),T=tone(L),nA=Math.round(L.ach/10),nI=Math.round(L.inh/10),s='';
+    /* four panels; on a narrow screen they stack in one column so the labels stay readable */
+    var N=window.innerWidth<=560;
+    function pg(dx,dy){return '<g'+(N&&(dx||dy)?' transform="translate('+dx+' '+dy+')"':'')+'>';}
+    s+=N?'<rect x="2" y="2" width="316" height="876" rx="14" fill="#FBFCFC" stroke="#E4EAEE"/>':'<rect x="2" y="2" width="636" height="416" rx="14" fill="#FBFCFC" stroke="#E4EAEE"/>';
+    /* panel A: neuromuscular junction */
+    s+=pg(0,0);
+    s+='<text x="160" y="26" text-anchor="middle" font-size="14" font-weight="800" fill="#12333A">Neuromuscular junction</text>'+
+       '<path d="M70 40 h180 a20 20 0 0 1 20 20 v40 a20 20 0 0 1 -20 20 h-180 a20 20 0 0 1 -20 -20 v-40 a20 20 0 0 1 20 -20z" fill="#E4EEF0" stroke="#12333A" stroke-width="2.5"/>'+
+       '<text x="160" y="56" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4A5C68">Motor neuron ending</text>'+
+       vesicles(112,72,10-nA,'#2E7A86')+dots(110,134,100,nA,'#2E7A86')+
+       '<rect x="60" y="152" width="200" height="40" rx="10" fill="#F6D2C8" stroke="#B23A1D" stroke-width="2.5"/>';
+    for(var k=0;k<9;k++)s+='<line x1="'+(78+k*21)+'" y1="156" x2="'+(78+k*21)+'" y2="188" stroke="#D98A75" stroke-width="2"/>';
+    s+='<text x="160" y="210" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4A5C68">Skeletal muscle</text>'+
+       '<text x="160" y="228" text-anchor="middle" font-size="12" font-weight="800" fill="#2E7A86">Acetylcholine released: '+L.ach+'%</text>';
+    if(tox==='bot'&&dose>0)s+='<text x="276" y="96" font-size="22" font-weight="900" fill="#D4536B">✕</text>';
+    /* panel B: spinal cord inhibitory synapse */
+    s+='</g>'+pg(-320,230);
+    s+='<text x="480" y="26" text-anchor="middle" font-size="14" font-weight="800" fill="#12333A">Spinal cord: inhibitory synapse</text>'+
+       '<path d="M390 40 h180 a20 20 0 0 1 20 20 v40 a20 20 0 0 1 -20 20 h-180 a20 20 0 0 1 -20 -20 v-40 a20 20 0 0 1 20 -20z" fill="#FFE3DA" stroke="#96301A" stroke-width="2.5"/>'+
+       '<text x="480" y="56" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4A5C68">Inhibitory interneuron ending</text>'+
+       vesicles(432,72,10-nI,'#B23A1D')+dots(430,134,100,nI,'#B23A1D')+
+       '<ellipse cx="480" cy="172" rx="92" ry="22" fill="#E4EEF0" stroke="#12333A" stroke-width="2.5"/>'+
+       '<text x="480" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#12333A">Motor neuron</text>'+
+       '<text x="480" y="228" text-anchor="middle" font-size="12" font-weight="800" fill="#B23A1D">Glycine and GABA released: '+L.inh+'%</text>';
+    if(tox==='tet'&&dose>0)s+='<text x="596" y="96" font-size="22" font-weight="900" fill="#D4536B">✕</text>';
+    /* panel C: muscle tone */
+    s+='</g>'+pg(0,210)+(N?'':'<line x1="20" y1="246" x2="620" y2="246" stroke="#E4EAEE" stroke-width="2"/>')+
+       '<text x="160" y="272" text-anchor="middle" font-size="14" font-weight="800" fill="#12333A">What the muscle does</text>';
+    var mus;
+    if(T==='flaccid')mus='<path d="M60 330 Q160 370 260 330 Q160 352 60 330z" fill="#F6E1DA" stroke="#B23A1D" stroke-width="2.5"/>';
+    else if(T==='weak')mus='<path d="M68 322 Q160 352 252 322 Q160 302 68 322z" fill="#F6D9CF" stroke="#B23A1D" stroke-width="2.5"/>';
+    else if(T==='spastic'){mus='<ellipse cx="160" cy="320" rx="58" ry="38" fill="#C8553D" stroke="#7A2512" stroke-width="3"/>';
+      for(var z=0;z<5;z++)mus+='<path d="M'+(118+z*18)+' 296 l6 10 -6 10 6 10 -6 10" fill="none" stroke="#FFE3DA" stroke-width="2"/>';}
+    else if(T==='stiff')mus='<ellipse cx="160" cy="320" rx="76" ry="30" fill="#D9705A" stroke="#7A2512" stroke-width="2.5"/>';
+    else mus='<ellipse cx="160" cy="320" rx="90" ry="24" fill="#F6D2C8" stroke="#B23A1D" stroke-width="2.5"/>';
+    var tl={normal:'Normal tone',weak:'Weakening: less acetylcholine reaches the muscle',flaccid:'Flaccid (limp) paralysis',stiff:'Stiffening: motor neurons losing their brakes',spastic:'Spastic paralysis: muscles locked in spasm'}[T];
+    s+=mus+'<text x="160" y="400" text-anchor="middle" font-size="12.5" font-weight="800" fill="'+(T==='normal'?'#1C7554':'#96301A')+'">'+tl+'</text>';
+    /* panel D: tissue cell membranes */
+    s+='</g>'+pg(-320,440);
+    s+='<text x="480" y="272" text-anchor="middle" font-size="14" font-weight="800" fill="#12333A">Tissue cell membranes</text>';
+    var dmg=Math.round((100-L.mem)/100*6),c;
+    for(c=0;c<6;c++){var cx=405+(c%3)*75,cy=304+Math.floor(c/3)*46,bad=c<dmg;
+      s+='<rect x="'+(cx-30)+'" y="'+(cy-20)+'" width="60" height="40" rx="14" fill="'+(bad?'#FDECEF':'#E4EEF0')+'" stroke="'+(bad?'#D4536B':'#12333A')+'" stroke-width="2.5"'+(bad?' stroke-dasharray="6 5"':'')+'/>';
+      s+=bad?'<circle cx="'+(cx+16)+'" cy="'+(cy-12)+'" r="5" fill="#fff" stroke="#D4536B" stroke-width="1.5"/><circle cx="'+(cx+24)+'" cy="'+(cy-24)+'" r="3.5" fill="#fff" stroke="#D4536B" stroke-width="1.5"/>':
+              '<circle cx="'+cx+'" cy="'+cy+'" r="7" fill="#BFDADD"/>';}
+    s+='<text x="480" y="400" text-anchor="middle" font-size="12.5" font-weight="800" fill="'+(dmg?'#96301A':'#1C7554')+'">'+(dmg?dmg+' of 6 cells lysed (gas bubbles shown)':'Membranes intact')+'</text>';
+    s+='</g>';
+    return '<svg viewBox="'+(N?'0 0 320 880':'0 0 640 420')+'" role="img" aria-label="Neuromuscular junction, spinal inhibitory synapse, muscle tone, and tissue cell membranes for the chosen toxin and dose">'+s+'</svg>';
+  }
+  function bar(label,v,col){
+    return '<div class="sim-bar"><span>'+label+'</span><span class="sim-track"><i style="width:'+v+'%;background:'+col+'"></i></span><b>'+v+'%</b></div>';
+  }
+  function paint(){
+    Object.keys(segBtns).forEach(function(k){segBtns[k].classList.toggle('on',k===tox);segBtns[k].disabled=!unlocked;});
+    slider.disabled=!unlocked||tox==='none';val.textContent=tox==='none'?'—':dose+'%';
+    step.innerHTML=!unlocked?'<b>Start here.</b> Answer the prediction above to unlock the lab.':
+      '<b>What to do.</b> Choose a toxin, then drag the dose slider up. Watch both synapses, the muscle, and the tissue cells. Push each of the three toxins to a high dose (70% or more) to finish.';
+    fig.innerHTML=svg();
+    var L=levels();
+    bars.innerHTML=bar('Acetylcholine release at the muscle',L.ach,'#2E7A86')+bar('Glycine and GABA release in the spinal cord',L.inh,'#B23A1D')+bar('Tissue cell membranes intact',L.mem,'#12333A');
+    var t,miss=false,hi=dose>=70;
+    if(tox==='none'||dose===0)t='<strong>No toxin.</strong>Acetylcholine tells the muscle to contract, and glycine and GABA keep motor neurons from overfiring. Both signals are normal, so tone is normal.';
+    else if(tox==='bot'){miss=true;t='<strong>Botulinum toxin blocks acetylcholine release.</strong>The muscle never gets the signal to contract, so weakness progresses to descending, flaccid (limp) paralysis. The spinal synapse is untouched.'+(hi?' <b>Treatment:</b> antitoxin and respiratory support, because the paralysis can reach the muscles of breathing.':'');}
+    else if(tox==='tet'){miss=true;t='<strong>Tetanus toxin blocks glycine and GABA release in the spinal cord.</strong>Motor neurons lose their brakes and fire without control, so the muscle locks in spasm: spastic paralysis, lockjaw, and opisthotonos. Acetylcholine release is normal.'+(hi?' <b>Treatment:</b> metronidazole is often preferred over penicillin, because penicillin may antagonize GABA.':'');}
+    else{miss=true;t='<strong>Alpha toxin (lecithinase) destroys cell membranes directly.</strong>Neither synapse is affected, so this is not a nerve toxin at all. Cells lyse and tissue dies: gas gangrene.'+(hi?' <b>Treatment:</b> penicillin G plus surgical debridement, because antibiotics cannot reach dead, avascular tissue.':'');}
+    msg.className='feedback show'+(miss?' miss':'');msg.innerHTML=t;
+    chips.innerHTML='';
+    [['bot','Botulinum at a high dose'],['tet','Tetanus at a high dose'],['alpha','Alpha toxin at a high dose']].forEach(function(c){chips.appendChild(el('span','act-chip'+(seen[c[0]]?' done':''),c[1]));});
+  }
+  function record(){
+    if(unlocked&&tox!=='none'&&dose>=70&&!seen[tox]){seen[tox]=true;Act.keep(vkey,Object.assign({},seen));}
+    if(seen.bot&&seen.tet&&seen.alpha&&!state.activities[name])Act.done(name,true);
+  }
+  slider.oninput=function(){dose=Number(slider.value);record();paint();};
+  paint();
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Botulinum toxin and tetanus toxin both stop a nerve ending from releasing its neurotransmitter. Why does one cause limp (flaccid) paralysis and the other rigid (spastic) paralysis?',
+    options:['They block different neurotransmitters: botulinum blocks acetylcholine at the muscle, and tetanus blocks the inhibitory signals glycine and GABA in the spinal cord',
+             'They block the same neurotransmitter, but tetanus toxin is given at a higher dose',
+             'Tetanus toxin destroys muscle cell membranes, while botulinum toxin acts on nerves',
+             'Botulinum toxin acts faster, so the muscle has no time to stiffen'],
+    answer:0,
+    why:'Same kind of action, opposite targets. Losing the go signal (acetylcholine) leaves the muscle limp; losing the brakes (glycine and GABA) leaves it in spasm. Test both, plus alpha toxin, below.'},
+    function(){unlocked=true;paint();});
+  Act.register(name,{solve:function(){gate.solve();['bot','tet','alpha'].forEach(function(t){tox=t;dose=80;slider.value='80';record();});paint();}});
+})();
 
 Act.order('act-cdiffCycle', {name:'cdiffCycle', items:[
   'Broad-spectrum antibiotics (such as clindamycin, fluoroquinolones, or cephalosporins) suppress the normal colon flora.',
@@ -2151,5 +2548,6 @@ Act.predict('act-integrativeLens', {name:'integrativeLens',
 initWelcome();
 </script>
 <script src="shared/engine.js"></script>
+<script src="shared/menu.js"></script>                 
 </body>
 </html>

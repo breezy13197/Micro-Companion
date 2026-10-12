@@ -124,12 +124,54 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
 
 /* figure text inside SVG uses the page font */
 .figure svg text{font-family:var(--font)}
+/* ---------- custom simulations (catalase, blood agar, toxin, acid-fast, resistance, RMSF clock) ----------
+   Uses only this companion's tokens: --green family = primary, --w-hl = highlight, --ok/--rose = right/wrong. */
+.sim-step{margin:4px 0 14px;padding:11px 14px;border-left:4px solid var(--w-hl);background:var(--w-hl-soft);border-radius:0 10px 10px 0;font-size:.92rem;color:var(--ink)}
+.sim-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.sim-label{font-size:.74rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.sim-row .sim-label{margin-bottom:0}
+.sim-val{font-weight:800;color:var(--green);min-width:4.5ch}
+.sim-seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.sim-seg button{border:0;background:transparent;padding:8px 14px;font-size:.86rem;color:var(--ink-mid);border-right:1.5px solid var(--line)}
+.sim-seg button:last-child{border-right:0}
+.sim-seg button.on{background:var(--green);color:#fff;font-weight:650}
+.sim-seg button:disabled{opacity:.45;cursor:not-allowed}
+.sim-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start;margin:4px 0}
+.sim-fig{margin:0 0 6px !important;padding:12px !important}
+.sim-fig svg,.sim-fig img{display:block;width:100%;height:auto}
+.sim-fig .mic-thumb{max-width:none}
+.sim-plate svg{max-width:340px;margin:0 auto}
+.sim-col{min-width:0}
+.sim-block{margin:0 0 14px}
+.sim-block .q-stem{margin-bottom:4px}
+.sim-block .choices{margin:8px 0}
+.sim-bars{display:grid;gap:8px;margin:12px 0}
+.sim-bar{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 3.5em;gap:10px;align-items:center;font-size:.86rem;color:var(--ink-mid);margin:8px 0}
+.sim-bar b{color:var(--ink);text-align:right}
+.sim-track{display:block;height:12px;border-radius:99px;background:#E9EEF1;overflow:hidden}
+.sim-track i{display:block;height:100%;border-radius:99px;transition:width .25s}
+.sim-reagents{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.sim-reagent{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px 8px 8px;font-weight:650;font-size:.9rem;color:var(--ink)}
+.sim-reagent i{width:24px;height:32px;border-radius:6px 6px 9px 9px;display:block;border:2px solid rgba(0,0,0,.2)}
+.sim-reagent:hover:not(:disabled){border-color:var(--green)}
+.sim-reagent.used{background:var(--ok-soft);border-color:var(--ok)}
+.sim-reagent:disabled{cursor:default}
+.sim-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.8rem;color:var(--ink-mid);margin:2px 0 6px}
+.sim-legend i{display:inline-block;width:16px;height:9px;border-radius:5px;margin-right:6px;vertical-align:1px}
+.sim-find{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:6px}
+.sim-find li{position:relative;padding:7px 10px 7px 30px;border:1.5px solid var(--line);border-radius:10px;font-size:.86rem;color:var(--ink-soft);background:#fff;margin:0}
+.sim-find li::before{content:"";position:absolute;left:10px;top:50%;width:11px;height:11px;margin-top:-5.5px;border-radius:50%;border:2px solid var(--line)}
+.sim-find li.on{color:var(--ink);border-color:var(--rose);background:var(--rose-soft);font-weight:600}
+.sim-find li.on::before{background:var(--rose);border-color:var(--rose)}
+.cb-bub{animation:cbRise 1.7s ease-in infinite;transform-box:fill-box}
+@keyframes cbRise{0%{transform:translateY(4px);opacity:0}15%{opacity:1}100%{transform:translateY(-34px);opacity:0}}
+@media (max-width:760px){.sim-two{grid-template-columns:1fr}.sim-bar{grid-template-columns:1fr 3.5em}.sim-bar .sim-track{grid-column:1/-1;grid-row:2}}
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="sidebar">
-    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <a class="back-to-hub" href="index.html"><span class="arrow">&larr;</span>Back to hub</a>
     <div class="brand">
       <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3" width="7" height="18" rx="3.5"/><path d="M8.5 9h-3M8.5 13h-3M15.5 9h3M15.5 13h3"/></svg></div>
       <div><div class="brand-title">Bacteria IV &middot; Outliers</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
@@ -252,7 +294,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
         <p>You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
         <ul class="checks">
           <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
-          <li><span><b>Interact.</b> Build a cell wall, branch a disease-progression pathway, or sort a case, then watch what your choices do.</span></li>
+          <li><span><b>Interact.</b> Run an acid-fast stain, treat a TB population with one drug or four, or let the days of an RMSF case pass, then watch what your choices do.</span></li>
           <li><span><b>Explain.</b> Every answer comes with the reasoning, not only right or wrong.</span></li>
           <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
           <li><span><b>Finish strong.</b> A cumulative Mastery Challenge unlocks once every module is complete.</span></li>
@@ -286,7 +328,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
     <div class="home-list">
     <button class="home-item" data-goto="m1s1">
       <span class="home-num">1</span>
-      <span class="home-body"><span class="home-title">Built to persist: the acid-fast wall</span><span class="home-desc">Build the mycobacterial envelope layer by layer.</span></span>
+      <span class="home-body"><span class="home-title">Built to persist: the acid-fast wall</span><span class="home-desc">Run an acid-fast stain, then strip the waxy layer and run it again.</span></span>
       <span class="home-status">Not started</span>
     </button><button class="home-item" data-goto="m1s2">
       <span class="home-num">2</span>
@@ -298,7 +340,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
       <span class="home-status">Not started</span>
     </button><button class="home-item" data-goto="m1s4">
       <span class="home-num">4</span>
-      <span class="home-body"><span class="home-title">Resistance lab</span><span class="home-desc">Predict what a resistance mutation does to therapy.</span></span>
+      <span class="home-body"><span class="home-title">Resistance lab</span><span class="home-desc">Treat a population with one drug or four, and watch which mutants take over.</span></span>
       <span class="home-status">Not started</span>
     </button><button class="home-item" data-goto="m1s5">
       <span class="home-num">5</span>
@@ -344,8 +386,8 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
   </div>
   <div class="card hands-card">
     <div class="eyebrow hands">Hands-on</div>
-    <h2>Build the mycobacterial envelope</h2>
-    <p class="try-note">Drag each layer name onto its position, from the cytoplasm out. On a phone or with a keyboard, tap a label first, then tap the row it belongs to.</p>
+    <h2>Run an acid-fast stain</h2>
+    <p class="try-note">Apply the reagents in order and predict the result before the acid-alcohol wash. Then run the stain again on M. tuberculosis with its mycolic acid layer stripped away. Complete both runs to finish.</p>
     <div id="act-mycoEnvelope"></div>
   </div>
   <div class="card">
@@ -459,8 +501,8 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
   </div>
   <div class="card hands-card">
     <div class="eyebrow hands">Hands-on</div>
-    <h2>Predict the consequence</h2>
-    <p class="try-note">Read each mutation, predict what it does to therapy, then reveal the answer.</p>
+    <h2>One drug or four? Treat the population</h2>
+    <p class="try-note">Make a prediction first. Then treat a population that already contains a few resistant mutants, month by month, with one drug and with four.</p>
     <div id="act-tbResistanceLab"></div>
   </div>
   <div class="card">
@@ -1223,8 +1265,8 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
   </div>
   <div class="card hands-card">
     <div class="eyebrow hands">Hands-on</div>
-    <h2>Advance the case day by day</h2>
-    <p class="try-note">At each point, decide what should happen next.</p>
+    <h2>Let the days pass, then decide when to treat</h2>
+    <p class="try-note">Drag the slider to move through the illness and watch the rash and the vessel damage change. Press the treatment button when you would start doxycycline, then compare an early start with a late one.</p>
     <div id="act-rmsfClock"></div>
   </div>
   <div class="card">
@@ -1628,18 +1670,141 @@ var MODULE_QUIZ_SIZE = 8;
    Module 1 activities — built with the shared Act toolkit.
    ============================================================ */
 
-Act.dnd('act-mycoEnvelope', {name:'mycoEnvelope',
-  pills:['Cytoplasmic membrane','Peptidoglycan layer','Arabinogalactan-mycolate layer','Mycolic acids / free lipids (outermost)'],
-  rows:[
-    {text:'Innermost layer, directly enclosing the cytoplasm', answer:'Cytoplasmic membrane',
-     why:'The cytoplasmic membrane is the innermost boundary of the cell, the same role it plays in every bacterium.'},
-    {text:'A structural layer just outside the membrane, present but much thinner than in most Gram-positive bacteria', answer:'Peptidoglycan layer',
-     why:'Mycobacteria do have peptidoglycan, but it is a minor structural layer here rather than the dominant wall component it is in a true Gram-positive cell.'},
-    {text:'A carbohydrate-lipid scaffold linking the peptidoglycan to the outer lipid layers', answer:'Arabinogalactan-mycolate layer',
-     why:'Arabinogalactan is covalently attached to the peptidoglycan on one side and to mycolic acids on the other, forming the bridge between the two.'},
-    {text:'The outermost, waxy layer that retains carbol fuchsin stain and resists acids, bases, and drying', answer:'Mycolic acids / free lipids (outermost)',
-     why:'This outermost lipid layer is what makes the organism acid-fast and gives it its unusual environmental resistance.'}
-  ]});
+/* ---- Module 1 · Section 1: run an acid-fast stain (custom simulation) ----
+   Reagents in order, a prediction before the acid-alcohol wash, then a second
+   run with the mycolic acid layer stripped. Same activity name as before
+   (mycoEnvelope), so the manifest and saved progress keep working. */
+(function acidFastLab(){
+  var host=document.getElementById('act-mycoEnvelope'),name='mycoEnvelope',vkey=name+'_v';
+  if(!host)return;
+  var prog=Object.assign({normal:false,stripped:false},state.activities[vkey]||{});
+  var STEPS=[
+    {id:'cf',label:'Carbol fuchsin (with gentle heat)',color:'#C2185B'},
+    {id:'acid',label:'Acid-alcohol',color:'#E9EEF3'},
+    {id:'mb',label:'Methylene blue',color:'#2E7DA8'}
+  ];
+  var HINT={
+    acid:'Not yet. The acid-alcohol wash removes a dye, so a dye has to go on first.',
+    mb:'Not yet. The blue counterstain goes on last, after the acid-alcohol wash.',
+    cf:'Carbol fuchsin, the red primary stain, goes on first.'};
+  var stripped=false,step=0,awaiting=false,predAns=null,shown;
+  function shuffled(){var s;do{s=shuffle(STEPS);}while(s.every(function(x,i){return x.id===STEPS[i].id;}));return s;}
+  shown=shuffled();
+
+  var intro=el('div','sim-step'),modeRow=el('div','sim-row'),fig=el('div','figure sim-fig'),
+      rg=el('div','sim-reagents'),predBox=el('div'),cap=el('div','act-cap'),ctl=el('div','controls'),
+      again=el('button','btn ghost','Run it again'),progP=el('p','caption');
+  again.type='button';ctl.appendChild(again);
+  modeRow.innerHTML='<span class="sim-label">Specimen</span>';
+  var seg=el('div','sim-seg'),bN=el('button',null,'Run 1: normal cells'),bS=el('button',null,'Run 2: mycolic acid layer stripped');
+  bN.type=bS.type='button';seg.appendChild(bN);seg.appendChild(bS);modeRow.appendChild(seg);
+  [intro,modeRow,fig,rg,predBox,cap,ctl,progP].forEach(function(x){host.appendChild(x);});
+
+  function colors(k){
+    var M={fill:'#F4F1EA',edge:'#B9BFC9'},O={fill:'#F4F1EA',edge:'#B9BFC9'};
+    var red={fill:'#C2185B',edge:'#8E1144'},clear={fill:'#F7F5EF',edge:'#C9CDD5'},blue={fill:'#2E7DA8',edge:'#1D5A7C'};
+    if(k>=1){M=red;O=red;}
+    if(k>=2){O=clear;M=stripped?clear:red;}
+    if(k>=3){O=blue;M=stripped?blue:red;}
+    return {M:M,O:O};
+  }
+  function svg(){
+    var N=window.innerWidth<=560;
+    var C=colors(step),s='<rect x="2" y="2" width="'+(N?316:636)+'" height="'+(N?436:226)+'" rx="14" fill="#F3F4F6" stroke="#DEE1E6"/>'+
+      '<text x="20" y="26" font-size="11" font-weight="700" fill="#7A8194" letter-spacing="1">GLASS SLIDE</text>';
+    /* M. tuberculosis rod with its waxy layer */
+    s+=N?'<g transform="translate(-10 0)">':'<g>';
+    s+='<g transform="rotate(-8 170 108)">';
+    if(!stripped)s+='<rect x="64" y="66" width="212" height="84" rx="42" fill="none" stroke="#E8930C" stroke-width="5" stroke-dasharray="4 5"/>';
+    s+='<rect x="76" y="78" width="188" height="60" rx="30" fill="'+C.M.fill+'" stroke="'+C.M.edge+'" stroke-width="4"/></g>';
+    s+='<text x="170" y="184" text-anchor="middle" font-size="13" font-weight="800" fill="#20242E">M. tuberculosis</text>'+
+       '<text x="170" y="202" text-anchor="middle" font-size="11.5" fill="#4B5262">'+(stripped?'mycolic acid layer removed':'dashed ring: waxy mycolic acid layer')+'</text>';
+    s+='</g>';
+    /* non-acid-fast rod */
+    s+=(N?'<g transform="translate(-314 210)">':'<g>')+'<rect x="380" y="80" width="188" height="60" rx="30" fill="'+C.O.fill+'" stroke="'+C.O.edge+'" stroke-width="4"/>'+
+       '<text x="474" y="184" text-anchor="middle" font-size="13" font-weight="800" fill="#20242E">Non-acid-fast cell</text>'+
+       '<text x="474" y="202" text-anchor="middle" font-size="11.5" fill="#4B5262">for example, E. coli</text></g>';
+    return '<svg viewBox="'+(N?'0 0 320 440':'0 0 640 230')+'" role="img" aria-label="Two rod-shaped cells on a slide, M. tuberculosis and a non-acid-fast cell, changing color at each staining step">'+s+'</svg>';
+  }
+  var CAP={
+    cf:'<strong>Carbol fuchsin.</strong> Gentle heat drives the red primary stain into both cells, including the waxy wall.',
+    acidN:'<strong>Acid-alcohol.</strong> The lipid-rich mycolic acid wall (about 60% lipid) holds on to carbol fuchsin, so M. tuberculosis stays red. The other cell loses the dye and turns colorless.',
+    acidS:'<strong>Acid-alcohol.</strong> Without its mycolic acid layer, M. tuberculosis can no longer hold the dye. It washes out, just like the other cell.',
+    mbN:'<strong>Methylene blue.</strong> The counterstain colors the decolorized cell blue. <b>Result:</b> red means acid-fast, blue means not acid-fast.',
+    mbS:'<strong>Methylene blue.</strong> Both cells are now blue. The mycolic acid layer is what makes M. tuberculosis acid-fast.'
+  };
+  function paintButtons(){
+    rg.innerHTML='';
+    shown.forEach(function(s){
+      var i=STEPS.indexOf(s),b=el('button','sim-reagent'+(i<step?' used':''),'<i style="background:'+s.color+'"></i>'+s.label);
+      b.type='button';b.disabled=i<step;b.onclick=function(){press(s.id);};rg.appendChild(b);
+    });
+  }
+  function paint(){
+    bN.classList.toggle('on',!stripped);bS.classList.toggle('on',stripped);bS.disabled=!prog.normal;
+    intro.innerHTML=!prog.normal
+      ?'<b>Run 1.</b> Apply the three reagents in the correct order. The bottles are listed in random order. You will make a prediction before the acid-alcohol wash.'
+      :(!prog.stripped?'<b>Run 2.</b> Choose <b>Run 2</b> above to repeat the stain on M. tuberculosis with its mycolic acid layer stripped away.':'<b>Both runs complete.</b> Switch runs to repeat either one.');
+    fig.innerHTML=svg();paintButtons();
+    if(step===0)cap.innerHTML='The slide is fixed and unstained. Choose the first reagent.';
+    else if(step===1)cap.innerHTML=CAP.cf;
+    else if(step===2)cap.innerHTML=stripped?CAP.acidS:CAP.acidN;
+    else cap.innerHTML=stripped?CAP.mbS:CAP.mbN;
+    progP.textContent='Run 1 (normal): '+(prog.normal?'done ✓':'not yet')+'. Run 2 (layer stripped): '+(prog.stripped?'done ✓':'not yet')+'.';
+  }
+  function apply(){
+    step++;
+    if(step===3){
+      if(stripped)prog.stripped=true;else prog.normal=true;
+      Act.keep(vkey,{normal:prog.normal,stripped:prog.stripped});
+      if(prog.normal&&prog.stripped&&!state.activities[name])Act.done(name,true);
+    }
+    paint();
+  }
+  function press(id){
+    if(awaiting||step>=3)return;
+    if(id!==STEPS[step].id){cap.innerHTML='<strong>'+HINT[id]+'</strong>';return;}
+    if(id==='acid'){predict();return;}
+    apply();
+  }
+  function predict(){
+    awaiting=true;predBox.innerHTML='';
+    var g=el('div','act-gate');
+    g.appendChild(el('p','q-stem',stripped
+      ?'Predict: with the mycolic acid layer removed, what happens to M. tuberculosis in the acid-alcohol wash?'
+      :'Predict: after the acid-alcohol wash, which cell keeps the red carbol fuchsin?'));
+    var opts=stripped
+      ?[['ok','It loses the red dye, like the non-acid-fast cell'],['no','It stays red, because acid-fastness comes from the cytoplasm']]
+      :[['ok','M. tuberculosis, because its lipid-rich mycolic acid wall holds the dye'],['no','The non-acid-fast cell, because its thinner wall traps the dye']];
+    var ch=el('div','choices'),fb=el('div','feedback');
+    shuffle(opts).forEach(function(o){
+      var b=el('button','choice',o[1]);b.type='button';
+      b.onclick=function(){
+        var right=o[0]==='ok';
+        ch.querySelectorAll('.choice').forEach(function(x){x.disabled=true;});
+        b.classList.add(right?'right':'wrong');
+        fb.className='feedback show'+(right?'':' miss');
+        fb.innerHTML='<strong>'+(right?'Good prediction.':'Not quite.')+'</strong> Look at the slide to check what happens.';
+        awaiting=false;apply();
+      };
+      ch.appendChild(b);
+    });
+    g.appendChild(ch);g.appendChild(fb);predBox.appendChild(g);
+  }
+  function restart(strip){stripped=strip;step=0;awaiting=false;predBox.innerHTML='';shown=shuffled();paint();}
+  bN.onclick=function(){restart(false);};
+  bS.onclick=function(){if(prog.normal)restart(true);};
+  again.onclick=function(){restart(stripped);};
+  if(state.activities[name]===true)step=3;
+  paint();
+  Act.register(name,{solve:function(){
+    [false,true].forEach(function(strip){
+      restart(strip);press('cf');press('acid');
+      Array.prototype.forEach.call(predBox.querySelectorAll('.choice'),function(c){if(/holds the dye|loses the red dye/.test(c.textContent))c.click();});
+      press('mb');
+    });
+  }});
+})();
 
 Act.stages('act-tbProgression', {name:'tbProgression', stages:[
   {lead:'Airborne droplet nuclei reach the alveoli, where bacilli are engulfed by alveolar macrophages.',
@@ -1672,18 +1837,96 @@ Act.dnd('act-tbRegimenBuilder', {name:'tbRegimenBuilder',
      why:'Ethambutol targets arabinogalactan synthesis, disrupting the same wall scaffold explored in the envelope activity.'}
   ]});
 
-Act.predict('act-tbResistanceLab', {name:'tbResistanceLab', items:[
-  {id:'kat', title:'Catalase-peroxidase mutation',
-   prompt:'A strain acquires a mutation in the gene for catalase-peroxidase (KatG). What is the most likely therapeutic consequence?',
-   options:['Resistance to isoniazid, since this enzyme is required to activate the drug','Resistance to rifampin','Increased susceptibility to beta-lactams','Loss of acid-fast staining'],
-   answer:0,
-   why:'KatG converts isoniazid into its active form. Disable the enzyme, and the prodrug is never activated \u2014 the strain becomes resistant to isoniazid specifically, not to the other first-line drugs.'},
-  {id:'mycolic', title:'Mycolic-acid-synthesis mutation',
-   prompt:'A separate strain mutates a gene involved directly in mycolic acid synthesis. What is the most likely consequence?',
-   options:['Reduced susceptibility to isoniazid, which targets this pathway','Reduced susceptibility to rifampin only','Complete loss of the cell wall','Increased susceptibility to every first-line drug'],
-   answer:0,
-   why:'Isoniazid\u2019s target is mycolic acid synthesis itself, so a mutation anywhere in that pathway can blunt the drug\u2019s effect, independent of the katG activation step.'}
-]});
+/* ---- Module 1 · Section 4: the resistance lab (predict, then treat a population) ---- */
+(function resistanceLab(){
+  var host=document.getElementById('act-tbResistanceLab'),name='tbResistanceLab',vkey=name+'_v';
+  if(!host)return;
+  var prog=Object.assign({inh:0,rif:0,combo:0},state.activities[vkey]||{});
+  var REG={inh:'Isoniazid alone',rif:'Rifampin alone',combo:'Four drugs: INH + RIF + PZA + EMB'};
+  var reg='inh',unlocked=false,P,hist,round;
+  function reset(){P={S:96,I:2,R:2};hist=[{tot:100,res:4}];round=0;}
+  reset();
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var step=el('div','sim-step'),row=el('div','sim-row'),fig=el('div','figure sim-fig'),legend=el('div','sim-legend'),
+      msg=el('div','feedback show'),ctl=el('div','controls'),go=el('button','btn','Give one month of treatment'),
+      rs=el('button','btn ghost','Start over'),note=el('p','caption'),chips=el('div','act-chips');
+  go.type=rs.type='button';ctl.appendChild(go);ctl.appendChild(rs);
+  row.innerHTML='<span class="sim-label">Regimen</span>';
+  var seg=el('div','sim-seg'),segB={};
+  Object.keys(REG).forEach(function(k){var b=el('button',null,REG[k]);b.type='button';b.onclick=function(){reg=k;reset();paint();};seg.appendChild(b);segB[k]=b;});
+  row.appendChild(seg);
+  legend.innerHTML='<span><i style="background:#8FA0BF"></i>Susceptible to all four drugs</span><span><i style="background:#E8930C"></i>katG mutant: resists isoniazid</span><span><i style="background:#5B3D9E"></i>Mutant that resists rifampin</span><span><i style="background:#fff;border:1.5px solid #C9CCD3"></i>Empty space</span>';
+  note.textContent='Teaching model: 100 dots stand for a population that, in a real patient, is far larger. Each month the drugs kill most cells they can act on, and survivors double.';
+  [step,row,fig,legend,ctl,msg,chips,note].forEach(function(x){lab.appendChild(x);});
+
+  function resists(cell){ /* cell: 'S','I','R' */
+    if(reg==='inh')return cell==='I';
+    if(reg==='rif')return cell==='R';
+    return false; /* combination: each single mutant is still killed by another drug */
+  }
+  function treat(){
+    ['S','I','R'].forEach(function(c){if(!resists(c))P[c]*=0.1;});
+    var tot=P.S+P.I+P.R,g=Math.min(2,tot>0?100/tot:2);
+    ['S','I','R'].forEach(function(c){P[c]*=g;});
+    round++;
+    var res=reg==='inh'?P.I:reg==='rif'?P.R:0;
+    hist.push({tot:P.S+P.I+P.R,res:reg==='combo'?0:res});
+    if(round>prog[reg]){prog[reg]=round;Act.keep(vkey,{inh:prog.inh,rif:prog.rif,combo:prog.combo});}
+    if(prog.inh>=3&&prog.combo>=3&&!state.activities[name])Act.done(name,true);
+  }
+  function svg(){
+    var N=window.innerWidth<=560,VW=N?320:640,VH=N?520:360;
+    var s='<rect x="2" y="2" width="'+(VW-4)+'" height="'+(VH-4)+'" rx="14" fill="#F8F9FA" stroke="#DEE1E6"/>',i;
+    var nS=Math.round(P.S),nI=Math.round(P.I),nR=Math.round(P.R);
+    if(nS+nI+nR===0&&(P.S+P.I+P.R)>0.05)nS=1;
+    var cells=[];for(i=0;i<nI;i++)cells.push('I');for(i=0;i<nR;i++)cells.push('R');for(i=0;i<nS;i++)cells.push('S');
+    var COL={S:['#8FA0BF','#5D6E8F'],I:['#E8930C','#A86600'],R:['#5B3D9E','#3E2A73']};
+    for(i=0;i<100;i++){
+      var cx=N?34+(i%10)*28:30+(i%25)*24.2,cy=N?24+Math.floor(i/10)*22:26+Math.floor(i/25)*26,c=cells[i];
+      s+=c?'<rect x="'+(cx-9)+'" y="'+(cy-5)+'" width="18" height="10" rx="5" fill="'+COL[c][0]+'" stroke="'+COL[c][1]+'" stroke-width="1.5"/>'
+          :'<rect x="'+(cx-9)+'" y="'+(cy-5)+'" width="18" height="10" rx="5" fill="#fff" stroke="#DEE1E6" stroke-width="1.5"/>';
+    }
+    /* chart */
+    var x0=N?44:60,y0=N?470:318,W=N?256:520,H=N?170:170,LX=N?60:420,LY=N?y0-H-36:y0-H+2;
+    s+='<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+W)+'" y2="'+y0+'" stroke="#9AA2B1"/><line x1="'+x0+'" y1="'+(y0-H)+'" x2="'+x0+'" y2="'+y0+'" stroke="#9AA2B1"/>'+
+       '<text x="'+(x0-8)+'" y="'+(y0+4)+'" text-anchor="end" font-size="11" fill="#7A8194">0</text><text x="'+(x0-8)+'" y="'+(y0-H+4)+'" text-anchor="end" font-size="11" fill="#7A8194">100</text>'+
+       '<text x="'+(x0+W/2)+'" y="'+(y0+32)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4B5262">months of treatment</text>';
+    for(i=0;i<=6;i++)s+='<text x="'+(x0+i*W/6)+'" y="'+(y0+16)+'" text-anchor="middle" font-size="11" fill="#7A8194">'+i+'</text>';
+    function line(key,col,dash){var pts=hist.map(function(h,k){return (x0+k*W/6).toFixed(1)+','+(y0-Math.min(100,h[key])/100*H).toFixed(1);}).join(' ');
+      return '<polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="3.5" stroke-linejoin="round"'+(dash?' stroke-dasharray="7 5"':'')+'/>'+
+        hist.map(function(h,k){return '<circle cx="'+(x0+k*W/6).toFixed(1)+'" cy="'+(y0-Math.min(100,h[key])/100*H).toFixed(1)+'" r="4" fill="'+col+'"/>';}).join('');}
+    s+=line('tot','#262B36',false)+line('res','#E8930C',true);
+    s+='<g font-size="11.5" font-weight="700"><line x1="'+LX+'" y1="'+LY+'" x2="'+(LX+24)+'" y2="'+LY+'" stroke="#262B36" stroke-width="3.5"/><text x="'+(LX+30)+'" y="'+(LY+4)+'" fill="#20242E">All bacilli</text>'+
+       '<line x1="'+LX+'" y1="'+(LY+18)+'" x2="'+(LX+24)+'" y2="'+(LY+18)+'" stroke="#E8930C" stroke-width="3.5" stroke-dasharray="7 5"/><text x="'+(LX+30)+'" y="'+(LY+22)+'" fill="#20242E">Resistant to the regimen</text></g>';
+    return '<svg viewBox="0 0 '+VW+' '+VH+'" role="img" aria-label="One hundred TB bacilli colored by resistance, above a chart of total and resistant bacilli across months of treatment">'+s+'</svg>';
+  }
+  function paint(){
+    Object.keys(segB).forEach(function(k){segB[k].classList.toggle('on',k===reg);segB[k].disabled=!unlocked;});
+    go.disabled=!unlocked||round>=6;rs.disabled=!unlocked;
+    step.innerHTML=!unlocked?'<b>Start here.</b> Answer the prediction above to unlock the lab.':
+      '<b>What to do.</b> The population starts with 96 susceptible bacilli and a few spontaneous mutants. Choose a regimen and give at least three months of treatment. Do this for <b>isoniazid alone</b> and for <b>the four-drug regimen</b>.';
+    fig.innerHTML=svg();
+    var tot=P.S+P.I+P.R,t,miss=false;
+    if(!unlocked)t='Answer the prediction above to unlock the lab.';
+    else if(round===0)t='<strong>Month 0.</strong> The mutants were already there before any drug was given. Resistance in M. tuberculosis comes from chromosomal mutation; this organism has no plasmids.';
+    else if(reg==='inh'){miss=true;t='<strong>After '+round+' month'+(round>1?'s':'')+' of isoniazid alone:</strong> '+Math.round(P.I)+' of '+Math.round(tot)+' bacilli are katG mutants. Without catalase-peroxidase (KatG), they cannot activate isoniazid, so the drug never touches them. Isoniazid removed their competition, and they took over.';}
+    else if(reg==='rif'){miss=true;t='<strong>After '+round+' month'+(round>1?'s':'')+' of rifampin alone:</strong> the rifampin-resistant mutants survive and take over. One drug, one escape route.';}
+    else t='<strong>After '+round+' month'+(round>1?'s':'')+' of four drugs:</strong> '+(tot<0.5?'the population is nearly gone.':'only about '+Math.round(tot)+' of 100 remain.')+' Each mutant resists only one drug, so the other drugs still kill it. Surviving would take two separate chromosomal mutations in the same cell; resistance to both isoniazid and rifampin is what defines MDR-TB.';
+    msg.className='feedback show'+(miss?' miss':'');msg.innerHTML=t;
+    chips.innerHTML='';
+    [['inh','Isoniazid alone: 3 months'],['combo','Four drugs: 3 months']].forEach(function(c){chips.appendChild(el('span','act-chip'+(prog[c[0]]>=3?' done':''),c[1]));});
+  }
+  go.onclick=function(){if(round<6){treat();paint();}};
+  rs.onclick=function(){reset();paint();};
+  paint();
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'A patient has active pulmonary TB with a very large population of bacilli. A few of those bacilli already carry a katG mutation. If isoniazid is given alone for several months, what happens?',
+    options:['The katG mutants survive and take over the population','Isoniazid kills the mutants too, only more slowly','The mutants pass a resistance plasmid to the other bacilli','Nothing changes, because mutations do not affect treatment'],
+    answer:0,
+    why:'katG mutants cannot activate isoniazid, so isoniazid alone kills everything except them. That is why active TB is never treated with a single drug.'},
+    function(){unlocked=true;paint();});
+  Act.register(name,{solve:function(){gate.solve();['inh','combo'].forEach(function(r){reg=r;reset();treat();treat();treat();});paint();}});
+})();
 
 Act.dnd('act-tbMacLeprosySort', {name:'tbMacLeprosySort',
   pills:['M. tuberculosis','MAC (M. avium-intracellulare)','M. leprae'],
@@ -1935,23 +2178,90 @@ Act.order('act-endotheliumToRash', {name:'endotheliumToRash', items:[
   '<b>Systemic manifestations.</b> The resulting rash, headache, and, in severe cases, edema or circulatory collapse follow directly from this vascular injury.'
 ]});
 
-Act.stages('act-rmsfClock', {name:'rmsfClock', stages:[
-  {lead:'Day 1-2: A patient who was recently hiking develops sudden fever, severe headache, and myalgia. No rash is present yet.',
-   prompt:'What should happen at this point?',
-   options:['Begin doxycycline empirically based on history and exam; do not wait for the rash','Wait for the rash to appear before starting any treatment','Order a rickettsial antibody titer and wait for results before treating','Reassure the patient that this is a normal viral illness'],
-   answer:0,
-   why:'Waiting for the rash to appear before treating Rocky Mountain spotted fever can delay therapy dangerously. Doxycycline should be started empirically based on the clinical picture and exposure history alone.'},
-  {lead:'Day 3-4: The patient did not receive treatment. A maculopapular rash now appears, starting on the wrists and ankles.',
-   prompt:'What does this rash timing tell you?',
-   options:['This is the expected 2-6 day delay between fever onset and rash in RMSF, and treatment is now overdue','This rules out RMSF, since the rash should have appeared on day 1','This is now a different diagnosis entirely','No further action is needed since the rash has appeared'],
-   answer:0,
-   why:'The rash of RMSF classically follows fever onset by 2 to 6 days. By the time it appears, treatment is already overdue and should be started immediately.'},
-  {lead:'Day 6-7: Still untreated, the patient develops confusion and signs of disseminated intravascular coagulation.',
-   prompt:'What does this progression represent?',
-   options:['Severe, potentially fatal disease from ongoing vascular injury and delayed treatment','A normal resolution phase that requires no further intervention','A separate, unrelated infection','Evidence that antibiotics would no longer help'],
-   answer:0,
-   why:'Untreated RMSF can progress to severe, life-threatening disease with CNS changes and DIC, driven by the same vascular injury that started days earlier \u2014 doxycycline remains the appropriate treatment even at this stage, and earlier treatment prevents ever reaching it.'}
-]});
+/* ---- Module 5 · Section 2: the RMSF clinical clock (manipulate time, decide when to treat) ---- */
+(function rmsfClock(){
+  var host=document.getElementById('act-rmsfClock'),name='rmsfClock',vkey=name+'_v';
+  if(!host)return;
+  var seen=Object.assign({},state.activities[vkey]||{});
+  var INJ=[0,6,12,22,34,46,58,70,80,88,94];
+  var day=1,treated=null;
+  var step=el('div','sim-step'),row=el('div','sim-row'),slider=document.createElement('input'),val=el('span','sim-val'),
+      grid=el('div','sim-two'),fig=el('div','figure sim-fig'),side=el('div','sim-col'),
+      ctl=el('div','controls'),tx=el('button','btn','Start doxycycline today'),rs=el('button','btn ghost','Reset the case'),
+      msg=el('div','feedback'),note=el('p','caption'),chips=el('div','act-chips');
+  slider.type='range';slider.min='1';slider.max='10';slider.step='1';slider.value='1';slider.style.flex='1 1 220px';
+  slider.setAttribute('aria-label','Days since the fever began');
+  row.innerHTML='<span class="sim-label">Days since fever began</span>';row.appendChild(slider);row.appendChild(val);
+  tx.type=rs.type='button';ctl.appendChild(tx);ctl.appendChild(rs);
+  grid.appendChild(fig);grid.appendChild(side);
+  step.innerHTML='<b>The case.</b> A patient went hiking last week and found a tick afterward. Now they have a sudden fever, a severe headache, and muscle aches. Move the slider to let the days pass, and press <b>Start doxycycline today</b> when you decide to treat. Run the case twice: once treating before the rash (day 1 or 2), and once waiting until day 5 or later.';
+  note.textContent='Teaching model: the injury meter and the spread of the rash show the sequence described in the lecture, not exact timing for any one patient.';
+  [step,row,grid,ctl,msg,chips,note].forEach(function(x){host.appendChild(x);});
+
+  function effDay(){return treated?Math.min(day,treated):day;}
+  function injury(){
+    if(!treated||day<=treated)return INJ[day];
+    return Math.round(INJ[treated]*Math.max(.25,1-.2*(day-treated)));
+  }
+  function bodySVG(){
+    var d=effDay(),spots=[],s='';
+    var WR=[[180,204],[190,214],[330,204],[340,214],[228,330],[238,338],[282,330],[292,338]];
+    var LIMB=[[184,136],[188,168],[332,136],[336,168],[232,268],[238,296],[284,268],[290,296]];
+    var TRUNK=[[240,122],[282,140],[252,172],[292,190],[262,214],[185,234],[335,234],[232,354],[288,354]];
+    if(d>=3)spots=spots.concat(WR);
+    if(d>=4)spots=spots.concat(LIMB);
+    if(d>=5)spots=spots.concat(TRUNK);
+    s+='<g fill="#ECEDF0" stroke="#C9CCD3" stroke-width="3">'+
+       '<circle cx="260" cy="48" r="30"/><rect x="249" y="76" width="22" height="18" rx="6"/>'+
+       '<rect x="210" y="92" width="100" height="142" rx="30"/>'+
+       '<rect x="170" y="100" width="30" height="122" rx="15"/><rect x="320" y="100" width="30" height="122" rx="15"/>'+
+       '<circle cx="185" cy="234" r="12"/><circle cx="335" cy="234" r="12"/>'+
+       '<rect x="216" y="238" width="38" height="108" rx="16"/><rect x="266" y="238" width="38" height="108" rx="16"/>'+
+       '<ellipse cx="232" cy="354" rx="21" ry="9"/><ellipse cx="288" cy="354" rx="21" ry="9"/></g>';
+    spots.forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5.5" fill="#D4536B" fill-opacity=".85"/>';});
+    s+='<text x="300" y="30" font-size="13" font-weight="800" fill="#B0342F">Fever</text>';
+    if(treated)s+='<rect x="324" y="330" width="190" height="34" rx="17" fill="#E7F6EF" stroke="#2FA97A" stroke-width="2"/><text x="419" y="352" text-anchor="middle" font-size="13" font-weight="800" fill="#1C7554">Doxycycline started day '+treated+'</text>';
+    return '<svg viewBox="120 0 400 380" role="img" aria-label="Body outline showing the rash on day '+day+(d>=3?', with spots starting at the wrists and ankles':', no rash yet')+'">'+s+'</svg>';
+  }
+  function findings(){
+    var d=effDay();
+    var F=[['Fever, severe headache, muscle aches',d>=1],['Rash at the wrists and ankles',d>=3],['Rash spreading toward the trunk, palms, and soles',d>=5],['Confusion (central nervous system changes)',d>=6],['Edema and signs of DIC',d>=7]];
+    return '<div class="sim-label">Findings so far</div><ul class="sim-find">'+F.map(function(f){return '<li class="'+(f[1]?'on':'')+'">'+f[0]+'</li>';}).join('')+'</ul>';
+  }
+  function paint(){
+    val.textContent='Day '+day;
+    fig.innerHTML=bodySVG();
+    var inj=injury();
+    side.innerHTML=findings()+'<div class="sim-bar"><span>Damage to small blood vessels</span><span class="sim-track"><i style="width:'+inj+'%;background:'+(inj>55?'#D4536B':inj>25?'#E8930C':'#2FA97A')+'"></i></span><b>'+inj+'%</b></div>';
+    tx.disabled=!!treated;
+    var t='',cls='feedback show';
+    if(treated){
+      if(treated<=2)t='<strong>Treated on day '+treated+', before any rash.</strong>This is the standard of care. Doxycycline starts on clinical suspicion and exposure history alone, without waiting for the rash or lab confirmation, and even in children.';
+      else if(treated<=4){cls+=' miss';t='<strong>Treated on day '+treated+', after the rash appeared.</strong>The rash follows fever by 2 to 6 days, so waiting for it delayed therapy while the vessels kept leaking. Better than waiting longer, but overdue.';}
+      else{cls+=' miss';t='<strong>Treated on day '+treated+'.</strong>Vascular injury had already progressed'+(treated>=6?', with confusion'+(treated>=7?' and signs of DIC':''):'')+'. Doxycycline is still the right drug at this stage, but earlier treatment would have stopped the injury before it got here.';}
+      if(day>treated)t+=' Move the slider forward: after treatment the damage stops climbing and begins to recover.';
+    }else if(day<=2)t='<strong>Day '+day+'.</strong>No rash yet. Decide: treat now, or keep watching?';
+    else if(day<=5)t='<strong>Day '+day+'.</strong>The rash has appeared and is spreading. Every day without treatment, more small blood vessels are injured.';
+    else{cls+=' miss';t='<strong>Day '+day+', still untreated.</strong>Leaky vessels are now causing systemic damage: confusion'+(day>=7?', edema, and disseminated intravascular coagulation':'')+'. Untreated RMSF can lead to circulatory collapse.';}
+    msg.className=cls;msg.innerHTML=t;
+    chips.innerHTML='';
+    [['early','Treated before the rash (day 1 or 2)'],['late','Treated late (day 5 or later)']].forEach(function(c){chips.appendChild(el('span','act-chip'+(seen[c[0]]?' done':''),c[1]));});
+  }
+  slider.oninput=function(){day=Number(slider.value);paint();};
+  tx.onclick=function(){
+    if(treated)return;treated=day;
+    var k=treated<=2?'early':treated>=5?'late':null;
+    if(k&&!seen[k]){seen[k]=true;Act.keep(vkey,Object.assign({},seen));}
+    if(seen.early&&seen.late&&!state.activities[name])Act.done(name,true);
+    paint();
+  };
+  rs.onclick=function(){treated=null;day=1;slider.value='1';paint();};
+  paint();
+  Act.register(name,{solve:function(){
+    rs.onclick();slider.value='2';slider.oninput();tx.onclick();
+    rs.onclick();slider.value='6';slider.oninput();tx.onclick();
+  }});
+})();
 
 Act.dnd('act-vectorMatch', {name:'vectorMatch',
   pills:['Rickettsia rickettsii','Ehrlichia chaffeensis','Anaplasma phagocytophilum','Coxiella burnetii'],
@@ -2096,5 +2406,6 @@ Act.fill('act-finalRecap', {name:'finalRecap',
 initWelcome();
 </script>
 <script src="shared/engine.js"></script>
+<script src="shared/menu.js"></script>   
 </body>
 </html>

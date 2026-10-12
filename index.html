@@ -1414,7 +1414,7 @@ function renderDash(){
   if(HUB.missing.length){
     M.appendChild(el("div",{class:"note bad", text:
       "These files did not load: " + HUB.missing.join(", ") +
-      ". Check that each one sits in the banks folder next to hub.html, spelled exactly the same way."}));
+      ". Check that each one sits in the banks folder next to index.html, spelled exactly the same way."}));
   }
   HUB.topics.forEach(function(t){
     if(t.id !== "hub" && !t.manifest){
@@ -2942,11 +2942,12 @@ window.addEventListener("beforeunload", function(e){
 });
 if(!HUB.topics.length){
   $("main").innerHTML = '<div class="card pad"><div class="empty"><strong>No question banks loaded</strong>' +
-    '<span>hub.html expects a folder called <code>banks</code> sitting next to it, holding each companion’s ' +
+    '<span>index.html expects a folder called <code>banks</code> sitting next to it, holding each companion’s ' +
     '<code>.js</code> bank file and its <code>.manifest.js</code> file. None of them were found.</span></div></div>';
 } else {
   render();
 }
 </script>
+<script src="shared/menu.js"></script>
 </body>
 </html>
