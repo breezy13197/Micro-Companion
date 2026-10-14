@@ -853,5 +853,350 @@ var POOL = [
     options:['It is given with or just before the first antibiotic dose', 'It replaces the need for antibiotics entirely', 'It is given only after a full course of antibiotics is completed', 'It treats Listeria specifically'],
     answer:0,
     why:'Dexamethasone is given with or just before the first antibiotic dose for suspected pneumococcal meningitis, as part of standard management alongside antibiotics chosen to cover resistant pneumococci (such as vancomycin) and, in appropriate age groups, Listeria (ampicillin).'
+  },
+
+  /* ---- Added in the coverage pass: pool expanded to 18-19 questions per module ---- */
+  {
+    id:'BAC3-063', m:'m1', area:'Staph vs strep basics', level:'concept',
+    stem:'Which oxygen requirement describes both Staphylococcus and Streptococcus?',
+    options:['Facultative anaerobe', 'Obligate aerobe', 'Obligate anaerobe', 'Microaerophile'],
+    answer:0,
+    why:'Both genera grow with or without oxygen, which makes them facultative anaerobes. They differ in arrangement (clusters versus chains) and in catalase activity, not in their oxygen requirement.'
+  },
+  {
+    id:'BAC3-064', m:'m1', area:'Staph vs strep basics', level:'application',
+    stem:'A Gram stain shows gram-positive cocci in chains. When hydrogen peroxide is added to a colony, no bubbles form. What does the absence of bubbles indicate?',
+    options:['The organism lacks catalase', 'The organism lacks coagulase', 'The organism makes beta-lactamase', 'The organism has a capsule'],
+    answer:0,
+    why:'Catalase breaks hydrogen peroxide into water and oxygen, and the oxygen appears as bubbles. No bubbles means the organism is catalase-negative, which fits Streptococcus or Enterococcus rather than Staphylococcus.'
+  },
+  {
+    id:'BAC3-065', m:'m1', area:'Staph vs strep basics', level:'concept',
+    stem:'Anaerobes are inhibited by oxygen partly because they lack or have reduced amounts of which pair of enzymes?',
+    options:['Catalase and superoxide dismutase', 'Coagulase and hyaluronidase', 'Beta-lactamase and penicillinase', 'Urease and oxidase'],
+    answer:0,
+    why:'Oxygen use produces hydrogen peroxide and superoxide. Catalase and superoxide dismutase neutralize them, and anaerobes lack or have reduced amounts of both, so these toxic products accumulate and oxidize enzyme thiols.'
+  },
+  {
+    id:'BAC3-066', m:'m1', area:'Staphylococcal identification', level:'application',
+    stem:'A colony on blood agar is golden-yellow and beta-hemolytic, and Gram stain shows grape-like clusters. Which test confirms the species?',
+    options:['Coagulase', 'Optochin', 'Bacitracin', 'Novobiocin'],
+    answer:0,
+    why:'Golden-yellow, beta-hemolytic colonies with clustered cocci suggest Staphylococcus aureus, and a positive coagulase test confirms it. Optochin and bacitracin are used for streptococci, and novobiocin separates the coagulase-negative staphylococci from each other.'
+  },
+  {
+    id:'BAC3-067', m:'m1', area:'Staphylococcal identification', level:'application',
+    stem:'A prosthetic joint infection persists despite antibiotics. The organism is Staphylococcus epidermidis. Which feature best explains why the infection is so hard to clear?',
+    options:['A biofilm shields the bacteria from phagocytes and drugs', 'A pre-formed toxin remains active in the infected tissue', 'A missing cell wall makes beta-lactam drugs ineffective', 'Growth takes place inside host macrophages and neutrophils'],
+    answer:0,
+    why:'S. epidermidis attaches to the device and builds a slime-layer biofilm. Bacteria inside it are shielded from phagocytes and antibiotics and grow slowly, which is why treatment often requires removing the device.'
+  },
+  {
+    id:'BAC3-068', m:'m1', area:'Staphylococcal identification', level:'integration',
+    stem:'Which set of results identifies an unknown clustered gram-positive coccus as Staphylococcus saprophyticus?',
+    options:['Catalase-positive, coagulase-negative, novobiocin-resistant', 'Catalase-positive, coagulase-positive, novobiocin-resistant', 'Catalase-positive, coagulase-negative, novobiocin-susceptible', 'Catalase-negative, coagulase-negative, novobiocin-susceptible'],
+    answer:0,
+    why:'Catalase-positive places the organism in Staphylococcus, coagulase-negative rules out S. aureus, and novobiocin resistance separates S. saprophyticus from S. epidermidis, which is susceptible.'
+  },
+  {
+    id:'BAC3-069', m:'m1', area:'Streptococcal & enterococcal identification', level:'concept',
+    stem:'Lancefield grouping of the streptococci is based on which cell wall component?',
+    options:['The C carbohydrate antigen', 'The M protein', 'The polysaccharide capsule', 'The lipoteichoic acid'],
+    answer:0,
+    why:'Lancefield groups (A, B, D, and so on) are defined by the C carbohydrate antigen in the cell wall. M protein is a group A virulence factor, and capsules and teichoic acids are not used for grouping.'
+  },
+  {
+    id:'BAC3-070', m:'m1', area:'Streptococcal & enterococcal identification', level:'application',
+    stem:'A throat culture grows beta-hemolytic, catalase-negative cocci in chains that are susceptible to bacitracin. Which organism is identified?',
+    options:['Streptococcus pyogenes (group A)', 'Streptococcus agalactiae (group B)', 'Streptococcus pneumoniae', 'Enterococcus faecalis'],
+    answer:0,
+    why:'Beta-hemolytic, catalase-negative chains point to a beta-hemolytic streptococcus, and bacitracin susceptibility identifies group A (S. pyogenes). Group B (S. agalactiae) is bacitracin-resistant, while pneumococcus is alpha-hemolytic and enterococcus is nonhemolytic.'
+  },
+  {
+    id:'BAC3-071', m:'m1', area:'Streptococcal & enterococcal identification', level:'concept',
+    stem:'Enterococcus faecalis belongs to which Lancefield group, and where does it normally live?',
+    options:['Group D; the colon', 'Group A; the skin and throat', 'Group B; the vagina', 'No group; the oropharynx'],
+    answer:0,
+    why:'E. faecalis (with S. bovis) is a group D organism and is normal flora of the colon, which is why it causes urinary tract infection and endocarditis. Group A lives on skin and throat, group B colonizes the vagina, and viridans streptococci are oropharyngeal.'
+  },
+  {
+    id:'BAC3-072', m:'m2', area:'S. aureus virulence and disease', level:'concept',
+    stem:'The golden pigment staphyloxanthin enhances Staphylococcus aureus pathogenicity by doing what?',
+    options:['Absorbing reactive oxygen species in neutrophils', 'Cleaving desmoglein in skin desmosomes', 'Forming pores in leukocyte membranes', 'Binding the Fc region of IgG antibodies'],
+    answer:0,
+    why:'Staphyloxanthin absorbs the reactive oxygen species that neutrophils use to kill ingested bacteria. Cleaving desmoglein is exfoliatin, pore formation is the leukocidin and alpha toxin, and binding IgG is protein A.'
+  },
+  {
+    id:'BAC3-073', m:'m2', area:'S. aureus virulence and disease', level:'application',
+    stem:'A hospital isolate of Staphylococcus aureus is resistant to nafcillin. Which mechanism explains this resistance?',
+    options:['Mutant penicillin-binding proteins', 'Synthesis of beta-lactamase', 'Loss of the peptidoglycan layer', 'Efflux of the drug by the capsule'],
+    answer:0,
+    why:'Methicillin- or nafcillin-resistant S. aureus (MRSA) carries mutant penicillin-binding proteins. Beta-lactamase explains resistance to penicillin G, which nafcillin is designed to withstand. Vancomycin, often with gentamicin, or daptomycin is used for MRSA.'
+  },
+  {
+    id:'BAC3-074', m:'m2', area:'S. aureus virulence and disease', level:'application',
+    stem:'A healthy adult has a 3-cm skin abscess. Which step is the most important first treatment?',
+    options:['Drainage of the abscess', 'Intranasal mupirocin', 'Intravenous vancomycin', 'Removal of an indwelling device'],
+    answer:0,
+    why:'Drainage is the foundation of treating a skin abscess; adding an active antibiotic such as TMP-SMX or clindamycin modestly improves cure. Mupirocin is for nasal decolonization, and device removal applies only when a device is involved.'
+  },
+  {
+    id:'BAC3-075', m:'m2', area:'Group A strep virulence and disease', level:'concept',
+    stem:'Which group A streptococcal virulence factor is considered the most important and inactivates C3b?',
+    options:['M protein', 'Streptokinase', 'Hyaluronidase', 'Streptolysin S'],
+    answer:0,
+    why:'M protein protrudes from the cell surface and inactivates C3b, so complement-mediated phagocytosis is blocked. Streptokinase digests clots, hyaluronidase degrades subcutaneous tissue, and streptolysin S is a hemolysin that oxygen does not inactivate.'
+  },
+  {
+    id:'BAC3-076', m:'m2', area:'Group A strep virulence and disease', level:'integration',
+    stem:'Three weeks after strep pharyngitis, a child has dark urine and facial swelling. Which complication has developed, and does treating the sore throat prevent it?',
+    options:['Acute glomerulonephritis; antibiotics have no protective effect', 'Acute glomerulonephritis; antibiotics are protective', 'Rheumatic fever; antibiotics have no protective effect', 'Rheumatic fever; antibiotics are protective'],
+    answer:0,
+    why:'Dark urine weeks after strep infection points to immune-mediated acute glomerulonephritis. Treating strep throat prevents rheumatic fever but does not prevent glomerulonephritis, so the two complications must be kept apart.'
+  },
+  {
+    id:'BAC3-077', m:'m2', area:'Group A strep virulence and disease', level:'application',
+    stem:'A patient with group A streptococcal pharyngitis has a non-anaphylactic penicillin allergy. Which drug is an appropriate alternative?',
+    options:['A first-generation cephalosporin', 'Gentamicin', 'Ciprofloxacin', 'Metronidazole'],
+    answer:0,
+    why:'For penicillin-allergic patients without anaphylaxis, a first-generation cephalosporin is appropriate. Clindamycin, clarithromycin, and azithromycin are other alternatives. Aminoglycosides, fluoroquinolones, and metronidazole are not used for group A strep.'
+  },
+  {
+    id:'BAC3-078', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'application',
+    stem:'After a childhood vaccination program, the number of pneumococcal infections falls less than expected. Which concern from the lecture explains this?',
+    options:['Serotypes outside the vaccine can take over and cause disease', 'The vaccine removes the capsule from carried strains', 'The vaccine strips normal flora from the oropharynx', 'The vaccine selects for penicillin-resistant strains'],
+    answer:0,
+    why:'Serotype replacement means pneumococcal serotypes not covered by the vaccine can cause disease, so total incidence may not fall as far as the vaccine alone would predict. The vaccine targets capsular serotypes; it does not alter flora or resistance.'
+  },
+  {
+    id:'BAC3-079', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'application',
+    stem:'A patient with Enterococcus faecalis endocarditis has no drug allergies. Which regimen is appropriate?',
+    options:['Ampicillin plus ceftriaxone', 'Ceftriaxone by itself', 'Penicillin V by itself', 'Gentamicin by itself'],
+    answer:0,
+    why:'Enterococci are cephalosporin-resistant, so ceftriaxone works only when combined with ampicillin; ampicillin plus gentamicin is the other accepted combination. Single agents do not provide the synergy needed for endocarditis.'
+  },
+  {
+    id:'BAC3-080', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'application',
+    stem:'An Enterococcus faecium isolate from a bloodstream infection is resistant to vancomycin because of an altered D-Ala-D-Lac cell wall target. Which drug is an appropriate choice?',
+    options:['Linezolid', 'Cefazolin', 'Penicillin G', 'Gentamicin'],
+    answer:0,
+    why:'Vancomycin-resistant enterococci (VRE), mostly E. faecium, are treated with linezolid or daptomycin. Cephalosporins and penicillin G are not reliable against enterococci, and gentamicin is not an effective single agent.'
+  },
+  {
+    id:'BAC3-081', m:'m3', area:'Neisseria: virulence and diagnosis', level:'concept',
+    stem:'On Gram stain, which appearance is shared by Neisseria meningitidis and Neisseria gonorrhoeae?',
+    options:['Gram-negative diplococci', 'Gram-positive diplococci', 'Gram-negative coccobacilli', 'Gram-positive cocci in clusters'],
+    answer:0,
+    why:'Both Neisseria species are gram-negative diplococci, so Gram stain cannot separate them from each other. Tests such as maltose fermentation, or the specimen source, do that work.'
+  },
+  {
+    id:'BAC3-082', m:'m3', area:'Neisseria: virulence and diagnosis', level:'concept',
+    stem:'Which meningococcal component serves as the immunogen in the MenACWY vaccines?',
+    options:['Polysaccharide capsule', 'Factor H binding protein', 'IgA protease', 'Pili'],
+    answer:0,
+    why:'The polysaccharide capsule resists phagocytosis and is the immunogen in the MenACWY vaccines. Factor H binding protein is the immunogen in the group B (MenB) vaccine instead.'
+  },
+  {
+    id:'BAC3-083', m:'m3', area:'Neisseria: virulence and diagnosis', level:'application',
+    stem:'A urethral discharge Gram stain from a man shows gram-negative diplococci inside neutrophils. Which organism is identified?',
+    options:['Neisseria gonorrhoeae', 'Neisseria meningitidis', 'Escherichia coli', 'Chlamydia trachomatis'],
+    answer:0,
+    why:'Gram-negative diplococci inside neutrophils on a urethral or cervical specimen identify the gonococcus. Meningococcus is a respiratory pathogen, E. coli is a rod, and Chlamydia is not readily Gram stained.'
+  },
+  {
+    id:'BAC3-084', m:'m3', area:'Neisseria: virulence and diagnosis', level:'integration',
+    stem:'Why does a past gonococcal infection fail to protect a person from reinfection?',
+    options:['Antigenic variation of surface structures', 'A thick capsule that blocks antibody binding', 'Hiding inside macrophages between infections', 'Endotoxin that destroys memory B cells'],
+    answer:0,
+    why:'Antigenic variation of surface structures such as pili thwarts the immune system, so antibodies against one form miss the next. This is also why no gonococcal vaccine exists. The gonococcus is a pyogenic, extracellular pathogen without the capsule that the meningococcus has.'
+  },
+  {
+    id:'BAC3-085', m:'m3', area:'Meningococcus: treatment and prevention', level:'application',
+    stem:'A college student has confirmed meningococcal meningitis. Which drug is an appropriate treatment?',
+    options:['Ceftriaxone', 'Trimethoprim-sulfamethoxazole', 'Doxycycline', 'Gentamicin'],
+    answer:0,
+    why:'Ceftriaxone or penicillin G is the treatment, and penicillin-resistant strains are rare. Sulfonamide resistance is common, so trimethoprim-sulfamethoxazole is a poor choice, and doxycycline and gentamicin are not standard therapy.'
+  },
+  {
+    id:'BAC3-086', m:'m3', area:'Meningococcus: treatment and prevention', level:'integration',
+    stem:'Which finding points to meningococcemia rather than meningitis alone?',
+    options:['A purpuric, necrotic rash', 'A gray throat pseudomembrane', 'A painless black eschar', 'Blood-tinged “currant-jelly” sputum'],
+    answer:0,
+    why:'Meningococcemia produces a purpuric, necrotic rash from bloodstream spread. A gray pseudomembrane suggests diphtheria, a black eschar suggests cutaneous anthrax, and currant-jelly sputum suggests Klebsiella pneumonia.'
+  },
+  {
+    id:'BAC3-087', m:'m3', area:'Gonococcus: treatment and prevention', level:'application',
+    stem:'A patient has uncomplicated gonorrhea with possible chlamydial coinfection. Which regimen is appropriate?',
+    options:['Ceftriaxone plus doxycycline', 'Penicillin G plus azithromycin', 'Ciprofloxacin by itself', 'Doxycycline by itself'],
+    answer:0,
+    why:'Treat with a single intramuscular dose of ceftriaxone, and add doxycycline for 7 days when chlamydia has not been excluded. Routine azithromycin dual therapy was dropped, and penicillin or ciprofloxacin alone are not reliable because of resistance.'
+  },
+  {
+    id:'BAC3-088', m:'m3', area:'Gonococcus: treatment and prevention', level:'application',
+    stem:'For which site of gonococcal infection is a test of cure recommended 7 to 14 days after treatment?',
+    options:['Pharynx', 'Urethra', 'Cervix', 'Conjunctiva'],
+    answer:0,
+    why:'A test of cure at 7 to 14 days is recommended only for pharyngeal infection; for other sites the follow-up step is retesting for reinfection at about 3 months.'
+  },
+  {
+    id:'BAC3-089', m:'m4', area:'Anthrax: portals and toxin', level:'concept',
+    stem:'Which component of the anthrax exotoxin is an adenylate cyclase?',
+    options:['Edema factor', 'Lethal factor', 'Protective antigen', 'Alpha toxin'],
+    answer:0,
+    why:'Edema factor is an adenylate cyclase, lethal factor is a protease, and protective antigen binds host cells and delivers the other two. Alpha toxin belongs to S. aureus and C. perfringens, not B. anthracis.'
+  },
+  {
+    id:'BAC3-090', m:'m4', area:'Anthrax: portals and toxin', level:'application',
+    stem:'A patient has flu-like illness after inhaling spores and is diagnosed with systemic anthrax. Which management is appropriate?',
+    options:['Two bactericidal drugs, a protein synthesis inhibitor, and antitoxin', 'A single oral fluoroquinolone course given for 7 days', 'A single oral penicillin course given for 3 days', 'Supportive care followed by a booster dose of vaccine'],
+    answer:0,
+    why:'Systemic anthrax needs two bactericidal drugs from different classes plus a protein synthesis inhibitor (for example linezolid or clindamycin) for 2 weeks or longer, plus antitoxin. Single-agent oral courses fit cutaneous disease without meningitis, and vaccination is prevention, not treatment.'
+  },
+  {
+    id:'BAC3-091', m:'m4', area:'Toxin mechanism: flaccid, spastic, and destructive', level:'concept',
+    stem:'Tetanus toxin blocks the release of which neurotransmitters?',
+    options:['Glycine and GABA', 'Acetylcholine', 'Dopamine and serotonin', 'Norepinephrine'],
+    answer:0,
+    why:'Tetanus toxin blocks release of the inhibitory neurotransmitters glycine and GABA in the spinal cord, so motor neurons fire without brakes. Blocking acetylcholine release is the action of botulinum toxin.'
+  },
+  {
+    id:'BAC3-092', m:'m4', area:'Toxin mechanism: flaccid, spastic, and destructive', level:'application',
+    stem:'After a puncture wound, a patient has sustained, painful muscle contraction with a rigidly arched back. Which type of paralysis and cause fit this presentation?',
+    options:['Spastic paralysis from blocked inhibitory neurotransmitter release', 'Flaccid paralysis from blocked acetylcholine release', 'Flaccid paralysis from membrane damage by lecithinase', 'Spastic paralysis from a pore-forming enterotoxin'],
+    answer:0,
+    why:'An arched back (opisthotonos) with sustained contraction is spastic paralysis from tetanus toxin, which blocks inhibitory transmitters. Flaccid paralysis from blocked acetylcholine release is botulism, and lecithinase damage is gas gangrene.'
+  },
+  {
+    id:'BAC3-093', m:'m4', area:'Toxin mechanism: flaccid, spastic, and destructive', level:'concept',
+    stem:'Which toxin action causes Clostridium perfringens food poisoning?',
+    options:['A pore-forming enterotoxin that binds claudins at tight junctions', 'A superantigen that triggers cytokine release', 'A lecithinase that destroys cell membranes', 'An ADP-ribosyltransferase that inactivates EF-2'],
+    answer:0,
+    why:'C. perfringens food poisoning is caused by a pore-forming enterotoxin that binds claudin receptors at intestinal tight junctions. Lecithinase is the gas gangrene toxin, and EF-2 inactivation belongs to diphtheria toxin and Pseudomonas exotoxin A.'
+  },
+  {
+    id:'BAC3-094', m:'m4', area:'C. difficile: the antibiotic-associated cycle', level:'application',
+    stem:'A patient has a first episode of confirmed C. difficile infection. Which drug is preferred?',
+    options:['Fidaxomicin', 'Metronidazole', 'Clindamycin', 'Ciprofloxacin'],
+    answer:0,
+    why:'Fidaxomicin is preferred for a first episode and for recurrences because it is followed by fewer recurrences than vancomycin; oral vancomycin is an acceptable alternative. Metronidazole is reserved, and clindamycin and ciprofloxacin are high-risk causes of the disease.'
+  },
+  {
+    id:'BAC3-095', m:'m4', area:'C. difficile: the antibiotic-associated cycle', level:'application',
+    stem:'Staff are caring for a patient with C. difficile infection. Which hand hygiene method is appropriate after contact?',
+    options:['Washing with soap and water', 'Using an alcohol-based hand rub', 'Wearing gloves and skipping handwashing', 'Rinsing with water alone'],
+    answer:0,
+    why:'Alcohol hand rubs do not kill C. difficile spores, so hands are washed with soap and water, together with gloves and gowns and sporicidal cleaning of the room.'
+  },
+  {
+    id:'BAC3-096', m:'m4', area:'Listeria and diphtheria', level:'concept',
+    stem:'Diphtheria toxin shuts down protein synthesis by ADP-ribosylating which target?',
+    options:['Elongation factor 2 (EF-2)', 'The Gs regulatory protein', 'The Gi regulatory protein', 'The adenylate cyclase enzyme'],
+    answer:0,
+    why:'Diphtheria toxin ADP-ribosylates EF-2, the same target as Pseudomonas exotoxin A. ADP-ribosylation of Gs is cholera toxin, and of Gi is pertussis toxin.'
+  },
+  {
+    id:'BAC3-097', m:'m4', area:'Listeria and diphtheria', level:'concept',
+    stem:'Which Listeria monocytogenes product allows the organism to escape from the phagosome after entering a cell?',
+    options:['Listeriolysin', 'Internalin', 'Lethal factor', 'Streptolysin O'],
+    answer:0,
+    why:'Listeriolysin lets Listeria escape the phagosome after cell entry. Internalin comes earlier and helps the organism attach to and enter human cells.'
+  },
+  {
+    id:'BAC3-098', m:'m5', area:'E. coli: ETEC vs EHEC', level:'concept',
+    stem:'Which ETEC product stimulates adenylate cyclase and raises intracellular cAMP?',
+    options:['Heat-labile toxin (LT)', 'Heat-stable toxin (ST)', 'Shiga toxin', 'Exfoliatin'],
+    answer:0,
+    why:'The heat-labile toxin (LT) stimulates adenylate cyclase and raises cAMP, causing watery diarrhea. The heat-stable toxin (ST) acts through guanylate cyclase and cGMP, and Shiga toxin belongs to EHEC.'
+  },
+  {
+    id:'BAC3-099', m:'m5', area:'E. coli: ETEC vs EHEC', level:'application',
+    stem:'A patient with bloody diarrhea from E. coli O157:H7 asks to take loperamide. Why should this be discouraged?',
+    options:['Anti-motility drugs can precipitate hemolytic uremic syndrome', 'Anti-motility drugs inactivate oral rehydration solutions', 'Anti-motility drugs raise the Shiga toxin dose ingested', 'Anti-motility drugs cause pseudomembranes to form'],
+    answer:0,
+    why:'Slowing gut transit can precipitate hemolytic uremic syndrome, so anti-motility drugs are avoided in EHEC infection. Management is rehydration, with supportive therapy such as dialysis if HUS develops.'
+  },
+  {
+    id:'BAC3-100', m:'m5', area:'Salmonella, Shigella & Klebsiella', level:'application',
+    stem:'A traveler develops typhoid fever and later becomes a chronic gallbladder carrier. Which organism is responsible?',
+    options:['Salmonella Typhi', 'Non-typhoidal Salmonella', 'Shigella dysenteriae', 'Vibrio cholerae'],
+    answer:0,
+    why:'S. Typhi causes typhoid fever and gallbladder carriage, and a typhoid vaccine is advised for travelers. Non-typhoidal Salmonella (poultry, eggs, reptiles) causes gastroenteritis instead.'
+  },
+  {
+    id:'BAC3-101', m:'m5', area:'Salmonella, Shigella & Klebsiella', level:'integration',
+    stem:'A stool isolate is a non-lactose fermenter, oxidase-negative, nonmotile, and H2S-negative. Which organism fits these results?',
+    options:['Shigella', 'Salmonella', 'Escherichia coli', 'Pseudomonas aeruginosa'],
+    answer:0,
+    why:'Non-lactose fermentation excludes E. coli, and oxidase-negative excludes Pseudomonas. Salmonella is H2S-positive, while Shigella is nonmotile and H2S-negative.'
+  },
+  {
+    id:'BAC3-102', m:'m5', area:'Vibrio, Campylobacter & H. pylori', level:'concept',
+    stem:'Cholera toxin raises cAMP by ADP-ribosylating and locking on which G protein?',
+    options:['Gs', 'Gi', 'Gq', 'Ras'],
+    answer:0,
+    why:'Cholera toxin ADP-ribosylates Gs and locks it on, so cAMP stays high and profuse rice-water diarrhea results. Pertussis toxin acts on Gi instead.'
+  },
+  {
+    id:'BAC3-103', m:'m5', area:'Vibrio, Campylobacter & H. pylori', level:'application',
+    stem:'Two weeks after gastroenteritis linked to undercooked poultry, a patient develops ascending limb weakness. Which preceding organism is the likely trigger?',
+    options:['Campylobacter jejuni', 'Vibrio cholerae', 'Shigella dysenteriae', 'Klebsiella pneumoniae'],
+    answer:0,
+    why:'Campylobacter jejuni infection can be followed by Guillain-Barré syndrome (and reactive arthritis). It is linked to poultry and unpasteurized milk, and the other organisms are not associated with this complication.'
+  },
+  {
+    id:'BAC3-104', m:'m5', area:'Where the enteric bacteria strike', level:'integration',
+    stem:'A patient has fever and bloody diarrhea. Which mechanism and site fit this presentation?',
+    options:['Invasion or Shiga toxin affecting the colon', 'A toxin acting on the small intestine without invasion', 'Urease-mediated injury of the stomach lining', 'Overgrowth after antibiotics in the small intestine'],
+    answer:0,
+    why:'Bloody diarrhea points to invasion or Shiga toxin in the colon (Shigella, Salmonella, Campylobacter, EHEC). Watery diarrhea is the toxin pattern of the small intestine, and urease-mediated injury describes H. pylori in the stomach.'
+  },
+  {
+    id:'BAC3-105', m:'m6', area:'Pseudomonas: the opportunist', level:'concept',
+    stem:'How does Pseudomonas exotoxin A cause tissue necrosis?',
+    options:['It blocks protein synthesis by modifying EF-2', 'It cleaves desmoglein in skin desmosomes', 'It locks the Gs protein on to raise cAMP', 'It breaks down IgA on mucosal surfaces'],
+    answer:0,
+    why:'Exotoxin A ADP-ribosylates elongation factor 2 and blocks protein synthesis, the same target as diphtheria toxin. Cleaving desmoglein is exfoliatin, locking on Gs is cholera toxin, and IgA breakdown is IgA protease.'
+  },
+  {
+    id:'BAC3-106', m:'m6', area:'Pseudomonas: the opportunist', level:'application',
+    stem:'Which patient group is at highest risk of chronic Pseudomonas aeruginosa lung infection?',
+    options:['Patients with cystic fibrosis', 'Patients who had a splenectomy', 'Patients who inject drugs', 'Patients with sickle cell disease'],
+    answer:0,
+    why:'P. aeruginosa chronically infects the lungs of many adults with cystic fibrosis. Its slime layer helps it adhere to mucous membranes and avoid antibodies.'
+  },
+  {
+    id:'BAC3-107', m:'m6', area:'H. influenzae & B. pertussis: vaccine-preventable', level:'concept',
+    stem:'Which Haemophilus influenzae serotype is the most important, and is the target of the conjugate vaccine?',
+    options:['Type b', 'Type a', 'Type c', 'Type d'],
+    answer:0,
+    why:'The type b serotype, defined by its capsular polysaccharide, is the most important and the most antigenic. Conjugate vaccination reduced H. influenzae meningitis in children.'
+  },
+  {
+    id:'BAC3-108', m:'m6', area:'H. influenzae & B. pertussis: vaccine-preventable', level:'application',
+    stem:'A child has H. influenzae type b meningitis. Which drug is used as prophylaxis for close contacts?',
+    options:['Rifampin', 'Azithromycin', 'Doxycycline', 'Amoxicillin'],
+    answer:0,
+    why:'Rifampin is the prophylaxis for contacts of H. influenzae meningitis. Azithromycin is the contact prophylaxis for pertussis, a similar-looking pairing that is easy to swap.'
+  },
+  {
+    id:'BAC3-109', m:'m6', area:'H. influenzae & B. pertussis: vaccine-preventable', level:'application',
+    stem:'Which vaccine is recommended during pregnancy to protect the newborn from pertussis?',
+    options:['Tdap', 'DTaP', 'MenACWY', 'PCV20'],
+    answer:0,
+    why:'Tdap is recommended in each pregnancy so maternal antibodies protect the newborn. DTaP is the childhood series, and MenACWY and PCV20 protect against meningococcus and pneumococcus.'
+  },
+  {
+    id:'BAC3-110', m:'m6', area:'Tularemia and plague: zoonotic hazards', level:'application',
+    stem:'Which antibiotic is a first-line choice for plague caused by Yersinia pestis?',
+    options:['Gentamicin', 'Penicillin G', 'Cefazolin', 'Clindamycin'],
+    answer:0,
+    why:'Gentamicin or a fluoroquinolone is first-line for plague, with doxycycline as an alternative. Streptomycin is not widely available in the United States, and beta-lactams and clindamycin are not standard therapy.'
+  },
+  {
+    id:'BAC3-111', m:'m6', area:'Anaerobes & the encapsulated-organism synthesis', level:'concept',
+    stem:'Why are aminoglycosides such as gentamicin ineffective against anaerobes?',
+    options:['Their uptake into bacterial cells depends on oxygen', 'Anaerobes destroy them with beta-lactamase', 'Anaerobes lack the ribosome they bind', 'They cannot penetrate abscess walls'],
+    answer:0,
+    why:'Aminoglycoside uptake into bacterial cells requires oxygen, so these drugs fail against anaerobes and in oxygen-free abscesses. Metronidazole, clindamycin, and penicillin are among the drugs that work, with drainage of the abscess.'
   }
 ];
