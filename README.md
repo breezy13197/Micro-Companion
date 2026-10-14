@@ -12,7 +12,7 @@ A set of web pages that students open in a browser. No installation, no server, 
 |---|---|
 | `index.html` | The hub page itself. Students open this one first. |
 | `bacteria1.html` to `bacteria4.html` | The four Bacteria companions (study pages for each lecture). |
-| `viruses1.html`, `viruses2.html` | The two Viruses companions. |
+| `viruses1.html` to `viruses4.html` | The four Viruses companions. |
 | `banks/` | The questions and flashcards, plus a small "manifest" file per companion that describes its sections. |
 | `shared/` | Code and styling shared by every companion. |
 
@@ -41,6 +41,8 @@ companions/
     bacteria4.js    bacteria4.manifest.js
     viruses1.js     viruses1.manifest.js
     viruses2.js     viruses2.manifest.js
+    viruses3.js     viruses3.manifest.js
+    viruses4.js     viruses4.manifest.js
   shared/
     activities.js  engine.js  helpers.js  menu.js  storage.js  welcome.js
     sections.css   shell.css  styles.css  welcome.css
@@ -68,6 +70,8 @@ You should see a table like this:
 | Bacteria IV: Other pathogens | 87 | manifest loaded |
 | Viruses I: Introduction | 98 | manifest loaded |
 | Viruses II: Antivirals and Vaccines | 106 | manifest loaded |
+| Viruses III: Herpes to Flu | 125 | manifest loaded |
+| Viruses IV: Childhood & Enteric | 67 | manifest loaded |
 | Integration & review | 38 | not needed |
 
 (The question counts will change when you add or remove questions. What matters is that every row says "manifest loaded".)
