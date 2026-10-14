@@ -66,7 +66,7 @@ You should see a table like this:
 |---|---|---|
 | Bacteria I: Introduction | 77 | manifest loaded |
 | Bacteria II: Antibacterials | 91 | manifest loaded |
-| Bacteria III: Cocci and rods | 62 | manifest loaded |
+| Bacteria III: Cocci and rods | 111 | manifest loaded |
 | Bacteria IV: Other pathogens | 87 | manifest loaded |
 | Viruses I: Introduction | 98 | manifest loaded |
 | Viruses II: Antivirals and Vaccines | 106 | manifest loaded |
