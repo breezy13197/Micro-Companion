@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viruses IV · Childhood and Enteric Tract Viruses — PHA3109 Study Companion</title>
+<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
+<style>
+/* ============================================================
+   THEME — Viruses IV companion
+   Only this page's look. shared/styles.css is untouched.
+   Meaning of the colors on this page:
+     ultramarine = this companion's primary (buttons, current section)
+     magenta     = highlight (hero accents, stat icons, "predict" boxes)
+     green       = correct / complete
+     rose        = incorrect / needs review
+   ============================================================ */
+:root{
+  --ultra:#1F2A80; --ultra-deep:#141C5C; --ultra-lift:#3A4BD0;
+  --mag:#E5489F; --mag-deep:#C2307F; --mag-soft:#FDE7F3; --mag-ink:#A3126A;
+
+  /* the "primary" family every shared component reads */
+  --green:#222F8E; --green-bright:#4256D6; --green-soft:#E9ECFA; --green-line:#C3CAF0;
+  --amber:#A3126A; --amber-soft:#FDE7F3;
+
+  /* correct / complete keep a true green, so ultramarine never reads as "right" */
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-line:#BFE6D4; --ok-ink:#1C7554;
+
+  /* colors used in figures */
+  --rna:#E5489F; --dna:#3A4BD0; --env:#F2B6D6; --cap:#C9D0F5; --gut:#E8A24C; --blood:#D4536B;
+
+  --ink:#161A3C; --ink-mid:#464B72; --ink-soft:#767BA0;
+  --page:#F5F6FC; --line:#E1E4F4;
+  --shadow:0 2px 16px rgba(31,42,128,.10);
+  --ultra-ink:#1B2680;
+
+  /* welcome page + sidebar + section tokens (companion-architecture.md §15-17) */
+  --w-deep:var(--ultra-deep); --w-band:var(--ultra); --w-lift:var(--ultra-lift);
+  --w-hero-1:#E9ECFB; --w-hero-2:#F8F9FF; --w-hero-3:#FFEAF5;
+  --w-hl:var(--mag); --w-hl-hover:var(--mag-deep); --w-hl-ink:var(--mag-ink); --w-hl-strong:var(--ultra-lift); --w-on-hl:#14142B;
+  --w-hl-soft:var(--mag-soft);
+  --w-art-1:#E9ECFB; --w-art-2:#FFEAF5;
+  --w-check:var(--ultra-lift);
+  --w-kp-bg:#F6F7FE;
+  --w-shadow-rgb:31,42,128;
+  --w-ring-track:#D6DBF5; --w-ring-fill:#E5489F;
+  --w-t1-bg:#E3E7FB; --w-t1-fg:#2B38B8;
+  --w-t2-bg:#FDE4F1; --w-t2-fg:#A3126A;
+  --w-t3-bg:#E0F3EB; --w-t3-fg:#1C8A62;
+  --w-t4-bg:#EDE6FA; --w-t4-fg:#6A47C4;
+  --w-t5-bg:#DFF1F8; --w-t5-fg:#1D7FA6;
+  --w-t6-bg:#FFF0DC; --w-t6-fg:#A8590C;
+  --w-cols:6;
+}
+body{
+  background:
+    radial-gradient(900px 420px at 92% -8%, #E3E8FF 0%, rgba(227,232,255,0) 62%),
+    radial-gradient(760px 380px at 2% -4%, #FFE6F3 0%, rgba(255,230,243,0) 58%),
+    var(--page);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{color:var(--ink)}
+h2{letter-spacing:-.015em}
+
+/* --- shared components, re-inked to ultramarine / ok-green --- */
+.mod-head.current{background:var(--green-soft);color:var(--ultra-ink)}
+.mod-head.current .mod-badge{background:#fff;color:var(--ultra-ink)}
+.mod-head .mod-badge.done{background:var(--ok-soft);color:var(--ok-ink)}
+.sub button.current{background:var(--green-soft);color:var(--ultra-ink)}
+.sub button.done .dot{background:var(--ok)}
+.sub button.current .dot{background:var(--ultra-lift)}
+.ring-wrap{background:var(--green-soft)}
+.ring-num{color:var(--ultra-ink)}
+.ring-cap{color:var(--ink-mid)}
+.btn:hover{background:var(--ultra-deep)}
+.btn.ghost.on{background:var(--green-soft);border-color:var(--green-line);color:var(--ultra-ink)}
+.opt.sel{color:var(--ultra-ink)}
+.opt.reveal{border-color:var(--ok);color:var(--ok-ink)}
+.opt.sel.bad{background:var(--rose-soft)}
+.dnd-pill{color:var(--ultra-ink)}
+.dnd-ghost{color:var(--ultra-ink)}
+.dnd-row.correct{border-color:var(--ok);background:var(--ok-soft)}
+.dnd-row.correct .dnd-slot{border-color:var(--ok)}
+.choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback{border-left-color:var(--ok)}
+.feedback.miss{border-left-color:var(--rose)}
+.apply{background:var(--green-soft)}
+.apply .tag{background:#D6DCFA;color:var(--ultra-ink)}
+.predict .tag{background:#F9CFE6;color:var(--mag-ink)}
+.mod-badge.done,.home-num.done{background:var(--ok-soft);color:var(--ok-ink)}
+.home-status.done{color:var(--ok-ink)}
+.s-strong{color:var(--ok-ink)}
+.lock-dot.done{background:var(--ok)}
+.fc-front{background:linear-gradient(140deg,#EEF0FF,#FFEAF5);border:1px solid var(--green-line)}
+.score-hero{background:linear-gradient(135deg,var(--ultra-lift),var(--ultra))}
+.score-hero .big{color:#FFB3DA}
+.reset:hover{color:var(--rose)}
+.back-to-hub{color:var(--ultra-lift)}
+input[type=range]{background:linear-gradient(90deg,var(--green-line),var(--ultra-lift))}
+input[type=range]::-webkit-slider-thumb{border-color:var(--ultra)}
+input[type=range]::-moz-range-thumb{border-color:var(--ultra)}
+.box.clinical{background:#EEEBFC}
+.act-hs.on{filter:drop-shadow(0 0 5px rgba(229,72,159,.95))}
+
+.btn.outline{background:#fff;color:var(--ultra);border:1.5px solid var(--green-line)}
+.btn.outline:hover{background:var(--green-soft);color:var(--ultra-deep)}
+.mod-card .go{color:var(--ultra-lift)}
+.badge-hl{position:absolute;right:16px;top:16px;background:var(--mag);color:#14142B;border-radius:12px;padding:9px 14px;
+  font-weight:800;line-height:1.1;text-align:center;box-shadow:0 6px 16px rgba(194,48,127,.35)}
+.badge-hl small{display:block;font-size:.62rem;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- custom activity pieces ---------- */
+.lab-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:#fff;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:8px 15px;font-size:.86rem;color:var(--ink-mid);min-height:40px}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button.on{background:var(--ultra);color:#fff}
+.seg button.seen::after{content:" \2713";color:var(--ok);font-weight:700}
+.seg button.on.seen::after{color:#BFF0DA}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.lab-out{background:#F7F8FD;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin:10px 0;font-size:.94rem}
+.lab-out h4{margin:0 0 6px}
+.lab-out p:last-child{margin-bottom:0}
+.lab-out.locked{opacity:.45;pointer-events:none}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.tagpill{display:inline-block;border-radius:999px;padding:3px 11px;font-size:.78rem;font-weight:700;background:var(--green-soft);color:var(--ultra-ink);border:1px solid var(--green-line)}
+.tagpill.open{background:var(--ok-soft);color:var(--ok-ink);border-color:var(--ok-line)}
+.tagpill.shut{background:var(--rose-soft);color:#9A2F46;border-color:#F0C3CD}
+.tagpill.hl{background:var(--mag-soft);color:var(--mag-ink);border-color:#F4BFDD}
+.meter{height:12px;border-radius:99px;background:#E4E7F5;overflow:hidden;margin:6px 0 2px}
+.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--mag),var(--ultra-lift));width:0;transition:width .4s}
+.gauge-row{display:grid;grid-template-columns:minmax(120px,190px) 1fr auto;gap:10px;align-items:center;margin:6px 0;font-size:.88rem}
+.gauge-row b{font-weight:700;color:var(--ink)}
+.gauge-row .tagpill{justify-self:end}
+.slider-row{display:grid;grid-template-columns:minmax(140px,220px) 1fr;gap:12px;align-items:center;margin:8px 0}
+.slider-row label{font-size:.88rem;font-weight:650}
+.slider-row input[type=range]{width:100%}
+.scroll-x{overflow-x:auto}
+.case-chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:10px 0}
+.sim-grid .fld{display:flex;flex-direction:column;gap:5px;font-size:.84rem;font-weight:650}
+.sim-grid select,.sim-grid input[type=number]{font:inherit;font-size:.9rem;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.sim-grid .chk{flex-direction:row;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;font-weight:600}
+.news-card{border-left:6px solid var(--mag)}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:12px 0}
+.news-stat{background:#F7F8FD;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px}
+.news-stat b{display:block;font-size:2rem;line-height:1;color:var(--ultra);margin-bottom:6px}
+.act-explore .figure svg{max-width:460px;margin:0 auto;display:block}
+.figure svg text{font-family:var(--font)}
+.chain-node{cursor:default}
+.broken{opacity:.35}
+@keyframes vPop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+.v-new{animation:vPop .45s ease both;transform-box:fill-box;transform-origin:center}
+@media (max-width:620px){
+  .gauge-row{grid-template-columns:1fr;gap:4px}
+  .gauge-row .tagpill{justify-self:start}
+  .slider-row{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.v-new{animation:none}.meter i{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5.2"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1"/></svg></div>
+      <div><div class="brand-title">Viruses IV &middot; Childhood &amp; Enteric</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="18" fill="none" stroke="#D6DBF5" stroke-width="5"/>
+        <circle id="ringFill" cx="22" cy="22" r="18" fill="none" stroke="#E5489F" stroke-width="5"
+                stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113"
+                transform="rotate(-90 22 22)"/>
+      </svg>
+      <div><div class="ring-num" id="ringPct">0%</div>
+      <div class="ring-cap">of the companion<br>complete</div></div>
+    </div>
+    <button class="reset" id="resetBtn">Clear my saved progress</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="topTitle">Welcome</h1><div class="meta" id="topMeta">Viruses IV &middot; PHA3109 Microbiology &amp; Immunology</div></div>
+      <div class="pill" id="topPill">Not started</div>
+    </div>
+
+<section class="section welcome" data-key="start">
+  <div class="hero">
+    <div>
+      <div class="kicker">PHA3109 &middot; Microbiology &amp; Immunology</div>
+      <h2 class="hero-title">Spot the virus.<span>Guard the patient.</span></h2>
+      <p>Viruses IV &mdash; Childhood and Enteric Tract Viruses. Predict, build, sort, and simulate your way through measles, mumps, rubella, parvovirus B19, HHV-6, and the viruses that spread by the fecal-oral route. The lecture supplies the content; this companion supplies the practice.</p>
+      <div class="btn-row">
+        <button class="btn lg" data-go="m1home">Start Module 1</button>
+        <button class="btn lg outline" data-go="flashcards">Try the flashcards</button>
+      </div>
+      <div class="hero-note"><span class="hero-dots"><i style="background:#E5489F"></i><i style="background:#3A4BD0"></i><i style="background:#2FA97A"></i></span>Built around one question for every virus: where does it go, and who is at risk?</div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 400 400" role="img" aria-label="Illustration of two kinds of virus particle: an enveloped virus with surface spikes and a nonenveloped icosahedral virus">
+  <defs>
+    <radialGradient id="hg" cx="45%" cy="35%" r="75%"><stop offset="0" stop-color="#4256D6"/><stop offset="1" stop-color="#1F2A80"/></radialGradient>
+  </defs>
+  <circle cx="200" cy="205" r="184" fill="none" stroke="#E5489F" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round"/>
+  <circle cx="200" cy="205" r="152" fill="url(#hg)"/>
+  <circle cx="200" cy="205" r="152" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3"/>
+  <g stroke="#FFB3DA" stroke-width="5" stroke-linecap="round">
+    <line x1="150" y1="150" x2="150" y2="124"/><line x1="150" y1="150" x2="127" y2="137"/><line x1="150" y1="150" x2="127" y2="163"/>
+  </g>
+  <g transform="translate(160 188)">
+    <g stroke="#E5489F" stroke-width="5" stroke-linecap="round">
+      <line x1="0" y1="-62" x2="0" y2="-76"/><line x1="44" y1="-44" x2="54" y2="-54"/><line x1="62" y1="0" x2="76" y2="0"/>
+      <line x1="44" y1="44" x2="54" y2="54"/><line x1="0" y1="62" x2="0" y2="76"/><line x1="-44" y1="44" x2="-54" y2="54"/>
+      <line x1="-62" y1="0" x2="-76" y2="0"/><line x1="-44" y1="-44" x2="-54" y2="-54"/>
+    </g>
+    <circle r="62" fill="#F8C9E2" stroke="#E5489F" stroke-width="5"/>
+    <path d="M-36 8 q14 -34 28 0 t28 0 t28 0" fill="none" stroke="#3A4BD0" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(272 262)">
+    <polygon points="0,-46 40,-23 40,23 0,46 -40,23 -40,-23" fill="#C9D0F5" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+    <polyline points="-40,-23 0,0 40,-23" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3"/><line x1="0" y1="0" x2="0" y2="46" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>
+  </g>
+  <circle cx="322" cy="102" r="6" fill="#E5489F"/><circle cx="62" cy="290" r="5" fill="#3A4BD0"/><circle cx="352" cy="262" r="4" fill="#E5489F"/>
+  <g font-family="inherit" font-weight="700" font-size="13">
+    <rect x="10" y="98" width="106" height="30" rx="15" fill="#fff"/><circle cx="28" cy="113" r="6" fill="#E5489F"/><text x="42" y="118" fill="#161A3C">Enveloped</text>
+    <rect x="270" y="330" width="116" height="30" rx="15" fill="#fff"/><circle cx="288" cy="345" r="6" fill="#3A4BD0"/><text x="302" y="350" fill="#161A3C">Nonenveloped</text>
+  </g>
+</svg>
+      <div class="hero-badge"><b data-stat="modules">6</b><span>Modules</span></div>
+    </div>
+  </div>
+
+  <div class="statband" aria-label="What is inside this companion">
+    <div class="stat"><span data-ico="layers"></span><div><b data-stat="modules">6</b><span>Modules</span></div></div>
+    <div class="stat"><span data-ico="spark"></span><div><b data-stat="activities">24</b><span>Hands-on activities</span></div></div>
+    <div class="stat"><span data-ico="question"></span><div><b data-stat="questions">67</b><span>Quiz questions</span></div></div>
+    <div class="stat"><span data-ico="cards"></span><div><b data-stat="cards">51</b><span>Flashcards</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="sect-head"><div><div class="eyebrow">Your path</div><h2>Six modules, one pharmacist&rsquo;s question each</h2></div></div>
+    <div class="mod-cards">
+      <button class="mod-card" data-go="m1home"><span class="chip-ico tone-1" data-ico="microbe"></span>
+        <h3>Childhood viruses and measles</h3><p>Which virus is this, and why does measles spread so well?</p><span class="go">Open module &rarr;</span></button>
+      <button class="mod-card" data-go="m2home"><span class="chip-ico tone-2" data-ico="target"></span>
+        <h3>Mumps and rubella</h3><p>Where does the virus go, and what is at risk in pregnancy?</p><span class="go">Open module &rarr;</span></button>
+      <button class="mod-card" data-go="m3home"><span class="chip-ico tone-3" data-ico="dna"></span>
+        <h3>Parvovirus B19, HHV-6, and a pregnancy case</h3><p>How do the host and the target cell shape the disease?</p><span class="go">Open module &rarr;</span></button>
+      <button class="mod-card" data-go="m4home"><span class="chip-ico tone-4" data-ico="shield"></span>
+        <h3>Enteric transmission and norovirus</h3><p>How does it travel, and how do I break the chain?</p><span class="go">Open module &rarr;</span></button>
+      <button class="mod-card" data-go="m5home"><span class="chip-ico tone-5" data-ico="flask"></span>
+        <h3>Rotavirus, fluids, and vaccines</h3><p>Why does diarrhea dehydrate, and who can be vaccinated?</p><span class="go">Open module &rarr;</span></button>
+      <button class="mod-card" data-go="m6home"><span class="chip-ico tone-6" data-ico="layers"></span>
+        <h3>Enteroviruses and local vs. systemic infection</h3><p>Why can a virus that enters the gut injure the nervous system?</p><span class="go">Open module &rarr;</span></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="why">
+      <div class="why-art"><svg viewBox="0 0 420 230" role="img" aria-label="Three steps: predict, interact, explain">
+  <g fill="none" stroke="#C3CAF0" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round">
+    <path d="M118 96 C 140 60, 170 60, 190 92"/><path d="M232 92 C 252 60, 282 60, 302 96"/>
+  </g>
+  <g>
+    <circle cx="80" cy="112" r="46" fill="#fff" stroke="#E5489F" stroke-width="4"/>
+    <text x="80" y="122" text-anchor="middle" font-size="34" font-weight="800" fill="#1F2A80">?</text>
+    <text x="80" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#161A3C">1 Predict</text>
+    <circle cx="210" cy="112" r="46" fill="#1F2A80"/>
+    <path d="M196 96 v34 l9 -8 6 13 7 -3 -6 -13 12 -1 z" fill="#FFB3DA"/>
+    <text x="210" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#161A3C">2 Interact</text>
+    <circle cx="340" cy="112" r="46" fill="#fff" stroke="#2FA97A" stroke-width="4"/>
+    <path d="M320 113 l14 14 26 -30" fill="none" stroke="#2FA97A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="340" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#161A3C">3 Explain</text>
+  </g>
+</svg><div class="badge-hl"><small>Every section</small>Practice first</div></div>
+      <div>
+        <div class="eyebrow">How it works</div>
+        <h2>Not a repeat of the slides</h2>
+        <p>You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
+        <ul class="checks">
+          <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
+          <li><span><b>Interact.</b> Move an exposure date, switch the immune response off, adjust gut absorption, or screen an infant for vaccination, then watch what your choices do.</span></li>
+          <li><span><b>Explain.</b> Every answer comes with the reasoning, not only right or wrong.</span></li>
+          <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
+          <li><span><b>Finish strong.</b> The Final Mastery Exam unlocks once all six modules are complete.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-ico" data-ico="book"></div>
+    <div class="cta-body"><h2>Ready to begin?</h2><p>Start with the five childhood viruses that can look alike at the bedside. Your progress saves in this browser as you go.</p></div>
+    <button class="btn hl lg" data-go="m1home">Start Module 1 &rarr;</button>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m1home">
+  <div class="modhero">
+    <div class="kicker">Module 1</div>
+    <h2>Childhood viruses and measles</h2>
+    <p>Five viruses cause most childhood fevers and rashes, and at the bedside they can look alike. This module teaches you to tell them apart by what they are made of, and then follows measles from the first breath to its complications.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Which childhood virus is this, and what does it put at risk?</span></div>
+    <div class="ghost-num" aria-hidden="true">1</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Match measles, mumps, rubella, parvovirus B19, and HHV-6 to their genome, envelope, and defining clinical clues.</li><li>Explain why measles spreads before the rash is seen, and name the post-exposure options and their time windows.</li><li>Describe how the measles rash arises, and how immune amnesia and later complications follow.</li></ul>
+  </div>
+  <div class="card news-card">
+    <div class="eyebrow">In the news</div>
+    <h3>Why this matters now</h3>
+    <div class="news-grid">
+      <div class="news-stat"><b>2,318</b>confirmed U.S. measles cases reported by CDC in 2026 (as of July): the most in a year since elimination was declared in 2000. Preventable with 2 doses of MMR.</div>
+      <div class="news-stat"><b>10%</b>of parvovirus B19 tests were IgM-positive by June 2024, up from under 3% (CDC Health Alert, 2024). No vaccine; risk to pregnancy and sickle cell disease.</div>
+    </div>
+    <p class="caption">These figures are copied from the lecture slide and are dated. They are context only and are not part of any quiz or exam.</p>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m1s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Viral fingerprint lab</span><span class="home-desc">Match five viruses to their features, then revise your answer as clinical clues arrive.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Measles exposure timeline</span><span class="home-desc">Move the day of contact and see who was at risk and which options are still open.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Rash, immunity, and complications</span><span class="home-desc">Switch the immune response on and off and watch what happens to the rash.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1quiz">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Module 1 quiz</span><span class="home-desc">Eight questions, then a targeted round on any concept you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s1">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 1</div>
+    <h2>Viral fingerprint lab</h2>
+    <p class="lede">Childhood rashes are easy to confuse. The most reliable first sort is not the rash but the virus itself: what is the genome, and is there an envelope? Those features decide what the virion must carry, and they point toward the clinical pattern.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Measles and mumps (paramyxoviruses) have negative-sense RNA, helical capsids, envelopes, and a polymerase packaged in the virion.</li><li>Rubella (a togavirus) has positive-sense RNA, an icosahedral capsid, and an envelope.</li><li>Parvovirus B19 has single-stranded DNA and no envelope. HHV-6 (a herpesvirus) has double-stranded DNA, an envelope, and two serotypes.</li></ul></div>
+    <div class="figure">
+<svg viewBox="0 0 640 250" role="img" aria-label="Schematic of the five childhood viruses. Measles and mumps: enveloped with a helical capsid and negative-sense RNA. Rubella: enveloped with an icosahedral capsid and positive-sense RNA. Parvovirus B19: icosahedral with single-stranded DNA and no envelope. HHV-6: enveloped with an icosahedral capsid and double-stranded DNA."><line x1="98.0" y1="86.0" x2="105.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="93.4" y1="103.0" x2="99.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="81.0" y1="115.4" x2="84.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="64.0" y1="120.0" x2="64.0" y2="127.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="47.0" y1="115.4" x2="43.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="34.6" y1="103.0" x2="28.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="30.0" y1="86.0" x2="23.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="34.6" y1="69.0" x2="28.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="47.0" y1="56.6" x2="43.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="64.0" y1="52.0" x2="64.0" y2="45.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="81.0" y1="56.6" x2="84.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="93.4" y1="69.0" x2="99.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><circle cx="64" cy="86" r="34" fill="#F2B6D6" stroke="#E5489F" stroke-width="3"/><path d="M56 90 q8 -18 16 0 t16 0 t16 0" transform="translate(-24 0) rotate(-20 64 86)" fill="none" stroke="#3A4BD0" stroke-width="5" stroke-linecap="round"/><text x="64" y="158" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">Measles</text><text x="64" y="178" text-anchor="middle" font-size="12.5" fill="#E5489F" font-weight="700">&minus;ssRNA</text><text x="64" y="196" text-anchor="middle" font-size="11.5" fill="#464B72">enveloped, helical</text><line x1="226.0" y1="86.0" x2="233.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="221.4" y1="103.0" x2="227.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="209.0" y1="115.4" x2="212.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="192.0" y1="120.0" x2="192.0" y2="127.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="175.0" y1="115.4" x2="171.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="162.6" y1="103.0" x2="156.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="158.0" y1="86.0" x2="151.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="162.6" y1="69.0" x2="156.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="175.0" y1="56.6" x2="171.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="192.0" y1="52.0" x2="192.0" y2="45.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="209.0" y1="56.6" x2="212.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="221.4" y1="69.0" x2="227.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><circle cx="192" cy="86" r="34" fill="#F2B6D6" stroke="#E5489F" stroke-width="3"/><path d="M184 90 q8 -18 16 0 t16 0 t16 0" transform="translate(-24 0) rotate(-20 192 86)" fill="none" stroke="#3A4BD0" stroke-width="5" stroke-linecap="round"/><text x="192" y="158" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">Mumps</text><text x="192" y="178" text-anchor="middle" font-size="12.5" fill="#E5489F" font-weight="700">&minus;ssRNA</text><text x="192" y="196" text-anchor="middle" font-size="11.5" fill="#464B72">enveloped, helical</text><line x1="354.0" y1="86.0" x2="361.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="349.4" y1="103.0" x2="355.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="337.0" y1="115.4" x2="340.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="320.0" y1="120.0" x2="320.0" y2="127.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="303.0" y1="115.4" x2="299.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="290.6" y1="103.0" x2="284.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="286.0" y1="86.0" x2="279.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="290.6" y1="69.0" x2="284.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="303.0" y1="56.6" x2="299.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="320.0" y1="52.0" x2="320.0" y2="45.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="337.0" y1="56.6" x2="340.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="349.4" y1="69.0" x2="355.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><circle cx="320" cy="86" r="34" fill="#F2B6D6" stroke="#E5489F" stroke-width="3"/><polygon points="338.3,96.5 320.0,107.1 301.7,96.5 301.7,75.5 320.0,64.9 338.3,75.5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="3" stroke-linejoin="round"/><path d="M316 86 q4 -8 8 0 t8 0" transform="translate(-8 0)" fill="none" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><text x="320" y="158" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">Rubella</text><text x="320" y="178" text-anchor="middle" font-size="12.5" fill="#E5489F" font-weight="700">+ssRNA</text><text x="320" y="196" text-anchor="middle" font-size="11.5" fill="#464B72">enveloped, icosahedral</text><polygon points="477.4,103.0 448.0,120.0 418.6,103.0 418.6,69.0 448.0,52.0 477.4,69.0" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="3" stroke-linejoin="round"/><path d="M444 86 q4 -8 8 0 t8 0" transform="translate(-8 0)" fill="none" stroke="#3A4BD0" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 5"/><text x="448" y="158" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">Parvovirus B19</text><text x="448" y="178" text-anchor="middle" font-size="12.5" fill="#E5489F" font-weight="700">ssDNA</text><text x="448" y="196" text-anchor="middle" font-size="11.5" fill="#464B72">no envelope, icosahedral</text><line x1="610.0" y1="86.0" x2="617.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="605.4" y1="103.0" x2="611.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="593.0" y1="115.4" x2="596.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="576.0" y1="120.0" x2="576.0" y2="127.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="559.0" y1="115.4" x2="555.5" y2="121.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="546.6" y1="103.0" x2="540.5" y2="106.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="542.0" y1="86.0" x2="535.0" y2="86.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="546.6" y1="69.0" x2="540.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="559.0" y1="56.6" x2="555.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="576.0" y1="52.0" x2="576.0" y2="45.0" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="593.0" y1="56.6" x2="596.5" y2="50.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><line x1="605.4" y1="69.0" x2="611.5" y2="65.5" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/><circle cx="576" cy="86" r="34" fill="#F2B6D6" stroke="#E5489F" stroke-width="3"/><polygon points="594.3,96.5 576.0,107.1 557.7,96.5 557.7,75.5 576.0,64.9 594.3,75.5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="3" stroke-linejoin="round"/><circle cx="576" cy="86" r="10" fill="none" stroke="#3A4BD0" stroke-width="3"/><circle cx="576" cy="86" r="4" fill="#3A4BD0"/><text x="576" y="158" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">HHV-6</text><text x="576" y="178" text-anchor="middle" font-size="12.5" fill="#E5489F" font-weight="700">dsDNA</text><text x="576" y="196" text-anchor="middle" font-size="11.5" fill="#464B72">enveloped, icosahedral</text><text x="320" y="238" text-anchor="middle" font-size="11.5" fill="#767BA0">Schematic redraw of the lecture comparison table. Not to scale.</text></svg>
+  <p class="caption">The two RNA-polymerase carriers are the paramyxoviruses. The only nonenveloped virus here is B19.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match the profile, then add the clues</h2>
+    <p class="try-note">Step 1: choose the genome-and-envelope profile for each virus. Step 2: work through five patients one clue at a time. Sometimes the right answer is that you cannot yet name the virus.</p>
+    <h3 style="margin:6px 0">Step 1 &middot; Genome and envelope</h3><div id="act-fpMatch"></div><h3 style="margin:22px 0 6px">Step 2 &middot; Clinical clues</h3><div id="act-fingerprintLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k1a"><p>Which virus in this group is a nonenveloped, single-stranded DNA virus?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k1b"><p>Measles and mumps viruses carry their own RNA-dependent RNA polymerase inside the virion. Which property of their genome explains this?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k1c"><p>A child has a maculopapular rash, and the rash alone does not identify the virus. Which approach fits the evidence?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A rash narrows the list but seldom names the virus. Pair it with the pattern of the fever, findings in the mouth, the host (sickle cell disease, pregnancy, transplant), and the vaccine record.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s2">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 2</div>
+    <h2>Measles exposure timeline</h2>
+    <p class="lede">Measles is among the most contagious viruses, and much of its spread happens before anyone knows what the illness is. Two ideas drive the response: the contagious window around the rash, and the short time windows for post-exposure options.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Contagious from about 4 days before to about 4 days after rash onset. Droplet and airborne spread, and virus can stay infectious in the air for up to 2 hours.</li><li>Airborne Precautions apply to a suspected case.</li><li>Post-exposure: MMR within 72 hours, or immune globulin within 6 days, when appropriate for the person. MMR is not given in pregnancy or severe immunocompromise.</li></ul></div>
+    <div class="figure">
+<svg viewBox="0 0 640 250" role="img" aria-label="A room with a person who has measles on the left, a cloud of virus particles in the air, and a second person on the right. A clock reads: virus can stay infectious in the air for up to 2 hours.">
+  <rect x="8" y="30" width="624" height="180" rx="14" fill="#F8F9FF" stroke="#C3CAF0" stroke-width="2"/>
+  <g transform="translate(70 120)"><circle cx="0" cy="-30" r="20" fill="#F8C9E2" stroke="#E5489F" stroke-width="3"/><path d="M-26 50 v-48 q0 -14 26 -14 q26 0 26 14 v48z" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="3"/>
+    <g fill="#E5489F"><circle cx="-8" cy="-34" r="2.5"/><circle cx="7" cy="-26" r="2.5"/><circle cx="-2" cy="-22" r="2.5"/></g></g>
+  <text x="70" y="198" text-anchor="middle" font-size="12.5" font-weight="700" fill="#161A3C">Person with measles</text>
+  <g fill="#E5489F" opacity=".85">
+    <circle cx="150" cy="96" r="4"/><circle cx="178" cy="120" r="3.5"/><circle cx="210" cy="90" r="4.5"/><circle cx="238" cy="130" r="3.5"/><circle cx="270" cy="100" r="4"/>
+    <circle cx="300" cy="140" r="4.5"/><circle cx="332" cy="92" r="3.5"/><circle cx="364" cy="124" r="4"/><circle cx="394" cy="104" r="4.5"/><circle cx="424" cy="138" r="3.5"/>
+    <circle cx="190" cy="152" r="3"/><circle cx="260" cy="70" r="3"/><circle cx="350" cy="64" r="3.5"/><circle cx="410" cy="76" r="3"/>
+  </g>
+  <g transform="translate(500 70)"><circle r="34" fill="#fff" stroke="#1F2A80" stroke-width="4"/><path d="M0 -22 v22 l15 10" fill="none" stroke="#1F2A80" stroke-width="4" stroke-linecap="round"/></g>
+  <text x="500" y="124" text-anchor="middle" font-size="12.5" font-weight="700" fill="#161A3C">Up to 2 hours</text>
+  <g transform="translate(580 130)"><circle cx="0" cy="-30" r="18" fill="#E0F3EB" stroke="#2FA97A" stroke-width="3"/><path d="M-24 46 v-44 q0 -12 24 -12 q24 0 24 12 v44z" fill="#E7F6EF" stroke="#2FA97A" stroke-width="3"/></g>
+  <text x="580" y="198" text-anchor="middle" font-size="12.5" font-weight="700" fill="#161A3C">Next person</text>
+  <text x="320" y="24" text-anchor="middle" font-size="12.5" fill="#464B72">Virus can stay infectious in the air after the person has left the room</text>
+</svg>
+  <p class="caption">Why a waiting room matters: the virus stays in the air after the patient has left.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Move the day of contact</h2>
+    <p class="try-note">Predict first. Then slide the day of contact to see whether it fell inside the contagious window, and choose a person to see which post-exposure windows are still open. This is an educational model, not advice for an individual.</p>
+    <div id="act-exposureTimeline"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k2a"><p>Relative to the first day of the rash, when is a person with measles contagious?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k2b"><p>A child with measles leaves an exam room. For how long can infectious virus remain in the room’s air?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k2c"><p>Which pair correctly matches measles post-exposure options with their time windows?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The decision depends on three facts together: how long ago the exposure was, whether the person is pregnant or severely immunocompromised, and what protection they already have. Confirm any real exposure decision with current guidance and the treating clinician.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s3">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 3</div>
+    <h2>Rash, immunity, and complications</h2>
+    <p class="lede">The measles rash is not the virus eating the skin. It is the immune system, in the form of cytotoxic T cells, attacking infected skin cells. That has a surprising consequence for who gets a rash, and for what measles does to immunity afterward.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Pathway: upper respiratory tract, blood, reticuloendothelial cells (a second round of replication), then skin. The viral fusion protein joins cells into giant cells.</li><li>Koplik spots can appear inside the cheeks before the rash. Immune amnesia means earlier immune memory can be erased.</li><li>Complications occur in about 30% of U.S. cases: diarrhea, otitis media, pneumonia, encephalitis, and, years later, SSPE. Vitamin A lowered deaths in children under 2.</li></ul></div>
+    <div class="figure">
+<svg viewBox="0 0 640 210" role="img" aria-label="Measles pathogenesis: the virus replicates in the upper respiratory tract, spreads in the blood, replicates again in reticuloendothelial cells, and reaches the skin, where cytotoxic T cells cause the rash."><rect x="8" y="50" width="128" height="64" rx="14" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="3"/><text x="72" y="78" text-anchor="middle" font-weight="750" font-size="13.5" fill="#161A3C">Upper respiratory</text><text x="72" y="97" text-anchor="middle" font-size="11.5" fill="#464B72">tract</text><rect x="176" y="50" width="120" height="64" rx="14" fill="#FDE7F3" stroke="#3A4BD0" stroke-width="3"/><text x="236" y="78" text-anchor="middle" font-weight="750" font-size="13.5" fill="#161A3C">Blood</text><text x="236" y="97" text-anchor="middle" font-size="11.5" fill="#464B72">spread</text><rect x="336" y="50" width="150" height="64" rx="14" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="3"/><text x="411" y="78" text-anchor="middle" font-weight="750" font-size="13.5" fill="#161A3C">Reticuloendothelial</text><text x="411" y="97" text-anchor="middle" font-size="11.5" fill="#464B72">cells, 2nd replication</text><rect x="526" y="50" width="106" height="64" rx="14" fill="#FDE7F3" stroke="#3A4BD0" stroke-width="3"/><text x="579" y="78" text-anchor="middle" font-weight="750" font-size="13.5" fill="#161A3C">Skin</text><text x="579" y="97" text-anchor="middle" font-size="11.5" fill="#464B72">infected cells</text><g stroke="#E5489F" stroke-width="4" fill="none" stroke-linecap="round"><path d="M138 82 h34"/><path d="M298 82 h34"/><path d="M488 82 h34"/></g><g fill="#E5489F"><polygon points="170,76 180,82 170,88"/><polygon points="330,76 340,82 330,88"/><polygon points="520,76 530,82 520,88"/></g><g transform="translate(579 150)"><circle r="16" fill="#2FA97A" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">T</text></g><text x="579" y="186" text-anchor="middle" font-size="12" font-weight="700" fill="#161A3C">Cytotoxic T cells: rash</text><text x="320" y="24" text-anchor="middle" font-size="12.5" fill="#464B72">Redrawn from the lecture pathogenesis diagram</text></svg>
+  <p class="caption">Follow the arrows, then test what each step needs in the activity below.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Switch the immune response</h2>
+    <p class="try-note">Predict first. Then follow the virus through the body, turn the T-cell response on and off to see what changes, and test what measles does to immune memory.</p>
+    <div id="act-rashSim"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k3a"><p>Which route best describes early measles pathogenesis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k3b"><p>What produces the measles rash?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k3c"><p>Where are Koplik spots found?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Measles takes away more than the rash. After the infection, children can be less protected against other infections than they were before. Preventing the infection with 2 doses of MMR prevents these effects.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1quiz">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Mastery check</div>
+    <h2>Module 1 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 1 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m1"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m2home">
+  <div class="modhero">
+    <div class="kicker">Module 2</div>
+    <h2>Mumps and rubella</h2>
+    <p>Both viruses begin in the respiratory tract. After that, their paths split: mumps heads for the glands and other organs, and rubella travels through the blood to the skin and, in pregnancy, to the fetus.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Where does the virus go next, and who is at risk?</span></div>
+    <div class="ghost-num" aria-hidden="true">2</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Predict the organs mumps can involve, and describe its rarer complications accurately.</li><li>Put the steps of rubella spread in order, and explain why the timing of infection in pregnancy matters.</li><li>Decide who can and cannot receive MMR, and why.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m2s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Mumps: where it goes</span><span class="home-desc">Choose an organ, predict what mumps does there, and see it on a body map.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Rubella: mother to fetus</span><span class="home-desc">Order the spread, then slide through pregnancy to see what changes.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Who can receive MMR?</span><span class="home-desc">Sort eight people into who can and who cannot receive the vaccine.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2quiz">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Module 2 quiz</span><span class="home-desc">Eight questions, then a targeted round on any concept you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s1">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 1</div>
+    <h2>Mumps: where it goes</h2>
+    <p class="lede">Mumps is best known for swollen parotid glands, but the virus does not stop there. Thinking in terms of tissues reached is more useful than memorizing a list: after the respiratory tract, which organs are in the path?</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Spread is by respiratory droplets. After the respiratory tract, the virus reaches the parotid glands.</li><li>It can also involve the testes, ovaries, pancreas, and meninges. Orchitis occurs in postpubertal males, and sterility is rare and linked to bilateral orchitis.</li><li>Mumps meningitis is typically benign. There is no antiviral for mumps.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict, then reveal on the body map</h2>
+    <p class="try-note">Choose an organ below. Commit to a prediction about what mumps does there, and the map will show where it is.</p>
+    <div id="act-mumpsMap"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k4a"><p>After entering the respiratory tract, which sites can mumps virus reach in addition to the parotid glands?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k4b"><p>Which statement about sterility after mumps orchitis is best supported?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k4c"><p>Which description fits mumps meningitis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Sterility is the complication people remember, so it is worth saying it accurately: rare, tied to both testes being involved, and seen after puberty. Overstating it frightens patients, and understating the other sites misses pancreatitis and meningitis.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s2">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 2</div>
+    <h2>Rubella: mother to fetus</h2>
+    <p class="lede">Rubella is usually a mild illness for the person who has it. The reason it matters is the pregnant woman, because the virus that spreads in her blood can reach the placenta and the developing fetus.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Replication in the nasopharynx and local lymph nodes, then viremia, then skin and organs. The origin of the rash is uncertain.</li><li>First-trimester infection is linked to the most profound fetal harm (congenital rubella syndrome). Infants shed virus for months.</li><li>MMR is not given in pregnancy. Vaccinate before pregnancy or postpartum. Immune globulin is not routine.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Order the spread, then slide through pregnancy</h2>
+    <p class="try-note">Step 1: put the spread in order. Step 2: predict, then move the slider through the stages of pregnancy to see what changes. The model is qualitative and uses no invented risk numbers.</p>
+    <h3 style="margin:6px 0">Step 1 &middot; Order the spread</h3><div id="act-rubellaPath_o"></div><h3 style="margin:22px 0 6px">Step 2 &middot; Timing and prevention</h3><div id="act-rubellaPath"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k5a"><p>Which sequence describes rubella spread in the body?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k5b"><p>Infection at which time in pregnancy carries the most profound fetal harm from rubella?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k5c"><p>What is known about infants with congenital rubella?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Prevention is the plan, because it has to happen before pregnancy. A woman who is not immune cannot be vaccinated while pregnant, and immune globulin is not a routine fix, so the question to ask early is whether she was ever immune.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s3">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 3</div>
+    <h2>Who can receive MMR?</h2>
+    <p class="lede">MMR contains live, weakened viruses. That is why it protects so well, and it is also why there are two groups who do not receive it: pregnant women and people who are severely immunocompromised.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Two doses: 12–15 months and 4–6 years. It protects against measles, mumps, and rubella.</li><li>It is not given in pregnancy or in severe immunocompromise.</li><li>A non-immune woman can be vaccinated before pregnancy or after delivery. After a measles exposure, MMR can be given within 72 hours when appropriate.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Can the person receive MMR?</h2>
+    <p class="try-note">Choose one answer for every person, then check. Each row explains its answer once you have checked. Rotavirus vaccine eligibility has its own simulator in Module 5.</p>
+    <div id="act-mmrSorter"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k6a"><p>What is the MMR schedule given in the lecture?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k6b"><p>A woman who is not immune to rubella is planning a pregnancy. When can she receive MMR?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k6c"><p>MMR protects against which three viruses?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The vaccine question is often really a timing question. The same woman can be a candidate before pregnancy, a non-candidate during it, and a candidate again after delivery.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2quiz">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Mastery check</div>
+    <h2>Module 2 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 2 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m2"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m3home">
+  <div class="modhero">
+    <div class="kicker">Module 3</div>
+    <h2>Parvovirus B19, HHV-6, and a pregnancy case</h2>
+    <p>These two viruses show how the host changes the disease. The same B19 infection can be a mild rash in one child, an aplastic crisis in another, and a threat to a fetus. The module ends by bringing the whole childhood group together in a pregnancy case.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do the target cell and the host shape this disease?</span></div>
+    <div class="ghost-num" aria-hidden="true">3</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Explain how B19 infection of erythroid precursors leads to aplastic crisis, chronic anemia, and fetal hydrops.</li><li>Describe roseola, and explain why HHV-6 can reactivate in a transplant recipient.</li><li>Reason through a pregnancy exposure without naming a virus from the rash alone.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m3s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">B19 and the hydrops chain</span><span class="home-desc">Order the steps from infected marrow to hydrops, then change the host.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Roseola and reactivation</span><span class="home-desc">Place the rash relative to the fever, then switch to a transplant recipient.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">The pregnancy rash case</span><span class="home-desc">Work through the lecture case one decision at a time.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3quiz">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Module 3 quiz</span><span class="home-desc">Eight questions, then a targeted round on any concept you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s1">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 1</div>
+    <h2>B19 and the hydrops chain</h2>
+    <p class="lede">Parvovirus B19 attacks one kind of cell, the red blood cell precursor. Almost everything clinically important about it follows from that: who becomes severely anemic, who needs IVIG, and what happens to a fetus.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>B19 infects erythroblasts and halts red cell production. It spreads by the respiratory route and across the placenta. Slapped-cheek rash is the classic childhood sign.</li><li>Aplastic crisis occurs in sickle cell disease, thalassemia, or hereditary spherocytosis. Immunocompromised patients can develop chronic anemia.</li><li>Fetal risk is about 5–10%, highest at weeks 9–20. Fetal anemia can progress to heart failure and edema (hydrops), and most fetal infections resolve. Rash and arthritis are linked to immune complexes. Treatment is supportive, with transfusion or IVIG.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Order the chain, then change the host</h2>
+    <p class="try-note">Step 1: put the steps in order. Step 2: predict, then switch the host and watch the red-cell supply respond.</p>
+    <h3 style="margin:6px 0">Step 1 &middot; Order the chain</h3><div id="act-hydropsOrder"></div><h3 style="margin:22px 0 6px">Step 2 &middot; Change the host</h3><div id="act-hydropsChain"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k7a"><p>Which cell does parvovirus B19 infect, leading to anemia?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k7b"><p>In which patient can B19 cause an aplastic crisis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k7c"><p>Which process explains the rash and joint pain seen in B19 infection?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The host decides the consequence. A healthy child recovers from a few days of paused red cell production without noticing. A child whose red cells already turn over quickly, a patient who cannot clear the virus, and a fetus whose circulation depends on a constant supply of new red cells are each affected differently.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s2">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 2</div>
+    <h2>Roseola and reactivation</h2>
+    <p class="lede">Roseola is a benign childhood illness with a distinctive order of events. HHV-6 is also a good example of what latency means: the immune system can control a virus without removing it.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Roseola: high fever, then a rash that appears after the fever resolves. HHV-6 infects B and T cells and has two serotypes.</li><li>After infection the virus is latent. Lifelong immunity does not apply in the same way, because the virus can reactivate.</li><li>In transplant recipients, reactivation can cause encephalitis, pneumonia, and hepatitis. Foscarnet or ganciclovir are listed.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Place the rash, then switch the host</h2>
+    <p class="try-note">Step 1: place the rash marker where you expect it on the fever line and check. Step 2: switch to a transplant recipient and see what reactivation means.</p>
+    <div id="act-roseolaTimeline"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k8a"><p>A toddler has a high fever for several days. The fever ends, and then a rash appears. Which virus fits?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k8b"><p>What happens to HHV-6 after the first infection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k8c"><p>Which drugs are listed for HHV-6 reactivation in a transplant recipient?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The order of fever and rash is the clue, because most other childhood rashes arrive with the fever and not after it. Latency is the second lesson: a virus that has been quiet for years can return when T-cell function is suppressed.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s3">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 3</div>
+    <h2>The pregnancy rash case</h2>
+    <p class="lede">A woman at 20 weeks of pregnancy sat next to a child in a waiting room. The child now has a red maculopapular rash, and she cannot find her vaccine record. This case brings together everything in the childhood group: which viruses are possible, which fetal risks differ, and what can and cannot be done.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Possible viruses include measles, rubella, and parvovirus B19. The rash alone does not name the virus.</li><li>Rubella is linked to congenital malformations. B19 is linked to fetal anemia and hydrops. Measles carries a stillbirth risk.</li><li>MMR is not given in pregnancy. Immune globulin is not routine for rubella, and it has a 6-day window for measles exposure.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Work through the case</h2>
+    <p class="try-note">Each decision unlocks the next. A wrong answer nudges you to try again. This case is for learning and is not advice for a real patient.</p>
+    <div id="act-pregCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k9a"><p>Which fetal outcome is typical of B19 infection in pregnancy?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k9b"><p>A woman is 20 weeks pregnant, and her rubella immunity is unknown. Which statement about MMR is correct?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k9c"><p>What does the lecture say about immune globulin for rubella exposure in pregnancy?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">In a case like this, the safest first move is to gather information: when the exposure happened, what the woman’s own immunity is, and what the child’s illness really is. Then the specific risks and time windows can be matched to the facts.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3quiz">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Mastery check</div>
+    <h2>Module 3 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 3 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m3"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m4home">
+  <div class="modhero">
+    <div class="kicker">Module 4</div>
+    <h2>Enteric transmission and norovirus</h2>
+    <p>Enteric viruses cause very different illnesses, yet they share how they travel and what they are made of. This module builds the fecal-oral chain, compares genomes and polymerases, and then puts you in charge of a norovirus outbreak.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How does it travel, and how do I break the chain?</span></div>
+    <div class="ghost-num" aria-hidden="true">4</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Trace the fecal-oral chain, and choose the measures that break each link.</li><li>Compare norovirus, rotavirus, and the picornaviruses by genome and polymerase, and place poliovirus, coxsackievirus, and echovirus in the genus Enterovirus.</li><li>Respond to a norovirus outbreak with the measures the lecture supports.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m4s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">The fecal-oral chain</span><span class="home-desc">Order the chain, then break each link with a measure that works.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Genomes and polymerases</span><span class="home-desc">Predict whether each virion must carry a polymerase, then sort the enteroviruses.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Norovirus outbreak commander</span><span class="home-desc">Lead the response to a cluster of illness in a care home.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4quiz">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Module 4 quiz</span><span class="home-desc">Eight questions, then a targeted round on any concept you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s1">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 1</div>
+    <h2>The fecal-oral chain</h2>
+    <p class="lede">Enteric viruses are shed in stool and swallowed by the next host. Everything they have in common, including how well they survive outside the body, makes sense once you picture that chain.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>All enteric viruses spread by the fecal-oral route, have no envelope (so they survive stomach acid), and have RNA genomes.</li><li>Two groups: gastroenteritis viruses (norovirus, rotavirus) and the genus Enterovirus (poliovirus, coxsackievirus, echovirus).</li><li>Norovirus has a low infectious dose, is shed before symptoms and for weeks after, and persists on surfaces for days.</li></ul></div>
+    <div class="figure">
+<svg viewBox="0 0 640 260" role="img" aria-label="The fecal-oral chain: virus leaves the body in feces, then moves by fingers, food, fluids, flies, or surfaces (fomites) to the mouth of a new host, where it survives stomach acid and infects the small intestine.">
+  <g transform="translate(70 130)"><circle r="46" fill="#FFF0DC" stroke="#E8A24C" stroke-width="4"/><text y="-2" text-anchor="middle" font-size="14" font-weight="800" fill="#161A3C">Feces</text><text y="16" text-anchor="middle" font-size="11.5" fill="#464B72">virus shed</text></g>
+  <g font-size="12.5" font-weight="700" fill="#161A3C" text-anchor="middle">
+    <rect x="200" y="14" width="190" height="34" rx="17" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="295" y="36">Fingers</text>
+    <rect x="200" y="62" width="190" height="34" rx="17" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="295" y="84">Food</text>
+    <rect x="200" y="110" width="190" height="34" rx="17" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="295" y="132">Fluids (water)</text>
+    <rect x="200" y="158" width="190" height="34" rx="17" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="295" y="180">Flies and other vectors</text>
+    <rect x="200" y="206" width="190" height="34" rx="17" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="295" y="228">Fomites (surfaces)</text>
+  </g>
+  <g stroke="#E5489F" stroke-width="3" fill="none" stroke-linecap="round"><path d="M116 112 C 150 70, 170 36, 198 32"/><path d="M116 122 C 150 100, 170 82, 198 80"/><path d="M116 132 H198"/><path d="M116 142 C 150 160, 170 172, 198 174"/><path d="M116 152 C 150 190, 170 218, 198 222"/>
+  <path d="M392 32 C 430 40, 460 90, 486 120"/><path d="M392 80 C 430 90, 460 110, 486 124"/><path d="M392 128 H486"/><path d="M392 176 C 430 170, 460 150, 486 134"/><path d="M392 224 C 430 210, 460 170, 486 140"/></g>
+  <g transform="translate(560 130)"><circle r="46" fill="#E0F3EB" stroke="#2FA97A" stroke-width="4"/><text y="-2" text-anchor="middle" font-size="14" font-weight="800" fill="#161A3C">New host</text><text y="16" text-anchor="middle" font-size="11.5" fill="#464B72">swallows virus</text></g>
+</svg>
+  <p class="caption">A redraw of the lecture figure. Each route is a separate link that a different measure can break.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Order the chain, then break the links</h2>
+    <p class="try-note">Step 1: put the chain in order. Step 2: choose a measure for each link and see whether it breaks the chain. Some tempting measures do not act on the virus at all.</p>
+    <h3 style="margin:6px 0">Step 1 &middot; Order the chain</h3><div id="act-fecalOrder"></div><h3 style="margin:22px 0 6px">Step 2 &middot; Break the links</h3><div id="act-fecalOral"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k10a"><p>What feature of enteric viruses helps them survive stomach acid?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k10b"><p>Which statement about norovirus shedding fits the lecture?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k10c"><p>Which hand hygiene step is recommended for norovirus?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Break the chain at the link you can control. Hands and surfaces are within reach of every pharmacy, clinic, and kitchen, and a measure only counts if it acts on the virus.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s2">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 2</div>
+    <h2>Genomes and polymerases</h2>
+    <p class="lede">The genome decides what the virion has to bring with it. A virus whose RNA can be read immediately by the cell needs no polymerase in the particle. One whose genome the cell cannot read must carry the enzyme.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Norovirus (Caliciviridae) has positive-sense single-stranded RNA and no polymerase in the virion.</li><li>Rotavirus (Reoviridae) has double-stranded RNA in 11 segments and carries a polymerase in the virion.</li><li>Picornaviruses have positive-sense single-stranded RNA. The genus Enterovirus is a subset: poliovirus, coxsackievirus, and echovirus.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the polymerase, then sort the groups</h2>
+    <p class="try-note">Step 1: for each virus, predict whether the virion must carry its own polymerase. Step 2: sort five viruses into the correct clinical group.</p>
+    <h3 style="margin:6px 0">Step 1 &middot; Does the virion carry a polymerase?</h3><div id="act-genomeChallenge"></div><h3 style="margin:22px 0 6px">Step 2 &middot; Which group?</h3><div id="act-enteroGroup"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k11a"><p>Norovirus has a positive-sense single-stranded RNA genome. Why does it not need a polymerase in the virion?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k11b"><p>Why does rotavirus carry a polymerase in its virion?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k11c"><p>Which set belongs to the genus Enterovirus?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">"Enteric virus" is a clinical grouping, and "Enterovirus" is a genus. They overlap in how they spread, not in what they are, which is why norovirus and rotavirus are gastroenteritis viruses and not enteroviruses.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s3">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 3</div>
+    <h2>Norovirus outbreak commander</h2>
+    <p class="lede">Norovirus is the textbook outbreak virus. A very small dose causes illness, people shed it before they feel sick and for weeks after, and the virus persists on surfaces for days. It overtook rotavirus as a cause of gastroenteritis in U.S. children under 5 once rotavirus vaccination began.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Onset 12–48 hours after exposure. Stool PCR identifies the virus. Treatment is supportive fluids.</li><li>Wash with soap and water for at least 20 seconds. Stay home for 48 hours after symptoms stop. There is no vaccine.</li><li>The main complication of gastroenteritis is dehydration, and antibiotics do not help a viral infection.</li></ul></div>
+    <div class="figure">
+<svg viewBox="0 0 640 190" role="img" aria-label="Three ways norovirus spreads: contact with an infected person, contaminated food or water, and contaminated surfaces."><rect x="10" y="40" width="190" height="110" rx="14" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="3"/><text x="105" y="82" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">Infected people</text><text x="105" y="106" text-anchor="middle" font-size="12" fill="#464B72">close contact, and shedding</text><rect x="225" y="40" width="190" height="110" rx="14" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="3"/><text x="320" y="82" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">Food and water</text><text x="320" y="106" text-anchor="middle" font-size="12" fill="#464B72">contaminated by shed virus</text><rect x="440" y="40" width="190" height="110" rx="14" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="3"/><text x="535" y="82" text-anchor="middle" font-weight="750" font-size="14" fill="#161A3C">Surfaces (fomites)</text><text x="535" y="106" text-anchor="middle" font-size="12" fill="#464B72">virus persists for days</text><text x="320" y="24" text-anchor="middle" font-size="12.5" fill="#464B72">Adapted from the CDC norovirus infographic on the slide. Redrawn, not copied.</text><text x="320" y="176" text-anchor="middle" font-size="12.5" font-weight="700" fill="#A3126A">Low infectious dose: a very small amount of virus can cause illness</text></svg>
+  <p class="caption">Three routes, one shared feature: virus that leaves the body in vomit or stool and ends up on hands and surfaces.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Run the outbreak response</h2>
+    <p class="try-note">A care home has a cluster of vomiting and diarrhea. Make each decision in turn. A wrong answer nudges you to try again. This is a learning scenario, not outbreak guidance.</p>
+    <div id="act-outbreakCmd"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k12a"><p>What is the usual onset of norovirus illness after exposure, and how is it identified?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k12b"><p>How long should a person with norovirus stay home after symptoms stop?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k12c"><p>Which management fits norovirus gastroenteritis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">During an outbreak the measures that work are the ones that match the virus: hand hygiene with soap and water, keeping ill staff home until 48 hours after symptoms stop, and fluids. A tempting measure that does nothing against a virus can give false reassurance.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4quiz">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Mastery check</div>
+    <h2>Module 4 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 4 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m4"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m5home">
+  <div class="modhero">
+    <div class="kicker">Module 5</div>
+    <h2>Rotavirus, fluids, and vaccines</h2>
+    <p>Rotavirus is the classic cause of severe watery diarrhea in infants, and it is the one gastroenteritis virus in this lecture with a vaccine. This module opens by comparing it head to head with norovirus, then models how the gut loses fluid, and ends with a vaccine-screening simulator.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Why does diarrhea dehydrate, and who can be vaccinated?</span></div>
+    <div class="ghost-num" aria-hidden="true">5</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Compare norovirus and rotavirus on genome, age group, timing, and prevention.</li><li>Explain how damaged absorption and increased secretion each add to fluid loss, and match treatment to severity.</li><li>Apply the rotavirus vaccine schedule, age limits, and contraindications to infant cases.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m5s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Norovirus vs. rotavirus</span><span class="home-desc">Sort thirteen features into norovirus, rotavirus, or both.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">The gut fluid balance</span><span class="home-desc">Adjust absorption and secretion and predict fluid loss and treatment.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Rotavirus vaccine screening</span><span class="home-desc">Screen infants against the schedule, age limits, and contraindications.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5quiz">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Module 5 quiz</span><span class="home-desc">Eight questions, then a targeted round on any concept you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s1">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 1</div>
+    <h2>Norovirus vs. rotavirus</h2>
+    <p class="lede">Norovirus and rotavirus are the two gastroenteritis viruses in this lecture. They share a route and a complication, and they differ in nearly everything else that a pharmacist would be asked about.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Both are nonenveloped, spread fecal-orally, infect the small-intestine epithelium, and are treated with supportive fluids.</li><li>Norovirus: positive-sense RNA, no polymerase in the virion, onset 12–48 hours, no vaccine. Rotavirus: 11-segment dsRNA, polymerase in the virion, incubation 1–3 days, children 6–24 months, oral vaccines.</li><li>Rotavirus: fever and vomiting ease on day 2, and diarrhea lasts 5–7 days. Hygiene alone is not enough to control it.</li></ul></div>
+    <div class="figure">
+<svg viewBox="0 0 640 270" role="img" aria-label="Rotavirus schematic: a double-layered capsid surrounding 11 segments of double-stranded RNA and the viral polymerase. There is no envelope."><circle cx="190" cy="138" r="112" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="5"/><circle cx="190" cy="138" r="84" fill="#F8F9FF" stroke="#3A4BD0" stroke-width="3" stroke-dasharray="6 5"/><circle cx="302.0" cy="138.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="298.2" cy="167.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="287.0" cy="194.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="269.2" cy="217.2" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="246.0" cy="235.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="219.0" cy="246.2" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="190.0" cy="250.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="161.0" cy="246.2" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="134.0" cy="235.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="110.8" cy="217.2" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="93.0" cy="194.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="81.8" cy="167.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="78.0" cy="138.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="81.8" cy="109.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="93.0" cy="82.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="110.8" cy="58.8" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="134.0" cy="41.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="161.0" cy="29.8" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="190.0" cy="26.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="219.0" cy="29.8" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="246.0" cy="41.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="269.2" cy="58.8" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="287.0" cy="82.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><circle cx="298.2" cy="109.0" r="5" fill="#C9D0F5" stroke="#3A4BD0" stroke-width="2"/><path d="M217.6 142.9 q6 -10 12 0 t12 0" transform="rotate(6 217.6 142.9) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M222.3 167.9 q6 -10 12 0 t12 0" transform="rotate(25 222.3 167.9) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M197.0 165.1 q6 -10 12 0 t12 0" transform="rotate(45 197.0 165.1) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M176.3 179.8 q6 -10 12 0 t12 0" transform="rotate(64 176.3 179.8) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M168.3 155.7 q6 -10 12 0 t12 0" transform="rotate(84 168.3 155.7) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M146.3 142.9 q6 -10 12 0 t12 0" transform="rotate(104 146.3 142.9) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M164.9 125.6 q6 -10 12 0 t12 0" transform="rotate(123 164.9 125.6) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M167.4 100.2 q6 -10 12 0 t12 0" transform="rotate(143 167.4 100.2) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M190.9 110.0 q6 -10 12 0 t12 0" transform="rotate(163 190.9 110.0) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M215.0 101.8 q6 -10 12 0 t12 0" transform="rotate(182 215.0 101.8) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><path d="M215.8 127.2 q6 -10 12 0 t12 0" transform="rotate(202 215.8 127.2) translate(-12 0)" fill="none" stroke="#E5489F" stroke-width="3.5" stroke-linecap="round"/><circle cx="190" cy="138" r="9" fill="#2FA97A" stroke="#fff" stroke-width="2"/><g font-size="13" fill="#161A3C" font-weight="700">
+      <line x1="300" y1="70" x2="346" y2="70" stroke="#767BA0"/><text x="352" y="75">Outer and inner capsid layers</text><text x="352" y="92" font-size="11.5" font-weight="400" fill="#464B72">No lipid envelope</text>
+      <line x1="236" y1="116" x2="346" y2="136" stroke="#767BA0"/><text x="352" y="141" fill="#A3126A">11 segments of dsRNA</text>
+      <line x1="199" y1="140" x2="346" y2="190" stroke="#767BA0"/><text x="352" y="195" fill="#1C7554">RNA polymerase in the virion</text><text x="352" y="212" font-size="11.5" font-weight="400" fill="#464B72">Makes mRNA from each segment</text></g>
+    <text x="320" y="258" text-anchor="middle" font-size="11.5" fill="#767BA0">Own schematic, rebuilt from the lecture illustration. Not to scale.</text></svg>
+  <p class="caption">The rotavirus virion carries a polymerase because its double-stranded RNA cannot be read by host enzymes.</p>
+</div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Norovirus, rotavirus, or both?</h2>
+    <p class="try-note">Choose one answer for every feature, then check. Each row explains its answer once you have checked.</p>
+    <div id="act-h2hMatch"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k13a"><p>Rotavirus disease is most typical in which group?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k13b"><p>What happened to norovirus after rotavirus vaccination began in the United States?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k13c"><p>Which incubation period matches rotavirus?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Parents will ask whether a vaccine can prevent the stomach bug, and the honest answer depends on the virus. There is a vaccine for rotavirus and none for norovirus, which is why norovirus overtook rotavirus in children under 5.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s2">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 2</div>
+    <h2>The gut fluid balance</h2>
+    <p class="lede">Gastroenteritis kills by dehydration, not by the virus itself. Two separate things can go wrong at the same time: the damaged lining absorbs less, and the intestine secretes more. Adjusting each one shows why the stool becomes so watery.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>The virus infects small-intestine epithelium, destroys cells, and disrupts absorption. The main complication is dehydration.</li><li>Osmotic diarrhea: unabsorbed nutrients hold water in the lumen. Secretory diarrhea: the intestine actively secretes fluid. They are distinct and can occur together.</li><li>Treatment: oral rehydration solution, IV fluids for severe dehydration, and zinc for 10–14 days (WHO). Antibiotics do not help.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Adjust absorption and secretion</h2>
+    <p class="try-note">Predict first. Then move the two sliders and watch the lumen, the stool water, and the recommended step. The gauges are qualitative on purpose: they show direction and size, not measured volumes.</p>
+    <div id="act-fluidSim"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k14a"><p>Where do gastroenteritis viruses cause their damage?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k14b"><p>Unabsorbed nutrients in the gut lumen pull water into the stool. Which mechanism is this?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k14c"><p>What is the first-line treatment for most children with rotavirus gastroenteritis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Replace the water and salts, and the child usually recovers on their own. That is why oral rehydration solution is first-line and why antibiotics, which act on bacteria, add nothing here. The skill is recognizing when a child has moved from needing a drink to needing a drip.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s3">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 3</div>
+    <h2>Rotavirus vaccine screening</h2>
+    <p class="lede">Hygiene is not enough to control rotavirus, which is why two oral, live vaccines exist. The schedule has strict age limits, so screening an infant is a matter of checking age, doses so far, and the two contraindications.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Rotarix: 2 doses (2 and 4 months). RotaTeq: 3 doses (2, 4, and 6 months). Both are oral.</li><li>The first dose must be given by 14 weeks 6 days, and the last by 8 months 0 days.</li><li>Contraindications: SCID and a history of intussusception. The Rotarix applicator contains latex.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Screen the infant</h2>
+    <p class="try-note">Pick a case or set your own values, predict the outcome, and check. The rules come from the lecture slide and are stored in one place at the top of this page’s script so they can be updated. This is a teaching simulation, not a prescribing tool.</p>
+    <div id="act-vaccineScreen"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k15a"><p>Which pair correctly describes the two rotavirus vaccines?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k15b"><p>By what age must the first rotavirus vaccine dose be given?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k15c"><p>Which condition is a contraindication to rotavirus vaccine?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Screening is a short checklist, and each item is a yes or no: is the infant within the age limit, is the series already complete, and is either contraindication present? When the answer is unclear, the pharmacist checks the current schedule rather than guessing.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5quiz">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Mastery check</div>
+    <h2>Module 5 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 5 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m5"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m6home">
+  <div class="modhero">
+    <div class="kicker">Module 6</div>
+    <h2>Enteroviruses and local vs. systemic infection</h2>
+    <p>The picornaviruses enter through the gut, yet many injure other tissues: nerves, heart, meninges, and skin. This module follows poliovirus through four stages, matches coxsackieviruses and echoviruses to the tissues they injure, and then compares every virus in the lecture on one map.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Why can a virus that enters the gut injure the nervous system?</span></div>
+    <div class="ghost-num" aria-hidden="true">6</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Order the four stages of poliovirus invasion, and predict where each vaccine interrupts the pathway.</li><li>Match coxsackie A, coxsackie B, and echovirus syndromes to tissues, and recognize when a clue is not enough to decide.</li><li>Compare local and systemic infections across all the viruses in the lecture.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m6s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Poliovirus: four stages</span><span class="home-desc">Order the stages, then see where an infection stops with and without vaccination.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Coxsackievirus and echovirus</span><span class="home-desc">Match syndromes to the virus group, including cases where you cannot decide.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Local vs. systemic infection</span><span class="home-desc">Explore a whole-body map of where each virus enters and what it injures.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6quiz">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Module 6 quiz</span><span class="home-desc">Eight questions, then a targeted round on any concept you miss.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s1">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 1</div>
+    <h2>Poliovirus: four stages</h2>
+    <p class="lede">Poliovirus enters through the mouth and begins in the gut, but whether it stays there depends on how far it gets. Most infections stop early. A small fraction reaches the nervous system, where the damage is permanent.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Four stages: alimentary, lymphatic, viremic, then neurologic. Most infections stop at the viremic stage.</li><li>About 1% of infections in non-immunized people reach the nervous system and cause flaccid paralysis.</li><li>IPV is injected and gives serum antibody with little gut effect. OPV gives serum antibody and gut IgA, with vaccine-associated paralysis in about 1 per 2–4 million doses.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Order the stages, then test immunity</h2>
+    <p class="try-note">Step 1: put the four stages in order. Step 2: choose an immunity status and see where the infection is stopped.</p>
+    <h3 style="margin:6px 0">Step 1 &middot; Order the stages</h3><div id="act-polioOrder"></div><h3 style="margin:22px 0 6px">Step 2 &middot; Where does it stop?</h3><div id="act-polioPath"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k16a"><p>Which is the correct order of poliovirus invasion?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k16b"><p>Where do most poliovirus infections stop?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k16c"><p>Which vaccine causes both serum and gut IgA responses?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Entry through the gut does not mean the disease stays in the gut. Antibody in the blood and antibody in the gut protect at different stages, and that difference is the whole comparison between IPV and OPV.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s2">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 2</div>
+    <h2>Coxsackievirus and echovirus</h2>
+    <p class="lede">The coxsackieviruses and echoviruses are enteroviruses that spread fecal-orally but cause disease elsewhere. The useful skill is to link a syndrome to a tissue, and to know when a clue does not point to a single virus.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Coxsackie A: herpangina, hand-foot-and-mouth disease, and aseptic meningitis (skin and mucous membranes).</li><li>Coxsackie B: pleurodynia, myocarditis and pericarditis, and severe neonatal myocarditis (heart, pleura, pancreas, liver).</li><li>Echovirus: aseptic meningitis, febrile illness, and respiratory illness.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match the syndrome to the group</h2>
+    <p class="try-note">Choose one answer for every case, then check. A tissue clue often narrows the field without settling it, so some rows are best answered “cannot tell from this clue alone.”</p>
+    <div id="act-coxTriage"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k17a"><p>Herpangina and hand-foot-and-mouth disease are linked to which group?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k17b"><p>A patient has chest pain from pleurodynia. Which group fits best?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k17c"><p>Which viruses can cause aseptic meningitis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A tissue clue changes the odds but does not prove the diagnosis. Aseptic meningitis, for example, can come from more than one enterovirus, and the same is true of a febrile or respiratory illness.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s3">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 3</div>
+    <h2>Local vs. systemic infection</h2>
+    <p class="lede">This is the integrating section. Every virus in the lecture enters somewhere, stays local or travels, and injures a particular tissue. Seeing them on one body shows why a gut virus, a respiratory virus, and a placental virus produce such different diseases.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Local infections stay at the entry site: rotavirus and norovirus in the small intestine.</li><li>Systemic infections spread through blood or lymph: measles (respiratory tract to skin), rubella (also the placenta), B19 (bone marrow), mumps (glands and other organs), and poliovirus (gut to the nervous system).</li><li>The tissue the virus reaches, not the portal of entry, decides the symptoms.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Explore the whole body</h2>
+    <p class="try-note">Select each region, or use the buttons, to see which viruses enter there or injure it. The activity is complete once you have opened every region.</p>
+    <div id="act-bodyExplorer"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="k18a"><p>Which infection stays mostly within the intestine?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k18b"><p>What must happen for an infection that begins in one organ to injure a distant organ?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="k18c"><p>Poliovirus enters through the gut. Why can it injure the nervous system?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When a patient has a symptom, ask two questions: where did the virus enter, and where did it travel? The symptoms follow the second answer.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6quiz">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Mastery check</div>
+    <h2>Module 6 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 6 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m6"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="flashcards">
+  <div class="card">
+    <div class="eyebrow">Retrieval practice</div>
+    <h2>Flashcards</h2>
+    <p class="lede">Say the answer out loud before you flip the card. Retrieval from memory strengthens recall far more than rereading does.</p>
+    <div class="fc-stage">
+      <div class="fc" id="fcCard" tabindex="0" role="button" aria-label="Flashcard. Press Enter to flip.">
+        <div class="fc-face fc-front"><div>
+          <div class="fc-term" id="fcFront"></div>
+          <div class="fc-hint">click, tap, or press Enter to flip</div>
+        </div></div>
+        <div class="fc-face fc-back"><div class="fc-def" id="fcBack"></div></div>
+      </div>
+    </div>
+    <div class="fc-bar">
+      <button class="btn ghost" id="fcPrev">Previous</button>
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn ghost" id="fcNext">Next</button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section" data-key="final">
+  <div class="card">
+    <div class="eyebrow">Final Mastery Exam</div>
+    <h2>25-question mastery exam</h2>
+    <p class="lede">A mixed set drawn from all six modules: recall, application, and integration. After you submit, any concept area you missed becomes a targeted practice round, drawing on fresh questions where possible.</p>
+    <div class="quiz-body" data-quiz="final"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit exam</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+  </main>
+</div>
+
+<!-- Load order matters (see companion-architecture.md section 3). Content first, then shared
+     tools, then this page's own script, then the engine last. -->
+<script src="banks/viruses4.js"></script>
+<script src="banks/viruses4.manifest.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/helpers.js"></script>
+<script src="shared/activities.js"></script>
+<script src="shared/welcome.js"></script>
+<script>
+var BODY={"parotid": "<svg viewBox=\"0 0 280 300\" role=\"img\" aria-label=\"Body map with the parotid glands highlighted\" style=\"max-width:260px;display:block;margin:0 auto\"><g fill=\"#F4F5FD\" stroke=\"#C3CAF0\" stroke-width=\"3\"><circle cx=\"128\" cy=\"48\" r=\"30\"/><rect x=\"92\" y=\"82\" width=\"72\" height=\"150\" rx=\"28\"/><rect x=\"100\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"134\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"62\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/><rect x=\"168\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/></g><ellipse cx=\"106\" cy=\"62\" rx=\"9\" ry=\"13\" fill=\"#E5489F\" stroke=\"#A3126A\" stroke-width=\"3\"/><path d=\"M104 28 q16 -22 36 0 q6 14 -2 24 h-32 q-8 -10 -2 -24z\" transform=\"translate(-12 0)\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"112\" rx=\"26\" ry=\"22\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"170\" rx=\"20\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"232\" rx=\"12\" ry=\"9\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"206\" rx=\"24\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><text x=\"140\" y=\"298\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"750\" fill=\"#A3126A\">Parotid glands</text></svg>", "meninges": "<svg viewBox=\"0 0 280 300\" role=\"img\" aria-label=\"Body map with the meninges and brain highlighted\" style=\"max-width:260px;display:block;margin:0 auto\"><g fill=\"#F4F5FD\" stroke=\"#C3CAF0\" stroke-width=\"3\"><circle cx=\"128\" cy=\"48\" r=\"30\"/><rect x=\"92\" y=\"82\" width=\"72\" height=\"150\" rx=\"28\"/><rect x=\"100\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"134\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"62\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/><rect x=\"168\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/></g><ellipse cx=\"106\" cy=\"62\" rx=\"9\" ry=\"13\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><path d=\"M104 28 q16 -22 36 0 q6 14 -2 24 h-32 q-8 -10 -2 -24z\" transform=\"translate(-12 0)\" fill=\"#E5489F\" stroke=\"#A3126A\" stroke-width=\"3\"/><ellipse cx=\"128\" cy=\"112\" rx=\"26\" ry=\"22\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"170\" rx=\"20\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"232\" rx=\"12\" ry=\"9\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"206\" rx=\"24\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><text x=\"140\" y=\"298\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"750\" fill=\"#A3126A\">Meninges and brain</text></svg>", "resp": "<svg viewBox=\"0 0 280 300\" role=\"img\" aria-label=\"Body map with the respiratory tract highlighted\" style=\"max-width:260px;display:block;margin:0 auto\"><g fill=\"#F4F5FD\" stroke=\"#C3CAF0\" stroke-width=\"3\"><circle cx=\"128\" cy=\"48\" r=\"30\"/><rect x=\"92\" y=\"82\" width=\"72\" height=\"150\" rx=\"28\"/><rect x=\"100\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"134\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"62\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/><rect x=\"168\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/></g><ellipse cx=\"106\" cy=\"62\" rx=\"9\" ry=\"13\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><path d=\"M104 28 q16 -22 36 0 q6 14 -2 24 h-32 q-8 -10 -2 -24z\" transform=\"translate(-12 0)\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"112\" rx=\"26\" ry=\"22\" fill=\"#E5489F\" stroke=\"#A3126A\" stroke-width=\"3\"/><ellipse cx=\"128\" cy=\"170\" rx=\"20\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"232\" rx=\"12\" ry=\"9\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"206\" rx=\"24\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><text x=\"140\" y=\"298\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"750\" fill=\"#A3126A\">Respiratory tract</text></svg>", "pancreas": "<svg viewBox=\"0 0 280 300\" role=\"img\" aria-label=\"Body map with the pancreas highlighted\" style=\"max-width:260px;display:block;margin:0 auto\"><g fill=\"#F4F5FD\" stroke=\"#C3CAF0\" stroke-width=\"3\"><circle cx=\"128\" cy=\"48\" r=\"30\"/><rect x=\"92\" y=\"82\" width=\"72\" height=\"150\" rx=\"28\"/><rect x=\"100\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"134\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"62\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/><rect x=\"168\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/></g><ellipse cx=\"106\" cy=\"62\" rx=\"9\" ry=\"13\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><path d=\"M104 28 q16 -22 36 0 q6 14 -2 24 h-32 q-8 -10 -2 -24z\" transform=\"translate(-12 0)\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"112\" rx=\"26\" ry=\"22\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"170\" rx=\"20\" ry=\"7\" fill=\"#E5489F\" stroke=\"#A3126A\" stroke-width=\"3\"/><ellipse cx=\"128\" cy=\"232\" rx=\"12\" ry=\"9\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"206\" rx=\"24\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><text x=\"140\" y=\"298\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"750\" fill=\"#A3126A\">Pancreas</text></svg>", "testes": "<svg viewBox=\"0 0 280 300\" role=\"img\" aria-label=\"Body map with the testes highlighted\" style=\"max-width:260px;display:block;margin:0 auto\"><g fill=\"#F4F5FD\" stroke=\"#C3CAF0\" stroke-width=\"3\"><circle cx=\"128\" cy=\"48\" r=\"30\"/><rect x=\"92\" y=\"82\" width=\"72\" height=\"150\" rx=\"28\"/><rect x=\"100\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"134\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"62\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/><rect x=\"168\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/></g><ellipse cx=\"106\" cy=\"62\" rx=\"9\" ry=\"13\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><path d=\"M104 28 q16 -22 36 0 q6 14 -2 24 h-32 q-8 -10 -2 -24z\" transform=\"translate(-12 0)\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"112\" rx=\"26\" ry=\"22\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"170\" rx=\"20\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"232\" rx=\"12\" ry=\"9\" fill=\"#E5489F\" stroke=\"#A3126A\" stroke-width=\"3\"/><ellipse cx=\"128\" cy=\"206\" rx=\"24\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><text x=\"140\" y=\"298\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"750\" fill=\"#A3126A\">Testes</text></svg>", "ovaries": "<svg viewBox=\"0 0 280 300\" role=\"img\" aria-label=\"Body map with the ovaries highlighted\" style=\"max-width:260px;display:block;margin:0 auto\"><g fill=\"#F4F5FD\" stroke=\"#C3CAF0\" stroke-width=\"3\"><circle cx=\"128\" cy=\"48\" r=\"30\"/><rect x=\"92\" y=\"82\" width=\"72\" height=\"150\" rx=\"28\"/><rect x=\"100\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"134\" y=\"224\" width=\"22\" height=\"60\" rx=\"10\"/><rect x=\"62\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/><rect x=\"168\" y=\"90\" width=\"26\" height=\"100\" rx=\"12\"/></g><ellipse cx=\"106\" cy=\"62\" rx=\"9\" ry=\"13\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><path d=\"M104 28 q16 -22 36 0 q6 14 -2 24 h-32 q-8 -10 -2 -24z\" transform=\"translate(-12 0)\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"112\" rx=\"26\" ry=\"22\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"170\" rx=\"20\" ry=\"7\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"232\" rx=\"12\" ry=\"9\" fill=\"#E4E8F8\" stroke=\"#C3CAF0\" stroke-width=\"2\"/><ellipse cx=\"128\" cy=\"206\" rx=\"24\" ry=\"7\" fill=\"#E5489F\" stroke=\"#A3126A\" stroke-width=\"3\"/><text x=\"140\" y=\"298\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"750\" fill=\"#A3126A\">Ovaries</text></svg>"};
+function explorerSvg(){return "<svg viewBox=\"0 0 400 330\" style=\"max-width:460px;display:block;margin:0 auto\" role=\"img\" aria-label=\"A body outline with selectable regions: respiratory tract, salivary glands, nervous system, heart and pleura, gut, bone marrow, skin, placenta and fetus, and the blood and lymph that connect them.\">\n  <g fill=\"#F4F5FD\" stroke=\"#C3CAF0\" stroke-width=\"3\"><circle cx=\"200\" cy=\"52\" r=\"32\"/><rect x=\"160\" y=\"88\" width=\"80\" height=\"150\" rx=\"30\"/><rect x=\"168\" y=\"230\" width=\"26\" height=\"80\" rx=\"11\"/><rect x=\"206\" y=\"230\" width=\"26\" height=\"80\" rx=\"11\"/><rect x=\"124\" y=\"96\" width=\"28\" height=\"110\" rx=\"13\"/><rect x=\"248\" y=\"96\" width=\"28\" height=\"110\" rx=\"13\"/></g>\n  <g stroke=\"#2B38B8\" stroke-width=\"3\" fill=\"#DDE1FA\">\n    <path data-hs=\"cns\" d=\"M174 34 q26 -26 52 0 q6 14 -2 24 h-48 q-8 -10 -2 -24z\"/>\n    <ellipse data-hs=\"glands\" cx=\"176\" cy=\"66\" rx=\"9\" ry=\"14\"/>\n    <ellipse data-hs=\"resp\" cx=\"200\" cy=\"112\" rx=\"27\" ry=\"20\"/>\n    <ellipse data-hs=\"heart\" cx=\"214\" cy=\"146\" rx=\"15\" ry=\"14\"/>\n    <ellipse data-hs=\"gut\" cx=\"200\" cy=\"188\" rx=\"31\" ry=\"22\"/>\n    <ellipse data-hs=\"placenta\" cx=\"200\" cy=\"226\" rx=\"22\" ry=\"11\"/>\n  </g>\n  <g stroke=\"#A3126A\" stroke-width=\"3\" fill=\"#FBD3E8\">\n    <rect data-hs=\"marrow\" x=\"257\" y=\"120\" width=\"10\" height=\"64\" rx=\"5\"/>\n    <rect data-hs=\"skin\" x=\"131\" y=\"108\" width=\"14\" height=\"70\" rx=\"7\"/>\n    <path data-hs=\"blood\" d=\"M188 128 v50\" fill=\"none\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  </g>\n  <g font-size=\"12\" font-weight=\"700\" fill=\"#161A3C\">\n    <text x=\"262\" y=\"36\">Nervous system</text><text x=\"8\" y=\"68\">Salivary glands</text><text x=\"278\" y=\"100\">Respiratory tract</text>\n    <text x=\"278\" y=\"136\">Heart</text><text x=\"278\" y=\"198\">Gut</text><text x=\"278\" y=\"236\">Placenta, fetus</text>\n    <text x=\"278\" y=\"167\" fill=\"#A3126A\">Bone marrow</text><text x=\"8\" y=\"146\" fill=\"#A3126A\">Skin</text><text x=\"8\" y=\"196\" fill=\"#A3126A\">Blood, lymph</text>\n  </g>\n  <text x=\"200\" y=\"324\" text-anchor=\"middle\" font-size=\"11.5\" fill=\"#767BA0\">Select a region, or use the buttons below.</text>\n</svg>";}
+
+/* ============================================================
+   THIS PAGE'S OWN SCRIPT — Viruses IV · Childhood and Enteric Tract Viruses
+   1) builds the structure engine.js needs from MANIFEST (copied
+      unchanged from the reference pattern in companion-architecture §5)
+   2) builds every hands-on activity
+   3) calls initWelcome() at the very end (icons, live counts, buttons)
+   ============================================================ */
+
+/* ---------- 1) Structure derived from MANIFEST ---------- */
+var BADGES = {home:'&#8962;', m1:'1', m2:'2', m3:'3', m4:'4', m5:'5', m6:'6', flash:'&#10022;', final:'&#9733;'};
+
+var MODULES = MANIFEST.modules.map(function(m){
+  var mod = {id:m.id, badge:BADGES[m.id]||'&#8226;', title:m.title,
+             sections:m.sections.map(function(s){return {key:s.key,label:s.label};})};
+  if(m.unlockAfter) mod.unlockAfter = m.unlockAfter;
+  return mod;
+});
+
+var FLOW = []; MODULES.forEach(function(m){ m.sections.forEach(function(s){ FLOW.push(s); }); });
+
+var UNGRADED = [];
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(!s.checks && !s.activity && !s.quiz) UNGRADED.push(s.key);
+});});
+
+var SECTION_REQ = {}, QUIZ_KEY_FOR_SECTION = {};
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(s.checks || s.activity){
+    SECTION_REQ[s.key] = {checks:s.checks||[]};
+    if(s.activity) SECTION_REQ[s.key].activity = s.activity;
+  }
+  if(s.quiz) QUIZ_KEY_FOR_SECTION[s.key] = s.quiz;
+});});
+
+var AREA_SECTION = MANIFEST.areaSection;
+
+var MODULE_QUIZ_SIZE = 8;
+/* 18 concept areas, 25 exam questions: every area is asked at least once. */
+var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
+
+/* tiny helpers shared by the activities below */
+function $(id){return document.getElementById(id);}
+function segControl(labels,onPick){
+  /* labels: [[value,text],...]; returns {box, set(value), buttons:{value:btn}} */
+  var box=el('div','seg'),buttons={};
+  labels.forEach(function(p){
+    var b=el('button',null,p[1]);b.type='button';b.setAttribute('data-v',p[0]);
+    b.onclick=function(){onPick(p[0]);};box.appendChild(b);buttons[p[0]]=b;
+  });
+  return {box:box,buttons:buttons,
+    set:function(v){Object.keys(buttons).forEach(function(k){buttons[k].classList.toggle('on',k===v);});},
+    mark:function(v){if(buttons[v])buttons[v].classList.add('seen');}};
+}
+/* a range slider with a label; returns {row, input} */
+function sliderRow(label,min,max,step,val,id){
+  var row=el('div','slider-row'),lab=el('label',null,label),inp=document.createElement('input');
+  inp.type='range';inp.min=min;inp.max=max;inp.step=step;inp.value=val;inp.id=id;lab.setAttribute('for',id);
+  row.appendChild(lab);row.appendChild(inp);return {row:row,input:inp};
+}
+function pill(text,cls){return '<span class="tagpill'+(cls?' '+cls:'')+'">'+text+'</span>';}
+/* progress kept under <name>_v is read back safely */
+function loadV(name,dflt){
+  var v=state.activities[name+'_v'];
+  return (v&&typeof v==='object')?Object.assign({},dflt,v):dflt;
+}
+function saveV(name,v){Act.keep(name+'_v',JSON.parse(JSON.stringify(v)));}
+
+/* ============================================================
+   MODULE 1 ACTIVITIES
+   ============================================================ */
+
+/* --- 1A step 1: genome and envelope profile (matching) --- */
+Act.sort('act-fpMatch',{name:'fpMatch',
+  options:['−ssRNA · enveloped','+ssRNA · enveloped','ssDNA · no envelope','dsDNA · enveloped'],
+  rows:[
+    {text:'<b>Measles virus</b>',answer:'−ssRNA · enveloped',
+     why:'A paramyxovirus: negative-sense RNA, helical capsid, envelope, and a polymerase packaged in the virion.'},
+    {text:'<b>Mumps virus</b>',answer:'−ssRNA · enveloped',
+     why:'Also a paramyxovirus, so it matches measles: negative-sense RNA, helical capsid, envelope, virion polymerase.'},
+    {text:'<b>Rubella virus</b>',answer:'+ssRNA · enveloped',
+     why:'A togavirus: positive-sense RNA, icosahedral capsid, and an envelope.'},
+    {text:'<b>Parvovirus B19</b>',answer:'ssDNA · no envelope',
+     why:'A parvovirus: single-stranded DNA and an icosahedral capsid with no envelope.'},
+    {text:'<b>HHV-6</b>',answer:'dsDNA · enveloped',
+     why:'A herpesvirus: double-stranded DNA, icosahedral capsid, envelope, and two serotypes.'}
+  ]});
+
+/* --- 1A step 2: patients arrive clue by clue (staged case) --- */
+Act.stages('act-fingerprintLab',{name:'fingerprintLab',stages:[
+  {lead:'<b>Patient 1.</b> A 3-year-old has a fever and a red, flat-and-bumpy (maculopapular) rash on the trunk. There is no other history yet.',
+   prompt:'What is the most reasonable conclusion at this point?',
+   options:['The rash is nonspecific, so more clues are needed before naming one virus','This is measles','This is rubella','This is parvovirus B19'],answer:0,
+   why:'Measles, rubella, B19, and HHV-6 can all cause a maculopapular rash. At this point the evidence does not separate them, and saying so is the correct answer.',
+   reveal:'<b>New clue:</b> the fever was high for 3 days and has just broken. The rash appeared as the fever fell.'},
+  {lead:'<b>Patient 1, continued.</b> The fever was high for 3 days, then broke. The rash appeared only after the fever resolved.',
+   prompt:'Which virus fits this order of events?',
+   options:['HHV-6 (roseola)','Measles virus','Mumps virus','Parvovirus B19'],answer:0,
+   why:'High fever followed by a rash once the fever resolves is the pattern of roseola, caused by HHV-6. In measles, the rash appears while the fever is still high.'},
+  {lead:'<b>Patient 2.</b> A child has very high fever, cough, red eyes, and small white spots on the inside of the cheeks. A rash is just beginning.',
+   prompt:'Which virus fits?',
+   options:['Rubella virus','Measles virus','HHV-6','Parvovirus B19'],answer:1,
+   why:'White spots on the cheek lining are Koplik spots, which point to measles. Measles is also contagious from 4 days before the rash to 4 days after it.'},
+  {lead:'<b>Patient 3.</b> A child with sickle cell disease has a mild illness with bright red cheeks, then becomes suddenly pale and exhausted.',
+   prompt:'Which virus is most likely, and why does it matter for this child?',
+   options:['Parvovirus B19, which halts red cell production in a child whose red cells already turn over quickly','Measles virus, which causes rash and anemia together','HHV-6, which infects red cell precursors','Rubella virus, which attacks the bone marrow'],answer:0,
+   why:'A slapped-cheek rash followed by a sudden anemia in a child with sickle cell disease is the picture of B19 aplastic crisis. B19 infects erythroid precursors.'},
+  {lead:'<b>Patient 4.</b> A teenager has fever and swelling in front of and below one ear. Two days later one testis becomes painful and swollen.',
+   prompt:'Which virus fits, and what does it tell you about spread?',
+   options:['Mumps virus, which reaches glands such as the parotids and the testes','Rubella virus, which reaches the testes through the placenta','Parvovirus B19, which infects the parotid glands','HHV-6, which causes orchitis during roseola'],answer:0,
+   why:'Mumps spreads from the respiratory tract to the parotid glands, and can involve the testes (orchitis in postpubertal males), ovaries, pancreas, and meninges.',
+   reveal:'You have now matched four of the five viruses to a clue pattern. Rubella is covered in Module 2.'}
+]});
+
+/* --- 1B Measles exposure timeline (predict, manipulate, explain) --- */
+(function exposureTimeline(){
+  var host=$('act-exposureTimeline'),name='exposureTimeline';
+  var prog=loadV(name,{inside:false,outside:false,profiles:[]});
+  var profile='healthy',gate;
+  var gateBox=el('div');host.appendChild(gateBox);
+  var lab=el('div','lab-out locked');host.appendChild(lab);
+  lab.innerHTML='<h4>Part A &middot; Was the contact inside the contagious window?</h4>'+
+    '<p style="margin:0 0 6px;font-size:.9rem">Slide the day you were in the same room as the patient, counted from the day their rash began (day 0).</p>'+
+    '<div class="figure" style="margin:6px 0"><svg id="etA" viewBox="0 0 640 120" role="img" aria-label="A timeline from 8 days before the rash to 8 days after. The days from 4 before to 4 after the rash are shaded as the contagious window. A marker shows the day of contact."></svg></div>'+
+    '<div id="etAOut" aria-live="polite"></div>';
+  var sa=sliderRow('Day of contact',-8,8,1,-6,'etSlide');lab.appendChild(sa.row);
+  var h4=el('h4',null,'Part B &middot; Which post-exposure windows are still open?');h4.style.marginTop='18px';lab.appendChild(h4);
+  var sb=sliderRow('Time since exposure',0,192,6,24,'etHours');lab.appendChild(sb.row);
+  var seg=segControl([['healthy','Healthy, not pregnant'],['preg','Pregnant, no evidence of immunity'],['immuno','Severely immunocompromised']],function(v){profile=v;mark(v);paintB();});
+  var pr=el('div','lab-row');pr.appendChild(el('span','lab-label','Person'));pr.appendChild(seg.box);lab.appendChild(pr);
+  var bOut=el('div');bOut.setAttribute('aria-live','polite');lab.appendChild(bOut);
+  lab.appendChild(el('p','caption','Educational model of the lecture’s two time windows. It is not advice for an individual exposure.'));
+  var svg=$('etA');
+  function X(d){return 40+(d+8)*35;}
+  function paintA(){
+    var d=Number(sa.input.value),inside=d>=-4&&d<=4;
+    svg.innerHTML='<rect x="'+X(-4)+'" y="30" width="'+(8*35)+'" height="40" rx="8" fill="#FDE7F3" stroke="#E5489F" stroke-width="2"/>'+
+      '<line x1="40" y1="50" x2="600" y2="50" stroke="#767BA0" stroke-width="3"/>'+
+      '<g font-size="11" fill="#464B72" text-anchor="middle">'+[-8,-4,0,4,8].map(function(t){return '<line x1="'+X(t)+'" y1="44" x2="'+X(t)+'" y2="56" stroke="#767BA0" stroke-width="2"/><text x="'+X(t)+'" y="84">'+(t>0?'+'+t:t)+'</text>';}).join('')+'</g>'+
+      '<text x="'+X(0)+'" y="22" text-anchor="middle" font-size="12" font-weight="750" fill="#A3126A">Contagious window</text>'+
+      '<text x="'+X(0)+'" y="102" text-anchor="middle" font-size="11.5" fill="#464B72">Day 0 = rash begins</text>'+
+      '<g transform="translate('+X(d)+' 50)"><circle r="11" fill="'+(inside?'#E5489F':'#2FA97A')+'" stroke="#fff" stroke-width="3"/></g>';
+    $('etAOut').innerHTML=(inside?pill('Inside the window','shut'):pill('Outside the window','open'))+' <span style="font-size:.92rem">'+
+      (inside?(d<0?'The patient was already contagious '+Math.abs(d)+(Math.abs(d)===1?' day':' days')+' before the rash, when nobody could have known it was measles.':
+        (d===0?'Contact on the day the rash began is inside the window.':'The patient was still contagious '+d+(d===1?' day':' days')+' after the rash began.')):
+        (d<0?'Contact this early is before the contagious window opens.':'Contact this late is after the contagious window closes.'))+'</span>';
+    if(inside&&!prog.inside){prog.inside=true;saveV(name,prog);}
+    if(!inside&&!prog.outside){prog.outside=true;saveV(name,prog);}
+    check();
+  }
+  function paintB(){
+    var h=Number(sb.input.value),mmrOpen=h<=72,igOpen=h<=144;
+    var days=(h/24);var dtxt=(h<48?h+' hours':(Math.round(days*10)/10)+' days');
+    var who={healthy:'MMR can be considered while its window is open.',
+      preg:'MMR is not given in pregnancy. Immune globulin can be considered with the obstetric team while its window is open.',
+      immuno:'MMR is not given in severe immunocompromise. Immune globulin can be considered with the specialist team while its window is open.'}[profile];
+    var any=(mmrOpen&&profile==='healthy')||igOpen;
+    bOut.innerHTML='<div class="pill-row">'+pill('Exposed '+dtxt+' ago','hl')+pill('MMR window (72 hours): '+(mmrOpen?'open':'closed'),mmrOpen?'open':'shut')+pill('Immune globulin window (6 days): '+(igOpen?'open':'closed'),igOpen?'open':'shut')+'</div>'+
+      '<p style="margin:6px 0 0;font-size:.93rem">'+who+(any?'':' Both windows have closed for this person, so neither time-sensitive option remains.')+'</p>';
+    check();
+  }
+  function mark(v){seg.mark(v);if(prog.profiles.indexOf(v)<0){prog.profiles.push(v);saveV(name,prog);}}
+  function check(){
+    prog.profiles.forEach(function(v){seg.mark(v);});
+    if(gate&&gate.answered()&&prog.inside&&prog.outside&&prog.profiles.length>=3&&!state.activities[name])Act.done(name,true);
+  }
+  sa.input.oninput=paintA;sb.input.oninput=paintB;
+  seg.set('healthy');mark('healthy');paintA();paintB();
+  gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a pregnant woman with no evidence of measles immunity was exposed 4 days ago. Which time-sensitive option is still within its window?',
+    options:['Immune globulin, whose window runs to 6 days','MMR, whose window is 72 hours','Both options','Neither option'],answer:0,
+    why:'The MMR window (72 hours) has passed, and MMR is not given in pregnancy anyway. The immune globulin window runs to 6 days, so it is the option still within its time limit.'},
+    function(){lab.classList.remove('locked');check();});
+  Act.register(name,{solve:function(){
+    gate.solve();sa.input.value='-6';sa.input.oninput();sa.input.value='0';sa.input.oninput();
+    ['healthy','preg','immuno'].forEach(function(v){seg.buttons[v].click();});
+  }});
+})();
+
+/* --- 1C Immune-rash simulator (causal toggle) --- */
+(function rashSim(){
+  var host=$('act-rashSim'),name='rashSim';
+  var prog=loadV(name,{t:[],m:[],c:[]}),gate;
+  var gateBox=el('div');host.appendChild(gateBox);
+  var lab=el('div','lab-out locked');host.appendChild(lab);
+
+  lab.appendChild(el('h4',null,'Part A &middot; Is the rash the virus or the immune response?'));
+  var tseg=segControl([['on','T-cell response intact'],['off','T-cell response absent']],function(v){tseg.set(v);tmark(v);paintT();});
+  var tr=el('div','lab-row');tr.appendChild(el('span','lab-label','Host'));tr.appendChild(tseg.box);lab.appendChild(tr);
+  var tOut=el('div');tOut.setAttribute('aria-live','polite');lab.appendChild(tOut);
+
+  var h2=el('h4',null,'Part B &middot; What does measles do to immune memory?');h2.style.marginTop='18px';lab.appendChild(h2);
+  var mseg=segControl([['before','Before measles'],['after','After measles']],function(v){mseg.set(v);mmark(v);paintM();});
+  var mr=el('div','lab-row');mr.appendChild(el('span','lab-label','Timeline'));mr.appendChild(mseg.box);lab.appendChild(mr);
+  var mOut=el('div');mOut.setAttribute('aria-live','polite');lab.appendChild(mOut);
+
+  var h3=el('h4',null,'Part C &middot; Complications');h3.style.marginTop='18px';lab.appendChild(h3);
+  var CMP=[['diarrhea','Diarrhea','Seen during or soon after the acute illness.'],
+    ['otitis','Otitis media','Seen during or soon after the acute illness.'],
+    ['pneumonia','Pneumonia','Seen during or soon after the acute illness. It can reflect the virus or a secondary infection.'],
+    ['enceph','Encephalitis','A serious complication of the acute illness that involves the brain.'],
+    ['sspe','SSPE','Subacute sclerosing panencephalitis appears years after the acute illness.']];
+  var cbtns={},cOut=el('div','lab-out');cOut.style.margin='8px 0';cOut.setAttribute('aria-live','polite');
+  var cr=el('div','act-chips');
+  CMP.forEach(function(c){var b=el('button','act-chip',c[1]);b.type='button';b.onclick=function(){
+      cOut.innerHTML='<h4>'+c[1]+'</h4><p>'+c[2]+'</p><p style="margin-bottom:0">About 30% of U.S. measles cases have a complication. Vitamin A lowered deaths in children under 2 in a Cochrane subgroup; it is not an antiviral, and there is none for measles.</p>';
+      if(prog.c.indexOf(c[0])<0){prog.c.push(c[0]);saveV(name,prog);}
+      paintC(c[0]);check();};cr.appendChild(b);cbtns[c[0]]=b;});
+  lab.appendChild(cr);lab.appendChild(cOut);
+  cOut.innerHTML='<p style="margin:0;color:var(--ink-soft)">Select each complication to open it.</p>';
+  var cProg=el('p','caption');lab.appendChild(cProg);
+  function paintC(cur){CMP.forEach(function(c){cbtns[c[0]].classList.toggle('done',prog.c.indexOf(c[0])>-1);cbtns[c[0]].classList.toggle('on',c[0]===cur);});
+    cProg.textContent=prog.c.length+' of '+CMP.length+' complications opened.';}
+
+  function tmark(v){tseg.mark(v);if(prog.t.indexOf(v)<0){prog.t.push(v);saveV(name,prog);}}
+  function mmark(v){mseg.mark(v);if(prog.m.indexOf(v)<0){prog.m.push(v);saveV(name,prog);}}
+  var cur={t:'on',m:'before'};
+  function paintT(){
+    var on=(tseg.buttons.on.classList.contains('on'));
+    var steps=['Upper respiratory tract','Blood','Reticuloendothelial cells (second replication)','Skin'];
+    tOut.innerHTML='<div class="pill-row">'+steps.map(function(s,i){return pill((i+1)+'. '+s,'');}).join('')+'</div>'+
+      '<div class="pill-row">'+pill('Virus reaches the skin: yes','hl')+pill(on?'Typical rash: appears':'Typical rash: does not form',on?'shut':'open')+'</div>'+
+      '<p style="margin:6px 0 0;font-size:.93rem">'+(on?'Cytotoxic T cells attack virus-infected cells in the skin, and the attack produces the maculopapular rash. The rash appears as immunity develops.':
+      'The virus still replicates and still reaches the skin, but the typical rash needs cytotoxic T cells. The absence of a rash does not mean the virus is absent.')+'</p>';
+    check();
+  }
+  function paintM(){
+    var after=mseg.buttons.after.classList.contains('on');
+    var dots='';for(var i=0;i<8;i++){var lost=after&&i%2===1;dots+='<circle cx="'+(34+i*60)+'" cy="34" r="19" fill="'+(lost?'#E4E7F5':'#C9D0F5')+'" stroke="'+(lost?'#B6BAD4':'#3A4BD0')+'" stroke-width="3" '+(lost?'stroke-dasharray="4 4"':'')+'/>'+(lost?'<path d="M'+(24+i*60)+' 24 l20 20 M'+(44+i*60)+' 24 l-20 20" stroke="#D4536B" stroke-width="3" stroke-linecap="round"/>':'');}
+    mOut.innerHTML='<div class="figure" style="margin:6px 0"><svg viewBox="0 0 490 72" role="img" aria-label="'+(after?'Eight memory cells, four of them crossed out, showing that measles erased part of the immune memory.':'Eight intact memory cells representing immunity built up from earlier infections and vaccines.')+'">'+dots+'</svg></div>'+
+      '<p style="margin:0;font-size:.93rem">'+(after?'<b>Immune amnesia.</b> Measles can erase part of the immune memory built up from earlier infections and vaccines, so the child is open to infections it had been protected against. The drawing is an illustration, not a measurement.':
+      'Each circle stands for immune memory against a different earlier infection or vaccine.')+'</p>';
+    check();
+  }
+  function check(){
+    if(gate&&gate.answered()&&prog.t.length>=2&&prog.m.length>=2&&prog.c.length>=CMP.length&&!state.activities[name])Act.done(name,true);
+  }
+  tseg.set('on');tmark('on');mseg.set('before');mmark('before');
+  prog.t.forEach(tseg.mark);prog.m.forEach(mseg.mark);paintT();paintM();paintC(null);
+  gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a patient with no T-cell function is infected with measles virus. What happens to the typical measles rash?',
+    options:['It does not form, because the rash depends on cytotoxic T cells','It is more intense, because the virus is unchecked','It is unchanged, because the virus makes the rash directly','It appears earlier, because the virus spreads faster'],answer:0,
+    why:'The rash is the result of cytotoxic T cells attacking infected skin cells. Without T cells the virus can still spread, but the usual rash does not appear.'},
+    function(){lab.classList.remove('locked');check();});
+  Act.register(name,{solve:function(){
+    gate.solve();tseg.buttons.off.click();tseg.buttons.on.click();mseg.buttons.after.click();mseg.buttons.before.click();
+    CMP.forEach(function(c){cbtns[c[0]].click();});
+  }});
+})();
+
+/* ============================================================
+   MODULE 2 ACTIVITIES
+   ============================================================ */
+
+/* --- 2A Mumps: predict, then see it on the body map --- */
+Act.predict('act-mumpsMap',{name:'mumpsMap',
+  start:'Choose an organ above, commit to a prediction, and the body map will show where it is.',
+  items:[
+    {id:'parotid',title:'Parotid glands',prompt:'A 9-year-old has swelling in front of and below the ear after a respiratory illness. Mumps most characteristically enlarges which structure?',
+     options:['The parotid glands','The thyroid gland','The adenoids','The lymph nodes at the groin'],answer:0,
+     why:'Mumps spreads by droplets from the respiratory tract to the parotid glands.',reveal:BODY.parotid},
+    {id:'testes',title:'Testes',prompt:'A postpubertal male with mumps develops painful testicular swelling. What does the lecture say about lasting sterility?',
+     options:['It is rare and is linked to both testes being involved','It is the expected result of orchitis','It occurs mainly in prepubertal boys','It follows mumps meningitis'],answer:0,
+     why:'Orchitis occurs in postpubertal males. Sterility is a rare outcome, and it is tied to bilateral orchitis.',reveal:BODY.testes},
+    {id:'ovaries',title:'Ovaries',prompt:'In a female patient, which organ can mumps involve besides the parotid glands?',
+     options:['The ovaries','The adrenal glands','The thyroid gland','The liver'],answer:0,
+     why:'Mumps can involve the ovaries as well as the testes, pancreas, and meninges.',reveal:BODY.ovaries},
+    {id:'pancreas',title:'Pancreas',prompt:'A patient with mumps develops severe upper abdominal pain. Which organ involvement would raise this concern?',
+     options:['The pancreas','The parotid glands','The meninges','The testes'],answer:0,
+     why:'The pancreas is one of the sites mumps can reach. Pain in the upper abdomen in a patient with mumps should prompt the thought of pancreatic involvement.',reveal:BODY.pancreas},
+    {id:'meninges',title:'Meninges',prompt:'A teenager with mumps develops headache and a stiff neck. What is the usual course of mumps meningitis?',
+     options:['It is typically benign','It is typically fatal','It typically leaves permanent paralysis','It typically needs foscarnet'],answer:0,
+     why:'Mumps meningitis is typically benign. There is no antiviral for mumps, so care is supportive.',reveal:BODY.meninges}
+  ]});
+
+/* --- 2B step 1: order the spread of rubella --- */
+Act.order('act-rubellaPath_o',{name:'rubellaPath_o',items:[
+  'Replication in the nasopharynx and local lymph nodes',
+  'Viremia: virus in the blood',
+  'Spread to the skin and other organs, and to the placenta in pregnancy']});
+
+/* --- 2B step 2: timing of infection and prevention (slider through pregnancy) --- */
+(function rubellaPath(){
+  var host=$('act-rubellaPath'),name='rubellaPath';
+  var prog=loadV(name,{seen:[]}),gate;
+  var ST=[
+    {k:'pre',label:'Before pregnancy',mmr:'MMR can be given',fetus:'No fetus yet',
+     text:'This is the prevention window. A non-immune woman can be vaccinated with MMR before she becomes pregnant. Immune globulin is not routine for rubella.'},
+    {k:'t1',label:'First trimester',mmr:'MMR is not given',fetus:'Most profound harm described',
+     text:'The lecture singles out first-trimester infection for profound fetal harm (congenital rubella syndrome). MMR is a live vaccine and is not given in pregnancy.'},
+    {k:'t2',label:'Second trimester',mmr:'MMR is not given',fetus:'Fetal infection still possible',
+     text:'The virus can still reach the fetus through the placenta. The most profound harm is described for first-trimester infection. MMR is not given in pregnancy.'},
+    {k:'t3',label:'Third trimester',mmr:'MMR is not given',fetus:'Fetal infection still possible',
+     text:'The virus can still reach the fetus. It is too late to prevent infection by vaccination, which is why immunity before pregnancy is the plan. MMR is not given in pregnancy.'},
+    {k:'post',label:'After delivery',mmr:'MMR can be given',fetus:'Infant can shed virus for months',
+     text:'A non-immune mother can be vaccinated after delivery. An infant with congenital rubella can shed virus for months, so the infant remains a source of infection for others.'}];
+  var gateBox=el('div');host.appendChild(gateBox);
+  var lab=el('div','lab-out locked');host.appendChild(lab);
+  var seg=segControl(ST.map(function(s){return [s.k,s.label];}),function(v){show(v);});
+  var row=el('div','lab-row');row.appendChild(el('span','lab-label','When'));row.appendChild(seg.box);lab.appendChild(row);
+  var fig=el('div','figure');fig.style.margin='8px 0';lab.appendChild(fig);
+  var out=el('div');out.setAttribute('aria-live','polite');lab.appendChild(out);
+  var cp=el('p','caption');lab.appendChild(cp);
+  function bar(k){
+    var i=['pre','t1','t2','t3','post'].indexOf(k);
+    var seg=function(x,w,lbl,on,fill){return '<rect x="'+x+'" y="34" width="'+w+'" height="38" rx="8" fill="'+(on?fill:'#E4E7F5')+'" stroke="'+(on?'#A3126A':'#C3CAF0')+'" stroke-width="'+(on?4:2)+'"/><text x="'+(x+w/2)+'" y="58" text-anchor="middle" font-size="12.5" font-weight="700" fill="#161A3C">'+lbl+'</text>';};
+    return '<svg viewBox="0 0 640 96" role="img" aria-label="A timeline: before pregnancy, three trimesters, and after delivery. The selected stage is highlighted: '+ST[i].label+'.">'+
+      seg(8,100,'Before',i===0,'#E3F5EC')+seg(118,126,'1st trimester',i===1,'#FDE7F3')+seg(254,126,'2nd trimester',i===2,'#FDE7F3')+seg(390,126,'3rd trimester',i===3,'#FDE7F3')+seg(526,106,'After birth',i===4,'#E3F5EC')+
+      '<text x="320" y="20" text-anchor="middle" font-size="11.5" fill="#767BA0">Qualitative model: no risk percentages are shown</text></svg>';
+  }
+  function show(k){
+    var s=ST.filter(function(x){return x.k===k;})[0];
+    seg.set(k);fig.innerHTML=bar(k);
+    out.innerHTML='<div class="pill-row">'+pill(s.mmr,s.mmr==='MMR can be given'?'open':'shut')+pill('Fetus: '+s.fetus,'hl')+'</div><p style="margin:6px 0 0;font-size:.93rem">'+s.text+'</p>';
+    if(prog.seen.indexOf(k)<0){prog.seen.push(k);saveV(name,prog);}
+    prog.seen.forEach(seg.mark);
+    cp.textContent=prog.seen.length+' of '+ST.length+' stages viewed.';
+    check();
+  }
+  function check(){if(gate&&gate.answered()&&prog.seen.length>=ST.length&&!state.activities[name])Act.done(name,true);}
+  show('pre');
+  gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: when a woman moves from before pregnancy into the first trimester, what happens to the option of giving MMR?',
+    options:['It is no longer given, because MMR is a live vaccine','It remains available, with extra monitoring','It becomes available only in the third trimester'],answer:0,
+    why:'MMR contains live attenuated viruses and is not given in pregnancy. That is why a non-immune woman is vaccinated before pregnancy or after delivery.'},
+    function(){lab.classList.remove('locked');check();});
+  Act.register(name,{solve:function(){gate.solve();ST.forEach(function(s){seg.buttons[s.k].click();});}});
+})();
+
+/* --- 2C Who can receive MMR? --- */
+Act.sort('act-mmrSorter',{name:'mmrSorter',
+  options:['MMR can be given','MMR is not given'],
+  rows:[
+    {text:'A healthy 13-month-old.',answer:'MMR can be given',why:'This is within the routine first-dose window of 12–15 months.'},
+    {text:'A healthy 5-year-old who has had one dose.',answer:'MMR can be given',why:'The second dose is due at 4–6 years.'},
+    {text:'A woman at 14 weeks of pregnancy with no evidence of rubella immunity.',answer:'MMR is not given',why:'MMR is a live vaccine and is not given in pregnancy. She can be vaccinated after delivery.'},
+    {text:'A patient with severe immunocompromise.',answer:'MMR is not given',why:'A live vaccine is not given in severe immunocompromise.'},
+    {text:'A woman with no evidence of rubella immunity who is planning a pregnancy.',answer:'MMR can be given',why:'Vaccination before pregnancy is the prevention plan for rubella.'},
+    {text:'A woman with no evidence of rubella immunity who delivered yesterday.',answer:'MMR can be given',why:'Vaccination after delivery is the other safe window.'},
+    {text:'A healthy, nonpregnant adult with no evidence of measles immunity, exposed to measles 2 days ago.',answer:'MMR can be given',why:'MMR can be given within 72 hours of exposure when appropriate for the person.'},
+    {text:'A pregnant woman with no evidence of measles immunity, exposed to measles 2 days ago.',answer:'MMR is not given',why:'MMR is not given in pregnancy. Immune globulin, which has a 6-day window, is the option to discuss with her clinician.'}
+  ]});
+
+/* ============================================================
+   MODULE 3 ACTIVITIES
+   ============================================================ */
+
+/* --- 3A step 1: order the hydrops chain --- */
+Act.order('act-hydropsOrder',{name:'hydropsOrder',items:[
+  'B19 infects red cell precursors (erythroid cells)',
+  'Red cell production falls',
+  'Anemia develops',
+  'The heart works harder and begins to fail',
+  'Fluid builds up in the tissues: edema (hydrops)']});
+
+/* --- 3A step 2: change the host --- */
+(function hydropsChain(){
+  var host=$('act-hydropsChain'),name='hydropsChain';
+  var prog=loadV(name,{seen:[]}),gate;
+  var H={
+    healthy:{label:'Healthy child',path:'M40 50 C 190 50, 250 78, 330 78 S 480 52, 600 50',tag:'Brief dip, then recovery',
+      text:'B19 pauses red cell production, but the red cells already in the blood last long enough that a healthy child barely notices. The illness is mild, with the slapped-cheek rash, and immunity follows.'},
+    scd:{label:'Sickle cell disease',path:'M40 50 C 180 50, 240 124, 330 124 S 500 76, 600 54',tag:'Steep drop: aplastic crisis',
+      text:'In sickle cell disease, thalassemia, or hereditary spherocytosis the red cells already turn over quickly, so a pause in production causes a steep fall in hemoglobin. This is an aplastic crisis, and a transfusion may be needed.'},
+    immuno:{label:'Immunocompromised patient',path:'M40 50 C 180 50, 240 112, 330 112 L 600 112',tag:'Stays low: chronic anemia',
+      text:'A patient who cannot clear the virus keeps losing red cell production, which leads to chronic anemia. IVIG is the treatment listed for this setting.'},
+    fetus:{label:'Fetus',path:'M40 50 C 180 50, 240 118, 330 118 S 520 112, 600 112',tag:'Anemia, heart failure, hydrops',
+      text:'B19 crosses the placenta and infects fetal erythroid precursors. The resulting anemia can progress to heart failure and edema throughout the body (hydrops). The risk is highest at weeks 9–20, and most fetal infections resolve.'}
+  };
+  var gateBox=el('div');host.appendChild(gateBox);
+  var lab=el('div','lab-out locked');host.appendChild(lab);
+  var seg=segControl(Object.keys(H).map(function(k){return [k,H[k].label];}),function(v){show(v);});
+  var row=el('div','lab-row');row.appendChild(el('span','lab-label','Host'));row.appendChild(seg.box);lab.appendChild(row);
+  var fig=el('div','figure');fig.style.margin='8px 0';lab.appendChild(fig);
+  var out=el('div');out.setAttribute('aria-live','polite');lab.appendChild(out);
+  var cp=el('p','caption');lab.appendChild(cp);
+  function chart(k){
+    return '<svg viewBox="0 0 640 150" role="img" aria-label="Red cell supply over time after B19 infection for '+H[k].label+': '+H[k].tag+'.">'+
+      '<line x1="40" y1="20" x2="40" y2="130" stroke="#767BA0" stroke-width="2"/><line x1="40" y1="130" x2="610" y2="130" stroke="#767BA0" stroke-width="2"/>'+
+      '<line x1="190" y1="20" x2="190" y2="130" stroke="#E5489F" stroke-width="2" stroke-dasharray="5 5"/>'+
+      '<text x="196" y="30" font-size="12" font-weight="700" fill="#A3126A">B19 infection</text>'+
+      '<text x="46" y="16" font-size="11.5" fill="#464B72">Red cell supply (qualitative)</text><text x="606" y="146" text-anchor="end" font-size="11.5" fill="#464B72">time</text>'+
+      '<path d="'+H[k].path+'" fill="none" stroke="#3A4BD0" stroke-width="5" stroke-linecap="round"/></svg>';
+  }
+  function show(k){
+    seg.set(k);fig.innerHTML=chart(k);
+    out.innerHTML='<div class="pill-row">'+pill(H[k].tag,k==='healthy'?'open':'shut')+'</div><p style="margin:6px 0 0;font-size:.93rem">'+H[k].text+'</p>';
+    if(prog.seen.indexOf(k)<0){prog.seen.push(k);saveV(name,prog);}
+    prog.seen.forEach(seg.mark);
+    cp.textContent=prog.seen.length+' of 4 hosts viewed.';check();
+  }
+  function check(){if(gate&&gate.answered()&&prog.seen.length>=4&&!state.activities[name])Act.done(name,true);}
+  show('healthy');
+  gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: B19 pauses red cell production for a short time in each of these hosts. Which one is at greatest risk of a sudden, severe fall in hemoglobin?',
+    options:['A child with sickle cell disease','A healthy school-age child','A healthy adult','A child with asthma'],answer:0,
+    why:'When red cells already turn over quickly, any pause in production shows up fast as severe anemia. In a healthy child the existing red cells bridge the pause.'},
+    function(){lab.classList.remove('locked');check();});
+  Act.register(name,{solve:function(){gate.solve();Object.keys(H).forEach(function(k){seg.buttons[k].click();});}});
+})();
+
+/* --- 3B Roseola: fever and rash, then a transplant recipient --- */
+(function roseolaTimeline(){
+  var host=$('act-roseolaTimeline'),name='roseolaTimeline';
+  var prog=loadV(name,{placed:false,hosts:[]});
+  var lab=el('div','lab-out');host.appendChild(lab);
+  lab.innerHTML='<h4>Part A &middot; Where does the rash appear?</h4><p style="margin:0 0 6px;font-size:.9rem">The shaded bar is the fever. Slide the rash marker to where you expect the rash in roseola, then check. The day numbers are illustrative.</p>'+
+    '<div class="figure" style="margin:6px 0"><svg id="rtA" viewBox="0 0 640 110" role="img" aria-label="A seven-day timeline with the fever shaded on the first days and a movable rash marker."></svg></div>';
+  var sl=sliderRow('Rash marker (day)',1,7,1,2,'rtSlide');lab.appendChild(sl.row);
+  var cr=el('div','controls');var chk=el('button','btn','Check placement');chk.type='button';var cap=el('span','caption');cap.style.margin='0';cap.setAttribute('aria-live','polite');cr.appendChild(chk);cr.appendChild(cap);lab.appendChild(cr);
+  var svg=$('rtA');
+  function X(d){return 50+(d-1)*84;}
+  function paintA(){
+    var d=Number(sl.input.value);
+    svg.innerHTML='<rect x="'+(X(1)-30)+'" y="34" width="'+(X(3)-X(1)+60)+'" height="34" rx="10" fill="#FBD3E8" stroke="#E5489F" stroke-width="2"/><text x="'+((X(1)+X(3))/2)+'" y="56" text-anchor="middle" font-size="12.5" font-weight="700" fill="#A3126A">High fever</text>'+
+      '<g font-size="11.5" fill="#464B72" text-anchor="middle">'+[1,2,3,4,5,6,7].map(function(t){return '<text x="'+X(t)+'" y="96">Day '+t+'</text>';}).join('')+'</g>'+
+      '<g transform="translate('+X(d)+' 22)"><polygon points="-9,-10 9,-10 0,6" fill="#3A4BD0"/></g><text x="'+X(d)+'" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#3A4BD0">Rash</text>';
+  }
+  sl.input.oninput=function(){paintA();cap.textContent='';};
+  chk.onclick=function(){
+    var d=Number(sl.input.value);
+    if(d>=4){cap.innerHTML='<b>Correct.</b> In roseola the rash appears after the fever has resolved. In most other childhood rashes it arrives while the fever is still present.';prog.placed=true;saveV(name,prog);}
+    else{cap.innerHTML='<b>Not quite.</b> In roseola the fever comes first and ends. Move the marker to after the shaded bar.';}
+    check();
+  };
+  var h=el('h4',null,'Part B &middot; The same virus in a different host');h.style.marginTop='18px';lab.appendChild(h);
+  var seg=segControl([['toddler','Healthy toddler'],['tx','Stem-cell transplant recipient']],function(v){show(v);});
+  var row=el('div','lab-row');row.appendChild(el('span','lab-label','Host'));row.appendChild(seg.box);lab.appendChild(row);
+  var out=el('div');out.setAttribute('aria-live','polite');lab.appendChild(out);
+  var T={toddler:{tag:'Roseola, then latency',fig:'<svg viewBox="0 0 640 70" role="img" aria-label="First infection with fever and rash, then a long latent period."><rect x="20" y="22" width="100" height="26" rx="8" fill="#FBD3E8" stroke="#E5489F" stroke-width="2"/><text x="70" y="40" text-anchor="middle" font-size="11.5" font-weight="700" fill="#A3126A">Roseola</text><rect x="130" y="22" width="490" height="26" rx="8" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="375" y="40" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2B38B8">Latent in the body (controlled by the immune system)</text></svg>',
+      text:'The first infection causes roseola: a high fever, then a rash. HHV-6 then stays latent. The immune system controls it, but it does not remove it.'},
+    tx:{tag:'Reactivation risk',fig:'<svg viewBox="0 0 640 70" role="img" aria-label="A latent period interrupted by reactivation after transplant, leading to encephalitis, pneumonia, or hepatitis."><rect x="20" y="22" width="360" height="26" rx="8" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="200" y="40" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2B38B8">Latent, with immunity suppressed after transplant</text><rect x="390" y="14" width="230" height="42" rx="10" fill="#FBD3E8" stroke="#E5489F" stroke-width="3"/><text x="505" y="39" text-anchor="middle" font-size="11.5" font-weight="700" fill="#A3126A">Reactivation</text></svg>',
+      text:'In a transplant recipient the latent virus can reactivate when immunity is suppressed. Reactivation can cause encephalitis, pneumonia, and hepatitis. Foscarnet or ganciclovir are the antivirals listed, and the treating team makes that decision.'}};
+  function show(v){
+    seg.set(v);out.innerHTML='<div class="figure" style="margin:6px 0">'+T[v].fig+'</div><div class="pill-row">'+pill(T[v].tag,v==='toddler'?'open':'shut')+'</div><p style="margin:6px 0 0;font-size:.93rem">'+T[v].text+'</p>';
+    if(prog.hosts.indexOf(v)<0){prog.hosts.push(v);saveV(name,prog);}
+    prog.hosts.forEach(seg.mark);check();
+  }
+  function check(){if(prog.placed&&prog.hosts.length>=2&&!state.activities[name])Act.done(name,true);}
+  paintA();show('toddler');
+  Act.register(name,{solve:function(){sl.input.value='5';sl.input.oninput();chk.click();seg.buttons.tx.click();seg.buttons.toddler.click();}});
+})();
+
+/* --- 3C The pregnancy rash case (staged decisions) --- */
+Act.stages('act-pregCase',{name:'pregCase',stages:[
+  {lead:'<b>The case.</b> A woman at 20 weeks of pregnancy sat next to a child in a waiting room. The child now has a red maculopapular rash. She cannot find her vaccine record.',
+   prompt:'Which childhood viruses could be responsible for the child’s rash?',
+   options:['Measles, rubella, and parvovirus B19 are all possible','Rubella is the one to consider, because it is the pregnancy virus','Measles is the one to consider, because it is the most common','Parvovirus B19 is excluded, because it does not cause a rash'],answer:0,
+   why:'All three can cause a maculopapular rash, and the rash alone does not name the virus. Each carries a different risk in pregnancy.'},
+  {prompt:'How do the fetal risks of rubella and parvovirus B19 differ?',
+   options:['Rubella causes congenital malformations, and B19 causes fetal anemia that can lead to hydrops','Rubella causes fetal anemia and hydrops, and B19 causes congenital malformations','Both cause the same malformations, but B19 does so more often','Neither virus can cross the placenta, so the fetus is not at risk'],answer:0,
+   why:'Rubella is linked to profound congenital damage, especially with first-trimester infection. B19 infects fetal erythroid precursors, and the anemia can lead to heart failure and hydrops.',
+   reveal:'<b>Also worth knowing:</b> B19 fetal risk is about 5–10% and highest at weeks 9–20, and most fetal infections resolve. Measles in pregnancy carries a risk of stillbirth.'},
+  {prompt:'She asks, “Can I have MMR today?” Which answer fits the lecture?',
+   options:['No. MMR is a live vaccine and is not given in pregnancy','Yes. It protects her fetus right away','Yes, but she needs a second dose today as well','Yes, as long as the rash has not appeared on her yet'],answer:0,
+   why:'MMR is not given in pregnancy. A non-immune woman is vaccinated before pregnancy or after delivery.'},
+  {prompt:'Is immune globulin the answer?',
+   options:['For rubella it is not routine. For a measles exposure it has a 6-day window and is a decision for her clinician','Yes. It is the standard step after any rash exposure in pregnancy','Yes. It replaces vaccination for rubella and for B19','No. Immune globulin has no role in any of these infections'],answer:0,
+   why:'Immune globulin is not routine for rubella. For measles, it has a time window of 6 days after exposure, and whether to give it is a clinical decision.'},
+  {prompt:'What would you tell her first?',
+   options:['The rash alone cannot name the virus, so we need the timing of the exposure, her own immunity, and the child’s diagnosis, and her obstetric clinician should be involved promptly','Most childhood rashes are harmless, so no further steps are needed','She should have MMR and return in a week to see whether she develops a rash','She should wait to see whether a rash appears on her own skin before doing anything else'],answer:0,
+   why:'The safe first move is to gather information and involve the obstetric team. The possible viruses have different fetal risks, and some options are time-sensitive.',
+   reveal:'<table style="width:100%;border-collapse:collapse;font-size:.88rem"><tr><th style="text-align:left;padding:4px">Virus</th><th style="text-align:left;padding:4px">Main concern in pregnancy</th></tr><tr><td style="padding:4px">Rubella</td><td style="padding:4px">Congenital malformations; first trimester worst</td></tr><tr><td style="padding:4px">Parvovirus B19</td><td style="padding:4px">Fetal anemia and hydrops</td></tr><tr><td style="padding:4px">Measles</td><td style="padding:4px">Stillbirth risk; time-sensitive post-exposure options</td></tr></table>'}
+]});
+
+/* ============================================================
+   MODULE 4 ACTIVITIES
+   ============================================================ */
+
+/* --- 4A step 1: order the fecal-oral chain --- */
+Act.order('act-fecalOrder',{name:'fecalOrder',items:[
+  'Virus is shed in the stool of an infected person',
+  'Virus reaches hands, food, water, or surfaces',
+  'Another person touches the item and swallows the virus',
+  'The unenveloped virus survives stomach acid and infects the small intestine']});
+
+/* --- 4A step 2: break the links --- */
+(function fecalOral(){
+  var host=$('act-fecalOral'),name='fecalOral';
+  var prog=loadV(name,{broken:[],tried:[]});
+  var ROUTES={hands:'Hands',food:'Food',surf:'Surfaces'};
+  var M=[
+    {id:'wash',label:'Wash hands with soap and water for at least 20 seconds',breaks:'hands',
+     msg:'This breaks the hands route. Washing physically removes the virus from the skin.'},
+    {id:'exclude',label:'Keep ill food handlers home until 48 hours after symptoms stop',breaks:'food',
+     msg:'This breaks the food route. People shed virus before symptoms and for weeks after, so staying away from food preparation matters.'},
+    {id:'clean',label:'Clean contaminated surfaces',breaks:'surf',
+     msg:'This breaks the surfaces route. Norovirus persists on surfaces for days.'},
+    {id:'abx',label:'Give antibiotics to people who are ill',breaks:null,
+     msg:'This does not break any link. Antibiotics act on bacteria, not viruses, and the virus keeps moving.'},
+    {id:'acid',label:'Rely on stomach acid to destroy the virus',breaks:null,
+     msg:'This does not work. Enteric viruses have no envelope, so they survive stomach acid.'}];
+  var fig=el('div','figure');fig.style.margin='0 0 8px';host.appendChild(fig);
+  var btns=el('div','case-chips');host.appendChild(btns);
+  var out=el('div','lab-out');out.setAttribute('aria-live','polite');host.appendChild(out);
+  var cp=el('p','caption');host.appendChild(cp);
+  var rs=el('button','btn ghost','Start over');rs.type='button';rs.style.marginTop='6px';host.appendChild(rs);
+  function chart(){
+    var keys=Object.keys(ROUTES),y={hands:46,food:104,surf:162};
+    var s='<svg viewBox="0 0 640 210" role="img" aria-label="Three routes from the stool of an infected person to a new host: hands, food, and surfaces. Routes that have been broken are marked with a cross: '+(prog.broken.length?prog.broken.map(function(k){return ROUTES[k];}).join(', '):'none yet')+'.">';
+    s+='<g transform="translate(60 104)"><circle r="42" fill="#FFF0DC" stroke="#E8A24C" stroke-width="4"/><text y="5" text-anchor="middle" font-size="13" font-weight="800" fill="#161A3C">Stool</text></g>';
+    s+='<g transform="translate(580 104)"><circle r="42" fill="#E0F3EB" stroke="#2FA97A" stroke-width="4"/><text y="-2" text-anchor="middle" font-size="13" font-weight="800" fill="#161A3C">New</text><text y="14" text-anchor="middle" font-size="13" font-weight="800" fill="#161A3C">host</text></g>';
+    keys.forEach(function(k){
+      var b=prog.broken.indexOf(k)>-1,yy=y[k];
+      s+='<g opacity="'+(b?0.4:1)+'"><path d="M100 104 C 150 104, 170 '+yy+', 220 '+yy+'" fill="none" stroke="#E5489F" stroke-width="4"/><path d="M420 '+yy+' C 470 '+yy+', 490 104, 540 104" fill="none" stroke="#E5489F" stroke-width="4"/>'+
+        '<rect x="220" y="'+(yy-18)+'" width="200" height="36" rx="18" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="320" y="'+(yy+5)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#161A3C">'+ROUTES[k]+'</text></g>';
+      if(b)s+='<g stroke="#D4536B" stroke-width="6" stroke-linecap="round" class="v-new"><path d="M300 '+(yy-14)+' l40 28 M340 '+(yy-14)+' l-40 28"/></g>';
+    });
+    return s+'</svg>';
+  }
+  function paint(msg){
+    fig.innerHTML=chart();
+    var n=prog.broken.length;
+    cp.textContent=n+' of 3 routes broken.'+(n===3?' Every route is interrupted in this simplified model. ✓':'');
+    out.innerHTML=msg||'<span style="color:var(--ink-soft)">Choose a measure to see whether it breaks a link.</span>';
+    M.forEach(function(m){var b=document.getElementById('fo-'+m.id);if(b){b.classList.toggle('done',m.breaks&&prog.broken.indexOf(m.breaks)>-1);}});
+    if(n===3&&!state.activities[name])Act.done(name,true);
+  }
+  M.forEach(function(m){
+    var b=el('button','act-chip',m.label);b.type='button';b.id='fo-'+m.id;b.style.textAlign='left';
+    b.onclick=function(){
+      if(m.breaks&&prog.broken.indexOf(m.breaks)<0){prog.broken.push(m.breaks);saveV(name,prog);}
+      paint('<b>'+(m.breaks?'Link broken.':'No link broken.')+'</b> '+m.msg);
+    };btns.appendChild(b);
+  });
+  rs.onclick=function(){prog.broken=[];saveV(name,prog);Act.done(name,null);paint();};
+  paint();
+  Act.register(name,{solve:function(){M.forEach(function(m){if(m.breaks)document.getElementById('fo-'+m.id).click();});}});
+})();
+
+/* --- 4B step 1: does the virion need a polymerase? --- */
+Act.predict('act-genomeChallenge',{name:'genomeChallenge',
+  start:'Choose a virus above and predict whether its virion must carry its own polymerase.',
+  items:[
+    {id:'noro',title:'Norovirus',prompt:'Norovirus has a positive-sense single-stranded RNA genome. Must its virion carry an RNA polymerase?',
+     options:['No: the genome can act as mRNA as soon as it enters the cell','Yes: the cell cannot read this genome','Yes: the capsid needs it to open'],answer:0,
+     why:'Positive-sense RNA is already in the form of mRNA, so host ribosomes make the viral polymerase from it.',
+     reveal:'<b>Norovirus</b> (Caliciviridae): +ssRNA, no polymerase in the virion.'},
+    {id:'rota',title:'Rotavirus',prompt:'Rotavirus has 11 segments of double-stranded RNA. Must its virion carry an RNA polymerase?',
+     options:['No: the host cell supplies a polymerase for this genome','Yes: the host has no enzyme that makes mRNA from dsRNA','No: the segments are translated directly'],answer:1,
+     why:'Host cells do not copy double-stranded RNA into mRNA, so rotavirus brings its own polymerase to make mRNA from each segment.',
+     reveal:'<b>Rotavirus</b> (Reoviridae): dsRNA in 11 segments, polymerase in the virion.'},
+    {id:'polio',title:'Poliovirus (a picornavirus)',prompt:'Poliovirus has a positive-sense single-stranded RNA genome. Must its virion carry an RNA polymerase?',
+     options:['Yes: all RNA viruses carry a polymerase','No: the genome acts as mRNA and the polymerase is made after entry','Yes: the genome must be converted to DNA first'],answer:1,
+     why:'Like norovirus, poliovirus is a positive-sense RNA virus. Its genome is translated first, and the RNA-dependent RNA polymerase is made afterward.',
+     reveal:'<b>Poliovirus</b> (Picornaviridae, genus Enterovirus): +ssRNA, no polymerase in the virion.'},
+    {id:'measles',title:'Measles virus (for contrast)',prompt:'From Module 1: measles virus has a negative-sense RNA genome. Must its virion carry a polymerase?',
+     options:['Yes: a negative-sense genome cannot be translated until it is copied','No: it is translated directly','No: the host copies it'],answer:0,
+     why:'A negative-sense genome is the complement of mRNA, and the host has no enzyme that copies it, so the virion carries the polymerase.',
+     reveal:'<b>Measles virus</b> (Paramyxoviridae): −ssRNA, polymerase in the virion.'}
+  ]});
+
+/* --- 4B step 2: which group? --- */
+Act.sort('act-enteroGroup',{name:'enteroGroup',
+  options:['Gastroenteritis virus','Genus Enterovirus'],
+  rows:[
+    {text:'<b>Norovirus</b> (Caliciviridae)',answer:'Gastroenteritis virus',why:'Norovirus infects the small-intestine epithelium and causes gastroenteritis. It is not a picornavirus.'},
+    {text:'<b>Rotavirus</b> (Reoviridae)',answer:'Gastroenteritis virus',why:'Rotavirus is a dsRNA gastroenteritis virus and is not an enterovirus.'},
+    {text:'<b>Poliovirus</b> (Picornaviridae)',answer:'Genus Enterovirus',why:'Poliovirus is an enterovirus. It enters through the gut but can reach the nervous system.'},
+    {text:'<b>Coxsackievirus</b> (Picornaviridae)',answer:'Genus Enterovirus',why:'Coxsackieviruses A and B are enteroviruses.'},
+    {text:'<b>Echovirus</b> (Picornaviridae)',answer:'Genus Enterovirus',why:'Echoviruses are enteroviruses.'}]});
+
+/* --- 4C Norovirus outbreak commander (staged decisions) --- */
+Act.stages('act-outbreakCmd',{name:'outbreakCmd',stages:[
+  {lead:'<b>The report.</b> A care home reports sudden vomiting and watery diarrhea in 9 residents and 2 staff. Illness began about 18 hours after a shared meal, and the people affected range from young adults to the very frail.',
+   prompt:'Which virus fits this pattern, and what confirms it?',
+   options:['Norovirus: onset 12–48 hours after exposure, confirmed by stool PCR','Rotavirus: it affects older adults most, confirmed by stool PCR','Poliovirus: onset within hours, confirmed by lumbar puncture','Parvovirus B19: onset within days, confirmed by a blood count'],answer:0,
+   why:'Norovirus illness begins about 12 to 48 hours after exposure, and stool PCR can detect the virus. Rotavirus typically affects children 6 to 24 months old.'},
+  {prompt:'Which links most likely carried the virus between rooms?',
+   options:['Contaminated hands, food, and surfaces, because virus is shed in stool and vomit and persists on surfaces for days','Airborne spread through the ventilation system, as with measles','Mosquito bites in the garden','Contaminated blood products given to residents'],answer:0,
+   why:'Norovirus has a low infectious dose, is shed before symptoms and for weeks after, and persists on surfaces for days.'},
+  {prompt:'Which hand hygiene step do you reinforce for staff and visitors?',
+   options:['Wash with soap and water for at least 20 seconds','Rinse hands briefly with water','Wear gloves instead of washing hands','Wash hands once at the end of each shift'],answer:0,
+   why:'The lecture recommends washing with soap and water for at least 20 seconds.'},
+  {prompt:'A kitchen worker who was ill has felt well for 24 hours and wants to return. What do you advise?',
+   options:['Stay home until 48 hours after symptoms stopped, because shedding continues','Return now, because symptoms have stopped','Return now, wearing gloves','Return after one dose of an antibiotic'],answer:0,
+   why:'People shed norovirus after symptoms stop. The lecture advises staying home for 48 hours after symptoms stop.'},
+  {prompt:'A frail resident has had repeated vomiting and diarrhea and is now drowsy. Which management fits?',
+   options:['Assess for dehydration and give fluids, with IV fluids if dehydration is severe','Start an antibiotic to treat the virus','Give a norovirus vaccine','Give zinc for 10–14 days in place of fluids'],answer:0,
+   why:'The main complication of gastroenteritis is dehydration. Management is supportive fluids. There is no norovirus vaccine, and antibiotics do not act on viruses.',
+   reveal:'<b>Outbreak closed.</b> You identified the virus, the links, the hygiene step, the exclusion period, and the management. Each decision came from a property of the virus.'}
+]});
+
+/* ============================================================
+   MODULE 5 ACTIVITIES
+   ============================================================ */
+
+/* --- 5.1 Norovirus, rotavirus, or both? --- */
+Act.sort('act-h2hMatch',{name:'h2hMatch',
+  options:['Norovirus','Rotavirus','Both'],
+  rows:[
+    {text:'Double-stranded RNA in 11 segments.',answer:'Rotavirus',why:'Rotavirus (Reoviridae) has an 11-segment dsRNA genome.'},
+    {text:'Positive-sense single-stranded RNA genome.',answer:'Norovirus',why:'Norovirus (Caliciviridae) has a +ssRNA genome that can act as mRNA.'},
+    {text:'Carries an RNA polymerase in the virion.',answer:'Rotavirus',why:'Host cells cannot make mRNA from dsRNA, so rotavirus brings its own polymerase. Norovirus does not need one.'},
+    {text:'Spread by the fecal-oral route.',answer:'Both',why:'All enteric viruses in this lecture spread fecal-orally.'},
+    {text:'No envelope, so it survives stomach acid.',answer:'Both',why:'Both are nonenveloped.'},
+    {text:'Illness begins 12–48 hours after exposure.',answer:'Norovirus',why:'Norovirus has the shorter incubation.'},
+    {text:'Incubation of 1–3 days.',answer:'Rotavirus',why:'Rotavirus incubation is 1 to 3 days.'},
+    {text:'Typical in children 6–24 months old.',answer:'Rotavirus',why:'Rotavirus disease is typical in this age group.'},
+    {text:'Fever and vomiting ease on day 2, followed by diarrhea for 5–7 days.',answer:'Rotavirus',why:'This is the course described for rotavirus.'},
+    {text:'Has oral vaccines.',answer:'Rotavirus',why:'Rotarix and RotaTeq are oral rotavirus vaccines.'},
+    {text:'Has no vaccine.',answer:'Norovirus',why:'There is no norovirus vaccine.'},
+    {text:'Infects the small-intestine epithelium, and dehydration is the main complication.',answer:'Both',why:'Both damage the small-intestine epithelium and cause fluid loss.'},
+    {text:'Overtook the other as a cause of gastroenteritis in U.S. children under 5 once vaccination began.',answer:'Norovirus',why:'As rotavirus fell with vaccination, norovirus overtook it.'}
+  ]});
+
+/* --- 5A Gut fluid balance (qualitative simulation) --- */
+(function fluidSim(){
+  var host=$('act-fluidSim'),name='fluidSim';
+  var prog=loadV(name,{maxA:0,maxS:0,drink:[]}),gate;
+  var A_L=['None','Mild','Moderate','Severe'],S_L=['Normal','Mild','Moderate','High'];
+  var gateBox=el('div');host.appendChild(gateBox);
+  var lab=el('div','lab-out locked');host.appendChild(lab);
+  var fig=el('div','figure');fig.style.margin='0 0 8px';lab.appendChild(fig);
+  var sa=sliderRow('Damage to absorption',0,3,1,0,'fsA'),ss=sliderRow('Increased secretion',0,3,1,0,'fsS');
+  lab.appendChild(sa.row);lab.appendChild(ss.row);
+  var dseg=segControl([['yes','Child is drinking'],['no','Child cannot keep fluids down']],function(v){dseg.set(v);dmark(v);paint();});
+  var dr=el('div','lab-row');dr.appendChild(el('span','lab-label','Child'));dr.appendChild(dseg.box);lab.appendChild(dr);
+  var out=el('div');out.setAttribute('aria-live','polite');lab.appendChild(out);
+  var cp=el('p','caption');lab.appendChild(cp);
+  function dmark(v){dseg.mark(v);if(prog.drink.indexOf(v)<0){prog.drink.push(v);saveV(name,prog);}}
+  function chart(a,s){
+    var svg='<svg viewBox="0 0 640 210" role="img" aria-label="Cross-section of the small intestine. Absorption damage is '+A_L[a].toLowerCase()+', so the lining is '+(a?'shorter':'full height')+'. Secretion is '+S_L[s].toLowerCase()+'. The lumen holds '+(a+s===0?'little extra water':'more water as the total rises')+'.">';
+    svg+='<rect x="10" y="10" width="620" height="110" rx="10" fill="#F4F8FF" stroke="#C3CAF0" stroke-width="2"/><text x="20" y="30" font-size="12" font-weight="700" fill="#464B72">Lumen (inside the gut)</text>';
+    for(var i=0;i<9;i++){var h=70-a*18,x=40+i*66;svg+='<rect x="'+x+'" y="'+(190-h-30)+'" width="34" height="'+(h+30)+'" rx="16" fill="'+(a?'#FBD3E8':'#C9D0F5')+'" stroke="'+(a?'#A3126A':'#3A4BD0')+'" stroke-width="2.5"/>';}
+    svg+='<rect x="10" y="168" width="620" height="32" rx="8" fill="#E9ECFA" stroke="#3A4BD0" stroke-width="2"/><text x="320" y="189" text-anchor="middle" font-size="12" font-weight="700" fill="#161A3C">Small-intestine lining (epithelium) and blood supply</text>';
+    var drops=(a+s)*2;for(var d=0;d<drops;d++){svg+='<circle cx="'+(60+((d*53)%520))+'" cy="'+(52+((d*37)%36))+'" r="6" fill="#4DA3E0" opacity=".85"/>';}
+    for(var k=0;k<s;k++){svg+='<g stroke="#2FA97A" stroke-width="4" stroke-linecap="round" fill="none"><path d="'+('M'+(150+k*150)+' 160 v-40')+'"/><path d="'+('M'+(140+k*150)+' 130 l10 -12 l10 12')+'"/></g>';}
+    return svg+'</svg>';
+  }
+  function lvl(t){return t===0?['Normal','open']:t<=2?['Mild to moderate','hl']:t<=4?['Marked','shut']:['Very high','shut'];}
+  function paint(){
+    var a=Number(sa.input.value),s=Number(ss.input.value),t=a+s,cant=dseg.buttons.no.classList.contains('on');
+    prog.maxA=Math.max(prog.maxA,a);prog.maxS=Math.max(prog.maxS,s);saveV(name,prog);
+    fig.innerHTML=chart(a,s);
+    var L=lvl(t),sev=(t>=5||cant),step;
+    if(t===0)step='No excess fluid loss, so no rehydration is needed in this model.';
+    else if(sev)step='This is severe dehydration or a child who cannot take fluids: IV fluids are needed. Oral rehydration solution is for a child who can drink.';
+    else step='Oral rehydration solution is first-line. Zinc for 10–14 days is advised in childhood diarrhea (WHO). Antibiotics do not help.';
+    out.innerHTML='<div class="gauge-row"><b>Water held by unabsorbed nutrients (osmotic)</b><div class="meter"><i style="width:'+(a/3*100)+'%"></i></div>'+pill(A_L[a],a?'hl':'open')+'</div>'+
+      '<div class="gauge-row"><b>Fluid actively secreted (secretory)</b><div class="meter"><i style="width:'+(s/3*100)+'%"></i></div>'+pill(S_L[s],s?'hl':'open')+'</div>'+
+      '<div class="gauge-row"><b>Watery stool and dehydration risk</b><div class="meter"><i style="width:'+(t/6*100)+'%"></i></div>'+pill(L[0],L[1])+'</div>'+
+      '<p style="margin:8px 0 0;font-size:.93rem"><b>Next step.</b> '+step+'</p>'+
+      '<p style="margin:6px 0 0;font-size:.85rem;color:var(--ink-soft)">The two mechanisms are distinct and can occur together, so their effects add. The bars show direction and size, not measured volumes.</p>';
+    cp.textContent='Highest settings tried: absorption '+A_L[prog.maxA].toLowerCase()+', secretion '+S_L[prog.maxS].toLowerCase()+'.';
+    check();
+  }
+  function check(){if(gate&&gate.answered()&&prog.maxA>=2&&prog.maxS>=2&&prog.drink.length>=2&&!state.activities[name])Act.done(name,true);}
+  sa.input.oninput=paint;ss.input.oninput=paint;
+  dseg.set('yes');dmark('yes');prog.drink.forEach(dseg.mark);paint();
+  gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: the virus has destroyed many absorptive cells, but there is no extra secretion. Will the stool still become watery?',
+    options:['Yes, because unabsorbed nutrients hold water in the gut','No, because only secretion makes stool watery','No, because water is absorbed elsewhere in the gut in equal amounts'],answer:0,
+    why:'When absorption fails, nutrients stay in the lumen and hold water with them (osmotic diarrhea). Secretion is a separate mechanism that adds to the loss.'},
+    function(){lab.classList.remove('locked');check();});
+  Act.register(name,{solve:function(){
+    gate.solve();sa.input.value='3';sa.input.oninput();ss.input.value='3';ss.input.oninput();dseg.buttons.no.click();dseg.buttons.yes.click();
+  }});
+})();
+
+/* --- 5B Rotavirus vaccine screening (rule-driven simulator) ---
+   The rules live here, in one place, so they can be updated when the
+   schedule changes. Source: lecture slide 31. Versioned on purpose. */
+var ROTA_RULES={
+  version:'Lecture of 10.13.2026, slide 31',
+  firstDoseMaxDays:14*7+6,     /* first dose by 14 weeks 6 days */
+  finalDoseMaxDays:243,        /* last dose by 8 months 0 days, counted here as about 243 days */
+  series:{Rotarix:2,RotaTeq:3}
+};
+function rotaDecide(c){
+  var why=[],R=ROTA_RULES;
+  if(c.scid||c.intuss){
+    if(c.scid)why.push('Severe combined immunodeficiency (SCID) is a contraindication to rotavirus vaccine.');
+    if(c.intuss)why.push('A history of intussusception is a contraindication to rotavirus vaccine.');
+    return {out:'no',why:why};
+  }
+  if(c.doses>=R.series[c.product]){
+    why.push(c.product+' is a '+R.series[c.product]+'-dose series, and '+c.doses+' doses have been given, so the series is complete.');
+    return {out:'complete',why:why};
+  }
+  if(c.product==='Rotarix'&&c.latex){
+    why.push('The Rotarix applicator contains latex, and this infant has a latex allergy, so this needs clarification before any dose.');
+    return {out:'refer',why:why};
+  }
+  if(c.doses===0&&c.days>R.firstDoseMaxDays){
+    why.push('The first dose must be given by 14 weeks 6 days. This infant is past that age, so the series is not started.');
+    return {out:'no',why:why};
+  }
+  if(c.days>R.finalDoseMaxDays){
+    why.push('The last dose must be given by 8 months 0 days. This infant is past that age, so no further dose is given.');
+    return {out:'no',why:why};
+  }
+  why.push(c.doses===0?'The infant is within the first-dose age limit and has no contraindication, so the series can be started.':
+    'The series is not complete, the infant is within the final-dose age limit, and there is no contraindication, so the series can be continued.');
+  why.push('Check the current schedule for timing between doses.');
+  return {out:'give',why:why};
+}
+(function vaccineScreen(){
+  var host=$('act-vaccineScreen'),name='vaccineScreen';
+  var prog=loadV(name,{done:[]});
+  var CASES=[
+    {id:'routine',label:'Routine 2-month visit',w:8,d:0,product:'Rotarix',doses:0,scid:false,intuss:false,latex:false},
+    {id:'sixteen',label:'16-week-old, first dose',w:16,d:0,product:'RotaTeq',doses:0,scid:false,intuss:false,latex:false},
+    {id:'second',label:'Second dose due',w:17,d:0,product:'Rotarix',doses:1,scid:false,intuss:false,latex:false},
+    {id:'scid',label:'Infant with SCID',w:10,d:0,product:'RotaTeq',doses:0,scid:true,intuss:false,latex:false},
+    {id:'intuss',label:'Prior intussusception',w:20,d:0,product:'RotaTeq',doses:1,scid:false,intuss:true,latex:false},
+    {id:'complete',label:'Series already given',w:30,d:0,product:'Rotarix',doses:2,scid:false,intuss:false,latex:false},
+    {id:'latex',label:'Latex allergy',w:8,d:0,product:'Rotarix',doses:0,scid:false,intuss:false,latex:true},
+    {id:'late',label:'Third dose, 36 weeks',w:36,d:0,product:'RotaTeq',doses:2,scid:false,intuss:false,latex:false}
+  ];
+  var OUT=[['give','Give a dose'],['no','Do not give a dose'],['complete','Series is complete'],['refer','Refer or clarify']];
+  var cur=null,chips={};
+
+  var rules=el('div','lab-out');
+  rules.innerHTML='<h4>The rules in this model</h4><ul style="margin:0;padding-left:20px;font-size:.92rem"><li>Rotarix is 2 doses and RotaTeq is 3 doses.</li><li>First dose by 14 weeks 6 days.</li><li>Last dose by 8 months 0 days (about 34 weeks 5 days here).</li><li>SCID and a history of intussusception are contraindications.</li><li>The Rotarix applicator contains latex.</li></ul>'+
+    '<p class="caption" style="margin:8px 0 0">Version: '+ROTA_RULES.version+'. Confirm any real decision against the current schedule.</p>';
+  host.appendChild(rules);
+  host.appendChild(el('div','lab-label','Choose a case, or set your own values'));
+  var cc=el('div','case-chips');host.appendChild(cc);
+  CASES.forEach(function(c){var b=el('button','act-chip',c.label);b.type='button';b.onclick=function(){load(c);};cc.appendChild(b);chips[c.id]=b;});
+
+  var grid=el('div','sim-grid');host.appendChild(grid);
+  function fld(label,input){var f=el('label','fld',label);f.appendChild(input);return f;}
+  var wk=document.createElement('input');wk.type='number';wk.min=6;wk.max=44;wk.step=1;
+  var dy=document.createElement('input');dy.type='number';dy.min=0;dy.max=6;dy.step=1;
+  var pr=document.createElement('select');['Rotarix','RotaTeq'].forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;pr.appendChild(o);});
+  var ds=document.createElement('select');[0,1,2,3].forEach(function(n){var o=document.createElement('option');o.value=n;o.textContent=n+(n===1?' dose given':' doses given');ds.appendChild(o);});
+  function chk(label){var l=el('label','fld chk');var i=document.createElement('input');i.type='checkbox';l.appendChild(i);l.appendChild(document.createTextNode(label));return {l:l,i:i};}
+  var sc=chk('SCID'),ix=chk('History of intussusception'),lx=chk('Latex allergy');
+  grid.appendChild(fld('Age, weeks',wk));grid.appendChild(fld('Plus days',dy));grid.appendChild(fld('Vaccine product',pr));grid.appendChild(fld('Doses already given',ds));
+  grid.appendChild(sc.l);grid.appendChild(ix.l);grid.appendChild(lx.l);
+  wk.setAttribute('aria-label','Age in weeks');dy.setAttribute('aria-label','Additional days');
+
+  host.appendChild(el('p','q-stem','Predict: what should happen for this infant?'));
+  var seg=el('div','act-chips');host.appendChild(seg);var obtn={};
+  OUT.forEach(function(o){var b=el('button','act-chip',o[1]);b.type='button';b.onclick=function(){answer(o[0]);};seg.appendChild(b);obtn[o[0]]=b;});
+  var fb=el('div','feedback');fb.setAttribute('aria-live','polite');host.appendChild(fb);
+  var cp=el('p','caption');host.appendChild(cp);
+
+  function vals(){return {days:Number(wk.value)*7+Number(dy.value),product:pr.value,doses:Number(ds.value),scid:sc.i.checked,intuss:ix.i.checked,latex:lx.i.checked};}
+  function setVals(c){wk.value=c.w;dy.value=c.d;pr.value=c.product;ds.value=c.doses;sc.i.checked=c.scid;ix.i.checked=c.intuss;lx.i.checked=c.latex;}
+  function load(c){cur=c;setVals(c);fb.className='feedback';fb.innerHTML='';paintChips();}
+  function sandbox(){cur=null;paintChips();}
+  [wk,dy,pr,ds,sc.i,ix.i,lx.i].forEach(function(n){n.addEventListener('change',function(){sandbox();fb.className='feedback';fb.innerHTML='';});});
+  function paintChips(){
+    CASES.forEach(function(c){chips[c.id].classList.toggle('done',prog.done.indexOf(c.id)>-1);chips[c.id].classList.toggle('on',cur&&cur.id===c.id);});
+    cp.textContent=prog.done.length+' of '+CASES.length+' cases answered correctly.'+(cur?'':' (Your own values do not count toward completion.)');
+  }
+  function answer(o){
+    var r=rotaDecide(vals());
+    if(o===r.out){
+      fb.className='feedback show';
+      fb.innerHTML='<strong>That’s it.</strong> '+r.why.join(' ');
+      if(cur&&prog.done.indexOf(cur.id)<0){prog.done.push(cur.id);saveV(name,prog);}
+      paintChips();
+      if(prog.done.length>=CASES.length&&!state.activities[name])Act.done(name,true);
+    }else{
+      fb.className='feedback show miss';
+      fb.innerHTML='<strong>Not quite — try again.</strong> Check the contraindications, how many doses have been given, and the age limits.';
+    }
+  }
+  load(CASES[0]);
+  Act.register(name,{solve:function(){CASES.forEach(function(c){load(c);answer(rotaDecide(vals()).out);});}});
+})();
+
+/* ============================================================
+   MODULE 6 ACTIVITIES
+   ============================================================ */
+
+/* --- 6A step 1: order the stages of poliovirus invasion --- */
+Act.order('act-polioOrder',{name:'polioOrder',items:[
+  'Alimentary: the virus enters by mouth and replicates in the gut',
+  'Lymphatic: the virus spreads to lymphatic tissue',
+  'Viremic: the virus enters the blood (most infections stop here)',
+  'Neurologic: the virus reaches the nervous system and can cause flaccid paralysis']});
+
+/* --- 6A step 2: where does the infection stop? --- */
+(function polioPath(){
+  var host=$('act-polioPath'),name='polioPath';
+  var prog=loadV(name,{seen:[]}),gate;
+  var S=['Alimentary','Lymphatic','Viremic','Neurologic'];
+  var M={
+    none:{label:'No immunity',marks:['go','go','stop','rare'],tag:'Most infections stop at the viremic stage',
+      text:'Without immunity the virus moves through all four stages. Most infections stop at the viremic stage. About 1% of infections in non-immunized people reach the nervous system and cause flaccid paralysis.'},
+    ipv:{label:'IPV (injected)',marks:['go','go','block','none'],tag:'Serum antibody blocks the blood stage',
+      text:'IPV is injected and gives serum antibody. That antibody acts in the blood, so it is well placed to stop the virus before it reaches the nervous system. It has little effect in the gut, so gut infection is not prevented well.'},
+    opv:{label:'OPV (oral)',marks:['block','block','block','none'],tag:'Gut IgA and serum antibody',
+      text:'OPV is given by mouth and gives serum antibody and gut IgA, so it acts at entry in the gut as well as in the blood. Vaccine-associated paralysis is rare: about 1 per 2–4 million doses.'}};
+  var gateBox=el('div');host.appendChild(gateBox);
+  var lab=el('div','lab-out locked');host.appendChild(lab);
+  var seg=segControl(Object.keys(M).map(function(k){return [k,M[k].label];}),function(v){show(v);});
+  var row=el('div','lab-row');row.appendChild(el('span','lab-label','Immunity'));row.appendChild(seg.box);lab.appendChild(row);
+  var fig=el('div','figure');fig.style.margin='8px 0';lab.appendChild(fig);
+  var out=el('div');out.setAttribute('aria-live','polite');lab.appendChild(out);
+  var cp=el('p','caption');lab.appendChild(cp);
+  function chart(k){
+    var m=M[k].marks,s='<svg viewBox="0 0 640 150" role="img" aria-label="The four stages of poliovirus invasion for '+M[k].label+': '+M[k].tag+'.">';
+    S.forEach(function(n,i){
+      var x=14+i*158,st=m[i];
+      var fill=st==='block'?'#E0F3EB':st==='stop'?'#FDE7F3':st==='rare'?'#F4F5FD':st==='none'?'#EEEFF7':'#E9ECFA';
+      var stroke=st==='block'?'#2FA97A':st==='stop'?'#E5489F':'#3A4BD0';
+      s+='<rect x="'+x+'" y="30" width="136" height="64" rx="14" fill="'+fill+'" stroke="'+stroke+'" stroke-width="3" '+(st==='rare'||st==='none'?'stroke-dasharray="6 5"':'')+'/><text x="'+(x+68)+'" y="58" text-anchor="middle" font-size="13.5" font-weight="750" fill="#161A3C">'+(i+1)+'. '+n+'</text>';
+      var note={go:'virus present',stop:'most stop here',rare:'about 1%',block:'blocked by antibody',none:'not reached'}[st];
+      s+='<text x="'+(x+68)+'" y="80" text-anchor="middle" font-size="11.5" fill="#464B72">'+note+'</text>';
+      if(i<3)s+='<path d="M'+(x+140)+' 62 h14" stroke="#E5489F" stroke-width="3" stroke-linecap="round"/>';
+    });
+    s+='<text x="320" y="20" text-anchor="middle" font-size="11.5" fill="#767BA0">Dashed outline = stage not usually reached</text>';
+    s+='<text x="320" y="130" text-anchor="middle" font-size="12.5" font-weight="700" fill="#A3126A">'+M[k].tag+'</text></svg>';
+    return s;
+  }
+  function show(k){
+    seg.set(k);fig.innerHTML=chart(k);out.innerHTML='<p style="margin:0;font-size:.93rem">'+M[k].text+'</p>';
+    if(prog.seen.indexOf(k)<0){prog.seen.push(k);saveV(name,prog);}
+    prog.seen.forEach(seg.mark);cp.textContent=prog.seen.length+' of 3 immunity states viewed.';check();
+  }
+  function check(){if(gate&&gate.answered()&&prog.seen.length>=3&&!state.activities[name])Act.done(name,true);}
+  show('none');
+  gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: an injected vaccine produces antibody in the blood but little in the gut. Which stage is it best placed to interrupt?',
+    options:['The viremic stage, before the virus reaches the nervous system','The alimentary stage, at the point of entry','The lymphatic stage, before the virus reaches the blood'],answer:0,
+    why:'Antibody in the blood can neutralize the virus during the viremic stage. Antibody at the gut surface (IgA) would be needed to act at entry.'},
+    function(){lab.classList.remove('locked');check();});
+  Act.register(name,{solve:function(){gate.solve();Object.keys(M).forEach(function(k){seg.buttons[k].click();});}});
+})();
+
+/* --- 6B Coxsackievirus and echovirus tissue triage --- */
+Act.sort('act-coxTriage',{name:'coxTriage',
+  options:['Coxsackie A','Coxsackie B','Echovirus','Cannot tell from this clue alone'],
+  rows:[
+    {text:'Blisters on the hands and feet and sores in the mouth (hand-foot-and-mouth disease).',answer:'Coxsackie A',why:'Hand-foot-and-mouth disease involves skin and mucous membranes and is linked to coxsackie A.'},
+    {text:'Painful small ulcers at the back of the throat (herpangina).',answer:'Coxsackie A',why:'Herpangina is linked to coxsackie A.'},
+    {text:'Sudden sharp chest pain that worsens with breathing, with fever (pleurodynia).',answer:'Coxsackie B',why:'Pleurodynia is linked to coxsackie B, which targets the pleura as well as the heart, pancreas, and liver.'},
+    {text:'Inflammation of the heart muscle or its lining (myocarditis or pericarditis).',answer:'Coxsackie B',why:'Myocarditis and pericarditis are linked to coxsackie B.'},
+    {text:'A newborn with severe myocarditis.',answer:'Coxsackie B',why:'Severe neonatal myocarditis is linked to coxsackie B.'},
+    {text:'Aseptic meningitis in a child.',answer:'Cannot tell from this clue alone',why:'Aseptic meningitis can be caused by coxsackie A and by echovirus, among others, so the clue narrows the field without naming one virus.'},
+    {text:'Fever with a mild respiratory illness.',answer:'Cannot tell from this clue alone',why:'Echoviruses can cause febrile and respiratory illness, but many other viruses do too, so this clue does not point to one group.'},
+    {text:'Hand-foot-and-mouth disease, with headache and a stiff neck a few days later.',answer:'Coxsackie A',why:'Coxsackie A causes both the skin and mucous membrane disease and aseptic meningitis, so one virus can explain both.'}
+  ]});
+
+/* --- 6C Whole-body local vs. systemic explorer --- */
+Act.explore('act-bodyExplorer',{name:'bodyExplorer',svg:explorerSvg(),
+  start:'Select a region on the body, or a button below, to see which viruses enter there or injure it.',
+  ids:['resp','gut','blood','skin','marrow','glands','placenta','cns','heart'],
+  items:{
+    resp:{title:'Respiratory tract',html:'<p><b>Entry for</b> measles, mumps, rubella, and parvovirus B19 (respiratory spread).</p><p>None of these stays local. Each reaches other tissues through the blood or lymph, which is why they are systemic infections.</p>'},
+    gut:{title:'Gut',html:'<p><b>Stays local:</b> norovirus and rotavirus infect the small-intestine epithelium, destroy cells, and disrupt absorption. The main complication is dehydration.</p><p><b>Entry only:</b> poliovirus, coxsackievirus, and echovirus also enter here, but they spread beyond the gut.</p>'},
+    blood:{title:'Blood and lymph',html:'<p>This is the connection that makes an infection systemic.</p><ul><li>Measles: blood, then reticuloendothelial cells, then skin.</li><li>Rubella: viremia carries the virus to skin and organs, and to the placenta in pregnancy.</li><li>Poliovirus: lymphatic, then viremic stage, before any nervous system disease.</li></ul>'},
+    skin:{title:'Skin and mucous membranes',html:'<ul><li>Measles: rash from cytotoxic T cells, and Koplik spots in the mouth.</li><li>Rubella: maculopapular rash.</li><li>B19: slapped-cheek rash, linked to immune complexes.</li><li>HHV-6: rash after the fever resolves (roseola).</li><li>Coxsackie A: hand-foot-and-mouth disease and herpangina.</li></ul>'},
+    marrow:{title:'Bone marrow',html:'<p><b>Parvovirus B19</b> infects erythroid precursors. Red cell production falls, which causes aplastic crisis in people with hemolytic anemias and chronic anemia in immunocompromised patients.</p>'},
+    glands:{title:'Salivary glands and other glands',html:'<p><b>Mumps</b> reaches the parotid glands, and can involve the testes, ovaries, and pancreas. Sterility after orchitis is rare and linked to bilateral involvement.</p>'},
+    placenta:{title:'Placenta and fetus',html:'<ul><li>Rubella: profound fetal harm, especially in the first trimester.</li><li>B19: fetal anemia and hydrops, with highest risk at weeks 9–20.</li><li>Measles: risk of stillbirth.</li></ul>'},
+    cns:{title:'Nervous system',html:'<ul><li>Poliovirus: motor neuron damage and flaccid paralysis in about 1% of non-immunized infections.</li><li>Coxsackie A and echovirus: aseptic meningitis.</li><li>Mumps: meningitis, typically benign.</li><li>Measles: encephalitis, and SSPE years later.</li><li>HHV-6 reactivation in transplant recipients: encephalitis.</li></ul>'},
+    heart:{title:'Heart and pleura',html:'<p><b>Coxsackie B</b> causes myocarditis and pericarditis, pleurodynia, and severe neonatal myocarditis. It targets the heart, pleura, pancreas, and liver.</p>'}
+  }});
+
+
+initWelcome();
+
+</script>
+<script src="shared/engine.js"></script>
+<script src="shared/menu.js"></script>
+</body>
+</html>
