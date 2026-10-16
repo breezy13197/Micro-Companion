@@ -9,7 +9,7 @@ module.exports = defineConfig({
   expect: { timeout: 7000 },
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [['list'], ['html', { open: 'never' }], ['./summary-reporter.js']],
   use: {
     baseURL: 'http://localhost:' + PORT,
     trace: 'retain-on-failure',

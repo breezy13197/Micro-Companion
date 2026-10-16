@@ -70,6 +70,10 @@ Type any one of these and press Enter. The first is the most thorough.
 
 You do not need to start a web server yourself. The checker starts a tiny one, runs the tests, and stops it.
 
+### Sharing the results (small file)
+
+Every run also saves a short text file, `failures-summary.txt`, in this folder. It lists only what failed, in which browser, and why, and is usually a few kilobytes. Send that file (or paste its contents) when asking for help. Please do not zip the `playwright-report` or `test-results` folders: they hold screenshots and recordings and can be tens of megabytes.
+
 ### Reading the results
 
 Each test prints a line with a tick (passed) or a cross (failed). At the end you get totals such as `223 passed, 19 failed`.
