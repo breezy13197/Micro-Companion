@@ -46,6 +46,21 @@ for (const size of SIZES) {
       expect(tooWide, 'hub pages that scroll sideways').toEqual([]);
     });
 
+    test('hub: progress boxes keep their text inside', async ({ page }) => {
+      await page.goto('/index.html');
+      await expect(page.locator('.d-cpct').first()).toBeVisible();
+      // The page can look fine (no sideways scrolling) while a label still hangs
+      // out of its own white box, so measure each label against its box.
+      const spilling = await page.evaluate(() =>
+        [...document.querySelectorAll('.d-cpct')].map(box => {
+          const label = box.querySelector('span').getBoundingClientRect();
+          const edge = box.getBoundingClientRect();
+          return label.right - edge.right > 0.5 || label.left < edge.left - 0.5
+            ? box.closest('.d-card').querySelector('.d-ckick').textContent.trim() : null;
+        }).filter(Boolean));
+      expect(spilling, 'progress boxes whose label spills out').toEqual([]);
+    });
+
     for (const id of COMPANIONS) {
       test(id + ': menu and layout fit the screen', async ({ page }) => {
         await openCompanion(page, id);
