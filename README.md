@@ -119,6 +119,10 @@ To change the hub's colors later, open `index.html` in a text editor and search 
 
 The `m` field of each hub question can now hold **more than one** companion, joined by `+`. Keep that format (for example `bacteria1+bacteria3`, no spaces). If you use BankBridge to edit `hub.js`, open a few questions after saving to confirm the `m` values survived.
 
+## Checking it works in different browsers
+
+The `browser-tests/` folder is an automatic checker that opens the hub and every companion in Chrome, Firefox, Safari and phone-sized screens, and reports anything that breaks. Students do not need it; you can leave it out of the folder you publish. Its own `README.md` explains how to run it, step by step.
+
 ## If something goes wrong
 
 | What you see | Most likely cause | Fix |
