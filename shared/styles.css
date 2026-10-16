@@ -217,11 +217,18 @@ tbody tr:last-child td{border-bottom:0}
   background:#fff;border:1.5px solid var(--green);color:#1C7554;font-weight:600;font-size:.85rem;
   box-shadow:0 8px 20px rgba(29,43,51,.2);transform:translate(-50%,-50%);opacity:.95}
 .dnd-pill.dragging{opacity:.3}
+/* Narrow screens: let the description and the drop slot stack instead of
+   sitting side by side, so the row never gets wider than the screen. */
+@media (max-width:640px){
+  .dnd-row{flex-wrap:wrap;gap:10px}
+  .dnd-desc{flex:1 1 100%;min-width:0}
+  .dnd-slot{flex:1 1 100%}
+}
 
 .fc-stage{perspective:1200px;margin:18px 0 10px}
 .fc{position:relative;height:215px;transition:transform .5s;transform-style:preserve-3d;cursor:pointer}
 .fc.flipped{transform:rotateY(180deg)}
-.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-md);
+.fc-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:var(--r-md);
   display:grid;place-items:center;text-align:center;padding:26px}
 .fc-front{background:linear-gradient(140deg,#EDF9F4,#E2F2FB);border:1px solid var(--green-line)}
 .fc-back{background:#fff;border:1px solid var(--line);transform:rotateY(180deg)}

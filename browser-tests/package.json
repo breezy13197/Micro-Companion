@@ -1,0 +1,17 @@
+{
+  "name": "micro-companion-browser-tests",
+  "private": true,
+  "description": "Cross-browser checks for the Microbiology Study Hub (not needed by students)",
+  "scripts": {
+    "install-browsers": "playwright install chromium firefox webkit",
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
