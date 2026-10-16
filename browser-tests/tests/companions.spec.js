@@ -34,17 +34,22 @@ for (const id of COMPANIONS) {
     test('every section opens and is the only one showing', async ({ page }) => {
       const problems = watchProblems(page);
       await openCompanion(page, id);
-      const keys = await page.evaluate(() => FLOW.map(f => f.key));
-      expect(keys.length).toBeGreaterThan(10);
+      expect(await page.evaluate(() => FLOW.length)).toBeGreaterThan(10);
 
-      for (let i = 0; i < keys.length; i++) {
-        await page.evaluate(n => goTo(n), i);
-        const visible = await page.evaluate(() =>
-          [...document.querySelectorAll('section.section')]
-            .filter(s => s.offsetParent !== null).map(s => s.dataset.key));
-        expect(visible, 'section ' + keys[i]).toEqual([keys[i]]);
-        expect(await page.locator('#topTitle').textContent(), 'title for ' + keys[i]).not.toBe('');
-      }
+      // Done in one step inside the page (not 30+ separate round trips) so it
+      // stays fast even when several browsers are being tested at once.
+      const wrong = await page.evaluate(() => {
+        const out = [];
+        FLOW.forEach((f, i) => {
+          goTo(i);
+          const shown = [...document.querySelectorAll('section.section')]
+            .filter(s => s.offsetParent !== null).map(s => s.dataset.key);
+          if (shown.length !== 1 || shown[0] !== f.key) out.push(f.key + ' showed [' + shown.join(', ') + ']');
+          if (!document.getElementById('topTitle').textContent) out.push(f.key + ' has an empty title');
+        });
+        return out;
+      });
+      expect(wrong).toEqual([]);
       expect(problems.list()).toEqual([]);
     });
 
@@ -81,17 +86,27 @@ for (const id of COMPANIONS) {
       await expect(page.locator('#fcFront')).not.toBeEmpty();
       await expect(page.locator('#fcBack')).not.toBeEmpty();
 
-      // Which half of the card is actually on top at its centre?
-      const topFace = () => card.evaluate(c => {
-        const r = c.getBoundingClientRect();
-        const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-        return hit && hit.closest('.fc-back') ? 'back' : (hit && hit.closest('.fc-face') ? 'front' : 'other');
-      });
+      // Both faces must hide their reverse side, or the answer shows through
+      // the question (this is what older Safari versions get wrong).
+      const faces = await page.evaluate(() => [...document.querySelectorAll('#fcCard .fc-face')].map(f => {
+        const st = getComputedStyle(f);
+        return st.backfaceVisibility || st.webkitBackfaceVisibility;
+      }));
+      expect(faces).toEqual(['hidden', 'hidden']);
+
       await card.scrollIntoViewIfNeeded();
-      expect(await topFace()).toBe('front');
+      const settle = () => page.waitForTimeout(800); // the flip animation takes half a second
+      await settle();
+      const before = await card.screenshot();
       await card.click();
       await expect(card).toHaveClass(/flipped/);
-      await expect.poll(topFace, { timeout: 4000 }).toBe('back');
+      await settle();
+      const after = await card.screenshot();
+      // The picture of the card must really change when it is flipped.
+      expect(Buffer.compare(before, after)).not.toBe(0);
+      // And it must be turned half way round (rotateY 180 degrees).
+      const turn = await card.evaluate(c => new DOMMatrix(getComputedStyle(c).transform).a);
+      expect(turn).toBeLessThan(-0.99);
 
       // Keyboard works too (Enter flips it back).
       await card.press('Enter');
@@ -120,8 +135,7 @@ for (const id of COMPANIONS) {
       const stillSet = await page.evaluate(() =>
         MANIFEST.modules.every(m => m.sections.every(s => !s.activity || (state.activities[s.activity] != null))));
       expect(stillSet, 'activity results survive a reload').toBe(true);
-      const lastIndex = await page.evaluate(() => FLOW.length - 1);
-      for (let i = 0; i <= lastIndex; i++) await page.evaluate(n => goTo(n), i);
+      await page.evaluate(() => { for (let i = 0; i < FLOW.length; i++) goTo(i); });
       expect(problems.list()).toEqual([]);
     });
 

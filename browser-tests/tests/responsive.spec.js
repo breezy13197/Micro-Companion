@@ -78,12 +78,15 @@ test.describe('every section fits a small phone', () => {
   for (const id of COMPANIONS) {
     test(id, async ({ page }) => {
       await openCompanion(page, id);
-      const n = await page.evaluate(() => FLOW.length);
-      const wide = [];
-      for (let i = 0; i < n; i++) {
-        await page.evaluate(k => goTo(k), i);
-        if (await hasSidewaysScroll(page)) wide.push(await page.evaluate(k => FLOW[k].key, i));
-      }
+      const wide = await page.evaluate(() => {
+        const out = [];
+        FLOW.forEach((f, i) => {
+          goTo(i);
+          const de = document.documentElement;
+          if (de.scrollWidth > de.clientWidth + 1) out.push(f.key);
+        });
+        return out;
+      });
       expect(wide, 'sections that scroll sideways at 360px').toEqual([]);
     });
   }

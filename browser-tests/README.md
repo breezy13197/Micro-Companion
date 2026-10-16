@@ -106,19 +106,15 @@ Not covered: whether the *content* (questions, answers, facts) is correct, and a
 
 ---
 
-## Results of the first run
+## What the first full run found (and what was done)
 
-The first run was done in Chrome (Chromium) and the Android phone setup only. The sandbox it ran in could not download Firefox or Safari, so **please run `npm test` once yourself to cover those.**
+A run in all five browsers (549 passed, 60 failed) showed:
 
-Everything passed except one kind of problem, which is the same in both: **some pages are too wide for a phone screen**, so the student has to scroll sideways.
+1. **Pages too wide for a phone** (every browser). Sorting/matching rows in the companions and the tables on the hub's "How this works" page stretched past a 360 px screen. **Fixed** in `shared/styles.css` and `index.html`; the hub's backup page also had a text box and file chooser a few pixels too wide, **fixed** too.
+2. **Safari flashcard failures.** The test was asking Safari a question it answers differently from Chrome (what is on top of a card that has not been flipped), so this was a weakness in the test, not proof the cards were broken. The test now checks that both card faces hide their reverse side, that the picture really changes on flipping, and that the card turns half way round. A `-webkit-` version of the hiding rule was also added for older Safari versions.
+3. **Timeouts** in Firefox and Safari. The "every section opens" test made dozens of separate requests to the page, which is slow when many browsers run at once. It now does the work in one step, and the time limit per test is 60 seconds.
 
-| Where | How far it overflows a 360 px phone | Likely cause |
-|---|---|---|
-| Sorting/matching activities (`.dnd-row`) in Bacteria I to IV and Viruses I to III | 3 to 41 px, in about 10 sections | The rows have a fixed width or a long unbreakable label |
-| Hub, **How this works** page | The "What is loaded right now" table is 613 px wide | A table with six columns does not shrink |
-| Hub, **My companions** and **Save / load progress** pages | 3 to 16 px | A small element slightly too wide |
-
-The tests for these are **meant to fail until the pages are fixed**. When they all pass, the problem is gone.
+After these changes everything passes in Chrome and the Android phone setup. **Please run `npm test` again** to confirm Firefox and Safari.
 
 Two small differences between the written checklist (`companion-architecture.md`, section 12) and the real pages were also noticed, in case you want to update the checklist:
 

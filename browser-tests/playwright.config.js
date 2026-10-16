@@ -5,7 +5,7 @@ const PORT = Number(process.env.PORT || 4173);
 
 module.exports = defineConfig({
   testDir: './tests',
-  timeout: 30000,
+  timeout: 60000,
   expect: { timeout: 7000 },
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,

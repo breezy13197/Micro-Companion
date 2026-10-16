@@ -169,7 +169,8 @@ a{color:var(--accent-deep)}
 .seg button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-deep);font-weight:620}
 .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .numin{width:96px;border:1.5px solid var(--line);border-radius:9px;padding:8px 11px;min-height:40px}
-.textin{width:100%;max-width:420px;border:1.5px solid var(--line);border-radius:9px;padding:8px 12px;min-height:40px}
+.textin{box-sizing:border-box;width:100%;max-width:420px;border:1.5px solid var(--line);border-radius:9px;padding:8px 12px;min-height:40px}
+input[type=file]{max-width:100%}
 .toggle{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1.5px solid var(--line);border-radius:var(--r-md)}
 .toggle.on{border-color:var(--accent);background:var(--accent-soft)}
 .toggle input{width:18px;height:18px;accent-color:var(--accent)}
@@ -250,6 +251,9 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 table.tbl th,table.tbl td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line-soft)}
 table.tbl th{color:var(--ink-mid);font-weight:600;font-size:12.5px}
 table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+/* Narrow screens: a wide table scrolls inside its own card instead of
+   stretching the whole page sideways. */
+@media (max-width:640px){table.tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}}
 
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--char);color:#fff;
   padding:12px 18px;border-radius:11px;font-size:14px;box-shadow:var(--shadow-lift);z-index:60;max-width:min(560px,92vw)}
