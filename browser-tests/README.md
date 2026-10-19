@@ -123,6 +123,12 @@ Two small differences between the written checklist (`companion-architecture.md`
 
 ---
 
+## Adding a new companion
+
+You do not need to change the tests. They look in the main folder for every file named like `bacteria5.html` or `viruses6.html` and test each one automatically, and the hub checks adjust their counts to match. Just add the new files (the page, plus its two files in `banks/`) and run `npm test`.
+
+Only one case needs a hand-edit: if you add a different *kind* of companion whose file name does not start with `bacteria` or `viruses` (for example `fungi1.html`), open `tests/helpers.js` and add the new prefix to the line that says `(?:bacteria|viruses)`, e.g. `(?:bacteria|viruses|fungi)`.
+
 ## If something goes wrong
 
 | What you see | What it means | What to do |

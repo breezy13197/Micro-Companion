@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { COMPANIONS, openCompanion, hasSidewaysScroll } = require('./helpers');
+const { COMPANIONS, openCompanion, hasSidewaysScroll, COUNT_TEXT } = require('./helpers');
 
 /* Sizes that stand for real devices. The menu folds away at 900px
    (companions) and 1080px (hub), so each side of those lines is tested. */
@@ -16,7 +16,7 @@ for (const size of SIZES) {
 
     test('hub: menu ' + (size.folded ? 'folds behind a button that works' : 'stays open'), async ({ page }) => {
       await page.goto('/index.html');
-      await expect(page.locator('#main')).toContainText('Eight companions');
+      await expect(page.locator('#main')).toContainText(COUNT_TEXT);
       const toggle = page.locator('.menu-toggle');
       if (size.folded && size.width <= 1080) {
         await expect(toggle).toBeVisible();

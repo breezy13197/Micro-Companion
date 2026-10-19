@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { watchProblems, openCompanion, solveCheckpoint } = require('./helpers');
+const { watchProblems, openCompanion, solveCheckpoint, COUNT_TEXT } = require('./helpers');
 
 /* Pretends the browser is blocking saved data, as private/incognito
    windows and strict privacy settings do. Any attempt to use
@@ -37,7 +37,7 @@ test.describe('when the browser blocks saved progress', () => {
     await blockStorage(page);
     await page.goto('/index.html');
     await expect(page.locator('#main .note.warn')).toContainText('blocking saved progress');
-    await expect(page.locator('#main')).toContainText('Eight companions');
+    await expect(page.locator('#main')).toContainText(COUNT_TEXT);
     expect(problems.list()).toEqual([]);
   });
 });

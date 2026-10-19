@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const path = require('path');
 const { pathToFileURL } = require('url');
-const { COMPANIONS, watchProblems } = require('./helpers');
+const { COMPANIONS, watchProblems, COUNT_TEXT } = require('./helpers');
 
 /* The README tells people to "open index.html in a browser", which means
    the address starts with file:// and there is no web server. Browsers are
@@ -12,10 +12,10 @@ const fileUrl = name => pathToFileURL(path.join(root, name)).href;
 
 test.describe('opened straight from disk (file://)', () => {
 
-  test('the hub loads and finds all eight companions', async ({ page }) => {
+  test('the hub loads and finds every companion', async ({ page }) => {
     const problems = watchProblems(page);
     await page.goto(fileUrl('index.html'));
-    await expect(page.locator('#main')).toContainText('Eight companions');
+    await expect(page.locator('#main')).toContainText(COUNT_TEXT);
     await expect(page.locator('#main .note.bad')).toHaveCount(0);
     expect(problems.list()).toEqual([]);
   });
@@ -39,6 +39,6 @@ test.describe('opened straight from disk (file://)', () => {
     await page.waitForFunction(() => typeof FLOW !== 'undefined');
     await page.locator('.back-to-hub').click();
     await expect(page).toHaveURL(/index\.html$/);
-    await expect(page.locator('#main')).toContainText('Eight companions');
+    await expect(page.locator('#main')).toContainText(COUNT_TEXT);
   });
 });
