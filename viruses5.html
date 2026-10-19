@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viruses V · Hepatitis, HIV and More — PHA3109 Study Companion</title>
+<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
+<style>
+:root{
+  --terra:#8A3B12; --terra-deep:#4A1D06; --terra-lift:#B5532A;
+  --lilac:#C9B8F0; --lilac-deep:#8F78D6; --lilac-soft:#F0EAFC; --lilac-ink:#4B3496;
+  --gold:#E0A010; --terra-ink:#6E2C0C;
+
+  /* the "primary" family every shared component reads */
+  --green:#8A3B12; --green-bright:#B5532A; --green-soft:#FBEDE6; --green-line:#E9C4B0;
+  --amber:#8A5A00; --amber-soft:#FDEFD0;
+
+  /* correct / complete keep a true green, so terracotta never reads as "right" */
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-line:#BFE6D4; --ok-ink:#1C7554;
+
+  --ink:#2A1B16; --ink-mid:#5C4A42; --ink-soft:#8A776E;
+  --page:#FBF6F3; --line:#EBDDD5;
+  --shadow:0 2px 16px rgba(138,59,18,.09);
+
+  --w-deep:#4A1D06; --w-band:#8A3B12; --w-lift:#B5532A;
+  --w-hero-1:#FBEAE0; --w-hero-2:#FFF8F4; --w-hero-3:#EFE8FC;
+  --w-hl:#C9B8F0; --w-hl-hover:#B3A0E6; --w-hl-ink:#4B3496; --w-hl-strong:#B5532A; --w-on-hl:#2A1650;
+  --w-hl-soft:#F0EAFC;
+  --w-art-1:#FBEAE0; --w-art-2:#EFE8FC; --w-art-line:#E9C4B0;
+  --w-check:#B5532A;
+  --w-kp-bg:#FDF6F2;
+  --w-shadow-rgb:138,59,18;
+  --w-t1-bg:#FBE6DA; --w-t1-fg:#A8431A;
+  --w-t2-bg:#EDE6FA; --w-t2-fg:#5B3FB5;
+  --w-t3-bg:#E3F2EA; --w-t3-fg:#1C7A55;
+  --w-t4-bg:#FDEFD0; --w-t4-fg:#8A5A00;
+  --w-t5-bg:#E1EEF8; --w-t5-fg:#1D6FA0;
+  --w-t6-bg:#F9E1E8; --w-t6-fg:#B03A5E;
+}
+body{
+  background:
+    radial-gradient(900px 420px at 92% -8%, #F1E9FD 0%, rgba(241,233,253,0) 62%),
+    radial-gradient(760px 380px at 2% -4%, #FCE8DC 0%, rgba(252,232,220,0) 58%),
+    var(--page);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{color:var(--ink)}
+h2{letter-spacing:-.015em}
+
+/* shared components, re-inked from green to terracotta / ok-green */
+.mod-head.current{background:var(--green-soft);color:var(--terra-ink)}
+.mod-head.current .mod-badge{background:#fff;color:var(--terra-ink)}
+.mod-head .mod-badge.done{background:var(--ok-soft);color:var(--ok-ink)}
+.sub button.current{background:var(--green-soft);color:var(--terra-ink)}
+.sub button.done .dot{background:var(--ok)}
+.sub button.current .dot{background:var(--terra-lift)}
+.ring-wrap{background:var(--green-soft)}
+.ring-num{color:var(--terra-ink)}
+.ring-cap{color:var(--ink-mid)}
+.pill{background:var(--green-soft);color:var(--terra-ink)}
+.btn:hover{background:var(--terra-deep)}
+.btn.ghost.on{background:var(--green-soft);border-color:var(--green-line);color:var(--terra-ink)}
+.opt.sel{color:var(--terra-ink)}
+.opt.reveal{border-color:var(--ok);color:var(--ok-ink)}
+.opt.sel.bad{background:var(--rose-soft)}
+.dnd-pill{color:var(--terra-ink)}
+.dnd-ghost{color:var(--terra-ink)}
+.dnd-row.correct{border-color:var(--ok);background:var(--ok-soft)}
+.dnd-row.correct .dnd-slot{border-color:var(--ok)}
+.choice:hover:not(:disabled){background:#FDF6F2}
+.choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback{border-left-color:var(--ok)}
+.feedback.miss{border-left-color:var(--rose)}
+.apply{background:var(--green-soft)}
+.apply .tag{background:#F3D3C3;color:var(--terra-ink)}
+.predict .tag{background:#FBE3A6;color:#6B4600}
+.mod-badge.done,.home-num.done{background:var(--ok-soft);color:var(--ok-ink)}
+.home-status.done{color:var(--ok-ink)}
+.s-strong{color:var(--ok-ink)}
+.lock-dot.done{background:var(--ok)}
+.fc-front{background:linear-gradient(140deg,#FDEFE7,#F0EAFC);border:1px solid var(--green-line)}
+.score-hero{background:linear-gradient(135deg,var(--terra-lift),var(--terra))}
+.score-hero .big{color:var(--lilac)}
+.bd-fill{background:var(--terra-lift)!important}
+.reset:hover{color:var(--rose)}
+.back-to-hub{color:var(--terra-lift)}
+input[type=range]{background:linear-gradient(90deg,var(--green-line),var(--terra-lift))}
+input[type=range]::-webkit-slider-thumb{border-color:var(--terra)}
+input[type=range]::-moz-range-thumb{border-color:var(--terra)}
+.box.clinical{background:#F2EDFC}
+.clinical .tag{background:#DCD0F7;color:var(--lilac-ink)}
+
+.btn.outline{background:#fff;color:var(--terra);border:1.5px solid var(--green-line)}
+.btn.outline:hover{background:var(--green-soft);color:var(--terra-deep)}
+
+/* custom activity pieces */
+.lab-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:#fff;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:8px 15px;font-size:.86rem;color:var(--ink-mid);cursor:pointer}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button.on{background:var(--terra);color:#fff}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.stage-name{font-size:1.1rem;font-weight:750;color:var(--terra);min-height:1.6em}
+.meter{height:12px;border-radius:99px;background:#EFE3DC;overflow:hidden;margin:6px 0 2px}
+.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--ok));width:0;transition:width .4s}
+.report{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.sir{font-weight:800;font-size:1.05rem;border-radius:999px;padding:8px 20px;color:#fff;min-width:140px;text-align:center}
+.scroll-x{overflow-x:auto}
+@keyframes dvPop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+.dv-new{animation:dvPop .45s ease both;transform-box:fill-box;transform-origin:center}
+.figure svg text{font-family:var(--font)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5.2"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1"/></svg></div>
+      <div><div class="brand-title">Viruses V &middot; Hepatitis &amp; HIV</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="18" fill="none" stroke="#EBCDBD" stroke-width="5"/>
+        <circle id="ringFill" cx="22" cy="22" r="18" fill="none" stroke="#9D86E0" stroke-width="5" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113" transform="rotate(-90 22 22)"/>
+      </svg>
+      <div><div class="ring-num" id="ringPct">0%</div>
+      <div class="ring-cap">of the companion<br>complete</div></div>
+    </div>
+    <button class="reset" id="resetBtn">Clear my saved progress</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="topTitle">Welcome</h1><div class="meta" id="topMeta">Viruses V &middot; PHA3109 Microbiology &amp; Immunology</div></div>
+      <div class="pill" id="topPill">Not started</div>
+    </div>
+
+<section class="section welcome" data-key="start">
+  <div class="hero">
+    <div>
+      <div class="kicker">PHA3109 &middot; Microbiology &amp; Immunology</div>
+      <h2 class="hero-title">Know the virus.<span>Choose the intervention.</span></h2>
+      <p>Viruses V &mdash; Hepatitis A&ndash;E, arboviruses, rabies, Ebola, and HIV. Predict, sort, step through, and decide your way through the material. The lecture supplies the content; this companion supplies the practice.</p>
+      <div class="btn-row">
+        <button class="btn lg" data-go="m1home">Start Module 1</button>
+        <button class="btn lg outline" data-go="flashcards">Try the flashcards</button>
+      </div>
+      <div class="hero-note"><span class="hero-dots"><i style="background:#8A3B12"></i><i style="background:#C9B8F0"></i><i style="background:#E0A010"></i></span>Built around one question: how do structure, replication, transmission, and immune response set the treatment and prevention?</div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 400 400" role="img" aria-label="Illustration of a virus particle with spike proteins, surrounded by small rings"><defs><radialGradient id="hg" cx="42%" cy="34%" r="78%"><stop offset="0" stop-color="#C06A3E"/><stop offset="1" stop-color="#6E2C0C"/></radialGradient></defs><circle cx="200" cy="205" r="186" fill="none" stroke="#C9B8F0" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round"/><line x1="326.0" y1="205.0" x2="350.0" y2="205.0" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="350.0" cy="205.0" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="319.8" y1="243.9" x2="342.7" y2="251.4" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="342.7" cy="251.4" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="301.9" y1="279.1" x2="321.4" y2="293.2" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="321.4" cy="293.2" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="274.1" y1="306.9" x2="288.2" y2="326.4" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="288.2" cy="326.4" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="238.9" y1="324.8" x2="246.4" y2="347.7" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="246.4" cy="347.7" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="200.0" y1="331.0" x2="200.0" y2="355.0" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="200.0" cy="355.0" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="161.1" y1="324.8" x2="153.6" y2="347.7" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="153.6" cy="347.7" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="125.9" y1="306.9" x2="111.8" y2="326.4" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="111.8" cy="326.4" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="98.1" y1="279.1" x2="78.6" y2="293.2" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="78.6" cy="293.2" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="80.2" y1="243.9" x2="57.3" y2="251.4" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="57.3" cy="251.4" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="74.0" y1="205.0" x2="50.0" y2="205.0" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="50.0" cy="205.0" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="80.2" y1="166.1" x2="57.3" y2="158.6" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="57.3" cy="158.6" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="98.1" y1="130.9" x2="78.6" y2="116.8" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="78.6" cy="116.8" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="125.9" y1="103.1" x2="111.8" y2="83.6" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="111.8" cy="83.6" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="161.1" y1="85.2" x2="153.6" y2="62.3" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="153.6" cy="62.3" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="200.0" y1="79.0" x2="200.0" y2="55.0" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="200.0" cy="55.0" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="238.9" y1="85.2" x2="246.4" y2="62.3" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="246.4" cy="62.3" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="274.1" y1="103.1" x2="288.2" y2="83.6" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="288.2" cy="83.6" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="301.9" y1="130.9" x2="321.4" y2="116.8" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="321.4" cy="116.8" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><line x1="319.8" y1="166.1" x2="342.7" y2="158.6" stroke="#8F78D6" stroke-width="5" stroke-linecap="round"/><circle cx="342.7" cy="158.6" r="6" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><circle cx="200" cy="205" r="124" fill="url(#hg)"/><circle cx="200" cy="205" r="124" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3"/><path d="M150 205 q12 -34 24 0 t24 0 t24 0 t24 0" fill="none" stroke="#F0EAFC" stroke-width="6" stroke-linecap="round"/><g fill="#F0EAFC" opacity=".85"><circle cx="160" cy="160" r="8"/><circle cx="240" cy="170" r="8"/><circle cx="226" cy="256" r="8"/><circle cx="168" cy="252" r="8"/></g><circle cx="334" cy="92" r="7" fill="#C9B8F0"/><circle cx="62" cy="300" r="6" fill="#B5532A"/><circle cx="354" cy="280" r="5" fill="#C9B8F0"/><g font-weight="700" font-size="13"><rect x="8" y="96" width="104" height="30" rx="15" fill="#fff"/><circle cx="26" cy="111" r="6" fill="#B5532A"/><text x="40" y="116" fill="#2A1B16">Hepatitis</text><rect x="290" y="326" width="98" height="30" rx="15" fill="#fff"/><circle cx="308" cy="341" r="6" fill="#8F78D6"/><text x="322" y="346" fill="#2A1B16">HIV</text></g></svg>
+      <div class="hero-badge"><b data-stat="modules">6</b><span>Modules</span></div>
+    </div>
+  </div>
+
+  <div class="statband" aria-label="What is inside this companion">
+    <div class="stat"><span data-ico="layers"></span><div><b data-stat="modules">6</b><span>Modules</span></div></div>
+    <div class="stat"><span data-ico="spark"></span><div><b data-stat="activities">23</b><span>Hands-on activities</span></div></div>
+    <div class="stat"><span data-ico="question"></span><div><b data-stat="questions">76</b><span>Quiz questions</span></div></div>
+    <div class="stat"><span data-ico="cards"></span><div><b data-stat="cards">68</b><span>Flashcards</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="sect-head"><div><div class="eyebrow">Your path</div><h2>Six modules, one pharmacist&rsquo;s question each</h2></div></div>
+    <div class="mod-cards" style="--w-cols:3">
+      <button class="mod-card" data-go="m1home">
+        <span class="chip-ico tone-1" data-ico="microbe"></span>
+        <h3>Hepatitis A–E: identify and differentiate</h3><p>Which virus is it, and how did the patient get it?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m2home">
+        <span class="chip-ico tone-2" data-ico="layers"></span>
+        <h3>Hepatitis: serology, replication, and antivirals</h3><p>What do the markers mean, and which step can a drug block?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m3home">
+        <span class="chip-ico tone-3" data-ico="dna"></span>
+        <h3>Arboviruses and vector-borne transmission</h3><p>How does the virus reach people, and how do we stop it?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m4home">
+        <span class="chip-ico tone-4" data-ico="shield"></span>
+        <h3>Rabies and Ebola: high-consequence infections</h3><p>How fast must I act, and what can still be done?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m5home">
+        <span class="chip-ico tone-5" data-ico="flask"></span>
+        <h3>HIV: replication and antiretroviral mechanisms</h3><p>Which step of the HIV life cycle does each drug stop?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m6home">
+        <span class="chip-ico tone-6" data-ico="spark"></span>
+        <h3>HIV: treatment, prevention, and patient care</h3><p>How do I keep the virus suppressed and stop transmission?</p><span class="go">Open module &rarr;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="why">
+      <div class="why-art">
+<svg viewBox="0 0 420 230" role="img" aria-label="Three steps: predict, interact, explain"><g fill="none" stroke="#E9C4B0" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"><path d="M118 96 C 140 60, 170 60, 190 92"/><path d="M232 92 C 252 60, 282 60, 302 96"/></g><circle cx="80" cy="112" r="46" fill="#fff" stroke="#C9B8F0" stroke-width="4"/><text x="80" y="122" text-anchor="middle" font-size="34" font-weight="800" fill="#8A3B12">?</text><text x="80" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">1 Predict</text><circle cx="210" cy="112" r="46" fill="#8A3B12"/><path d="M196 96 v34 l9 -8 6 13 7 -3 -6 -13 12 -1 z" fill="#C9B8F0"/><text x="210" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">2 Interact</text><circle cx="340" cy="112" r="46" fill="#fff" stroke="#2FA97A" stroke-width="4"/><path d="M320 113 l14 14 26 -30" fill="none" stroke="#2FA97A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><text x="340" y="188" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">3 Explain</text></svg>
+        <div class="badge-hl"><small>Every section</small>Practice first</div>
+      </div>
+      <div>
+        <div class="eyebrow">How it works</div>
+        <h2>Not a repeat of the slides</h2>
+        <p class="lede">You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
+        <ul class="checks">
+          <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
+          <li><span><b>Interact.</b> Sort jaundice clues, read a serology panel, step a virus through a cell, and slide a viral load to see the delivery decision change.</span></li>
+          <li><span><b>Explain.</b> Every answer comes with the reasoning, not only right or wrong.</span></li>
+          <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round.</span></li>
+          <li><span><b>Finish strong.</b> The Final Mastery Exam unlocks once all six modules are complete.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-ico" data-ico="book"></div>
+    <div class="cta-body"><h2>Ready to begin?</h2><p>Start with the five hepatitis viruses and what separates them. Your progress saves in this browser as you go.</p></div>
+    <button class="btn hl lg" data-go="m1home">Start Module 1 &rarr;</button>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m1home">
+  <div class="modhero">
+    <div class="kicker">Module 1</div>
+    <h2>Hepatitis A–E: identify and differentiate</h2>
+    <p>Five unrelated viruses attack the same organ and cause nearly the same illness. This module teaches you to tell them apart by route of spread, genome, behavior over time, and prevention.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Which hepatitis virus is this, how was it acquired, and could it become chronic?</span></div>
+    <div class="ghost-num" aria-hidden="true">1</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Explain how hepatitis viruses injure the liver, and name the one that damages hepatocytes directly.</li><li>Differentiate hepatitis A, B, C, D, and E by genome, route of spread, chronic potential, and vaccine status.</li><li>Apply the prevention steps for hepatitis A, B, C, and E to patient exposures and special populations.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m1s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Five viruses, one organ</span><span class="home-desc">Sort clues into what all five share, immune-mediated injury, and direct injury.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m1s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Telling A through E apart</span><span class="home-desc">Match ten clues to the virus they describe.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m1s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Age, exposure, and prevention</span><span class="home-desc">Work four patient decisions, from a daycare exposure to a pregnant traveler.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 1 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s1">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 1</div>
+    <h2>Five viruses, one organ</h2>
+    <p class="lede">All five hepatitis viruses infect the liver and cause a similar illness. That similarity is why symptoms alone cannot name the virus, and it is why the rest of this module focuses on how the viruses differ.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Hepatitis A, B, C, D, and E all infect the liver, and each has surface proteins that react with receptors on hepatocytes.</li><li>The shared picture is fever, anorexia, nausea, vomiting, jaundice, dark urine, pale feces, and elevated transaminase levels.</li><li>In HAV and HBV the virus is not directly cytotoxic. Cytotoxic T cells that target viral antigen on the hepatocyte surface cause the damage.</li><li>HDV is the exception: delta antigen is cytopathic in hepatocytes.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 640 250" role="img" aria-label="Two hepatocytes. For HAV and HBV a cytotoxic T cell attacks a cell showing viral antigen. For HDV, delta antigen inside the cell is directly damaging."><text x="170" y="24" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">HAV or HBV</text><text x="480" y="24" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">HDV</text><circle cx="190" cy="125" r="60" fill="#FBEDE6" stroke="#B5532A" stroke-width="4"/><circle cx="190" cy="125" r="20" fill="#F0EAFC" stroke="#8F78D6" stroke-width="3"/><line x1="250.0" y1="125.0" x2="262.0" y2="125.0" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="262.0" cy="125.0" r="3" fill="#8F78D6"/><line x1="238.5" y1="160.3" x2="248.2" y2="167.3" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="248.2" cy="167.3" r="3" fill="#8F78D6"/><line x1="208.5" y1="182.1" x2="212.2" y2="193.5" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="212.2" cy="193.5" r="3" fill="#8F78D6"/><line x1="171.5" y1="182.1" x2="167.8" y2="193.5" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="167.8" cy="193.5" r="3" fill="#8F78D6"/><line x1="141.5" y1="160.3" x2="131.8" y2="167.3" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="131.8" cy="167.3" r="3" fill="#8F78D6"/><line x1="130.0" y1="125.0" x2="118.0" y2="125.0" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="118.0" cy="125.0" r="3" fill="#8F78D6"/><line x1="141.5" y1="89.7" x2="131.8" y2="82.7" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="131.8" cy="82.7" r="3" fill="#8F78D6"/><line x1="171.5" y1="67.9" x2="167.8" y2="56.5" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="167.8" cy="56.5" r="3" fill="#8F78D6"/><line x1="208.5" y1="67.9" x2="212.2" y2="56.5" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="212.2" cy="56.5" r="3" fill="#8F78D6"/><line x1="238.5" y1="89.7" x2="248.2" y2="82.7" stroke="#8F78D6" stroke-width="3" stroke-linecap="round"/><circle cx="248.2" cy="82.7" r="3" fill="#8F78D6"/><text x="190" y="205" text-anchor="middle" font-size="12" fill="#5C4A42">Hepatocyte showing viral antigen</text><circle cx="70" cy="125" r="28" fill="#fff" stroke="#8A3B12" stroke-width="4"/><circle cx="70" cy="125" r="11" fill="#E9C4B0"/><path d="M100 125 H 124" stroke="#8A3B12" stroke-width="4" stroke-linecap="round"/><path d="M118 116 l10 9 -10 9" fill="none" stroke="#8A3B12" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><text x="70" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#8A3B12">Cytotoxic T cell</text><text x="170" y="236" text-anchor="middle" font-size="12" font-weight="700" fill="#8A3B12">Immune-mediated injury</text><circle cx="480" cy="125" r="60" fill="#FBEDE6" stroke="#B5532A" stroke-width="4" stroke-dasharray="7 5"/><circle cx="480" cy="125" r="20" fill="#F0EAFC" stroke="#8F78D6" stroke-width="3"/><g fill="#8F78D6"><circle cx="455" cy="150" r="5"/><circle cx="470" cy="160" r="5"/><circle cx="495" cy="155" r="5"/><circle cx="510" cy="140" r="5"/><circle cx="450" cy="105" r="5"/><circle cx="505" cy="100" r="5"/></g><text x="480" y="205" text-anchor="middle" font-size="12" fill="#5C4A42">Delta antigen inside the cell</text><text x="480" y="236" text-anchor="middle" font-size="12" font-weight="700" fill="#8A3B12">Direct (cytopathic) injury</text><line x1="320" y1="40" x2="320" y2="240" stroke="#E9C4B0" stroke-width="2" stroke-dasharray="4 6"/></svg><p class="caption">HAV and HBV are not directly cytotoxic: the T-cell response to viral antigen on the hepatocyte surface does the damage. Delta antigen is the exception.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Who does the damage?</h2>
+    <p class="try-note">Choose one answer for every clue, then check. Each row explains itself once you have checked.</p>
+    <div id="act-liverSort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c1a"><p>In hepatitis A, what directly injures the hepatocytes?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1b"><p>Which hepatitis virus makes a protein that is directly cytopathic in hepatocytes?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1c"><p>A patient has fever, nausea, jaundice, and elevated transaminases. What can the pharmacist conclude from these findings?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Elevated transaminases say the liver is injured, not which virus did it. The next questions are always how the patient was exposed and which test answers that, and those are the questions the next two sections practice.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s2">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 2</div>
+    <h2>Telling A through E apart</h2>
+    <p class="lede">Four features separate the five viruses: the family and genome, the route of spread, whether a chronic carrier state occurs, and whether a vaccine or immune globulin exists.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>HAV and HEV spread by the fecal–oral route and do not cause a chronic carrier state in healthy people.</li><li>HBV, HCV, and HDV spread through blood (and sexual contact), and each can become chronic. HBV also passes from mother to child at birth.</li><li>Only HAV and HBV have vaccines. HEV has none in the U.S. (Hecolin is licensed in China).</li><li>HBV is the only DNA virus of the five. It carries a DNA polymerase that also works as a reverse transcriptase. HDV is a satellite that needs HBV.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Virus</th><th>Family</th><th>Genome</th><th>Transmission</th><th>Chronic carriers</th><th>Vaccine / immune globulin</th></tr></thead><tbody><tr><td><b>HAV</b></td><td>Picornavirus</td><td>ssRNA</td><td>Fecal–oral</td><td>No</td><td>Yes / Yes</td></tr><tr><td><b>HBV</b></td><td>Hepadnavirus</td><td>dsDNA (interrupted, circular)</td><td>Blood, sexual, at birth</td><td>Yes</td><td>Yes / Yes</td></tr><tr><td><b>HCV</b></td><td>Flavivirus</td><td>ssRNA</td><td>Blood, sexual¹</td><td>Yes</td><td>No / No</td></tr><tr><td><b>HDV</b></td><td>Deltavirus</td><td>ssRNA (circular, negative-strand)</td><td>Blood, sexual¹</td><td>Yes</td><td>No / No</td></tr><tr><td><b>HEV</b></td><td>Hepevirus (Hepeviridae)</td><td>ssRNA</td><td>Fecal–oral</td><td>No³</td><td>No² / No</td></tr></tbody></table><p class="caption">¹ Sexual transmission seems likely but is poorly documented. ² No vaccine in the U.S.; Hecolin is licensed in China (WHO). ³ Chronic infection is rare and occurs in immunocompromised patients.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Which virus is it?</h2>
+    <p class="try-note">Choose a virus for every clue, then check. Several clues point to the same virus.</p>
+    <div id="act-abcdeSort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c2a"><p>Which pair of hepatitis viruses spreads by the fecal–oral route?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2b"><p>Which hepatitis virus has a DNA genome and a polymerase that acts as a reverse transcriptase?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2c"><p>Which hepatitis virus is a flavivirus with no vaccine?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Counseling starts with the route. Food and water point to A or E. Blood, sex, and birth point to B, C, or D. The route also tells you which vaccine is worth recommending and which patients need screening.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s3">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 3</div>
+    <h2>Age, exposure, and prevention</h2>
+    <p class="lede">Prevention depends on the patient in front of you. The same virus calls for a different action depending on age, the time since exposure, and pregnancy.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>HAV: incubation is 3 to 4 weeks, and most cases resolve in under 8 weeks. About 70% of children under 6 have no symptoms. There is no chronic state and no antiviral. After an exposure, give vaccine, plus immune globulin when indicated, within 2 weeks.</li><li>HBV: give the birth-dose vaccine within 24 hours, then 2 or 3 more doses. Newborns of HBsAg-positive mothers also receive HBIG. Chronic infection (more than 6 months) raises the risk of cirrhosis, liver failure, and liver cancer.</li><li>HCV: CDC recommends one-time screening of every adult 18 and older, and of pregnant women in every pregnancy. More than half of acute infections become chronic.</li><li>HEV: mortality is below 0.1% in most people but reaches up to about 20–25% in third-trimester pregnancy. Chronic infection can occur in immunocompromised patients, and ribavirin has shown efficacy there.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Four patients, four decisions</h2>
+    <p class="try-note">Answer each question to move to the next patient. A wrong choice lets you try again.</p>
+    <div id="act-hepCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c3a"><p>Which step is recommended after a hepatitis A exposure?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c3b"><p>When is the first hepatitis B vaccine dose given to a newborn?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c3c"><p>In adults, which hepatitis C screening approach does CDC recommend?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Two of the five viruses have vaccines, so for the others prevention is hygiene, screening, and early treatment. Keep the patient-specific rules close: the birth dose for every newborn, HBIG when the mother is HBsAg-positive, vaccine after a hepatitis A exposure, and an HCV screen for every adult.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1quiz">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Mastery check</div>
+    <h2>Module 1 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 1 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m1"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m2home">
+  <div class="modhero">
+    <div class="kicker">Module 2</div>
+    <h2>Hepatitis: serology, replication, and antivirals</h2>
+    <p>Once you know which hepatitis virus you are dealing with, the next questions are what the lab markers mean and where a drug can interrupt the virus. HBV, HCV, and HDV each answer differently.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>What do these markers mean, and which step of the virus can a drug block?</span></div>
+    <div class="ghost-num" aria-hidden="true">2</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Interpret HBV markers (HBsAg, anti-HBs, IgM anti-HBc, HBeAg, anti-HBe) and name the two seroconversions.</li><li>Explain why cccDNA prevents a cure for hepatitis B, and where entecavir and tenofovir act.</li><li>Match HCV direct-acting antivirals to their targets and define SVR, then explain how HDV depends on HBV.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m2s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Reading HBV serology</span><span class="home-desc">Interpret five patient marker patterns, committing to an answer before the explanation.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m2s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">HBV replication and cccDNA</span><span class="home-desc">Open the four steps of the HBV life cycle to see which can be blocked.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m2s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">HCV: SVR and direct-acting antivirals</span><span class="home-desc">Drag five drugs onto the mechanism each one uses.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m2s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">HDV: a virus that borrows an envelope</span><span class="home-desc">Step through coinfection and superinfection to see why HDV needs HBV.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 2 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s1">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 1</div>
+    <h2>Reading HBV serology</h2>
+    <p class="lede">HBV serology is a set of antigens and antibodies that rise and fall in a pattern. Read together, they tell you whether a patient is newly infected, chronically infected, or protected.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>HBsAg (surface antigen) is present in acute and chronic infection. Chronic infection means it persists for more than 6 months.</li><li>Anti-HBs (surface antibody) shows recovery or vaccine immunity. IgM anti-HBc (core antibody) shows recent infection.</li><li>HBeAg and anti-HBe are the e antigen and its antibody. HBeAg is a marker of active replication.</li><li>Seroconversion means an antigen disappears and its antibody appears. Two separate events: HBeAg to anti-HBe, and HBsAg to anti-HBs.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 640 255" role="img" aria-label="Schematic curves for an acute HBV infection that resolves: HBsAg and HBeAg rise and fall, IgM anti-HBc peaks and fades, and anti-HBs and anti-HBe appear later."><line x1="70" y1="200" x2="600" y2="200" stroke="#8A776E"/><line x1="70" y1="40" x2="70" y2="200" stroke="#8A776E"/><text x="22" y="124" font-size="11.5" font-weight="700" fill="#5C4A42" transform="rotate(-90 22 124)" text-anchor="middle">Marker level (schematic)</text><text x="335" y="244" text-anchor="middle" font-size="11.5" font-weight="700" fill="#5C4A42">Weeks after exposure</text><text x="70" y="217" text-anchor="middle" font-size="10.5" fill="#8A776E">0</text><text x="170" y="217" text-anchor="middle" font-size="10.5" fill="#8A776E">10</text><text x="270" y="217" text-anchor="middle" font-size="10.5" fill="#8A776E">20</text><text x="370" y="217" text-anchor="middle" font-size="10.5" fill="#8A776E">30</text><text x="470" y="217" text-anchor="middle" font-size="10.5" fill="#8A776E">40</text><text x="570" y="217" text-anchor="middle" font-size="10.5" fill="#8A776E">50</text><path d="M100 200 C125 200 125 147.5 150 147.5 C170 147.5 170 65 190 65 C220 65 220 95 250 95 C300 95 300 200 350 200 C450 200 450 200 550 200" fill="none" stroke="#8A3B12" stroke-width="3.5" stroke-linecap="round"/><path d="M90 200 C110 200 110 140 130 140 C150 140 150 117.5 170 117.5 C210 117.5 210 170 250 170 C280 170 280 200 310 200 C430 200 430 200 550 200" fill="none" stroke="#E0A010" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="7 5"/><path d="M130 200 C170 200 170 110 210 110 C250 110 250 57.5 290 57.5 C340 57.5 340 125 390 125 C460 125 460 192.5 530 192.5" fill="none" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><path d="M290 200 C340 200 340 170 390 170 C430 170 430 117.5 470 117.5 C530 117.5 530 80 590 80" fill="none" stroke="#2FA97A" stroke-width="3.5" stroke-linecap="round"/><path d="M310 200 C360 200 360 177.5 410 177.5 C460 177.5 460 140 510 140 C550 140 550 117.5 590 117.5" fill="none" stroke="#2E7DA8" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="7 5"/><g font-size="12" font-weight="700"><rect x="420" y="40" width="14" height="4" rx="2" fill="#8A3B12"/><text x="442" y="46" fill="#2A1B16">HBsAg</text><rect x="420" y="58" width="14" height="4" rx="2" fill="#E0A010"/><text x="442" y="64" fill="#2A1B16">HBeAg</text><rect x="420" y="76" width="14" height="4" rx="2" fill="#8F78D6"/><text x="442" y="82" fill="#2A1B16">IgM anti-HBc</text><rect x="420" y="94" width="14" height="4" rx="2" fill="#2FA97A"/><text x="442" y="100" fill="#2A1B16">Anti-HBs</text><rect x="420" y="112" width="14" height="4" rx="2" fill="#2E7DA8"/><text x="442" y="118" fill="#2A1B16">Anti-HBe</text></g></svg><p class="caption">A schematic, not patient data. In this pattern each antigen falls as its antibody appears: HBeAg gives way to anti-HBe, and HBsAg gives way to anti-HBs.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Interpret the patient’s markers</h2>
+    <p class="try-note">Choose a patient, read the markers, and predict the interpretation. The explanation appears after you commit. Answer all five to finish.</p>
+    <div id="act-serologyPredict"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c4a"><p>Which HBV marker is present in both acute and chronic infection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4b"><p>A patient’s HBeAg disappears and anti-HBe appears. Which term describes this?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4c"><p>An adult has anti-HBs as the only positive marker after completing the hepatitis B vaccine series. What does this show?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Anti-HBs alone after a completed vaccine series is the result you want in a vaccinated patient. Recovery from natural infection also leaves core antibody (anti-HBc), which a vaccinated patient does not have. HBsAg that persists beyond 6 months is chronic infection, and that is where the treatment questions of the next sections begin.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s2">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 2</div>
+    <h2>HBV replication and cccDNA</h2>
+    <p class="lede">HBV looks like a DNA virus, but it copies itself through an RNA intermediate. That one unusual step gives us our best drugs, and one unusual DNA form explains why we still cannot cure it.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>HBV carries its own DNA polymerase that also works as a reverse transcriptase. It is one of the few DNA viruses to do so, and it is the target of the first-line drugs entecavir and tenofovir.</li><li>In chronic infection, covalently closed circular DNA (cccDNA) forms and stays in the hepatocyte nucleus. It is the template for the mRNA that makes viral proteins and new genomes.</li><li>cccDNA cannot be targeted or degraded by current therapies, so hepatitis B cannot be completely cured. The treatment goal is undetectable HBV DNA.</li><li>Acute infection: no antiviral. Chronic infection: entecavir or tenofovir, usually continued for life. Prevention: HBsAg subunit vaccine and HBIG.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Walk through the HBV life cycle</h2>
+    <p class="try-note">Select each numbered step on the figure, or use the buttons under it. Open all four to finish.</p>
+    <div id="act-hbvExplore"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c5a"><p>Which viral activity is the target of entecavir and tenofovir?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c5b"><p>Why can current therapy suppress HBV but not cure it?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c5c"><p>Which treatment approach applies to a patient with acute HBV infection?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Entecavir and tenofovir suppress HBV but are taken long term, often for life, so adherence counseling matters. Stopping is a prescriber decision because cccDNA remains and the virus can rebound.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s3">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 3</div>
+    <h2>HCV: SVR and direct-acting antivirals</h2>
+    <p class="lede">Hepatitis C is curable. Direct-acting antivirals (DAAs) each block one protein of the virus, and combining them raises the chance of a cure.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Treatment goal: SVR, sustained virologic response, meaning undetectable HCV RNA 12 weeks after treatment is complete. Achieving SVR reduces liver cancer and end-stage liver disease.</li><li>NS5B polymerase inhibitor: sofosbuvir. NS5A inhibitors: velpatasvir and pibrentasvir (NS5A is a cofactor in the activity of the RNA polymerase). NS3/4A protease inhibitor: glecaprevir.</li><li>Combination therapy has a higher chance of SVR. Guideline regimens: sofosbuvir/velpatasvir for 12 weeks, or glecaprevir/pibrentasvir for 8 weeks.</li><li>HCV is an RNA virus. About 2.4 million people in the U.S. have chronic HCV, and more than half of acute infections become chronic. No vaccine is available.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 660 250" role="img" aria-label="The HCV protein map with the three direct-acting antiviral targets: NS3/4A protease, NS5A, and NS5B polymerase."><text x="320" y="26" text-anchor="middle" font-size="13" font-weight="750" fill="#2A1B16">HCV proteins (schematic order along the polyprotein)</text><rect x="70" y="50" width="116" height="46" rx="10" fill="#EFE3DC" stroke="#D8C6BB" stroke-width="2.5"/><text x="128" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#5C4A42">Structural</text><rect x="190" y="50" width="56" height="46" rx="10" fill="#EFE3DC" stroke="#D8C6BB" stroke-width="2.5"/><text x="218" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#5C4A42">NS2</text><rect x="250" y="50" width="96" height="46" rx="10" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><text x="298" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1B16">NS3/4A</text><rect x="350" y="50" width="56" height="46" rx="10" fill="#EFE3DC" stroke="#D8C6BB" stroke-width="2.5"/><text x="378" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#5C4A42">NS4B</text><rect x="410" y="50" width="86" height="46" rx="10" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><text x="453" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1B16">NS5A</text><rect x="500" y="50" width="96" height="46" rx="10" fill="#C9B8F0" stroke="#8F78D6" stroke-width="2.5"/><text x="548" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1B16">NS5B</text><line x1="298" y1="98" x2="298" y2="148" stroke="#B5532A" stroke-width="2.5"/><rect x="185" y="150" width="170" height="38" rx="10" fill="#fff" stroke="#B5532A" stroke-width="2.5"/><text x="270" y="166" text-anchor="middle" font-size="10.5" fill="#5C4A42">NS3/4A protease</text><text x="270" y="181" text-anchor="middle" font-size="12" font-weight="750" fill="#8A3B12">Glecaprevir</text><line x1="453" y1="98" x2="453" y2="198" stroke="#B5532A" stroke-width="2.5"/><rect x="368" y="200" width="170" height="38" rx="10" fill="#fff" stroke="#B5532A" stroke-width="2.5"/><text x="453" y="216" text-anchor="middle" font-size="10.5" fill="#5C4A42">NS5A (polymerase cofactor)</text><text x="453" y="231" text-anchor="middle" font-size="12" font-weight="750" fill="#8A3B12">Velpatasvir, pibrentasvir</text><line x1="548" y1="98" x2="548" y2="148" stroke="#B5532A" stroke-width="2.5"/><rect x="463" y="150" width="170" height="38" rx="10" fill="#fff" stroke="#B5532A" stroke-width="2.5"/><text x="548" y="166" text-anchor="middle" font-size="10.5" fill="#5C4A42">NS5B polymerase</text><text x="548" y="181" text-anchor="middle" font-size="12" font-weight="750" fill="#8A3B12">Sofosbuvir</text></svg><p class="caption">Each direct-acting antiviral blocks one viral protein. Guideline regimens combine them, which raises the chance of SVR.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match the drug to its mechanism</h2>
+    <p class="try-note">Drag each drug onto the description it fits. On a phone or with a keyboard, tap a drug first, then tap the row.</p>
+    <div id="act-daaMatch"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c6a"><p>What defines a sustained virologic response (SVR) in hepatitis C?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6b"><p>Which drug is an NS5B polymerase inhibitor?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6c"><p>Which guideline regimen is given for 8 weeks?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Contrast the two infections you will see. HCV is treated with a fixed 8- to 12-week course aimed at cure, while HBV is suppressed long term because cccDNA remains. Because HCV has no vaccine, screening every adult and treating early are the main tools.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s4">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 4</div>
+    <h2>HDV: a virus that borrows an envelope</h2>
+    <p class="lede">Hepatitis D virus is incomplete on its own. It can only copy itself inside cells that already make HBV’s surface protein, which explains how it spreads, why it is dangerous, and how it is prevented.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>HDV lacks the gene for an envelope protein, so it cannot replicate alone. It replicates in HBV-infected cells and uses HBsAg as its envelope. A virus that relies on another in this way is a satellite.</li><li>The genome is single-stranded, negative-sense, covalently closed circular RNA that encodes one protein: delta antigen, which is cytopathic in hepatocytes.</li><li>Coinfection: HBV and HDV are acquired together. Superinfection: HDV is acquired by someone who already has HBV. Superinfection in chronic HBV carriers carries a much higher risk of fulminant hepatitis, chronic hepatitis, and liver failure.</li><li>Treatment: peginterferon alpha may reduce the effects of chronic hepatitis but does not eradicate the carrier state. Bulevirtide blocks the NTCP receptor. Prevention: a person immunized against HBV will not acquire HDV.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 640 260" role="img" aria-label="HDV virion: an RNA genome with delta antigen inside an envelope made of HBsAg."><line x1="294.0" y1="130.0" x2="310.0" y2="130.0" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="287.6" y1="162.1" x2="302.4" y2="168.3" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="269.4" y1="189.4" x2="280.7" y2="200.7" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="242.1" y1="207.6" x2="248.3" y2="222.4" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="210.0" y1="214.0" x2="210.0" y2="230.0" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="177.9" y1="207.6" x2="171.7" y2="222.4" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="150.6" y1="189.4" x2="139.3" y2="200.7" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="132.4" y1="162.1" x2="117.6" y2="168.3" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="126.0" y1="130.0" x2="110.0" y2="130.0" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="132.4" y1="97.9" x2="117.6" y2="91.7" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="150.6" y1="70.6" x2="139.3" y2="59.3" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="177.9" y1="52.4" x2="171.7" y2="37.6" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="210.0" y1="46.0" x2="210.0" y2="30.0" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="242.1" y1="52.4" x2="248.3" y2="37.6" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="269.4" y1="70.6" x2="280.7" y2="59.3" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><line x1="287.6" y1="97.9" x2="302.4" y2="91.7" stroke="#8F78D6" stroke-width="4" stroke-linecap="round"/><circle cx="210" cy="130" r="84" fill="#F0EAFC" stroke="#8F78D6" stroke-width="5"/><circle cx="210" cy="130" r="42" fill="#FBEDE6" stroke="#B5532A" stroke-width="3"/><path d="M180 130 q8 -22 15 0 t15 0 t15 0 t14 0" fill="none" stroke="#8A3B12" stroke-width="3.5" stroke-linecap="round"/><g fill="#B5532A"><circle cx="186" cy="108" r="5"/><circle cx="214" cy="104" r="5"/><circle cx="236" cy="118" r="5"/><circle cx="232" cy="150" r="5"/><circle cx="204" cy="156" r="5"/><circle cx="182" cy="146" r="5"/></g><g font-size="13" font-weight="700" fill="#2A1B16"><line x1="300" y1="70" x2="352" y2="48" stroke="#8A776E"/><text x="356" y="52">HBsAg envelope (borrowed from HBV)</text><line x1="252" y1="120" x2="352" y2="122" stroke="#8A776E"/><text x="356" y="126">Delta antigen</text><line x1="236" y1="140" x2="352" y2="180" stroke="#8A776E"/><text x="356" y="184">Circular, negative-sense RNA</text></g><text x="356" y="146" font-size="11.5" fill="#5C4A42">(the only protein HDV encodes)</text></svg><p class="caption">HDV carries its own small RNA and delta antigen, but it has no gene for an envelope protein. It wraps itself in HBsAg made by a coinfecting HBV.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Coinfection and superinfection</h2>
+    <p class="try-note">Choose a scene and press Next step. Play both scenes to the end to finish.</p>
+    <div id="act-hdvSteps"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c7a"><p>Why can HDV not replicate on its own?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c7b"><p>Which situation describes HDV superinfection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c7c"><p>Which measure prevents hepatitis D?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Any patient with HBsAg-positive hepatitis is at risk for HDV, and hepatitis B vaccination protects against both. Because bulevirtide stops HDV from entering hepatocytes, check the current label before counseling on its use, including what happens if it is stopped.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2quiz">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Mastery check</div>
+    <h2>Module 2 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 2 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m2"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m3home">
+  <div class="modhero">
+    <div class="kicker">Module 3</div>
+    <h2>Arboviruses and vector-borne transmission</h2>
+    <p>Arboviruses travel between animals and people on the bite of an insect. To predict who gets sick, who spreads the virus, and how to prevent it, you need to follow the virus through the vector and through the blood.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How does the virus reach the patient, and what does that mean for prevention?</span></div>
+    <div class="ghost-num" aria-hidden="true">3</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Define arbovirus, explain why only female mosquitoes transmit, and describe the extrinsic incubation period.</li><li>Distinguish a dead-end host from a reservoir using the level and duration of viremia.</li><li>Compare dengue, yellow fever, West Nile, and Zika by vector, syndrome, and vaccine status.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m3s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Vectors and the transmission cycle</span><span class="home-desc">Follow a virus from a mosquito’s blood meal to a human host in two scenes.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m3s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Dead-end hosts and reservoirs</span><span class="home-desc">Adjust the level and length of viremia to see when a human infects the next mosquito.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m3s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Four arboviruses compared</span><span class="home-desc">Sort nine clues among dengue, yellow fever, West Nile, and Zika.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 3 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s1">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 1</div>
+    <h2>Vectors and the transmission cycle</h2>
+    <p class="lede">An arbovirus has to be transmitted by an arthropod, and it multiplies in both the arthropod and the vertebrate host. The cycle only works if the virus is present in enough quantity at each hand-off.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Arbovirus means any virus transmitted by arthropod vectors such as mosquitoes and ticks. More than 600 viruses are included, typically named for the disease they cause or where they were first isolated.</li><li>Transmission requires a sufficient amount of virus in the host bloodstream.</li><li>Only female mosquitoes transmit virus, because only females take blood from humans.</li><li>The extrinsic incubation period is the time needed for the mosquito’s saliva to contain enough virus to transmit an infectious dose.</li><li>Spread within the human body is systemic: the virus travels through the bloodstream (viremia).</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Follow the cycle</h2>
+    <p class="try-note">Choose a scene, then press Next step. Play both scenes to the end to finish.</p>
+    <div id="act-cycleSteps"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c8a"><p>Which mosquitoes transmit arboviruses to humans?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c8b"><p>What does the extrinsic incubation period measure?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c8c"><p>How does an arbovirus spread within the human body?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Because the chain runs through the vector, prevention is mainly vector control and avoiding bites. For a febrile patient, the history that matters includes travel, mosquito exposure, and vaccine status for the region.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s2">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 2</div>
+    <h2>Dead-end hosts and reservoirs</h2>
+    <p class="lede">Whether a human can pass an arbovirus back to a mosquito depends on how much virus is in the blood and for how long. That one variable decides whether the person is a dead end or a source.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Infection in the arthropod or the natural vertebrate host usually does not cause disease. Disease manifests in the dead-end host.</li><li>Dead-end host: the concentration of virus in the blood is too low, and viremia too brief, for transmission to another vector.</li><li>Occasionally high-level viremia occurs and humans become reservoirs, as with yellow fever and dengue.</li><li>Pathogenesis combines cytocidal effects of the virus and immunopathologic effects of the host response.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The viremia lab</h2>
+    <p class="try-note">Make a prediction first. Then set the virus level and the length of viremia. Reach both a dead-end host and a reservoir to finish.</p>
+    <div id="act-viremiaLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c9a"><p>What makes a human a dead-end host for an arbovirus?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9b"><p>Which description fits a reservoir host rather than a dead-end host?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9c"><p>In the transmission cycle, in which host does clinical disease manifest?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A person with a brief, low-level viremia is still sick, but is not a source of new infection. Where humans can be reservoirs, protecting patients from mosquito bites also protects the community.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s3">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 3</div>
+    <h2>Four arboviruses compared</h2>
+    <p class="lede">The same four viruses appear again and again in cases. Each has a distinct vector, a distinct syndrome, and a distinct answer to “is there a vaccine?”</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Most arbovirus infections are asymptomatic. Symptomatic infection is an acute febrile illness, and severity ranges from mild to fatal.</li><li>Consequences include encephalitis, hemorrhagic fever, and fever with myalgia, arthralgia, and a nonhemorrhagic rash.</li><li>Yellow fever has a single-dose vaccine with lifelong protection. A dengue vaccine (QDenga) is licensed in some countries. West Nile and Zika have no vaccine.</li><li>Source of the comparison data: WHO fact sheets, as given in the lecture table.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Virus</th><th>Vector</th><th>Main syndrome</th><th>Vaccine status</th></tr></thead><tbody><tr><td><b>Dengue</b></td><td>Aedes aegypti (also Ae. albopictus)</td><td>High fever, severe headache, muscle and joint pain; severe dengue: bleeding</td><td>QDenga: licensed in some countries, ages 6–16 in high-transmission settings</td></tr><tr><td><b>Yellow fever</b></td><td>Aedes, Haemagogus, Sabethes</td><td>Fever, aches; about 15% severe (jaundice, bleeding, shock); half of those die</td><td>Single dose; lifelong protection</td></tr><tr><td><b>West Nile</b></td><td>Culex</td><td>About 80% asymptomatic; fever, headache; most common cause of meningitis among arboviruses</td><td>None</td></tr><tr><td><b>Zika</b></td><td>Aedes</td><td>About 80% asymptomatic; fever, rash, joint pain; birth defects in pregnancy</td><td>None</td></tr></tbody></table><p class="caption">Source: WHO fact sheets, as given in the lecture table.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Which virus fits the clue?</h2>
+    <p class="try-note">Choose a virus for every clue, then check. Each row explains itself once checked.</p>
+    <div id="act-arboSort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c10a"><p>Which arbovirus has a single-dose vaccine that gives lifelong protection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10b"><p>Which arbovirus is linked to birth defects when infection occurs in pregnancy?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10c"><p>Which mosquito genus transmits West Nile virus?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">For pre-travel counseling the one arbovirus vaccine named in this table with lifelong protection is yellow fever. For dengue, West Nile, and Zika, prevention is avoiding bites. Zika adds a pregnancy concern because of birth defects.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3quiz">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Mastery check</div>
+    <h2>Module 3 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 3 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m3"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m4home">
+  <div class="modhero">
+    <div class="kicker">Module 4</div>
+    <h2>Rabies and Ebola: high-consequence infections</h2>
+    <p>Rabies and Ebola both start in animals, both carry a very high fatality rate, and both are shaped by one decision: act early. This module follows how each virus moves through the body and which interventions exist.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How quickly must I act, and what can still be done for this patient?</span></div>
+    <div class="ghost-num" aria-hidden="true">4</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Trace rabies virus from the bite to the brain to the saliva, and explain why it spreads by nerves rather than blood.</li><li>Classify a rabies exposure into WHO category I, II, or III and choose the matching post-exposure steps.</li><li>Explain how Ebola kills cells and disables immunity, and state which species the approved vaccine and antibodies cover.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m4s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Rabies: a virus that travels by nerve</span><span class="home-desc">Follow the rabies virus from a bite wound along nerves to the brain and back out to saliva.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m4s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Rabies exposure management</span><span class="home-desc">Triage nine exposures into WHO category I, II, or III.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m4s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Ebola: structure and how it kills</span><span class="home-desc">Complete a paragraph on how Ebola spreads, damages vessels, and blocks immunity.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m4s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Ebola species and countermeasures</span><span class="home-desc">Sort seven clues into Zaire, Sudan, and Bundibugyo.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 4 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s1">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 1</div>
+    <h2>Rabies: a virus that travels by nerve</h2>
+    <p class="lede">Rabies is a nerve virus. It hides at the bite site, climbs the nerves into the brain, and then travels back out to the salivary glands, never relying on the bloodstream.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Reservoirs: bats, skunks, and raccoons in the U.S., and dogs worldwide (the most common reservoir).</li><li>The virus is enveloped with a bullet-shaped capsid and a negative-sense single-stranded RNA genome. There is a single serotype, and the envelope glycoprotein spikes provide antigenicity.</li><li>It replicates at the bite site, infects sensory neurons, and moves to the CNS, where it is immunologically shielded. Then it moves down peripheral nerves to the salivary glands and enters saliva.</li><li>Negri bodies are cytoplasmic inclusions in infected neurons. Furious rabies (agitation, delirium, seizures, hydrophobia) and paralytic rabies (about 20% of cases, ascending paralysis) are the two forms. Once symptoms begin, rabies is almost always fatal.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 720 240" role="img" aria-label="Left: a bullet-shaped rabies virion with envelope spikes and a coiled nucleocapsid. Right: an infected neuron containing Negri bodies."><text x="190" y="30" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">Rabies virion</text><line x1="110" y1="74" x2="110" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="110" y1="186" x2="110" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="138" y1="74" x2="138" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="138" y1="186" x2="138" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="166" y1="74" x2="166" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="166" y1="186" x2="166" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="194" y1="74" x2="194" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="194" y1="186" x2="194" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="222" y1="74" x2="222" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="222" y1="186" x2="222" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="250" y1="74" x2="250" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="250" y1="186" x2="250" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="278" y1="74" x2="278" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="278" y1="186" x2="278" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="306" y1="74" x2="306" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="306" y1="186" x2="306" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="334" y1="74" x2="334" y2="62" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><line x1="334" y1="186" x2="334" y2="198" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round"/><path d="M96 78 H 330 C 392 78 430 102 430 130 C 430 158 392 182 330 182 H 96 Z" fill="#F0EAFC" stroke="#8F78D6" stroke-width="5" stroke-linejoin="round"/><path d="M118 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><path d="M146 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><path d="M174 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><path d="M202 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><path d="M230 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><path d="M258 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><path d="M286 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><path d="M314 92 q14 38 0 76" fill="none" stroke="#B5532A" stroke-width="5" stroke-linecap="round"/><text x="190" y="225" text-anchor="middle" font-size="12" fill="#5C4A42">Bullet-shaped, enveloped, negative-sense ssRNA</text><text x="520" y="30" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">Infected neuron</text><ellipse cx="520" cy="130" rx="92" ry="64" fill="#FBEDE6" stroke="#B5532A" stroke-width="4"/><circle cx="498" cy="118" r="24" fill="#E9C4B0" stroke="#8A3B12" stroke-width="3"/><g fill="#8A3B12"><circle cx="548" cy="146" r="9"/><circle cx="566" cy="122" r="7"/><circle cx="532" cy="160" r="7"/></g><line x1="548" y1="146" x2="600" y2="204" stroke="#8A776E"/><text x="604" y="212" font-size="12" font-weight="700" fill="#2A1B16">Negri body</text><text x="520" y="225" text-anchor="middle" font-size="12" fill="#5C4A42">Cytoplasmic inclusion</text></svg><p class="caption">Antigenicity comes from the envelope glycoprotein spikes, and there is a single serotype.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The route of the virus</h2>
+    <p class="try-note">Press Next step to move the virus along its route. Play the full route to the end to finish.</p>
+    <div id="act-rabiesPath"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c11a"><p>Along which route does rabies virus reach the central nervous system from a bite?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c11b"><p>What is a Negri body?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c11c"><p>A patient with rabies has fever, agitation, delirium, seizures, and hydrophobia. Which form is this?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The virus spends its early phase hidden at the bite site and in nerves, away from the immune system. That is why prompt post-exposure prophylaxis can prevent disease, and why nothing can be done once symptoms begin except supportive care.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s2">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 2</div>
+    <h2>Rabies exposure management</h2>
+    <p class="lede">Rabies cannot be treated once symptoms start, so the pharmacist’s job is the first hour after the exposure. WHO exposure categories tell you exactly how much to do.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>First step: wash the wound with soap and water for at least 15 minutes.</li><li>Category I (touching or feeding animals, licks on intact skin): wash exposed skin; no PEP needed.</li><li>Category II (nibbling of uncovered skin, minor scratches or abrasions without bleeding): wound washing and immediate vaccination.</li><li>Category III (bites or scratches through the skin, saliva on mucous membranes or broken skin, direct contact with bats): wound washing, immediate vaccination, and rabies immune globulin or monoclonal antibodies.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Category</th><th>Type of exposure (WHO)</th><th>What to do</th></tr></thead><tbody><tr><td><b>I</b></td><td>Touching or feeding animals; licks on intact skin (no exposure)</td><td>Wash exposed skin; no PEP needed</td></tr><tr><td><b>II</b></td><td>Nibbling of uncovered skin; minor scratches or abrasions without bleeding</td><td>Wound washing and immediate rabies vaccination</td></tr><tr><td><b>III</b></td><td>Bites or scratches through the skin; saliva on mucous membranes or broken skin; direct contact with bats</td><td>Wound washing, immediate vaccination, and rabies immune globulin or monoclonal antibodies</td></tr></tbody></table><p class="caption">First step for every exposure: wash the wound with soap and water for at least 15 minutes. Source: WHO rabies fact sheet.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Triage the exposure</h2>
+    <p class="try-note">Choose a category for every exposure, then check. Each row explains itself once checked.</p>
+    <div id="act-whoTriage"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c12a"><p>What is the first step after any possible rabies exposure?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12b"><p>A bat bite breaks the skin. Which management applies?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12c"><p>A dog nibbles a child’s uncovered skin without causing bleeding. What is the management?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The category decides whether immune globulin or monoclonal antibodies are needed on top of the vaccine. The exact vaccine schedule is not covered here, so confirm it against current CDC/ACIP or local guidance.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s3">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 3</div>
+    <h2>Ebola: structure and how it kills</h2>
+    <p class="lede">Ebola virus is long, filamentous, and carries its own polymerase. It causes a systemic disease in which damage to vessels, a failing immune response, and liver failure combine.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Ebola virus is enveloped with a helical nucleocapsid and a non-segmented, negative-sense ssRNA genome. It carries an RNA-dependent RNA polymerase.</li><li>Fruit bats are thought to be the natural hosts. Human-to-human spread is through blood and body fluids, and needle or syringe reuse is also implicated. Virus may persist in semen of survivors, documented up to 15 months after recovery (WHO).</li><li>The glycoprotein kills endothelial cells, causing severe thrombocytopenia and hemorrhage. Two other proteins inhibit interferon induction and action.</li><li>Lymphocytes, macrophages, and dendritic cells die, so the antibody response is ineffective. Hepatocytes die, causing liver failure. Case-fatality averages about 50% (range 25–90%).</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 640 250" role="img" aria-label="A long filamentous Ebola virion with a curled end, showing the envelope, glycoprotein, and helical nucleocapsid."><text x="320" y="26" text-anchor="middle" font-size="14" font-weight="750" fill="#2A1B16">Ebola virion (filamentous)</text><path d="M60 150 C 150 150 210 110 300 110 C 410 110 470 170 560 150 C 600 140 606 96 574 90 C 552 86 540 104 552 116" fill="none" stroke="#8F78D6" stroke-width="30" stroke-linecap="round"/><path d="M60 150 C 150 150 210 110 300 110 C 410 110 470 170 560 150 C 600 140 606 96 574 90 C 552 86 540 104 552 116" fill="none" stroke="#F0EAFC" stroke-width="20" stroke-linecap="round"/><path d="M60 150 C 150 150 210 110 300 110 C 410 110 470 170 560 150 C 600 140 606 96 574 90 C 552 86 540 104 552 116" fill="none" stroke="#B5532A" stroke-width="6" stroke-dasharray="1 8" stroke-linecap="round"/><g font-size="12.5" font-weight="700" fill="#2A1B16"><line x1="210" y1="126" x2="190" y2="192" stroke="#8A776E"/><text x="110" y="208">Helical nucleocapsid with RdRp</text><line x1="360" y1="96" x2="380" y2="62" stroke="#8A776E"/><text x="330" y="54">Envelope with glycoprotein</text><line x1="574" y1="82" x2="600" y2="60" stroke="#8A776E"/><text x="520" y="50" font-size="11.5">“Shepherd’s crook”</text></g><text x="320" y="238" text-anchor="middle" font-size="12" fill="#5C4A42">Non-segmented, negative-sense ssRNA genome</text></svg><p class="caption">Some Ebola virions curl at one end into a “shepherd’s crook” shape in electron micrographs.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Complete the paragraph</h2>
+    <p class="try-note">Choose a word for every blank from each drop-down list, then check. Extra words in the list are decoys.</p>
+    <div id="act-ebolaFill"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c13a"><p>Which enzyme does the Ebola virion carry because its genome is negative-sense RNA?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c13b"><p>How does Ebola virus disable the early antiviral response?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c13c"><p>What causes bleeding and low platelet counts in Ebola disease?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Ebola is a systemic infection, so care is supportive and infection control is essential. Proper handling of patients’ secretions matters, and survivors need counseling about virus that can persist in semen.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s4">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 4</div>
+    <h2>Ebola species and countermeasures</h2>
+    <p class="lede">Ebola is not one virus. There are six species, and the vaccine and antibodies you can use depend on which species the patient has.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Six species exist. Zaire, Sudan, and Bundibugyo cause large outbreaks.</li><li>Ervebo (vaccine, December 2019), Inmazeb (three antibodies, October 2020), and Ebanga (ansuvimab-zykl, December 2020) are approved for Zaire ebolavirus only. The antibodies target the glycoprotein.</li><li>No approved vaccine or antibody product exists for Sudan or Bundibugyo virus. Zaire-specific products cannot be assumed to work against them.</li><li>The lecture reports a 2026 Bundibugyo epidemic in the DRC with about 48% fatality (figures as of 27 September 2026). These numbers change weekly, so check WHO or CDC.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Species</th><th>Outbreaks</th><th>Approved vaccine / antibodies (FDA)</th></tr></thead><tbody><tr><td><b>Zaire ebolavirus</b></td><td>Large outbreaks</td><td>Ervebo (vaccine); Inmazeb and Ebanga (antibodies)</td></tr><tr><td><b>Sudan virus</b></td><td>Large outbreaks</td><td>None approved; Zaire products cannot be directly applied</td></tr><tr><td><b>Bundibugyo virus</b></td><td>Large outbreaks; 2026 epidemic in the DRC</td><td>None licensed (CEPI)</td></tr></tbody></table><p class="caption">Species are not interchangeable. Epidemic figures in the lecture are as of 27 September 2026 and change weekly.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Which species fits?</h2>
+    <p class="try-note">Choose a species for every clue, then check. Each row explains itself once checked.</p>
+    <div id="act-ebolaSpecies"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c14a"><p>Which species do the FDA-approved Ebola vaccine and antibody products cover?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14b"><p>A patient is infected with Sudan virus. What should the pharmacist conclude about Ervebo?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14c"><p>Which target do the Ebola antibodies Inmazeb and Ebanga bind?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Species identification changes the plan. A Zaire-approved product cannot be assumed to cover Sudan or Bundibugyo virus, so ask which species is circulating before recommending a product, and use current outbreak data rather than a memorized number.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4quiz">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Mastery check</div>
+    <h2>Module 4 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 4 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m4"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m5home">
+  <div class="modhero">
+    <div class="kicker">Module 5</div>
+    <h2>HIV: replication and antiretroviral mechanisms</h2>
+    <p>HIV is a map of drug targets. Every step of its life cycle is a place a drug can act, and learning the cycle once lets you place every antiretroviral class on it.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Which step of the HIV life cycle does each drug stop, and why does it work?</span></div>
+    <div class="ghost-num" aria-hidden="true">5</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Describe the HIV virion and how CD4 T-cell loss leads to opportunistic infection.</li><li>Put the seven steps of the HIV life cycle in order and place each antiretroviral class on its step.</li><li>Link drug structure to mechanism: chain termination by NRTIs, and CYP3A boosting of protease inhibitors.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m5s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">The HIV virion and CD4 loss</span><span class="home-desc">Open six parts of the virion to learn what each does and which drugs hit it.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m5s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">The HIV life cycle</span><span class="home-desc">Put the seven steps of the life cycle in order.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m5s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Where each drug class acts</span><span class="home-desc">Sort nine drugs onto the life-cycle step each one blocks.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m5s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">How NRTIs stop DNA synthesis</span><span class="home-desc">Watch a natural nucleotide extend the strand, then an NRTI end it.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m5s5">
+      <span class="home-num">5</span>
+      <span class="home-body"><span class="home-title">Protease inhibitors and boosting</span><span class="home-desc">Raise the booster dose and watch drug levels, and interaction risk, rise together.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 5 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s1">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 1</div>
+    <h2>The HIV virion and CD4 loss</h2>
+    <p class="lede">HIV is a retrovirus, which means it copies its RNA genome into DNA and inserts it into the host. Its structure explains how it enters cells and why the immune system collapses.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>HIV is a positive-sense, single-stranded RNA virus that carries two identical copies of its genome.</li><li>Its envelope contains gp120 and gp41, which bind the CD4 and CCR5 receptors on T cells.</li><li>It infects and kills helper CD4 T lymphocytes, causing loss of cell-mediated immunity and a higher risk of opportunistic infections. Other cells that display CD4 can also be infected.</li><li>Inside the virion are the enzymes reverse transcriptase, integrase, and protease.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Explore the virion</h2>
+    <p class="try-note">Select a part of the virus, or use the buttons under the figure. Open all six to finish.</p>
+    <div id="act-hivExplore"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c15a"><p>Which cells does HIV infect and kill, causing loss of cell-mediated immunity?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c15b"><p>Which receptors on T cells do gp120 and gp41 engage?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c15c"><p>Why does untreated HIV infection lead to opportunistic infections?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The immune deficiency is why a patient can present with infections a healthy person would fight off. The virion’s enzymes also foreshadow the drug classes you will place on the life cycle in the next sections.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s2">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 2</div>
+    <h2>The HIV life cycle</h2>
+    <p class="lede">The life cycle has seven steps. Each antiretroviral class blocks one of them, so the order is the map you will use for the rest of the module.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Binding (CD4, then co-receptor) → fusion → reverse transcription → integration → replication → assembly → budding.</li><li>Persistence: the integrated DNA copy stays in the host genome, so antiretroviral therapy suppresses HIV but does not cure it. This parallels HBV cccDNA.</li><li>hiv.gov: ART is not a cure, and the virus remains in the body even when the viral load is undetectable.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Put the steps in order</h2>
+    <p class="try-note">Use the arrow buttons to move each step up or down, then check.</p>
+    <div id="act-hivCycle"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c16a"><p>Which step follows reverse transcription in the HIV life cycle?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c16b"><p>Why does antiretroviral therapy suppress HIV without curing it?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c16c"><p>In what order does HIV engage the cell surface?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Learn the order once and the drug classes fall into place: entry, reverse transcription, integration, and maturation. Knowing that integrated DNA persists also explains why therapy is long term.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s3">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 3</div>
+    <h2>Where each drug class acts</h2>
+    <p class="lede">Each antiretroviral name belongs to a class, and each class blocks a specific step. Placing a drug on the life cycle tells you what it does.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Entry inhibitors: enfuvirtide is a biomimetic peptide that binds gp41 and blocks fusion. Maraviroc binds the host CCR5 co-receptor and blocks co-receptor binding.</li><li>Nucleoside analogs (emtricitabine, lamivudine, tenofovir) inhibit reverse transcriptase.</li><li>Integrase inhibitors (raltegravir, dolutegravir) block integration of the viral genome into the host genome.</li><li>Protease inhibitors (saquinavir, darunavir) leave non-infectious, immature virus particles.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 700 260" role="img" aria-label="The seven steps of the HIV life cycle with each antiretroviral class placed on the step it blocks."><rect x="18" y="40" width="84" height="52" rx="12" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2.5"/><text x="60" y="30" text-anchor="middle" font-size="11" font-weight="800" fill="#B5532A">1</text><text x="60" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Binding</text><path d="M103 66 h6" stroke="#B5532A" stroke-width="2.5"/><rect x="110" y="40" width="84" height="52" rx="12" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2.5"/><text x="152" y="30" text-anchor="middle" font-size="11" font-weight="800" fill="#B5532A">2</text><text x="152" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Fusion</text><path d="M195 66 h6" stroke="#B5532A" stroke-width="2.5"/><rect x="202" y="40" width="84" height="52" rx="12" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2.5"/><text x="244" y="30" text-anchor="middle" font-size="11" font-weight="800" fill="#B5532A">3</text><text x="244" y="59" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Reverse</text><text x="244" y="73" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">transcription</text><path d="M287 66 h6" stroke="#B5532A" stroke-width="2.5"/><rect x="294" y="40" width="84" height="52" rx="12" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2.5"/><text x="336" y="30" text-anchor="middle" font-size="11" font-weight="800" fill="#B5532A">4</text><text x="336" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Integration</text><path d="M379 66 h6" stroke="#B5532A" stroke-width="2.5"/><rect x="386" y="40" width="84" height="52" rx="12" fill="#EFE3DC" stroke="#D8C6BB" stroke-width="2.5"/><text x="428" y="30" text-anchor="middle" font-size="11" font-weight="800" fill="#B5532A">5</text><text x="428" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Replication</text><path d="M471 66 h6" stroke="#B5532A" stroke-width="2.5"/><rect x="478" y="40" width="84" height="52" rx="12" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2.5"/><text x="520" y="30" text-anchor="middle" font-size="11" font-weight="800" fill="#B5532A">6</text><text x="520" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Assembly</text><path d="M563 66 h6" stroke="#B5532A" stroke-width="2.5"/><rect x="570" y="40" width="84" height="52" rx="12" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2.5"/><text x="612" y="30" text-anchor="middle" font-size="11" font-weight="800" fill="#B5532A">7</text><text x="612" y="66" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Budding</text><line x1="106" y1="94" x2="106" y2="120" stroke="#8A3B12" stroke-width="2.5"/><rect x="22" y="122" width="168" height="62" rx="10" fill="#fff" stroke="#8A3B12" stroke-width="2.5"/><text x="106" y="140" text-anchor="middle" font-size="12" font-weight="800" fill="#8A3B12">Entry inhibitors</text><text x="106" y="158" text-anchor="middle" font-size="11.5" fill="#2A1B16">Maraviroc (CCR5)</text><text x="106" y="174" text-anchor="middle" font-size="11.5" fill="#2A1B16">Enfuvirtide (gp41)</text><line x1="244" y1="94" x2="244" y2="120" stroke="#B5532A" stroke-width="2.5"/><rect x="160" y="122" width="168" height="78" rx="10" fill="#fff" stroke="#B5532A" stroke-width="2.5"/><text x="244" y="140" text-anchor="middle" font-size="12" font-weight="800" fill="#B5532A">NRTIs</text><text x="244" y="158" text-anchor="middle" font-size="11.5" fill="#2A1B16">Emtricitabine</text><text x="244" y="174" text-anchor="middle" font-size="11.5" fill="#2A1B16">Lamivudine</text><text x="244" y="190" text-anchor="middle" font-size="11.5" fill="#2A1B16">Tenofovir</text><line x1="348" y1="94" x2="348" y2="194" stroke="#8F78D6" stroke-width="2.5"/><rect x="274" y="196" width="148" height="62" rx="10" fill="#fff" stroke="#8F78D6" stroke-width="2.5"/><text x="348" y="214" text-anchor="middle" font-size="12" font-weight="800" fill="#8F78D6">Integrase inhibitors</text><text x="348" y="232" text-anchor="middle" font-size="11.5" fill="#2A1B16">Raltegravir</text><text x="348" y="248" text-anchor="middle" font-size="11.5" fill="#2A1B16">Dolutegravir</text><line x1="566" y1="94" x2="566" y2="120" stroke="#2E7DA8" stroke-width="2.5"/><rect x="482" y="122" width="168" height="62" rx="10" fill="#fff" stroke="#2E7DA8" stroke-width="2.5"/><text x="566" y="140" text-anchor="middle" font-size="12" font-weight="800" fill="#2E7DA8">Protease inhibitors</text><text x="566" y="158" text-anchor="middle" font-size="11.5" fill="#2A1B16">Saquinavir</text><text x="566" y="174" text-anchor="middle" font-size="11.5" fill="#2A1B16">Darunavir</text></svg><p class="caption">Each class blocks one step. Entry inhibitors act on two of the first steps, and protease inhibitors act late, so particles are released immature.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Place the drug on its step</h2>
+    <p class="try-note">Choose one step for every drug, then check. Each row explains its answer once checked.</p>
+    <div id="act-drugTarget"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c17a"><p>Which step does enfuvirtide block?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17b"><p>Maraviroc acts on which target?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17c"><p>What do protease inhibitors leave behind?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A pharmacist classifies a regimen by mechanism. Combining drugs from different classes means blocking different steps, which is the logic of the next module. Maraviroc is notable because it targets a host protein rather than a viral one.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s4">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 4</div>
+    <h2>How NRTIs stop DNA synthesis</h2>
+    <p class="lede">Nucleoside analogs look like the building blocks reverse transcriptase uses. Reverse transcriptase builds them in, and the strand cannot grow past that point.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Emtricitabine, lamivudine, and tenofovir are converted in the cell to the triphosphate form.</li><li>They compete with the matching natural nucleotide: dCTP for the cytosine analogs, dATP for tenofovir.</li><li>When an analog is added, the next nucleotide cannot be added, and chain elongation halts (chain termination).</li><li>Structure clue: none of the drawn structures has a 3′-OH group, which is the attachment point for the next nucleotide.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Extend the strand</h2>
+    <p class="try-note">Choose a scene, then press Next step. Play both scenes to the end to finish.</p>
+    <div id="act-nrtiChain"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c18a"><p>What structural feature do NRTIs lack that causes chain termination?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18b"><p>Emtricitabine and lamivudine compete with which natural nucleotide?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18c"><p>What happens to the DNA strand when an NRTI is incorporated?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">NRTIs are the backbone of nearly every regimen. Lamivudine and tenofovir also act on the HBV polymerase, which is why they appear in both hepatitis B and HIV therapy.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s5">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 5</div>
+    <h2>Protease inhibitors and boosting</h2>
+    <p class="lede">Protease inhibitors work on the viral protease dimer. Several are given with a second drug, a booster, that does not fight HIV at all, but changes how the body clears the first drug.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Protease monomers form a dimer, and the dimer cuts the viral polypeptide into working proteins.</li><li>Saquinavir is a peptide mimic that binds the active site of the dimerized protease. It does not bind the monomer.</li><li>Darunavir is given with a booster, ritonavir or cobicistat, that inhibits CYP3A. Darunavir levels rise, and so does the risk of drug interactions.</li><li>The 24 September 2026 DHHS update lists boosted darunavir plus lamivudine or emtricitabine as an option.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 640 260" role="img" aria-label="Two protease monomers form a dimer with one active site. Saquinavir sits in the active site, so the viral polypeptide is not cut."><text x="190" y="26" text-anchor="middle" font-size="13.5" font-weight="750" fill="#2A1B16">Protease dimer</text><path d="M110 50 C 70 80 70 190 125 220 C 160 232 186 200 186 160 C 186 120 170 90 150 60 Z" fill="#C9B8F0" stroke="#8F78D6" stroke-width="4" stroke-linejoin="round"/><path d="M270 50 C 310 80 310 190 255 220 C 220 232 194 200 194 160 C 194 120 210 90 230 60 Z" fill="#E9C4B0" stroke="#B5532A" stroke-width="4" stroke-linejoin="round"/><rect x="172" y="104" width="36" height="78" rx="14" fill="#fff" stroke="#8A776E" stroke-width="2" stroke-dasharray="4 4"/><rect x="176" y="112" width="28" height="62" rx="12" fill="#8A3B12"/><text x="190" y="248" text-anchor="middle" font-size="12" fill="#5C4A42">Two monomers form one active site</text><g font-size="12.5" font-weight="700" fill="#2A1B16"><line x1="212" y1="140" x2="300" y2="140" stroke="#8A776E"/><text x="306" y="136">Saquinavir (peptide mimic)</text><text x="306" y="153" font-size="11.5" font-weight="400" fill="#5C4A42">sits in the active site of the dimer</text></g><path d="M456 70 h120 M456 70 l-6 12 M576 70 l6 12" fill="none" stroke="#5C4A42" stroke-width="3" stroke-linecap="round"/><text x="516" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1B16">Viral polypeptide</text><g stroke="#B5532A" stroke-width="4" stroke-linecap="round"><path d="M486 94 l-8 20 M546 94 l8 20"/></g><text x="516" y="136" text-anchor="middle" font-size="11.5" fill="#5C4A42">cut by protease → mature proteins</text><text x="516" y="166" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8A3B12">Blocked → immature, non-infectious particles</text></svg><p class="caption">Saquinavir binds the dimerized form and does not bind the monomer.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The boosting lab</h2>
+    <p class="try-note">Make a prediction first. Then try each booster setting, with and without a second CYP3A-metabolized drug. Reach all three booster settings to finish.</p>
+    <div id="act-boostLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c19a"><p>Why is ritonavir or cobicistat given with darunavir?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c19b"><p>What is a main clinical risk of a CYP3A-inhibiting booster?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c19c"><p>Which form of HIV protease does saquinavir bind?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When a patient takes a boosted protease inhibitor, every new prescription, over-the-counter product, and supplement needs a CYP3A interaction check. The booster raises the risk of interactions, not only the level of the protease inhibitor.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5quiz">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Mastery check</div>
+    <h2>Module 5 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 5 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m5"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section modhome" data-key="m6home">
+  <div class="modhero">
+    <div class="kicker">Module 6</div>
+    <h2>HIV: treatment, prevention, and patient care</h2>
+    <p>Knowing the drug targets is the foundation. This module uses them to build regimens, protect patients from resistance, prevent new infections, and support pregnant patients.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do I keep the viral load undetectable, prevent transmission, and care for pregnant patients?</span></div>
+    <div class="ghost-num" aria-hidden="true">6</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Explain why combination therapy from at least two classes prevents resistance, and how adherence changes the risk.</li><li>Name current DHHS first-line options and the interaction check that comes with a booster.</li><li>Choose between PrEP, PEP, and other prevention tools, and apply delivery and feeding guidance in pregnancy.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m6s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Combination therapy and resistance</span><span class="home-desc">Change adherence and regimen to see how the chance of resistance responds.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m6s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Today’s first-line options</span><span class="home-desc">Work three decisions about dolutegravir plus lamivudine and boosted darunavir.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m6s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Preventing HIV: PrEP, PEP, and more</span><span class="home-desc">Sort ten prevention tools into PrEP, PEP, and other measures.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m6s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">HIV in pregnancy: delivery and feeding</span><span class="home-desc">Slide the HIV RNA level to see when a scheduled cesarean is recommended.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 6 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s1">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 1</div>
+    <h2>Combination therapy and resistance</h2>
+    <p class="lede">HIV is treated with several drugs at once, and the drugs only work if the patient actually takes them. Both facts come from the same cause: the virus mutates, and incomplete treatment lets resistant virus win.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Missed doses or an incomplete regimen let resistant virus develop (hiv.gov).</li><li>Drugs from different classes block different steps, so one mutation is less likely to defeat the whole regimen.</li><li>A typical starting regimen is three medicines from at least two drug classes (hiv.gov).</li><li>The model in the activity is a teaching simplification with made-up numbers. It shows the direction of the effect, not real patient risk.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The adherence lab</h2>
+    <p class="try-note">Make a prediction first. Then set adherence and try each of the three regimens. Try all three regimens to finish.</p>
+    <div id="act-adherenceLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c20a"><p>What allows resistant HIV to develop in a patient taking therapy?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c20b"><p>Why does combining drugs from different classes lower the chance of treatment failure?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c20c"><p>What is a typical starting regimen according to hiv.gov?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Adherence counseling is one of the most effective things a pharmacist does for a patient on antiretrovirals. Refill gaps, side effects, and cost are the practical reasons doses are missed, and each one is something a pharmacist can address.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s2">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 2</div>
+    <h2>Today’s first-line options</h2>
+    <p class="lede">The current guidelines name regimens built from the mechanisms you already know. Linking each drug to its step and its risks is how you check a regimen quickly.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>DHHS options (updated 24 September 2026 in the lecture): dolutegravir plus lamivudine (an integrase inhibitor plus a nucleoside analog), recommended for most people regardless of baseline viral load.</li><li>Boosted darunavir plus lamivudine or emtricitabine is an option. Darunavir is a protease inhibitor, and the booster inhibits CYP3A.</li><li>Guidelines change. The pharmacist’s habit is to check the current DHHS update rather than rely on a memorized list.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Three regimen decisions</h2>
+    <p class="try-note">Answer each question to move to the next. A wrong choice lets you try again.</p>
+    <div id="act-regimenCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c21a"><p>Which DHHS option pairs an integrase inhibitor with a nucleoside analog?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c21b"><p>Which drug class does darunavir belong to?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">For every regimen, ask three questions: which steps does it block, does it contain a booster that changes interaction checks, and is the list I am using current. The guideline source and date matter.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s3">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 3</div>
+    <h2>Preventing HIV: PrEP, PEP, and more</h2>
+    <p class="lede">There is no HIV vaccine, so prevention combines drugs taken before exposure, drugs taken after exposure, and behaviors and treatment that lower transmission.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>PrEP (pre-exposure prophylaxis): daily oral tenofovir-based combinations such as tenofovir/emtricitabine, or long-acting injectables: cabotegravir every 2 months or lenacapavir every 6 months.</li><li>PEP (post-exposure prophylaxis): antiretrovirals started after a possible exposure.</li><li>Circumcision reduces infection. Use condoms and avoid sharing needles.</li><li>A sustained undetectable viral load prevents sexual transmission (hiv.gov).</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Which prevention tool?</h2>
+    <p class="try-note">Choose one category for every item, then check. Each row explains itself once checked.</p>
+    <div id="act-preventSort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c22a"><p>Which product is a long-acting PrEP given every 6 months?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c22b"><p>What is the difference between PrEP and PEP?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c22c"><p>What does a sustained undetectable viral load mean for sexual transmission?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">The question that sorts PrEP from PEP is timing: before the exposure or after. PEP is time-sensitive, so a pharmacist should know to route the patient quickly. Confirm the timing window in current CDC guidance, which this lecture does not give.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s4">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 4</div>
+    <h2>HIV in pregnancy: delivery and feeding</h2>
+    <p class="lede">Pregnancy guidance turns on one number: the HIV RNA near delivery. This guidance changed recently, so older rules to avoid breastfeeding no longer apply as written.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Antiretroviral therapy is given to the mother and to the newborn.</li><li>Delivery (DHHS): scheduled cesarean at 38 weeks only when HIV RNA is above 1,000 copies/mL or unknown near delivery. At 1,000 copies/mL or below, vaginal birth follows the usual obstetric indications.</li><li>Infant feeding (DHHS, 2023): with a sustained undetectable viral load, breastfeeding is supported through shared decision-making (risk under 1%, but not zero). Formula or donor milk removes the postnatal risk.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The delivery decision</h2>
+    <p class="try-note">Make a prediction first. Then slide the HIV RNA level and try the unknown setting. Reach both a vaginal-birth result and a cesarean result to finish.</p>
+    <div id="act-deliveryLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c23a"><p>A pregnant patient near delivery has HIV RNA of 400 copies/mL. What is the delivery plan?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c23b"><p>HIV RNA is not available near delivery. What does DHHS recommend?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c23c"><p>A patient with a sustained undetectable viral load asks about breastfeeding. How should she be counseled?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Counsel with shared decision-making rather than a fixed rule. A patient who was told years ago to avoid breastfeeding may be hearing outdated guidance, so know the current DHHS position and present the options and risks.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6quiz">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Mastery check</div>
+    <h2>Module 6 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 6 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m6"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+
+<section class="section" data-key="flashcards">
+  <div class="card">
+    <div class="eyebrow">Retrieval practice</div>
+    <h2>Flashcards</h2>
+    <p class="lede">Say the answer out loud before you flip the card. Retrieval from memory strengthens recall far more than rereading does.</p>
+    <div class="fc-stage">
+      <div class="fc" id="fcCard" tabindex="0" role="button" aria-label="Flashcard. Press Enter to flip.">
+        <div class="fc-face fc-front"><div>
+          <div class="fc-term" id="fcFront"></div>
+          <div class="fc-hint">click, tap, or press Enter to flip</div>
+        </div></div>
+        <div class="fc-face fc-back"><div class="fc-def" id="fcBack"></div></div>
+      </div>
+    </div>
+    <div class="fc-bar">
+      <button class="btn ghost" id="fcPrev">Previous</button>
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn ghost" id="fcNext">Next</button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="final">
+  <div class="card">
+    <div class="eyebrow">Final Mastery Exam</div>
+    <h2>25-question mastery exam</h2>
+    <p class="lede">A mixed set drawn from all six modules: recall, application, and integration. After you submit, any concept area you missed becomes a targeted practice round, drawing on fresh questions where possible.</p>
+    <div class="quiz-body" data-quiz="final"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit exam</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+  </main>
+</div>
+
+<script src="banks/viruses5.js"></script>
+<script src="banks/viruses5.manifest.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/helpers.js"></script>
+<script src="shared/activities.js"></script>
+<script src="shared/welcome.js"></script>
+<script>
+
+var BADGES = {home:'&#8962;', m1:'1', m2:'2', m3:'3', m4:'4', m5:'5', m6:'6', flash:'&#10022;', final:'&#9733;'};
+var MODULES = MANIFEST.modules.map(function(m){
+  var mod = {id:m.id, badge:BADGES[m.id]||'&#8226;', title:m.title,
+             sections:m.sections.map(function(s){return {key:s.key,label:s.label};})};
+  if(m.unlockAfter) mod.unlockAfter = m.unlockAfter;
+  return mod;
+});
+var FLOW = []; MODULES.forEach(function(m){ m.sections.forEach(function(s){ FLOW.push(s); }); });
+var UNGRADED = [];
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(!s.checks && !s.activity && !s.quiz) UNGRADED.push(s.key);
+});});
+var SECTION_REQ = {}, QUIZ_KEY_FOR_SECTION = {};
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(s.checks || s.activity){
+    SECTION_REQ[s.key] = {checks:s.checks||[]};
+    if(s.activity) SECTION_REQ[s.key].activity = s.activity;
+  }
+  if(s.quiz) QUIZ_KEY_FOR_SECTION[s.key] = s.quiz;
+});});
+var AREA_SECTION = MANIFEST.areaSection;
+var MODULE_QUIZ_SIZE = 8;
+var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
+
+function $(id){return document.getElementById(id);}
+function svgEl(inner,vb,label){return '<svg viewBox="'+vb+'" role="img" aria-label="'+label+'">'+inner+'</svg>';}
+function segControl(labels,onPick){
+  var box=el('div','seg'),buttons={};
+  labels.forEach(function(p){
+    var b=el('button',null,p[1]);b.type='button';b.setAttribute('data-v',p[0]);
+    b.onclick=function(){onPick(p[0]);};box.appendChild(b);buttons[p[0]]=b;
+  });
+  return {box:box,buttons:buttons,set:function(v){Object.keys(buttons).forEach(function(k){buttons[k].classList.toggle('on',k===v);});}};
+}
+
+/* ============================================================
+   MODULE 1 ACTIVITIES
+   ============================================================ */
+
+/* --- 1.1 Who does the damage? (sort) --- */
+Act.sort('act-liverSort',{name:'liverSort',options:['Shared by all five','Immune-mediated (HAV, HBV)','Direct injury (HDV)'],
+  rows:[
+    {text:'Fever, anorexia, nausea, and vomiting',answer:'Shared by all five',why:'The clinical manifestations are similar for all five hepatitis viruses.'},
+    {text:'Jaundice, dark urine, and pale feces',answer:'Shared by all five',why:'These reflect liver injury and are seen with all five viruses.'},
+    {text:'Elevated transaminase levels',answer:'Shared by all five',why:'Transaminases rise whenever hepatocytes are injured, so they do not point to one virus.'},
+    {text:'Surface proteins react with receptors on hepatocytes',answer:'Shared by all five',why:'All five viruses have surface proteins that engage hepatocyte receptors, which is why the liver is the primary site.'},
+    {text:'Cytotoxic T cells target viral antigen on the hepatocyte surface',answer:'Immune-mediated (HAV, HBV)',why:'In HAV and HBV the virus is not directly cytotoxic. The T-cell response to viral antigen causes the damage.'},
+    {text:'No cytopathic effect is seen in the infected cells',answer:'Immune-mediated (HAV, HBV)',why:'HAV shows no cytopathic effect, so damage comes from the immune response rather than from the virus killing the cell.'},
+    {text:'Damage depends on how strongly T cells respond to infected cells',answer:'Immune-mediated (HAV, HBV)',why:'This describes immune-mediated injury, the mechanism in HAV and HBV.'},
+    {text:'Delta antigen is cytopathic in hepatocytes',answer:'Direct injury (HDV)',why:'HDV is the exception: delta antigen directly damages hepatocytes.'}
+  ]});
+
+/* --- 1.2 Which virus is it? (sort with five options) --- */
+Act.sort('act-abcdeSort',{name:'abcdeSort',options:['HAV','HBV','HCV','HDV','HEV'],
+  rows:[
+    {text:'A picornavirus (a hepatovirus) with an ssRNA genome',answer:'HAV',why:'HAV is a hepatovirus in the picornavirus family.'},
+    {text:'Partially double-stranded DNA genome, with a polymerase that also acts as a reverse transcriptase',answer:'HBV',why:'HBV is one of the few DNA viruses that uses reverse transcriptase.'},
+    {text:'A flavivirus. More than half of acute infections become chronic, and no vaccine exists',answer:'HCV',why:'HCV is an RNA flavivirus with no vaccine and no immune globulin.'},
+    {text:'A satellite virus that borrows HBsAg as its envelope',answer:'HDV',why:'HDV lacks an envelope protein gene and replicates only in HBV-infected cells.'},
+    {text:'Fecal–oral spread, with up to about 20–25% mortality in third-trimester pregnancy',answer:'HEV',why:'HEV resembles hepatitis A but is far more dangerous in late pregnancy (WHO).'},
+    {text:'Fecal–oral spread, with a vaccine and immune globulin, and no chronic state',answer:'HAV',why:'HAV never causes a carrier state, and prevention includes vaccine and immune globulin.'},
+    {text:'Spread by blood, sex, and at birth, and prevented by a birth-dose vaccine',answer:'HBV',why:'The birth dose within 24 hours protects newborns, with HBIG for infants of HBsAg-positive mothers.'},
+    {text:'CDC recommends one-time screening of every adult and screening in every pregnancy',answer:'HCV',why:'Screening is the main control tool because there is no vaccine.'},
+    {text:'Prevented in a person immunized against hepatitis B',answer:'HDV',why:'HDV needs HBsAg for its envelope, so a person immunized against HBV will not acquire it.'},
+    {text:'Chronic infection in immunocompromised patients; ribavirin has shown efficacy',answer:'HEV',why:'HEV is usually self-limited, but chronic infection can occur in immunocompromised patients.'}
+  ]});
+
+/* --- 1.3 Four patients, four decisions (stages) --- */
+Act.stages('act-hepCase',{name:'hepCase',stages:[
+  {lead:'<p>A child in daycare is diagnosed with hepatitis A. Another 4-year-old in the same room has a mild stomach illness and no jaundice.</p>',
+   prompt:'Why can the second child spread hepatitis A without anyone noticing?',
+   options:['About 70% of children under 6 have no symptoms, so infection can go unrecognized','Young children become chronic carriers who shed virus for years','The virus spreads through the air from young children','Young children are protected by the birth-dose vaccine'],answer:0,
+   why:'Many young children have silent HAV infection. The virus spreads by the fecal–oral route, so hygiene matters. There is no chronic state.',
+   reveal:'Incubation is 3 to 4 weeks, and most cases resolve in under 8 weeks.'},
+  {lead:'<p>A household contact of the child was exposed 10 days ago. She is not vaccinated and has no symptoms.</p>',
+   prompt:'Which action is appropriate?',
+   options:['Vaccine, plus immune globulin when indicated, within 2 weeks of exposure','An antiviral course for 12 weeks','Waiting for jaundice before acting','Hepatitis B vaccine'],answer:0,
+   why:'There is no antiviral for HAV, so post-exposure prevention is vaccine, with immune globulin when indicated, within 2 weeks.'},
+  {lead:'<p>A baby is born to a mother who tests HBsAg-positive.</p>',
+   prompt:'What does the newborn receive?',
+   options:['Hepatitis B vaccine within 24 hours, plus HBIG','HBIG alone, delayed until the first month','Entecavir for the first 6 months','Hepatitis A vaccine at birth'],answer:0,
+   why:'The vaccine builds the infant’s own active immunity, and HBIG supplies immediate passive protection when the mother is HBsAg-positive.',
+   reveal:'The birth dose is followed by 2 or 3 more doses. Protection lasts at least 20 years and probably for life (WHO).'},
+  {lead:'<p>A woman in her third trimester plans to travel to a region where hepatitis E is found.</p>',
+   prompt:'Which fact is most important for counseling her?',
+   options:['Mortality reaches up to about 20–25% in third-trimester pregnancy, and no vaccine is available in the U.S.','A hepatitis E vaccine is licensed in the U.S., so she should be vaccinated','Hepatitis E is spread by mosquitoes, so repellent is the key step','Hepatitis E becomes chronic in pregnant women'],answer:0,
+   why:'HEV spreads by the fecal–oral route, so food and water precautions matter. The risk of death is highest in the third trimester, and no U.S. vaccine exists.'}
+]});
+
+/* ============================================================
+   MODULE 2 ACTIVITIES
+   ============================================================ */
+
+/* --- 2.1 Interpret the markers (predict) --- */
+(function(){
+  var O=['Recent (acute) infection','Chronic infection','Vaccine immunity','HBeAg seroconversion, still HBsAg-positive','HBsAg seroconversion (recovery)'];
+  function mk(r){return '<p style="margin:0"><b>Markers:</b> '+r+'</p>';}
+  Act.predict('act-serologyPredict',{name:'serologyPredict',
+    start:'Choose a patient above. Read the markers, predict the interpretation, and the reasoning appears once you commit.',
+    items:[
+      {id:'pa',title:'Patient A',prompt:'Symptoms began 3 weeks ago. HBsAg positive, IgM anti-HBc positive, anti-HBs negative. What is the interpretation?',options:O,answer:0,
+       why:'HBsAg marks infection, and IgM anti-HBc marks recent infection. No anti-HBs has appeared yet.',reveal:mk('HBsAg +  ·  IgM anti-HBc +  ·  anti-HBs −')},
+      {id:'pb',title:'Patient B',prompt:'HBsAg is positive on two tests 8 months apart. IgM anti-HBc is negative. What is the interpretation?',options:O,answer:1,
+       why:'HBsAg that persists for more than 6 months defines chronic infection. The negative IgM anti-HBc argues against recent infection.',reveal:mk('HBsAg + (persisting)  ·  IgM anti-HBc −')},
+      {id:'pc',title:'Patient C',prompt:'A nurse completed the hepatitis B series last year. Anti-HBs is positive, and every other marker is negative. What is the interpretation?',options:O,answer:2,
+       why:'Anti-HBs alone, with no infection markers, is the pattern of vaccine immunity.',reveal:mk('anti-HBs +  ·  everything else −')},
+      {id:'pd',title:'Patient D',prompt:'Over a year, a patient’s HBeAg disappears and anti-HBe appears. HBsAg is still positive. What happened?',options:O,answer:3,
+       why:'HBeAg to anti-HBe is one seroconversion. It is separate from HBsAg to anti-HBs, so the patient is still infected.',reveal:mk('HBeAg → anti-HBe  ·  HBsAg still +')},
+      {id:'pe',title:'Patient E',prompt:'After an acute infection, HBsAg is now negative and anti-HBs is positive. What happened?',options:O,answer:4,
+       why:'The surface antigen disappeared and its antibody appeared. That is HBsAg-to-anti-HBs seroconversion, which signals recovery.',reveal:mk('HBsAg → anti-HBs')}
+    ]});
+})();
+
+/* --- 2.2 Walk through the HBV life cycle (explore) --- */
+(function(){
+  function badge(x,y,n){return '<circle cx="'+x+'" cy="'+y+'" r="13" fill="#fff" stroke="#8A3B12" stroke-width="3"/><text x="'+x+'" y="'+(y+4.5)+'" text-anchor="middle" font-size="13" font-weight="800" fill="#8A3B12" pointer-events="none">'+n+'</text>';}
+  var s=svgEl(
+    /* hepatocyte and nucleus */
+    '<rect x="196" y="22" width="430" height="272" rx="40" fill="#FBEDE6" stroke="#B5532A" stroke-width="5"/>'+
+    '<circle cx="410" cy="100" r="58" fill="#F0EAFC" stroke="#8F78D6" stroke-width="4"/>'+
+    '<text x="474" y="114" font-size="12" font-weight="700" fill="#5C4A42">Nucleus</text>'+
+    '<text x="410" y="244" text-anchor="middle" font-size="12" font-weight="700" fill="#5C4A42" opacity="0">.</text>'+
+    /* incoming virion */
+    '<circle cx="76" cy="140" r="34" fill="#F0EAFC" stroke="#8F78D6" stroke-width="5"/><circle cx="76" cy="140" r="16" fill="#FBEDE6" stroke="#B5532A" stroke-width="3"/>'+
+    '<text x="76" y="196" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1B16">HBV virion</text>'+
+    '<path d="M114 140 H 176" stroke="#B5532A" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 8"/>'+
+    /* 1 NTCP receptor */
+    '<g data-hs="ntcp"><rect x="186" y="116" width="22" height="48" rx="8" fill="#8A3B12"/><rect x="170" y="108" width="54" height="64" rx="14" fill="transparent"/>'+badge(176,90,1)+'<text x="176" y="188" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">NTCP</text></g>'+
+    /* 2 cccDNA */
+    '<g data-hs="cccdna"><circle cx="410" cy="100" r="30" fill="transparent"/><circle cx="410" cy="100" r="18" fill="none" stroke="#8A3B12" stroke-width="6"/>'+badge(452,66,2)+'<text x="410" y="140" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">cccDNA</text></g>'+
+    /* mRNA */
+    '<path d="M410 160 q4 28 -10 52" fill="none" stroke="#8F78D6" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="2 6"/>'+
+    /* 3 capsid with RT */
+    '<g data-hs="rt"><rect x="300" y="206" width="104" height="56" rx="26" fill="#F0EAFC" stroke="#8F78D6" stroke-width="4"/>'+
+      '<path d="M322 234 q8 -18 16 0 t16 0 t16 0" fill="none" stroke="#8A3B12" stroke-width="3.5" stroke-linecap="round"/>'+badge(300,204,3)+
+      '<text x="352" y="283" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Reverse transcription</text></g>'+
+    /* 4 release */
+    '<g data-hs="release"><circle cx="560" cy="226" r="26" fill="#F0EAFC" stroke="#8F78D6" stroke-width="5"/><circle cx="560" cy="226" r="11" fill="#FBEDE6" stroke="#B5532A" stroke-width="3"/>'+badge(586,198,4)+
+      '<text x="560" y="274" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Packaging and release</text></g>'+
+    '<path d="M406 234 H 520" stroke="#B5532A" stroke-width="3" stroke-linecap="round"/><path d="M514 226 l10 8 -10 8" fill="none" stroke="#B5532A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
+    '0 0 640 300','A schematic HBV life cycle in a hepatocyte: entry through the NTCP receptor, cccDNA in the nucleus, reverse transcription inside a capsid, and packaging and release of new virions');
+  Act.explore('act-hbvExplore',{name:'hbvExplore',svg:s,ids:['ntcp','cccdna','rt','release'],
+    start:'Select a numbered step on the figure, or one of the buttons under it.',
+    items:{
+      ntcp:{title:'1 · Entry through NTCP',html:'<p>HBV enters hepatocytes through the <b>NTCP receptor</b>. Entry through NTCP is not the target of the first-line HBV drugs.</p><p><i>Drug angle:</i> bulevirtide is an entry inhibitor that blocks NTCP. The lecture lists it for chronic hepatitis D (FDA, May 2026), because HDV uses the same receptor.</p>'},
+      cccdna:{title:'2 · cccDNA in the nucleus',html:'<p>In chronic infection, <b>covalently closed circular DNA (cccDNA)</b> forms and stays in the hepatocyte nucleus. It is the template for mRNA that makes viral proteins and the RNA that will become new genomes.</p><p><i>Drug angle:</i> current therapies <b>cannot target or degrade cccDNA</b>, so hepatitis B cannot be completely cured.</p>'},
+      rt:{title:'3 · Reverse transcription',html:'<p>HBV carries its own DNA polymerase, which also works as a <b>reverse transcriptase</b>. Inside the capsid it copies the RNA into new DNA. HBV is one of the few DNA viruses to do this.</p><p><i>Drug angle:</i> the first-line drugs <b>entecavir and tenofovir</b> are nucleoside or nucleotide analogs that inhibit this polymerase. Therapy is usually continued for life (WHO).</p>'},
+      release:{title:'4 · Packaging and release',html:'<p>New DNA is packaged and released from the cell as new viral particles. The envelope carries <b>HBsAg</b>.</p><p><i>Prevention angle:</i> the vaccine is made of HBsAg (a subunit vaccine), and HBIG supplies antibody against it. HDV also borrows HBsAg for its own envelope.</p>'}
+    }});
+})();
+
+/* --- 2.3 Match the HCV drug to its mechanism (drag and drop) --- */
+Act.dnd('act-daaMatch',{name:'daaMatch',
+  pills:['Sofosbuvir','Velpatasvir','Glecaprevir','Pibrentasvir','Entecavir'],
+  rows:[
+    {text:'<b>NS5B polymerase inhibitor.</b> Paired with velpatasvir for 12 weeks.',answer:'Sofosbuvir',why:'Sofosbuvir inhibits the NS5B polymerase, and sofosbuvir/velpatasvir is a 12-week guideline regimen.'},
+    {text:'<b>NS5A inhibitor.</b> The partner of sofosbuvir in the 12-week regimen.',answer:'Velpatasvir',why:'Velpatasvir blocks NS5A, a cofactor in the activity of the RNA polymerase.'},
+    {text:'<b>NS3/4A protease inhibitor.</b>',answer:'Glecaprevir',why:'Glecaprevir is the protease inhibitor of the group.'},
+    {text:'<b>NS5A inhibitor.</b> The partner of glecaprevir in the 8-week regimen.',answer:'Pibrentasvir',why:'Pibrentasvir blocks NS5A, and glecaprevir/pibrentasvir is the 8-week regimen.'},
+    {text:'<b>Nucleoside analog that inhibits the HBV polymerase.</b> Not an HCV drug.',answer:'Entecavir',why:'Entecavir is a first-line drug for chronic hepatitis B. It is not a direct-acting antiviral for HCV.'}
+  ]});
+
+/* --- 2.4 Coinfection and superinfection (stepper) --- */
+(function(){
+  function virus(id,x,y,col,stroke,label){return '<g id="'+id+'"><g transform="translate('+x+' '+y+')"><circle r="22" fill="'+col+'" stroke="'+stroke+'" stroke-width="4"/><text y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1B16">'+label+'</text></g></g>';}
+  function scene(p,isSuper){
+    return svgEl(
+      '<rect x="2" y="2" width="636" height="226" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>'+
+      '<rect x="240" y="30" width="250" height="170" rx="36" fill="#FBEDE6" stroke="#B5532A" stroke-width="4"/>'+
+      '<text x="365" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#5C4A42">'+(isSuper?'Hepatocyte of a chronic HBV carrier':'Hepatocyte')+'</text>'+
+      '<g id="'+p+'-hbs"><g fill="#8F78D6"><circle cx="286" cy="98" r="6"/><circle cx="318" cy="90" r="6"/><circle cx="352" cy="102" r="6"/><circle cx="302" cy="122" r="6"/><circle cx="338" cy="130" r="6"/></g><text x="262" y="72" font-size="11.5" font-weight="700" fill="#4B3496">HBsAg being made</text></g>'+
+      (isSuper?'':virus(p+'-hbv',70,70,'#FBEDE6','#B5532A','HBV'))+
+      virus(p+'-hdv',70,150,'#F0EAFC','#8F78D6','HDV')+
+      '<g id="'+p+'-new"><circle cx="425" cy="120" r="19" fill="#F0EAFC" stroke="#8F78D6" stroke-width="5"/><circle cx="425" cy="120" r="8" fill="#FBEDE6" stroke="#8A3B12" stroke-width="2.5"/><circle cx="452" cy="162" r="15" fill="#F0EAFC" stroke="#8F78D6" stroke-width="4"/><circle cx="452" cy="162" r="6" fill="#FBEDE6" stroke="#8A3B12" stroke-width="2"/><text x="425" y="188" text-anchor="middle" font-size="11" font-weight="700" fill="#4B3496">new HDV (HBsAg envelope)</text></g>'+
+      '<g id="'+p+'-sev"><rect x="520" y="60" width="96" height="112" rx="14" fill="#fff" stroke="#E9C4B0" stroke-width="2"/>'+
+        '<text x="568" y="82" text-anchor="middle" font-size="11" font-weight="800" fill="#5C4A42">LIVER INJURY</text>'+
+        '<rect x="536" y="94" width="64" height="12" rx="6" fill="#EFE3DC"/><rect x="536" y="94" width="'+(isSuper?60:44)+'" height="12" rx="6" fill="'+(isSuper?'#D4536B':'#E0A010')+'"/>'+
+        '<text x="568" y="132" text-anchor="middle" font-size="12" font-weight="800" fill="'+(isSuper?'#B03A5E':'#8A5A00')+'">'+(isSuper?'Much higher risk':'More severe')+'</text>'+
+        '<text x="568" y="150" text-anchor="middle" font-size="10.5" fill="#5C4A42">'+(isSuper?'than coinfection':'than HBV alone')+'</text></g>',
+      '0 0 640 230',isSuper?'Superinfection: HDV arrives in a cell that already makes HBsAg':'Coinfection: HBV and HDV arrive together');
+  }
+  Act.stepper('act-hdvSteps',{name:'hdvSteps',scenes:[
+    {id:'co',label:'Coinfection',intro:'HBV and HDV are acquired at the same time.',svg:scene('co',false),steps:[
+      {caption:'A person is exposed to HBV and HDV together. Neither has reached the liver yet.',
+       set:{'co-hbv':{t:[0,0]},'co-hdv':{t:[0,0]},'co-hbs':{o:0},'co-new':{o:0},'co-sev':{o:0}}},
+      {caption:'Both viruses reach hepatocytes. HDV can replicate only in a cell that is infected with HBV.',
+       set:{'co-hbv':{t:[250,70]},'co-hdv':{t:[220,15]}}},
+      {caption:'The infected hepatocyte begins making HBsAg, the HBV surface antigen.',set:{'co-hbs':{o:1}}},
+      {caption:'HDV has no envelope gene of its own, so it wraps its RNA in HBsAg and leaves as new enveloped virions.',set:{'co-new':{o:1}}},
+      {caption:'Hepatitis is more severe than with HBV alone, although the incidence of chronic hepatitis is similar to HBV alone.',set:{'co-sev':{o:1}}}]},
+    {id:'su',label:'Superinfection',intro:'HDV is acquired by a person who already has chronic HBV.',svg:scene('su',true),steps:[
+      {caption:'A chronic carrier of HBV. Hepatocytes are already making HBsAg.',
+       set:{'su-hdv':{t:[0,0],o:0},'su-hbs':{o:1},'su-new':{o:0},'su-sev':{o:0}}},
+      {caption:'HDV is acquired later, from blood or sexual contact.',set:{'su-hdv':{o:1}}},
+      {caption:'HDV reaches hepatocytes that already make HBsAg, so it can replicate right away.',set:{'su-hdv':{t:[220,15]}}},
+      {caption:'New HDV virions, wrapped in HBsAg, are released.',set:{'su-new':{o:1}}},
+      {caption:'The risk of fulminant, life-threatening hepatitis, chronic hepatitis, and liver failure is much higher in chronic HBV carriers who acquire HDV. HDV is considered the dominant virus.',set:{'su-sev':{o:1}}}]}
+  ]});
+})();
+
+/* ============================================================
+   MODULE 3 ACTIVITIES
+   ============================================================ */
+
+/* --- 3.1 Follow the transmission cycle (stepper) --- */
+(function(){
+  function mosq(id,x,y){
+    return '<g id="'+id+'"><g transform="translate('+x+' '+y+')"><ellipse rx="24" ry="9" fill="#2A1B16"/>'+
+      '<ellipse cx="-4" cy="-16" rx="16" ry="6" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2" transform="rotate(-25 -4 -16)"/>'+
+      '<ellipse cx="6" cy="-16" rx="16" ry="6" fill="#F0EAFC" stroke="#8F78D6" stroke-width="2" transform="rotate(20 6 -16)"/>'+
+      '<line x1="24" y1="2" x2="44" y2="10" stroke="#2A1B16" stroke-width="2.5" stroke-linecap="round"/></g></g>';
+  }
+  function person(x,y,label,col){
+    return '<g transform="translate('+x+' '+y+')"><circle cy="-30" r="13" fill="'+col+'"/><rect x="-16" y="-14" width="32" height="46" rx="14" fill="'+col+'"/><text y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1B16">'+label+'</text></g>';
+  }
+  function scene(p,high){
+    var fillH=high?66:18, fillY=190-fillH;
+    return svgEl(
+      '<rect x="2" y="2" width="636" height="246" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>'+
+      person(70,150,'Infected host','#C9B8F0')+
+      '<g id="'+p+'-load"><circle cx="165" cy="96" r="5" fill="#B5532A"/><circle cx="180" cy="106" r="5" fill="#B5532A"/><circle cx="172" cy="116" r="5" fill="#B5532A"/></g>'+
+      mosq(p+'-m1',120,100)+
+      '<g id="'+p+'-eip"><rect x="170" y="30" width="190" height="34" rx="17" fill="#FBEDE6" stroke="#B5532A" stroke-width="2.5"/><text x="265" y="52" text-anchor="middle" font-size="12" font-weight="750" fill="#6E2C0C">Extrinsic incubation period</text></g>'+
+      person(430,150,'Human','#E9C4B0')+
+      /* blood virus level bar */
+      '<g id="'+p+'-bar"><rect x="500" y="124" width="34" height="66" rx="6" fill="#fff" stroke="#8A776E" stroke-width="2"/>'+
+        '<rect x="500" y="'+fillY+'" width="34" height="'+fillH+'" rx="6" fill="'+(high?'#B5532A':'#E0A010')+'"/>'+
+        '<line x1="490" y1="150" x2="546" y2="150" stroke="#2A1B16" stroke-width="2" stroke-dasharray="4 3"/>'+
+        '<text x="517" y="116" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2A1B16">Virus in blood</text>'+
+        '<text x="517" y="222" text-anchor="middle" font-size="10.5" fill="#5C4A42">dashed line = infects a mosquito</text></g>'+
+      mosq(p+'-m2',545,50)+
+      '<g id="'+p+'-load2"><circle cx="596" cy="60" r="5" fill="#B5532A"/><circle cx="608" cy="68" r="5" fill="#B5532A"/></g>'+
+      '<g id="'+p+'-end"><text x="480" y="242" text-anchor="middle" font-size="12" font-weight="800" fill="'+(high?'#B03A5E':'#1C7554')+'">'+(high?'Next mosquito is infected':'Chain ends here')+'</text></g>',
+      '0 0 640 250',high?'A mosquito bites an infected host, waits out the extrinsic incubation period, bites a human who then has high-level viremia and infects the next mosquito':'A mosquito bites an infected host, waits out the extrinsic incubation period, bites a human who then has low, brief viremia, so the next mosquito is not infected');
+  }
+  function steps(p,high){
+    var m1=p+'-m1',m2=p+'-m2';
+    return [
+      {caption:'A female mosquito takes a blood meal from an infected host that has virus in its blood.',
+       set:(function(){var o={};o[p+'-load']={o:0};o[p+'-eip']={o:0};o[m1]={t:[0,0]};o[p+'-bar']={o:0};o[m2]={o:0,t:[0,0]};o[p+'-load2']={o:0};o[p+'-end']={o:0};return o;})()},
+      {caption:'The virus enters the mosquito and multiplies in it. Arboviruses multiply in both the vector and the vertebrate host.',set:(function(){var o={};o[p+'-load']={o:1};return o;})()},
+      {caption:'During the extrinsic incubation period, the mosquito’s saliva does not yet hold an infectious dose.',set:(function(){var o={};o[p+'-eip']={o:1};return o;})()},
+      {caption:'After that period, the mosquito bites a human and delivers an infectious dose. The human is infected and the virus spreads through the blood (viremia).',
+       set:(function(){var o={};o[p+'-eip']={o:0};o[m1]={t:[260,40]};o[p+'-load']={o:0};return o;})()},
+      {caption:high?'This infection produces high-level viremia, above the level needed to infect a mosquito.':'This infection produces low-level, brief viremia, below the level needed to infect a mosquito.',
+       set:(function(){var o={};o[p+'-bar']={o:1};return o;})()},
+      {caption:high?'A new mosquito that bites now takes up an infectious amount of virus. The human is acting as a reservoir, as with yellow fever and dengue.':'A new mosquito that bites now takes up too little virus. The human is a dead-end host: the person can be ill, but the chain stops here.',
+       set:(function(){var o={};o[m2]={o:1,t:[0,0]};if(high){o[p+'-load2']={o:1,t:[0,0]};}o[p+'-end']={o:1};return o;})()}
+    ];
+  }
+  Act.stepper('act-cycleSteps',{name:'cycleSteps',scenes:[
+    {id:'dead',label:'Dead-end host',intro:'The human has a low and brief viremia.',svg:scene('d',false),steps:steps('d',false)},
+    {id:'res',label:'Reservoir host',intro:'The human has a high and longer viremia (as in yellow fever and dengue).',svg:scene('r',true),steps:steps('r',true)}
+  ]});
+})();
+
+/* --- 3.2 The viremia lab (predict, then manipulate two variables) --- */
+(function viremiaLab(){
+  var host=$('act-viremiaLab'),name='viremiaLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,lvl=2,days=2;
+  var LV=['Very low','Low','Moderate','High','Very high'];
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var r1=el('div','lab-row'),l1=el('span','lab-label','Virus level in blood'),s1=document.createElement('input'),v1=el('span','stage-name');
+  s1.type='range';s1.min='1';s1.max='5';s1.value=String(lvl);s1.setAttribute('aria-label','Virus level in the blood');s1.style.maxWidth='260px';
+  r1.appendChild(l1);r1.appendChild(s1);r1.appendChild(v1);
+  var r2=el('div','lab-row'),l2=el('span','lab-label','Days of viremia'),s2=document.createElement('input'),v2=el('span','stage-name');
+  s2.type='range';s2.min='1';s2.max='7';s2.value=String(days);s2.setAttribute('aria-label','Days of viremia');s2.style.maxWidth='260px';
+  r2.appendChild(l2);r2.appendChild(s2);r2.appendChild(v2);
+  var fig=el('div','figure'),report=el('div','feedback show'),prog=el('p','caption');
+  [r1,r2,fig,report,prog].forEach(function(x){lab.appendChild(x);});
+  function reservoir(){return lvl>=4&&days>=3;}
+  function chart(){
+    var x0=50,y0=190,W=520,H=130,d,s='',pts=[];
+    s+='<rect x="2" y="2" width="636" height="226" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>';
+    s+='<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+W)+'" y2="'+y0+'" stroke="#8A776E"/><line x1="'+x0+'" y1="'+(y0-H)+'" x2="'+x0+'" y2="'+y0+'" stroke="#8A776E"/>';
+    s+='<text x="'+(x0+W/2)+'" y="'+(y0+30)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#5C4A42">Days after infection</text>';
+    s+='<text x="14" y="'+(y0-H/2)+'" font-size="12" font-weight="700" fill="#5C4A42" transform="rotate(-90 14 '+(y0-H/2)+')" text-anchor="middle">Virus in blood</text>';
+    for(d=0;d<=10;d++)s+='<text x="'+(x0+d*W/10)+'" y="'+(y0+14)+'" text-anchor="middle" font-size="10.5" fill="#8A776E">'+d+'</text>';
+    var thr=y0-H*3.5/5;
+    s+='<line x1="'+x0+'" y1="'+thr+'" x2="'+(x0+W)+'" y2="'+thr+'" stroke="#2A1B16" stroke-width="2" stroke-dasharray="6 4"/><text x="'+(x0+W)+'" y="'+(y0-H-14)+'" text-anchor="end" font-size="11.5" font-weight="700" fill="#2A1B16">Dashed line: level needed to infect a mosquito</text>';
+    var top=y0-H*lvl/5, endX=x0+(1+days)*W/10;
+    pts=[[x0+W/10,y0],[x0+W/10+14,top],[endX-14,top],[endX,y0]];
+    s+='<polygon points="'+pts.map(function(p){return p.join(',');}).join(' ')+'" fill="'+(reservoir()?'#B5532A':'#E0A010')+'" fill-opacity=".85" stroke="#8A3B12" stroke-width="3" stroke-linejoin="round"/>';
+    return svgEl(s,'0 0 640 230','Viremia over time with a dashed line marking the level needed to infect a mosquito');
+  }
+  function paint(){
+    v1.textContent=LV[lvl-1];v2.textContent=days+(days===1?' day':' days');
+    fig.innerHTML=chart();
+    var res=reservoir();
+    s1.disabled=s2.disabled=!unlocked;
+    if(!unlocked){report.innerHTML='Answer the prediction above to unlock the controls.';}
+    else if(res){report.className='feedback show';report.innerHTML='<strong>Reservoir.</strong> The virus level is high enough, and lasts long enough, for a feeding mosquito to take up an infectious dose. The person can start a new cycle, as humans do with yellow fever and dengue.';}
+    else{report.className='feedback show miss';report.innerHTML='<strong>Dead-end host.</strong> '+(lvl<4?'The virus level is too low':'Viremia is too brief')+' to infect a feeding mosquito. The person may be ill, but the transmission chain stops here.';}
+    if(unlocked){var k=res?'res':'dead';if(seen.indexOf(k)===-1){seen.push(k);Act.keep(vkey,seen.slice());}}
+    prog.textContent=unlocked?('Outcomes seen: '+seen.length+' of 2'+(seen.length?' ('+seen.map(function(k){return k==='res'?'reservoir':'dead-end host';}).join(', ')+')':'')):'';
+    if(unlocked&&seen.length>=2&&!state.activities[name])Act.done(name,true);
+  }
+  s1.oninput=function(){lvl=Number(s1.value);paint();};
+  s2.oninput=function(){days=Number(s2.value);paint();};
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a person has a low-level viremia that ends after 2 days. A mosquito bites this person on day 2. What is expected?',
+    options:['The mosquito is unlikely to take up enough virus','The mosquito takes up enough virus whenever any virus is in the blood','The mosquito takes up enough virus only after the person recovers'],answer:0,
+    why:'Transmission requires a sufficient amount of virus in the bloodstream. A low, brief viremia leaves the human a dead-end host.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;lvl=2;days=2;s1.value='2';s2.value='2';paint();lvl=5;days=5;s1.value='5';s2.value='5';paint();}});
+})();
+
+/* --- 3.3 Which arbovirus fits the clue? (sort) --- */
+Act.sort('act-arboSort',{name:'arboSort',options:['Dengue','Yellow fever','West Nile','Zika'],
+  rows:[
+    {text:'Transmitted by Culex mosquitoes',answer:'West Nile',why:'West Nile virus is transmitted by Culex mosquitoes.'},
+    {text:'Transmitted by Aedes aegypti; the severe form causes bleeding',answer:'Dengue',why:'Dengue is carried by Aedes aegypti (also Ae. albopictus). Severe dengue includes bleeding.'},
+    {text:'About 15% develop severe disease with jaundice, bleeding, and shock; half of those die',answer:'Yellow fever',why:'Severe yellow fever is the jaundice, bleeding, and shock picture, and about half of severe cases die (WHO).'},
+    {text:'A single-dose vaccine gives lifelong protection',answer:'Yellow fever',why:'Yellow fever vaccine is a single dose with lifelong protection.'},
+    {text:'Infection in pregnancy can cause birth defects',answer:'Zika',why:'Birth defects in pregnancy are the key concern with Zika.'},
+    {text:'High fever, severe headache, and muscle and joint pain',answer:'Dengue',why:'This is the dengue syndrome.'},
+    {text:'The most common cause of meningitis among arboviruses (lecture table)',answer:'West Nile',why:'About 80% of infections are asymptomatic, but meningitis is the key severe outcome.'},
+    {text:'About 80% asymptomatic; fever, rash, and joint pain; no vaccine',answer:'Zika',why:'Zika is mostly silent, and no vaccine exists.'},
+    {text:'Transmitted by Haemagogus and Sabethes mosquitoes as well as Aedes',answer:'Yellow fever',why:'Yellow fever vectors include Aedes, Haemagogus, and Sabethes mosquitoes.'},
+    {text:'QDenga is licensed in some countries, for ages 6–16 in high-transmission settings',answer:'Dengue',why:'This is the dengue vaccine status given in the lecture table.'}
+  ]});
+
+/* ============================================================
+   MODULE 4 ACTIVITIES
+   ============================================================ */
+
+/* --- 4.1 The route of the rabies virus (stepper) --- */
+(function(){
+  var s=svgEl(
+    '<rect x="2" y="2" width="636" height="256" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>'+
+    /* nerve in and out */
+    '<path d="M70 210 C 150 200 190 170 250 130 C 290 104 310 90 340 76" fill="none" stroke="#8F78D6" stroke-width="7" stroke-linecap="round"/>'+
+    '<path d="M340 76 C 410 100 470 130 520 170 C 540 184 556 192 574 198" fill="none" stroke="#B5532A" stroke-width="7" stroke-linecap="round"/>'+
+    /* blood vessel (not used) */
+    '<g id="rb-vessel"><path d="M70 236 C 200 246 400 246 574 236" fill="none" stroke="#D4536B" stroke-width="10" stroke-linecap="round" opacity=".55"/>'+
+      '<g stroke="#2A1B16" stroke-width="5" stroke-linecap="round"><path d="M300 224 l24 24 M324 224 l-24 24"/></g>'+
+      '<text x="360" y="222" font-size="12" font-weight="800" fill="#2A1B16">Not spread through the blood</text></g>'+
+    /* sites */
+    '<circle cx="70" cy="210" r="26" fill="#FBEDE6" stroke="#B5532A" stroke-width="4"/><text x="70" y="256" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1B16" opacity="0">.</text>'+
+    '<text x="70" y="176" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1B16">Bite site</text>'+
+    '<ellipse cx="344" cy="64" rx="56" ry="38" fill="#F0EAFC" stroke="#8F78D6" stroke-width="4"/><text x="344" y="68" text-anchor="middle" font-size="12.5" font-weight="800" fill="#4B3496">Brain (CNS)</text>'+
+    '<circle cx="574" cy="198" r="26" fill="#FBEDE6" stroke="#B5532A" stroke-width="4"/><text x="574" y="162" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1B16">Salivary glands</text>'+
+    '<text x="196" y="156" font-size="11.5" font-weight="700" fill="#4B3496" transform="rotate(-34 196 156)">sensory nerve</text>'+
+    '<text x="470" y="130" font-size="11.5" font-weight="700" fill="#8A3B12" transform="rotate(36 470 130)">peripheral nerves</text>'+
+    /* glows */
+    '<g id="rb-g1"><circle cx="70" cy="210" r="38" fill="#E0A010" fill-opacity=".35"/></g>'+
+    '<g id="rb-g2"><ellipse cx="344" cy="64" rx="70" ry="50" fill="#8F78D6" fill-opacity=".3"/></g>'+
+    '<g id="rb-g3"><circle cx="574" cy="198" r="38" fill="#B5532A" fill-opacity=".3"/><g fill="#8A3B12"><circle cx="560" cy="226" r="4"/><circle cx="574" cy="234" r="4"/><circle cx="588" cy="226" r="4"/></g></g>'+
+    /* the virus */
+    '<g id="rb-dot"><g transform="translate(70 210)"><circle r="11" fill="#8A3B12" stroke="#fff" stroke-width="3"/></g></g>',
+    '0 0 640 262','A schematic route: from a bite site along a sensory nerve to the brain, then along peripheral nerves to the salivary glands. The bloodstream is crossed out.');
+  Act.stepper('act-rabiesPath',{name:'rabiesPath',scenes:[
+    {id:'route',label:'From bite to saliva',intro:'Local replication, then spread along nerves. The bloodstream is not the route.',svg:s,steps:[
+      {caption:'A rabid animal bites. Virus in saliva enters the wound.',set:{'rb-dot':{t:[0,0]},'rb-g1':{o:0},'rb-g2':{o:0},'rb-g3':{o:0},'rb-vessel':{o:0}}},
+      {caption:'The virus first replicates at the bite site. This is local infection.',set:{'rb-g1':{o:1}}},
+      {caption:'It infects sensory neurons and travels up the nerve. It does not use the bloodstream, which also keeps it away from the immune system.',set:{'rb-dot':{t:[130,-42]},'rb-vessel':{o:1}}},
+      {caption:'It reaches the central nervous system, where it is immunologically shielded. It multiplies there. Encephalitis develops with neuronal death, and Negri bodies form in infected neurons.',set:{'rb-dot':{t:[274,-146]},'rb-g2':{o:1}}},
+      {caption:'The virus moves down peripheral nerves to other organs and the salivary glands.',set:{'rb-dot':{t:[430,-60]}}},
+      {caption:'From the salivary glands it enters saliva, where it can be passed to the next victim by biting. Once symptoms begin, rabies is almost always fatal.',set:{'rb-dot':{t:[504,-12]},'rb-g3':{o:1}}}]}
+  ]});
+})();
+
+/* --- 4.2 Triage the exposure (sort) --- */
+Act.sort('act-whoTriage',{name:'whoTriage',options:['Category I','Category II','Category III'],
+  rows:[
+    {text:'Touching or feeding a dog',answer:'Category I',why:'Touching or feeding animals is category I: wash exposed skin, and no PEP is needed.'},
+    {text:'A dog licks intact skin',answer:'Category I',why:'Licks on intact skin are category I.'},
+    {text:'A dog nibbles uncovered skin without causing bleeding',answer:'Category II',why:'Nibbling of uncovered skin is category II: wound washing and immediate vaccination.'},
+    {text:'A cat leaves a minor scratch without bleeding',answer:'Category II',why:'Minor scratches or abrasions without bleeding are category II.'},
+    {text:'A bat is in direct contact with a person',answer:'Category III',why:'Direct contact with bats is category III, so immune globulin or monoclonal antibodies are added.'},
+    {text:'A dog bite breaks the skin',answer:'Category III',why:'Bites through the skin are category III.'},
+    {text:'A scratch through the skin that bleeds',answer:'Category III',why:'Scratches through the skin are category III.'},
+    {text:'Animal saliva contacts the lining of the mouth',answer:'Category III',why:'Saliva on mucous membranes is category III.'},
+    {text:'Animal saliva contacts broken skin',answer:'Category III',why:'Saliva on broken skin is category III.'}
+  ]});
+
+/* --- 4.3 Complete the Ebola paragraph (fill in the blank) --- */
+Act.fill('act-ebolaFill',{name:'ebolaFill',
+  bank:['RNA-dependent RNA polymerase','negative','blood','glycoprotein','interferon','antibody','hepatocytes','reverse transcriptase','positive','respiratory droplets','integrase','complement'],
+  answers:['RNA-dependent RNA polymerase','negative','blood','glycoprotein','interferon','antibody','hepatocytes'],
+  text:'Ebola virus carries its own {0}, because its genome is {1}-sense RNA. Spread between humans occurs through {2} and body fluids. The {3} damages endothelial cells, causing severe thrombocytopenia and hemorrhage, while two other proteins block {4} induction and action. Because lymphocytes, macrophages, and dendritic cells die, the {5} response is ineffective, and death of {6} causes liver failure.'});
+
+/* --- 4.4 Which species fits? (sort) --- */
+Act.sort('act-ebolaSpecies',{name:'ebolaSpecies',options:['Zaire ebolavirus','Sudan virus','Bundibugyo virus'],
+  rows:[
+    {text:'Ervebo, a vaccine approved in December 2019',answer:'Zaire ebolavirus',why:'Ervebo is approved for Zaire ebolavirus only.'},
+    {text:'Inmazeb, three monoclonal antibodies targeting the glycoprotein',answer:'Zaire ebolavirus',why:'Inmazeb (October 2020) is approved for Zaire ebolavirus only.'},
+    {text:'Ebanga (ansuvimab-zykl), approved December 2020',answer:'Zaire ebolavirus',why:'Ebanga is also approved for Zaire ebolavirus only.'},
+    {text:'Causes large outbreaks. No approved product, and Zaire products cannot be directly applied',answer:'Sudan virus',why:'FDA states that products approved for Zaire ebolavirus cannot be directly applied to Sudan virus.'},
+    {text:'Species behind the 2026 epidemic in the DRC, with no licensed vaccine',answer:'Bundibugyo virus',why:'The lecture describes a 2026 Bundibugyo epidemic in the DRC. No vaccine is licensed (CEPI).'},
+    {text:'About 48% of confirmed cases died in the 2026 DRC epidemic (figures as of 27 September 2026)',answer:'Bundibugyo virus',why:'Lecture figures: 8,116 confirmed cases and 3,924 deaths, about 48% (UKHSA). These numbers change weekly.'},
+    {text:'No approved vaccine or antibody product. Species are not interchangeable',answer:'Sudan virus',why:'Neither a vaccine nor an antibody product is approved for Sudan virus.'}
+  ]});
+
+/* ============================================================
+   MODULE 5 ACTIVITIES
+   ============================================================ */
+
+/* --- 5.1 Explore the HIV virion (clickable diagram) --- */
+(function(){
+  var spikes='',i;
+  for(i=0;i<9;i++){var a=-Math.PI/2+(i-4)*0.3, x1=260+120*Math.cos(a), y1=190+120*Math.sin(a), x2=260+150*Math.cos(a), y2=190+150*Math.sin(a), x3=260+168*Math.cos(a), y3=190+168*Math.sin(a);
+    spikes+='<g data-hs="gp41"><line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="#B5532A" stroke-width="7" stroke-linecap="round"/><line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="transparent" stroke-width="22"/></g>'+
+      '<g data-hs="gp120"><circle cx="'+x3.toFixed(1)+'" cy="'+y3.toFixed(1)+'" r="11" fill="#C9B8F0" stroke="#8F78D6" stroke-width="3"/><circle cx="'+x3.toFixed(1)+'" cy="'+y3.toFixed(1)+'" r="18" fill="transparent"/></g>';}
+  var s=svgEl(
+    spikes+
+    '<circle cx="260" cy="190" r="120" fill="#FBEDE6" stroke="#B5532A" stroke-width="6"/>'+
+    '<path d="M260 108 C 200 120 180 190 214 262 C 230 290 290 290 306 262 C 340 190 320 120 260 108 Z" fill="#F0EAFC" stroke="#8F78D6" stroke-width="5"/>'+
+    '<g data-hs="rna"><path d="M240 150 q10 -16 20 0 t20 0 M240 170 q10 -16 20 0 t20 0" fill="none" stroke="#8A3B12" stroke-width="5" stroke-linecap="round"/><rect x="226" y="128" width="84" height="56" rx="12" fill="transparent"/></g>'+
+    '<g data-hs="rt"><ellipse cx="236" cy="226" rx="20" ry="14" fill="#8A3B12"/><text x="236" y="231" text-anchor="middle" font-size="12" font-weight="800" fill="#fff" pointer-events="none">RT</text></g>'+
+    '<g data-hs="integrase"><ellipse cx="284" cy="226" rx="20" ry="14" fill="#2E7DA8"/><text x="284" y="231" text-anchor="middle" font-size="12" font-weight="800" fill="#fff" pointer-events="none">IN</text></g>'+
+    '<g data-hs="protease"><ellipse cx="260" cy="256" rx="20" ry="14" fill="#2FA97A"/><text x="260" y="261" text-anchor="middle" font-size="12" font-weight="800" fill="#fff" pointer-events="none">PR</text></g>'+
+    '<g font-size="12.5" font-weight="700" fill="#2A1B16"><text x="420" y="50">gp120 (knobs)</text><text x="420" y="72">gp41 (stalks)</text><text x="420" y="190">Capsid with</text><text x="420" y="207">two RNA copies</text><text x="420" y="256">Enzymes: RT, IN, PR</text></g>',
+    '0 10 640 320','An HIV virion with gp120 and gp41 spikes in the envelope, a capsid holding two RNA copies, and the enzymes reverse transcriptase, integrase, and protease');
+  Act.explore('act-hivExplore',{name:'hivExplore',svg:s,ids:['gp120','gp41','rna','rt','integrase','protease'],
+    start:'Select a part of the virion, or one of the buttons below the figure.',
+    items:{
+      gp120:{title:'gp120',html:'<p>The outer envelope protein. It binds the <b>CD4</b> receptor and then the <b>CCR5</b> co-receptor on T cells.</p><p><i>Drug angle:</i> maraviroc binds the host CCR5 co-receptor and blocks co-receptor binding.</p>'},
+      gp41:{title:'gp41',html:'<p>The transmembrane envelope protein. After binding, gp41 mediates <b>fusion</b> of the virus with the cell membrane.</p><p><i>Drug angle:</i> enfuvirtide, a biomimetic peptide, binds gp41 and blocks fusion.</p>'},
+      rna:{title:'Two RNA copies',html:'<p>HIV is a <b>positive-sense, single-stranded RNA</b> virus. Each virion contains <b>two identical copies</b> of the genome.</p>'},
+      rt:{title:'Reverse transcriptase',html:'<p>Copies the viral RNA genome into <b>DNA</b>, which is why HIV is a retrovirus.</p><p><i>Drug angle:</i> nucleoside analogs (emtricitabine, lamivudine, tenofovir) inhibit reverse transcriptase.</p>'},
+      integrase:{title:'Integrase',html:'<p>Inserts the DNA copy into the host genome. Once integrated, the DNA persists, which is why therapy suppresses HIV but does not cure it.</p><p><i>Drug angle:</i> raltegravir and dolutegravir inhibit integration.</p>'},
+      protease:{title:'Protease',html:'<p>Cuts the viral polypeptide into working proteins so new particles mature. Protease monomers form a dimer, and the dimer does the cutting.</p><p><i>Drug angle:</i> saquinavir and darunavir bind the protease and leave immature, non-infectious particles.</p>'}
+    }});
+})();
+
+/* --- 5.2 Put the life cycle in order --- */
+Act.order('act-hivCycle',{name:'hivCycle',items:[
+  '<b>Binding.</b> gp120 attaches to CD4, then to the co-receptor (CCR5).',
+  '<b>Fusion.</b> gp41 fuses the viral envelope with the cell membrane.',
+  '<b>Reverse transcription.</b> Reverse transcriptase copies the viral RNA into DNA.',
+  '<b>Integration.</b> Integrase inserts the DNA copy into the host genome.',
+  '<b>Replication.</b> The host cell makes new viral RNA and proteins from the integrated DNA.',
+  '<b>Assembly.</b> New viral proteins and RNA come together into an immature particle.',
+  '<b>Budding.</b> The particle leaves the cell, and protease cuts the polypeptide so it matures into an infectious virion.'
+]});
+
+/* --- 5.3 Place the drug on its step (sort) --- */
+Act.sort('act-drugTarget',{name:'drugTarget',options:['Co-receptor binding','Fusion','Reverse transcription','Integration','Maturation (protease)'],
+  rows:[
+    {text:'Enfuvirtide',answer:'Fusion',why:'A biomimetic peptide that binds gp41 and blocks fusion of the virus with the cell membrane.'},
+    {text:'Maraviroc',answer:'Co-receptor binding',why:'Binds the host CCR5 co-receptor and blocks co-receptor binding.'},
+    {text:'Tenofovir',answer:'Reverse transcription',why:'A nucleoside analog that inhibits reverse transcriptase through chain termination.'},
+    {text:'Lamivudine',answer:'Reverse transcription',why:'A cytosine nucleoside analog that inhibits reverse transcriptase.'},
+    {text:'Emtricitabine',answer:'Reverse transcription',why:'A cytosine nucleoside analog that inhibits reverse transcriptase.'},
+    {text:'Raltegravir',answer:'Integration',why:'An integrase inhibitor that blocks insertion of the viral genome into the host genome.'},
+    {text:'Dolutegravir',answer:'Integration',why:'An integrase inhibitor, and the partner of lamivudine in a DHHS option.'},
+    {text:'Saquinavir',answer:'Maturation (protease)',why:'A peptide mimic that binds the protease dimer and leaves immature, non-infectious particles.'},
+    {text:'Darunavir',answer:'Maturation (protease)',why:'A protease inhibitor given with a CYP3A-inhibiting booster.'}
+  ]});
+
+/* --- 5.4 Extend the strand (stepper) --- */
+(function(){
+  function block(id,x,y,col,stroke,label){return '<g id="'+id+'"><g transform="translate('+x+' '+y+')"><rect width="44" height="44" rx="10" fill="'+col+'" stroke="'+stroke+'" stroke-width="3"/><text x="22" y="28" text-anchor="middle" font-size="13" font-weight="800" fill="#2A1B16">'+label+'</text></g></g>';}
+  function oh(id,x,y,col){return '<g id="'+id+'"><g transform="translate('+x+' '+y+')"><circle r="14" fill="#fff" stroke="'+col+'" stroke-width="3"/><text y="4.5" text-anchor="middle" font-size="11" font-weight="800" fill="'+col+'">OH</text></g></g>';}
+  function strand(){
+    var s='<rect x="2" y="2" width="636" height="236" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>';
+    s+='<text x="20" y="28" font-size="11.5" font-weight="700" fill="#8A776E" letter-spacing="1">NEW DNA STRAND (5′ → 3′)</text>';
+    var x=50,i,lab=['A','C','T','G'];
+    for(i=0;i<4;i++)s+='<rect x="'+(x+i*50)+'" y="110" width="44" height="44" rx="10" fill="#F0EAFC" stroke="#8F78D6" stroke-width="3"/><text x="'+(x+i*50+22)+'" y="138" text-anchor="middle" font-size="13" font-weight="800" fill="#4B3496">'+lab[i]+'</text>';
+    s+='<text x="20" y="214" font-size="11.5" font-weight="700" fill="#8A776E" letter-spacing="1">TEMPLATE (copied by reverse transcriptase)</text>';
+    for(i=0;i<7;i++)s+='<rect x="'+(x+i*50)+'" y="170" width="44" height="26" rx="8" fill="#EFE3DC" stroke="#D8C6BB" stroke-width="2"/>';
+    return s;
+  }
+  function natural(){
+    return svgEl(strand()+oh('nt-oh',256,132,'#8A3B12')+
+      block('nt-n1',250,30,'#FBEDE6','#B5532A','dNTP')+
+      oh('nt-oh2',358,132,'#8A3B12')+
+      block('nt-n2',300,30,'#FBEDE6','#B5532A','dNTP')+
+      '<g id="nt-done"><text x="470" y="136" font-size="13" font-weight="800" fill="#1C7554">Strand keeps growing</text></g>',
+      '0 0 640 240','DNA synthesis with a natural nucleotide: each added nucleotide keeps a 3′-OH group that lets the next one attach');
+  }
+  function drug(){
+    return svgEl(strand()+oh('dr-oh',256,132,'#8A3B12')+
+      block('dr-d',250,30,'#FFF1C7','#E0A010','NRTI')+
+      '<g id="dr-ppp"><circle cx="233" cy="40" r="7" fill="#E0A010"/><circle cx="233" cy="56" r="7" fill="#E0A010"/><circle cx="233" cy="72" r="7" fill="#E0A010"/><text x="214" y="30" text-anchor="end" font-size="11" font-weight="700" fill="#5C4A42">triphosphate</text></g>'+
+      '<g id="dr-x"><g transform="translate(358 132)"><circle r="14" fill="#fff" stroke="#D4536B" stroke-width="3" stroke-dasharray="4 3"/><path d="M-7 -7 l14 14 M7 -7 l-14 14" stroke="#D4536B" stroke-width="3.5" stroke-linecap="round"/></g><text x="388" y="136" font-size="12.5" font-weight="800" fill="#B03A5E">no 3′-OH here</text></g>'+
+      block('dr-n',330,30,'#FBEDE6','#B5532A','dNTP')+
+      '<g id="dr-end"><text x="470" y="64" font-size="13" font-weight="800" fill="#B03A5E">Chain termination</text></g>',
+      '0 0 640 240','DNA synthesis with a nucleoside analog: the analog has no 3′-OH group, so the next nucleotide cannot attach and the strand stops');
+  }
+  Act.stepper('act-nrtiChain',{name:'nrtiChain',scenes:[
+    {id:'nat',label:'Natural nucleotide',intro:'Reverse transcriptase builds DNA one nucleotide at a time. The 3′-OH of the last nucleotide is where the next one attaches.',svg:natural(),steps:[
+      {caption:'The new strand ends with a free 3′-OH group, the attachment point for the next nucleotide.',set:{'nt-oh':{o:1},'nt-n1':{o:1,t:[0,0]},'nt-oh2':{o:0},'nt-n2':{o:0,t:[0,0]},'nt-done':{o:0}}},
+      {caption:'A natural nucleotide (dNTP) that matches the template arrives.',set:{'nt-n1':{t:[0,40]}}},
+      {caption:'It attaches to the 3′-OH. The new end carries its own 3′-OH.',set:{'nt-n1':{t:[0,80]},'nt-oh':{o:0},'nt-oh2':{o:1}}},
+      {caption:'Another nucleotide can attach to the new 3′-OH, so the strand keeps growing.',set:{'nt-n2':{o:1,t:[0,80]},'nt-oh2':{o:0},'nt-done':{o:1}}}]},
+    {id:'drug',label:'NRTI (analog)',intro:'A nucleoside analog is built in as if it were the real nucleotide, but it cannot be extended.',svg:drug(),steps:[
+      {caption:'Inside the cell, the NRTI (emtricitabine, lamivudine, or tenofovir) is converted to its triphosphate form.',set:{'dr-oh':{o:1},'dr-d':{o:1,t:[0,0]},'dr-ppp':{o:1,t:[0,0]},'dr-x':{o:0},'dr-n':{o:0,t:[0,0]},'dr-end':{o:0}}},
+      {caption:'The triphosphate competes with the matching natural nucleotide: dCTP for the cytosine analogs, dATP for tenofovir.',set:{'dr-d':{t:[0,40]},'dr-ppp':{t:[0,40]}}},
+      {caption:'Reverse transcriptase adds the analog to the strand. The analog has no 3′-OH group.',set:{'dr-d':{t:[0,80]},'dr-ppp':{o:0},'dr-oh':{o:0},'dr-x':{o:1}}},
+      {caption:'The next nucleotide has nothing to attach to, so elongation halts. This is chain termination.',set:{'dr-n':{o:1,t:[0,10]},'dr-end':{o:1}}}]}
+  ]});
+})();
+
+/* --- 5.5 The boosting lab (predict, then manipulate) --- */
+(function boostLab(){
+  var host=$('act-boostLab'),name='boostLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,booster='none',second=false;
+  var LEV={none:{d:1,x:1},cobicistat:{d:3,x:2.5},ritonavir:{d:3,x:2.5}};
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var seg=segControl([['none','No booster'],['cobicistat','Cobicistat'],['ritonavir','Ritonavir']],function(v){booster=v;paint();});
+  var row=el('div','lab-row');row.innerHTML='<span class="lab-label">Booster</span>';row.appendChild(seg.box);
+  var row2=el('div','lab-row'),chk=document.createElement('input');chk.type='checkbox';chk.id='boost-second';
+  var chkLab=el('label',null,' Also taking another drug cleared by CYP3A');chkLab.htmlFor='boost-second';
+  row2.appendChild(chk);row2.appendChild(chkLab);
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [row,row2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  function bar(y,label,val,col){
+    var w=Math.min(1,val/3.2)*420;
+    return '<text x="20" y="'+(y-8)+'" font-size="12.5" font-weight="700" fill="#2A1B16">'+label+'</text>'+
+      '<rect x="20" y="'+y+'" width="420" height="24" rx="12" fill="#EFE3DC"/><rect x="20" y="'+y+'" width="'+w.toFixed(0)+'" height="24" rx="12" fill="'+col+'"/>'+
+      '<text x="'+(w+30).toFixed(0)+'" y="'+(y+17)+'" font-size="12" font-weight="800" fill="#5C4A42">'+(val===1?'1×':val+'×')+'</text>';
+  }
+  function paint(){
+    var L=LEV[booster],s='<rect x="2" y="2" width="636" height="'+(second?186:122)+'" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>';
+    s+=bar(44,'Darunavir level (relative, teaching model)',L.d,'#8A3B12');
+    if(second)s+=bar(110,'Level of the other CYP3A-cleared drug (relative)',L.x,'#8F78D6');
+    fig.innerHTML=svgEl(s,'0 0 640 '+(second?190:126),'Bars showing the relative level of darunavir and of another CYP3A-cleared drug at the chosen booster setting');
+    seg.set(booster);seg.buttons.none.disabled=seg.buttons.cobicistat.disabled=seg.buttons.ritonavir.disabled=!unlocked;chk.disabled=!unlocked;
+    if(!unlocked)msg.innerHTML='Answer the prediction above to unlock the lab.';
+    else if(booster==='none')msg.innerHTML='<strong>No booster.</strong> CYP3A clears darunavir normally, so its level stays low.'+(second?' The other drug is cleared normally too.':'');
+    else msg.innerHTML='<strong>'+(booster==='cobicistat'?'Cobicistat':'Ritonavir')+' inhibits CYP3A.</strong> Darunavir is cleared more slowly, so its level rises. '+(second?'The other drug is also cleared through CYP3A, so its level rises too, and the risk of a drug interaction rises with it.':'Turn on the second drug to see the interaction risk.');
+    if(unlocked&&seen.indexOf(booster)===-1){seen.push(booster);Act.keep(vkey,seen.slice());}
+    prog.textContent=unlocked?'Booster settings tried: '+seen.length+' of 3.':'';
+    if(unlocked&&seen.length>=3&&!state.activities[name])Act.done(name,true);
+  }
+  chk.onchange=function(){second=chk.checked;paint();};
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: ritonavir or cobicistat inhibits CYP3A. What happens to darunavir levels when it is given with the booster?',
+    options:['Levels rise','Levels fall','Levels stay the same','Darunavir is converted to its triphosphate'],answer:0,
+    why:'CYP3A clears darunavir. Inhibiting it raises darunavir levels, and it also raises levels of other CYP3A substrates, so interaction risk rises.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;['none','cobicistat','ritonavir'].forEach(function(b){booster=b;paint();});}});
+})();
+
+/* ============================================================
+   MODULE 6 ACTIVITIES
+   ============================================================ */
+
+/* --- 6.1 The adherence lab (predict, then manipulate) --- */
+(function adherenceLab(){
+  var host=$('act-adherenceLab'),name='adherenceLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,adh=70,reg='one';
+  var W={one:3.0,two:1.6,three:0.5};
+  var REGS=[['one','One drug'],['two','Two drugs, one class'],['three','Three drugs, two classes']];
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var seg=segControl(REGS,function(v){reg=v;paint();});
+  var row=el('div','lab-row');row.innerHTML='<span class="lab-label">Regimen</span>';row.appendChild(seg.box);
+  var row2=el('div','lab-row'),lbl=el('span','lab-label','Doses taken'),sl=document.createElement('input'),val=el('span','stage-name');
+  sl.type='range';sl.min='50';sl.max='100';sl.step='5';sl.value=String(adh);sl.setAttribute('aria-label','Percent of doses taken');sl.style.maxWidth='300px';
+  row2.appendChild(lbl);row2.appendChild(sl);row2.appendChild(val);
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [row,row2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  function risk(){return Math.max(0,Math.min(100,Math.round((100-adh)*W[reg]*1.1)));}
+  function paint(){
+    var r=risk(),col=r<20?'#2FA97A':(r<50?'#E0A010':'#D4536B');
+    val.textContent=adh+'% of doses';
+    fig.innerHTML=svgEl('<rect x="2" y="2" width="636" height="120" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>'+
+      '<text x="20" y="34" font-size="12.5" font-weight="700" fill="#2A1B16">Chance that resistant virus takes hold (teaching model, not patient data)</text>'+
+      '<rect x="20" y="48" width="600" height="28" rx="14" fill="#EFE3DC"/><rect x="20" y="48" width="'+(6*r)+'" height="28" rx="14" fill="'+col+'"/>'+
+      '<text x="26" y="104" font-size="13" font-weight="800" fill="#5C4A42">'+r+'%</text>','0 0 640 124','Bar showing the modeled chance that resistant virus takes hold');
+    seg.set(reg);Object.keys(seg.buttons).forEach(function(k){seg.buttons[k].disabled=!unlocked;});sl.disabled=!unlocked;
+    if(!unlocked)msg.innerHTML='Answer the prediction above to unlock the lab.';
+    else if(adh===100)msg.innerHTML='<strong>Every dose taken.</strong> In this model, the chance that resistant virus takes hold is lowest. Real patients miss doses, so the design of the regimen matters too.';
+    else if(reg==='one')msg.innerHTML='<strong>One drug.</strong> A single mutation can defeat it, and every missed dose gives the virus a chance to mutate.';
+    else if(reg==='two')msg.innerHTML='<strong>Two drugs from the same class.</strong> Both block the same step, so one mutation can defeat both.';
+    else msg.innerHTML='<strong>Three drugs from two classes.</strong> Different classes block different steps, so one mutation is much less likely to defeat the whole regimen. This matches a typical starting regimen (hiv.gov).';
+    if(unlocked&&seen.indexOf(reg)===-1){seen.push(reg);Act.keep(vkey,seen.slice());}
+    prog.textContent=unlocked?'Regimens tried: '+seen.length+' of 3.':'';
+    if(unlocked&&seen.length>=3&&!state.activities[name])Act.done(name,true);
+  }
+  sl.oninput=function(){adh=Number(sl.value);paint();};
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a patient misses 30% of doses of a single antiretroviral. How does adding two more drugs from a second class change the chance that resistant virus takes hold?',
+    options:['It lowers the chance, because one mutation is less likely to defeat all of the drugs','It raises the chance, because more drugs mean more mutations','It leaves the chance unchanged, because adherence alone decides resistance'],answer:0,
+    why:'Drugs from different classes block different steps, so one mutation is less likely to defeat the whole regimen. Missed doses still raise risk, so both adherence and regimen design matter.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;['one','two','three'].forEach(function(k){reg=k;paint();});}});
+})();
+
+/* --- 6.2 Three regimen decisions (stages) --- */
+Act.stages('act-regimenCase',{name:'regimenCase',stages:[
+  {lead:'<p>A patient starts dolutegravir plus lamivudine.</p>',
+   prompt:'Which steps of the HIV life cycle do these two drugs block?',
+   options:['Integration and reverse transcription','Fusion and co-receptor binding','Reverse transcription and maturation','Binding and assembly'],answer:0,
+   why:'Dolutegravir is an integrase inhibitor, and lamivudine is a nucleoside analog that inhibits reverse transcriptase.',
+   reveal:'This combination is a current DHHS option (updated 24 September 2026 in the lecture), recommended for most people regardless of baseline viral load.'},
+  {lead:'<p>A different patient will take boosted darunavir plus emtricitabine.</p>',
+   prompt:'Which part of care needs extra attention because of the booster?',
+   options:['Screening for CYP3A drug interactions','Confirming hepatitis A immunity','Monitoring for chain termination in host DNA','Starting hepatitis B immune globulin'],answer:0,
+   why:'The booster (ritonavir or cobicistat) inhibits CYP3A, so darunavir levels rise and so does the risk of drug interactions.'},
+  {lead:'<p>Both regimens contain lamivudine or emtricitabine.</p>',
+   prompt:'What is the mechanism of these two drugs?',
+   options:['After conversion to the triphosphate, they compete with dCTP and terminate the chain','They bind gp41 and block fusion','They bind the protease dimer','They block insertion of viral DNA into the host genome'],answer:0,
+   why:'Lamivudine and emtricitabine are cytosine nucleoside analogs. They lack a 3′-OH group, so the next nucleotide cannot be added.'}
+]});
+
+/* --- 6.3 Which prevention tool? (sort) --- */
+Act.sort('act-preventSort',{name:'preventSort',options:['PrEP','PEP','Other measure'],
+  rows:[
+    {text:'Daily oral tenofovir/emtricitabine taken before exposure',answer:'PrEP',why:'Daily oral tenofovir-based combinations are PrEP.'},
+    {text:'Cabotegravir injection every 2 months',answer:'PrEP',why:'Cabotegravir every 2 months is a long-acting injectable PrEP.'},
+    {text:'Lenacapavir injection every 6 months',answer:'PrEP',why:'Lenacapavir every 6 months is a long-acting injectable PrEP.'},
+    {text:'Antiretrovirals started after a possible exposure',answer:'PEP',why:'PEP is started after a possible exposure.'},
+    {text:'Antiretrovirals started after a needle-stick exposure',answer:'PEP',why:'The timing, after the exposure, defines PEP.'},
+    {text:'Circumcision',answer:'Other measure',why:'Circumcision reduces infection with HIV.'},
+    {text:'Condoms',answer:'Other measure',why:'Condoms are a behavioral prevention tool.'},
+    {text:'Not sharing needles',answer:'Other measure',why:'Avoiding shared needles prevents transmission.'},
+    {text:'A sustained undetectable viral load in the partner who has HIV',answer:'Other measure',why:'A sustained undetectable viral load prevents sexual transmission (hiv.gov). Treatment of the partner is the prevention.'}
+  ]});
+
+/* --- 6.4 The delivery decision (predict, then manipulate a variable) --- */
+(function deliveryLab(){
+  var host=$('act-deliveryLab'),name='deliveryLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,idx=2,unknown=false;
+  var V=[50,200,400,800,1000,2000,5000,20000];
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var row=el('div','lab-row'),lbl=el('span','lab-label','HIV RNA near delivery'),sl=document.createElement('input'),val=el('span','stage-name');
+  sl.type='range';sl.min='0';sl.max=String(V.length-1);sl.step='1';sl.value=String(idx);sl.setAttribute('aria-label','HIV RNA near delivery in copies per milliliter');sl.style.maxWidth='320px';
+  row.appendChild(lbl);row.appendChild(sl);row.appendChild(val);
+  var row2=el('div','lab-row'),chk=document.createElement('input');chk.type='checkbox';chk.id='dl-unknown';
+  var chkLab=el('label',null,' The result is not available near delivery');chkLab.htmlFor='dl-unknown';row2.appendChild(chk);row2.appendChild(chkLab);
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [row,row2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  function ces(){return unknown||V[idx]>1000;}
+  function paint(){
+    var x0=50,W=540,i,s='<rect x="2" y="2" width="636" height="140" rx="14" fill="#FBF6F3" stroke="#EBDDD5"/>';
+    s+='<line x1="'+x0+'" y1="80" x2="'+(x0+W)+'" y2="80" stroke="#8A776E" stroke-width="3"/>';
+    for(i=0;i<V.length;i++){var xx=x0+i*W/(V.length-1);
+      s+='<circle cx="'+xx+'" cy="80" r="'+(i===idx&&!unknown?11:5)+'" fill="'+(V[i]>1000?'#B5532A':'#2FA97A')+'" '+(i===idx&&!unknown?'stroke="#2A1B16" stroke-width="3"':'')+'/><text x="'+xx+'" y="108" text-anchor="middle" font-size="11" fill="#5C4A42">'+V[i].toLocaleString('en-US')+'</text>';}
+    var tx=x0+(4.5)*W/(V.length-1);
+    s+='<line x1="'+tx+'" y1="40" x2="'+tx+'" y2="98" stroke="#2A1B16" stroke-width="2" stroke-dasharray="5 4"/><text x="'+tx+'" y="32" text-anchor="middle" font-size="12" font-weight="800" fill="#2A1B16">1,000 copies/mL</text>';
+    s+='<text x="'+(x0+W/2)+'" y="132" text-anchor="middle" font-size="11.5" font-weight="700" fill="#5C4A42">HIV RNA (copies/mL)</text>';
+    fig.innerHTML=svgEl(s,'0 0 640 146','A scale of HIV RNA levels with a dashed line at 1,000 copies per milliliter');
+    val.textContent=unknown?'Not available':(V[idx].toLocaleString('en-US')+' copies/mL');
+    sl.disabled=!unlocked||unknown;chk.disabled=!unlocked;
+    if(!unlocked)msg.innerHTML='Answer the prediction above to unlock the controls.';
+    else if(ces())msg.innerHTML='<strong>Scheduled cesarean at 38 weeks.</strong> HIV RNA is '+(unknown?'unknown':'above 1,000 copies/mL')+' near delivery. The newborn receives antiretroviral therapy.';
+    else msg.innerHTML='<strong>Vaginal birth, following the usual obstetric indications.</strong> At 1,000 copies/mL or below, HIV status alone does not call for a cesarean. The newborn receives antiretroviral therapy.';
+    if(unlocked){var k=ces()?'ces':'vag';if(seen.indexOf(k)===-1){seen.push(k);Act.keep(vkey,seen.slice());}}
+    prog.textContent=unlocked?'Outcomes seen: '+seen.length+' of 2.':'';
+    if(unlocked&&seen.length>=2&&!state.activities[name])Act.done(name,true);
+  }
+  sl.oninput=function(){idx=Number(sl.value);paint();};
+  chk.onchange=function(){unknown=chk.checked;paint();};
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: near delivery, a patient’s HIV RNA rises from 400 to 5,000 copies/mL. What changes in the recommendation?',
+    options:['It changes from vaginal birth (usual obstetric indications) to a scheduled cesarean at 38 weeks','It does not change, because HIV status never affects delivery','It changes to an emergency cesarean at 34 weeks'],answer:0,
+    why:'DHHS recommends a scheduled cesarean at 38 weeks only when HIV RNA is above 1,000 copies/mL or unknown near delivery. At 1,000 or below, vaginal birth follows the usual indications.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;idx=2;unknown=false;paint();idx=6;paint();}});
+})();
+
+
+initWelcome();
+</script>
+<script src="shared/engine.js"></script>
+<script src="shared/menu.js"></script>
+</body>
+</html>
