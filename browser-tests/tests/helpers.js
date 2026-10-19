@@ -1,9 +1,25 @@
 const { expect } = require('@playwright/test');
 
-const COMPANIONS = [
-  'bacteria1', 'bacteria2', 'bacteria3', 'bacteria4',
-  'viruses1', 'viruses2', 'viruses3', 'viruses4'
-];
+const fs = require('fs');
+const path = require('path');
+
+/* The list of companions is read from the real files, so adding
+   viruses6.html or bacteria5.html (or removing one) needs no change here.
+   Anything in the main folder named bacteriaN.html or virusesN.html counts. */
+const siteRoot = path.resolve(__dirname, '..', '..');
+const COMPANIONS = fs.readdirSync(siteRoot)
+  .map(f => f.match(/^((?:bacteria|viruses)(\d+))\.html$/))
+  .filter(Boolean)
+  .sort((a, b) => a[1].replace(/\d+$/, '').localeCompare(b[1].replace(/\d+$/, '')) || Number(a[2]) - Number(b[2]))
+  .map(m => m[1]);
+
+/* The hub writes the count as a word up to ten ("Eight companions.") and as a
+   number after that. This builds the same sentence from the number of files. */
+const NUMBER_WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+const COUNT_TEXT = COMPANIONS.length === 1
+  ? 'One companion.'
+  : (NUMBER_WORDS[COMPANIONS.length] || COMPANIONS.length) + ' companions.';
+
 
 /* Starts listening for anything that goes wrong on a page: JavaScript
    errors, console errors, files that failed to load, and 404/500 replies.
@@ -39,4 +55,4 @@ async function solveCheckpoint(page, host) {
   await expect(host.locator('.choice.right')).toHaveCount(1);
 }
 
-module.exports = { COMPANIONS, watchProblems, openCompanion, hasSidewaysScroll, solveCheckpoint };
+module.exports = { COMPANIONS, COUNT_TEXT, watchProblems, openCompanion, hasSidewaysScroll, solveCheckpoint };

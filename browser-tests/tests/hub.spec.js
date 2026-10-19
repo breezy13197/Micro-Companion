@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { COMPANIONS, watchProblems, openCompanion } = require('./helpers');
+const { COMPANIONS, COUNT_TEXT, watchProblems, openCompanion } = require('./helpers');
 
 const VIEWS = {
   dash: 'Dashboard', companions: 'My companions', exam: 'Build an exam',
@@ -16,15 +16,14 @@ async function openHubView(page, view) {
 
 test.describe('hub (index.html)', () => {
 
-  test('loads cleanly with all eight companions on the dashboard', async ({ page }) => {
+  test('loads cleanly with every companion on the dashboard', async ({ page }) => {
     const problems = watchProblems(page);
     await page.goto('/index.html');
     await expect(page).toHaveTitle(/Microbiology Study Hub/);
-    await expect(page.locator('#main')).toContainText('Eight companions');
-    for (const name of ['Bacteria I', 'Bacteria II', 'Bacteria III', 'Bacteria IV',
-                        'Viruses I', 'Viruses II', 'Viruses III', 'Viruses IV']) {
-      await expect(page.locator('#main')).toContainText(name);
-    }
+    await expect(page.locator('#main')).toContainText(COUNT_TEXT);
+    // One progress card per companion file in the folder, plus the hub's own
+    // "Integration & review" card.
+    await expect(page.locator('#main .d-card')).toHaveCount(COMPANIONS.length + 1);
     expect(problems.list()).toEqual([]);
   });
 
@@ -42,9 +41,9 @@ test.describe('hub (index.html)', () => {
     await page.goto('/index.html');
     await openHubView(page, 'help');
     const chips = page.locator('#main table.tbl tr td:nth-child(5) .chip');
-    await expect(chips).toHaveCount(9);
+    await expect(chips).toHaveCount(COMPANIONS.length + 1); // every companion plus the hub's own bank
     const texts = await chips.allTextContents();
-    expect(texts.filter(t => t === 'manifest loaded')).toHaveLength(8);
+    expect(texts.filter(t => t === 'manifest loaded')).toHaveLength(COMPANIONS.length);
     expect(texts.filter(t => t === 'not needed')).toHaveLength(1);
     await expect(page.locator('#main .note.bad')).toHaveCount(0);
   });
