@@ -137,7 +137,29 @@ var CARDS = [
     "id": "HUB-CARD-25",
     "t": "Listeria in meningitis",
     "d": "Not encapsulated; escapes the phagosome with listeriolysin. Ampicillin is added for newborns and adults over 50, since cephalosporins do not cover it."
-  }
+  },
+  { "id": "HUB-CARD-26", "t": "Which virions carry their own polymerase", "d": "Negative-sense RNA viruses (measles, mumps, influenza) and dsRNA viruses (rotavirus) carry an RNA polymerase because host cells cannot copy their genomes into mRNA. Poxviruses carry a DNA-dependent RNA polymerase because they replicate in the cytoplasm. Positive-sense viruses such as norovirus do not." },
+  { "id": "HUB-CARD-27", "t": "Herpesvirus drugs: who activates what", "d": "Acyclovir is first phosphorylated by viral thymidine kinase. Ganciclovir is activated by the CMV UL97 kinase. Foscarnet needs no activation and blocks the viral DNA polymerase directly." },
+  { "id": "HUB-CARD-28", "t": "Protease inhibitors across viruses", "d": "Nirmatrelvir (SARS-CoV-2), darunavir and saquinavir (HIV), and glecaprevir (HCV NS3/4A) all block a viral protease, so the long polypeptide stays uncut." },
+  { "id": "HUB-CARD-29", "t": "Boosters and CYP3A", "d": "Ritonavir (with nirmatrelvir or darunavir) and cobicistat inhibit CYP3A. The partner drug stays high, and levels of other medicines can rise too, so review the full medicine list." },
+  { "id": "HUB-CARD-30", "t": "Influenza drugs by stage", "d": "Amantadine blocks uncoating (stage 2) and is no longer used. Baloxavir blocks cap-snatching during mRNA synthesis (stage 5). Oseltamivir, zanamivir, and peramivir block release (stage 8)." },
+  { "id": "HUB-CARD-31", "t": "Prevention drugs versus treatment drugs", "d": "Prevention: lenacapavir (HIV PrEP, every 6 months), cabotegravir (PrEP, every 2 months), letermovir (CMV in transplant recipients), nirsevimab (RSV in infants), ensitrelvir (COVID-19 post-exposure), baloxavir (influenza post-exposure)." },
+  { "id": "HUB-CARD-32", "t": "Live versus non-live vaccines in vulnerable patients", "d": "Live vaccines (MMR, Varivax, rotavirus) can cause disease when immunity is impaired and are not given in pregnancy (MMR). Non-live choices include Shingrix, inactivated influenza vaccine, and recombinant Abrysvo." },
+  { "id": "HUB-CARD-33", "t": "Passive plus active protection", "d": "Rabies category III: wound washing, vaccine, and immune globulin or monoclonal antibodies. Newborn of an HBsAg-positive mother: hepatitis B vaccine within 24 hours plus HBIG. Pre-formed antibody covers the early gap while the vaccine builds lasting immunity." },
+  { "id": "HUB-CARD-34", "t": "Herd immunity thresholds", "d": "Measles needs about 95% immunity and polio about 80%. Below the threshold, each case can infect more than one person, and infants and immunocompromised people are exposed." },
+  { "id": "HUB-CARD-35", "t": "OPV versus IPV", "d": "OPV is live and oral, builds gut IgA plus serum antibody, and carries a rare risk of vaccine-associated paralysis. IPV is injected and builds serum antibody with little effect in the gut." },
+  { "id": "HUB-CARD-36", "t": "What persists after antiviral therapy", "d": "HSV: circular, unintegrated DNA in neurons. HBV: cccDNA in the hepatocyte nucleus. HIV: DNA integrated into the host genome. Current drugs do not remove these, whereas HCV has no such reservoir and can be cured." },
+  { "id": "HUB-CARD-37", "t": "Prophage versus herpesvirus latency", "d": "A prophage is integrated into the bacterial chromosome. Latent HSV DNA is circular and unintegrated in neurons. Both persist without making progeny until reactivation or induction." },
+  { "id": "HUB-CARD-38", "t": "Herpesviruses in transplant recipients", "d": "CMV and HHV-6 stay latent and reactivate when cell-mediated immunity is impaired. Ganciclovir or foscarnet are listed for treatment, and letermovir is used as CMV prophylaxis." },
+  { "id": "HUB-CARD-39", "t": "Cytotoxic T cells as a cause of injury", "d": "The measles rash, hepatitis A liver damage, and hepatitis B liver injury are attributed to cytotoxic T cells attacking virus-infected cells." },
+  { "id": "HUB-CARD-40", "t": "Cell fusion viruses", "d": "Measles virus, RSV, HSV, and VZV can fuse infected cells into multinucleated giant cells. A Tzanck smear shows this cytopathic effect for HSV and VZV but does not name the species." },
+  { "id": "HUB-CARD-41", "t": "Which test answers which question", "d": "HCV RNA by RT-PCR 12 weeks after therapy confirms SVR. HBsAg detection shows current infection. Anti-HBs shows recovery or vaccine immunity. A fourfold or greater titer rise between acute and convalescent samples shows recent infection." },
+  { "id": "HUB-CARD-42", "t": "Tumor viruses and vaccines", "d": "HPV, EBV, HBV, HCV, and HTLV-1 are linked to malignant transformation. Only HPV (Gardasil 9) and HBV have vaccines among them." },
+  { "id": "HUB-CARD-43", "t": "Nonenveloped enteric viruses and hygiene", "d": "Norovirus and rotavirus lack an envelope, so they survive stomach acid and persist on surfaces. Hepatitis A is also fecal-oral. Wash with soap and water for at least 20 seconds." },
+  { "id": "HUB-CARD-44", "t": "Nerves versus blood", "d": "Rabies and herpesviruses travel along nerves. Poliovirus, measles virus, arboviruses, and B19 spread through lymph or blood. Rotavirus and norovirus stay local to the gut." },
+  { "id": "HUB-CARD-45", "t": "Viruses and pregnancy", "d": "Rubella: malformations, worst in the first trimester. Parvovirus B19: fetal anemia and hydrops. CMV: birth defects. HEV: high maternal mortality in the third trimester. MMR is not given in pregnancy." },
+  { "id": "HUB-CARD-46", "t": "Perinatal prevention", "d": "HBV: birth-dose vaccine within 24 hours, plus HBIG if the mother is HBsAg-positive. HIV: antiretroviral therapy, plus scheduled cesarean at 38 weeks if HIV RNA is above 1,000 copies/mL or unknown. Neonatal HSV: IV acyclovir immediately." },
+  { "id": "HUB-CARD-47", "t": "Interferon: evasion and therapy", "d": "Influenza NS-1 can inhibit interferon production, two Ebola proteins block interferon induction and action, and EBV blocks interferon synthesis. Recombinant interferon alpha is used for chronic hepatitis B." }
 ];
 
 var POOL = [
@@ -710,5 +732,605 @@ var POOL = [
     ],
     "answer": 0,
     "why": "S. epidermidis is the classic device-infection organism. A biofilm of proteins, polysaccharides, and extracellular DNA protects the cells, so a susceptible MIC does not guarantee clearance while the device stays in place."
+  },
+    {
+    "id": "HUB-039",
+    "m": "viruses1+viruses4",
+    "area": "Genome strategy and virion enzymes",
+    "level": "application",
+    "stem": "A laboratory compares measles virus, norovirus, and rotavirus virions. Which set carries its own polymerase?",
+    "options": [
+      "Measles virus and norovirus",
+      "Norovirus and rotavirus",
+      "Measles virus and rotavirus",
+      "Measles virus, norovirus, and rotavirus"
+    ],
+    "answer": 2,
+    "why": "Measles virus has a negative-sense RNA genome and rotavirus has double-stranded RNA, and host cells cannot copy either into mRNA, so both bring a polymerase. Norovirus has a positive-sense genome that acts as mRNA, so it does not."
+  },
+  {
+    "id": "HUB-040",
+    "m": "viruses1+viruses3",
+    "area": "Genome strategy and virion enzymes",
+    "level": "application",
+    "stem": "Influenza virions carry a polymerase that makes viral mRNA, whereas a herpesvirus uses a host enzyme in the nucleus. Which explanation fits?",
+    "options": [
+      "Influenza has negative-sense RNA that host cells cannot copy into mRNA, whereas herpesvirus DNA can be transcribed by host RNA polymerase in the nucleus",
+      "Influenza has double-stranded DNA that must be copied in the cytoplasm, whereas herpesvirus RNA is translated directly",
+      "Influenza replicates in the nucleus without an envelope, whereas herpesvirus replicates in the cytoplasm",
+      "Influenza carries reverse transcriptase to make DNA, whereas herpesvirus carries integrase"
+    ],
+    "answer": 0,
+    "why": "A negative-sense RNA genome cannot be translated, and host cells have no enzyme that copies it, so influenza brings its own polymerase. Herpesviruses replicate in the nucleus and use host RNA polymerase to transcribe their DNA."
+  },
+  {
+    "id": "HUB-041",
+    "m": "viruses3+viruses4",
+    "area": "Genome strategy and virion enzymes",
+    "level": "integration",
+    "stem": "Poxviruses and rotavirus each carry a transcription polymerase in the virion. Which pair of reasons is correct?",
+    "options": [
+      "Poxvirus: a negative-sense RNA genome. Rotavirus: a single-stranded DNA genome",
+      "Poxvirus: a positive-sense RNA genome that needs editing. Rotavirus: an envelope that blocks host enzymes",
+      "Poxvirus: replication in the nucleus with host RNA polymerase. Rotavirus: a positive-sense RNA genome",
+      "Poxvirus: replication in the cytoplasm, out of reach of host RNA polymerase. Rotavirus: a double-stranded RNA genome that host enzymes cannot read"
+    ],
+    "answer": 3,
+    "why": "Poxviruses replicate in the cytoplasm, where host RNA polymerase is not available, so they carry a DNA-dependent RNA polymerase. Rotavirus carries a polymerase because host cells cannot make mRNA from double-stranded RNA."
+  },
+  {
+    "id": "HUB-042",
+    "m": "viruses2+viruses3",
+    "area": "Antiviral targets across viruses",
+    "level": "application",
+    "stem": "Which pairing correctly names the viral enzyme that first activates each drug in infected cells?",
+    "options": [
+      "Acyclovir: UL97 kinase. Ganciclovir: viral thymidine kinase. Foscarnet: none",
+      "Acyclovir: viral thymidine kinase. Ganciclovir: UL97 kinase. Foscarnet: none",
+      "Acyclovir: none. Ganciclovir: viral thymidine kinase. Foscarnet: UL97 kinase",
+      "Acyclovir: viral thymidine kinase. Ganciclovir: none. Foscarnet: UL97 kinase"
+    ],
+    "answer": 1,
+    "why": "Viral thymidine kinase starts activation of acyclovir, and the CMV UL97 kinase phosphorylates ganciclovir. Foscarnet blocks the viral DNA polymerase directly, so it needs no activation."
+  },
+  {
+    "id": "HUB-043",
+    "m": "viruses2+viruses5",
+    "area": "Antiviral targets across viruses",
+    "level": "concept",
+    "stem": "Nirmatrelvir (COVID-19), darunavir (HIV), and glecaprevir (HCV) share which mechanism?",
+    "options": [
+      "They end the growing DNA chain because they lack a 3′ hydroxyl",
+      "They block cleavage of sialic acid so virions cannot be released",
+      "They block a viral protease that cuts a long polypeptide into working proteins",
+      "They bind gp41 and prevent fusion of the envelope with the cell membrane"
+    ],
+    "answer": 2,
+    "why": "All three are protease inhibitors. Glecaprevir acts on the HCV NS3/4A protease. Chain termination describes nucleoside analogs, release blockade describes neuraminidase inhibitors, and gp41 binding describes enfuvirtide."
+  },
+  {
+    "id": "HUB-044",
+    "m": "viruses2+viruses5",
+    "area": "Antiviral targets across viruses",
+    "level": "application",
+    "stem": "Nirmatrelvir is given with ritonavir, and darunavir is given with ritonavir or cobicistat. What is the shared practical consequence?",
+    "options": [
+      "Both boosters block the viral protease directly, so the partner dose can be lowered",
+      "Both boosters convert the partner drug into its active form in the liver",
+      "Both boosters prevent the partner drug from entering infected cells",
+      "Both boosters inhibit CYP3A, so levels of other medicines can rise and interactions need review"
+    ],
+    "answer": 3,
+    "why": "Ritonavir and cobicistat inhibit CYP3A, which slows breakdown of the partner drug. The same effect can raise levels of other CYP3A substrates, so the full medicine list is reviewed."
+  },
+  {
+    "id": "HUB-045",
+    "m": "viruses2+viruses3",
+    "area": "Antiviral targets across viruses",
+    "level": "integration",
+    "stem": "Which pairing correctly places each influenza drug at its step of the replication cycle?",
+    "options": [
+      "Oseltamivir: uncoating. Baloxavir: release. Amantadine: mRNA synthesis",
+      "Amantadine: uncoating. Baloxavir: mRNA synthesis through cap-snatching. Oseltamivir: release",
+      "Amantadine: release. Baloxavir: uncoating. Oseltamivir: mRNA synthesis",
+      "Baloxavir: attachment. Amantadine: mRNA synthesis. Oseltamivir: uncoating"
+    ],
+    "answer": 1,
+    "why": "Amantadine blocks the M2 channel and prevents uncoating (stage 2), although it is no longer used for influenza. Baloxavir inhibits the cap-dependent endonuclease during mRNA synthesis (stage 5). Oseltamivir inhibits neuraminidase and blocks release (stage 8)."
+  },
+  {
+    "id": "HUB-046",
+    "m": "viruses2+viruses5",
+    "area": "Antiviral targets across viruses",
+    "level": "application",
+    "stem": "Which pairing correctly matches each nucleoside or nucleotide analog with its target?",
+    "options": [
+      "Sofosbuvir: reverse transcriptase. Entecavir: NS5B polymerase. Tenofovir: integrase",
+      "Sofosbuvir: NS3/4A protease. Entecavir: HBV integrase. Tenofovir: reverse transcriptase",
+      "Sofosbuvir: HCV NS5B RNA polymerase. Entecavir: HBV polymerase (reverse transcriptase activity). Tenofovir: HIV reverse transcriptase",
+      "Sofosbuvir: NS5A protein. Entecavir: HBV protease. Tenofovir: gp41"
+    ],
+    "answer": 2,
+    "why": "Sofosbuvir inhibits the NS5B RNA polymerase of hepatitis C virus. Entecavir inhibits the reverse transcriptase activity of the HBV polymerase. Tenofovir inhibits reverse transcriptase and is used for both HIV and HBV."
+  },
+  {
+    "id": "HUB-047",
+    "m": "viruses2+viruses3+viruses5",
+    "area": "Antiviral targets across viruses",
+    "level": "integration",
+    "stem": "Lenacapavir and letermovir are used for prevention. Which pairing of target and use is correct?",
+    "options": [
+      "Lenacapavir: terminase, to prevent CMV disease. Letermovir: capsid protein, as HIV PrEP",
+      "Lenacapavir: integrase, to treat HIV. Letermovir: terminase, to treat CMV",
+      "Lenacapavir: gp41, as passive immunization. Letermovir: protease, to prevent RSV",
+      "Lenacapavir: capsid protein, as HIV PrEP every 6 months. Letermovir: terminase, as CMV prophylaxis in transplant recipients"
+    ],
+    "answer": 3,
+    "why": "Lenacapavir binds the HIV capsid protein and is given every 6 months as PrEP. Letermovir inhibits the CMV terminase complex and prevents CMV disease in high-risk transplant recipients."
+  },
+  {
+    "id": "HUB-048",
+    "m": "viruses2+viruses5",
+    "area": "Antiviral targets across viruses",
+    "level": "application",
+    "stem": "On the eight-stage replication roadmap, which stages does a regimen of dolutegravir plus lamivudine block?",
+    "options": [
+      "Genome copying (stage 3) and integration (stage 4)",
+      "Attachment and entry (stage 1) and uncoating (stage 2)",
+      "Integration (stage 4) and release (stage 8)",
+      "Protein making and cutting (stage 6) and assembly (stage 7)"
+    ],
+    "answer": 0,
+    "why": "Lamivudine is a nucleoside analog that stops reverse transcription, which is genome copying for HIV (stage 3). Dolutegravir is an integrase inhibitor and blocks integration (stage 4). The two drugs act on different enzymes, which slows resistance."
+  },
+  {
+    "id": "HUB-049",
+    "m": "viruses2+viruses3",
+    "area": "Vaccines and passive protection",
+    "level": "application",
+    "stem": "A 35-year-old receiving chemotherapy needs protection against zoster and influenza. Which pair of vaccines fits?",
+    "options": [
+      "Varivax and live attenuated influenza vaccine",
+      "Shingrix and inactivated influenza vaccine",
+      "Zostavax and inactivated influenza vaccine",
+      "Shingrix and live attenuated influenza vaccine"
+    ],
+    "answer": 1,
+    "why": "Live-attenuated vaccines can cause disease in immunocompromised patients. Shingrix is a recombinant, non-live vaccine used from age 19 in immunocompromised adults, and an inactivated influenza vaccine contains no live virus. Zostavax was live and has been discontinued in the U.S."
+  },
+  {
+    "id": "HUB-050",
+    "m": "viruses2+viruses3+viruses4",
+    "area": "Vaccines and passive protection",
+    "level": "integration",
+    "stem": "Abrysvo is given at 32 to 36 weeks of pregnancy, whereas MMR is not given during pregnancy. Which explanation fits?",
+    "options": [
+      "Abrysvo is a live attenuated vaccine, whereas MMR is a killed vaccine",
+      "Abrysvo is given only after delivery, whereas MMR is given in the third trimester",
+      "Abrysvo is an mRNA vaccine that cannot reach the fetus, whereas MMR can",
+      "Abrysvo is a recombinant protein vaccine with no live virus, whereas MMR contains live attenuated viruses"
+    ],
+    "answer": 3,
+    "why": "Abrysvo is a recombinant subunit vaccine, so there is no virus that can replicate. Maternal vaccination passes antibody to the infant. MMR contains live attenuated viruses, so a non-immune woman is vaccinated before pregnancy or after delivery."
+  },
+  {
+    "id": "HUB-051",
+    "m": "viruses2+viruses5",
+    "area": "Vaccines and passive protection",
+    "level": "integration",
+    "stem": "A newborn of an HBsAg-positive mother receives hepatitis B vaccine plus HBIG, and a person with a category III rabies exposure receives vaccine plus immune globulin. What principle explains both?",
+    "options": [
+      "The vaccine gives immediate protection, and the immune globulin builds lasting memory",
+      "The immune globulin makes later vaccine doses unnecessary because its protection is long-lasting",
+      "Pre-formed antibody gives immediate protection while the vaccine builds the person’s own lasting immunity",
+      "Both products supply pre-formed antibody, so the combination extends protection through repeated passive doses"
+    ],
+    "answer": 2,
+    "why": "Passive antibody protects immediately but fades over weeks to months and creates no memory. Active immunity from the vaccine takes days to weeks to start and then lasts. Combining them covers the early gap."
+  },
+  {
+    "id": "HUB-052",
+    "m": "viruses2+viruses4",
+    "area": "Vaccines and passive protection",
+    "level": "application",
+    "stem": "A community has 90% measles vaccine coverage, and a child with fever, rash, and Koplik spots attends a crowded clinic. Which statement is supported?",
+    "options": [
+      "Coverage exceeds the measles threshold, so outbreaks fade and infants are protected indirectly",
+      "Coverage is below the threshold of about 95%, so sustained spread is possible and infants too young for MMR remain at risk",
+      "Coverage is adequate, because the polio threshold of about 80% applies to measles",
+      "Coverage has no bearing, because measles does not spread through the air"
+    ],
+    "answer": 1,
+    "why": "About 95% immunity is needed to stop sustained measles spread. Below that, each case can infect more than one person. Measles can remain infectious in the air for up to 2 hours, and infants and immunocompromised people are protected only when community immunity is high."
+  },
+  {
+    "id": "HUB-053",
+    "m": "viruses1+viruses2+viruses4",
+    "area": "Vaccines and passive protection",
+    "level": "integration",
+    "stem": "Why can oral poliovirus vaccine interrupt gut transmission better than inactivated vaccine, and what is its trade-off?",
+    "options": [
+      "It is live and given by mouth, so it builds gut IgA as well as serum antibody, with a rare risk of vaccine-associated paralysis",
+      "It is killed and injected, so it builds serum IgG, with a risk of vaccine-associated paralysis",
+      "It is a subunit vaccine that supplies pre-formed IgA, with a short duration of protection",
+      "It is injected and builds serum antibody and gut IgA, with local pain as its trade-off"
+    ],
+    "answer": 0,
+    "why": "A live vaccine given by the natural route produces secretory IgA at the mucosal surface in addition to serum antibody. OPV carries vaccine-associated paralysis in about 1 per 2 to 4 million doses. IPV is injected and has little effect in the gut."
+  },
+  {
+    "id": "HUB-054",
+    "m": "viruses2+viruses4",
+    "area": "Vaccines and passive protection",
+    "level": "concept",
+    "stem": "An infant with severe combined immunodeficiency should not receive rotavirus vaccine, and MMR is avoided in severe immunocompromise. Which principle covers both?",
+    "options": [
+      "Live-attenuated vaccines can cause disease when the immune system is impaired",
+      "Killed vaccines can revert to virulence in infants",
+      "Subunit vaccines replicate in immunocompromised patients",
+      "Live vaccines give weaker protection than killed vaccines"
+    ],
+    "answer": 0,
+    "why": "The weakened virus in a live vaccine still replicates, so it can cause disease in a patient who cannot control it. Killed and subunit vaccines contain no replicating virus."
+  },
+  {
+    "id": "HUB-055",
+    "m": "viruses1+viruses3",
+    "area": "Latency and persistence",
+    "level": "concept",
+    "stem": "A bacterial prophage and a latent herpes simplex virus both persist without making progeny. Which comparison is correct?",
+    "options": [
+      "Both persist as circular DNA separate from the host chromosome",
+      "The prophage is integrated into the bacterial chromosome, whereas latent HSV DNA is circular and unintegrated in neurons",
+      "The prophage is a circular episome, whereas latent HSV DNA is integrated into a chromosome",
+      "Both persist as RNA copies in the cytoplasm"
+    ],
+    "answer": 1,
+    "why": "A prophage is viral DNA integrated into the bacterial genome. Latent HSV DNA stays as circular, unintegrated DNA in neurons, and its main transcripts are the noncoding LATs."
+  },
+  {
+    "id": "HUB-056",
+    "m": "viruses2+viruses3+viruses5",
+    "area": "Latency and persistence",
+    "level": "integration",
+    "stem": "Which pairing correctly states the viral genome form that persists after antiviral therapy?",
+    "options": [
+      "HSV: DNA integrated into the host genome. HBV: circular unintegrated DNA in neurons. HIV: cccDNA",
+      "HSV: RNA in the cytoplasm. HBV: integrated DNA. HIV: cccDNA",
+      "HSV: cccDNA in the hepatocyte nucleus. HBV: integrated DNA. HIV: circular DNA in neurons",
+      "HSV: circular unintegrated DNA in neurons. HBV: cccDNA in the hepatocyte nucleus. HIV: DNA integrated into the host genome"
+    ],
+    "answer": 3,
+    "why": "HSV latency is a circular episome in neurons, HBV persists as cccDNA in the hepatocyte nucleus, and HIV persists as integrated DNA. Current drugs do not remove any of these, so none of the three infections is cured by antivirals."
+  },
+  {
+    "id": "HUB-057",
+    "m": "viruses1+viruses3+viruses4",
+    "area": "Latency and persistence",
+    "level": "application",
+    "stem": "CMV and HHV-6 both cause serious disease in transplant recipients receiving immunosuppression. Which explanation fits both?",
+    "options": [
+      "Both are herpesviruses that remain latent and reactivate when cell-mediated immunity is impaired",
+      "Both are nonenveloped DNA viruses that integrate into host DNA",
+      "Both lack a latent state, so replication continues at a low level",
+      "Both cause disease only when acquired as a new primary infection"
+    ],
+    "answer": 0,
+    "why": "CMV and HHV-6 are herpesviruses. They persist after the first infection and reactivate when immunity falls, as with immunosuppressive drugs or corticosteroids."
+  },
+  {
+    "id": "HUB-058",
+    "m": "viruses3+viruses4",
+    "area": "Latency and persistence",
+    "level": "application",
+    "stem": "Which antiviral is listed for both CMV disease and HHV-6 reactivation in transplant recipients and acts without activation by a viral kinase?",
+    "options": [
+      "Ganciclovir",
+      "Foscarnet",
+      "Letermovir",
+      "Acyclovir"
+    ],
+    "answer": 1,
+    "why": "Foscarnet blocks the viral DNA polymerase directly and is listed for both. Ganciclovir is also listed for both but needs the UL97 kinase. Letermovir is CMV prophylaxis, and acyclovir is not listed for either."
+  },
+  {
+    "id": "HUB-059",
+    "m": "viruses1+viruses4+viruses5",
+    "area": "Immunopathogenesis and cell injury",
+    "level": "concept",
+    "stem": "The measles rash and the liver injury of hepatitis A are both attributed to which mechanism?",
+    "options": [
+      "A toxin released by the infected cell",
+      "Antibody and complement lysing infected cells",
+      "Direct viral lysis of the infected cells",
+      "Cytotoxic T cells attacking virus-infected cells"
+    ],
+    "answer": 3,
+    "why": "The measles rash appears when cytotoxic T cells attack infected skin cells. Hepatitis A shows no cytopathic effect, and cytotoxic T cells that target viral antigen on hepatocytes are thought to cause the damage."
+  },
+  {
+    "id": "HUB-060",
+    "m": "viruses1+viruses3+viruses4+viruses5",
+    "area": "Immunopathogenesis and cell injury",
+    "level": "integration",
+    "stem": "Which pairing correctly matches each condition with its mechanism?",
+    "options": [
+      "Influenza myalgia: circulating cytokines. Rotavirus diarrhea: NSP4 and serotonin activating enteric nerves. Hepatitis B liver injury: cytotoxic T cells",
+      "Influenza myalgia: viral replication in muscle. Rotavirus diarrhea: cytokines. Hepatitis B liver injury: NSP4",
+      "Influenza myalgia: cytotoxic T cells. Rotavirus diarrhea: viremia. Hepatitis B liver injury: circulating cytokines",
+      "Influenza myalgia: NSP4. Rotavirus diarrhea: cytotoxic T cells killing gut cells. Hepatitis B liver injury: a viral toxin"
+    ],
+    "answer": 0,
+    "why": "Influenza stays in the respiratory tract, and viremia is rare, so aches come from circulating cytokines. Rotavirus NSP4 and serotonin activate enteric nerves, raising fluid secretion and motility. Cytotoxic T cells cause most hepatitis B liver injury."
+  },
+  {
+    "id": "HUB-061",
+    "m": "viruses1+viruses3+viruses4",
+    "area": "Immunopathogenesis and cell injury",
+    "level": "application",
+    "stem": "A Tzanck smear of an HSV vesicle and a measles-infected cell culture both show multinucleated giant cells. Which process produces these cells?",
+    "options": [
+      "Integration of viral DNA into the host chromosome",
+      "Malignant transformation of the infected cell",
+      "Fusion of neighboring cell membranes by viral fusion proteins",
+      "Lysogenic conversion by a prophage"
+    ],
+    "answer": 2,
+    "why": "Viral fusion proteins join infected cells together. Measles virus, RSV, HSV, and VZV can all produce giant cells. The Tzanck finding is a cytopathic effect and does not by itself name the species."
+  },
+  {
+    "id": "HUB-062",
+    "m": "viruses1+viruses5",
+    "area": "Diagnosis and testing",
+    "level": "application",
+    "stem": "A patient completes a course of direct-acting antivirals for chronic hepatitis C. Which test and timing confirm a sustained virologic response?",
+    "options": [
+      "Paired measles-style titers, looking for a fourfold rise",
+      "RT-PCR for HCV RNA 12 weeks after treatment ends",
+      "ELISA for HBsAg on the last day of treatment",
+      "Cell culture for cytopathic effect 4 weeks after treatment starts"
+    ],
+    "answer": 1,
+    "why": "Nucleic acid testing measures viral burden, and SVR is undetectable HCV RNA 12 weeks after treatment completion. Titers, HBsAg, and culture answer different questions."
+  },
+  {
+    "id": "HUB-063",
+    "m": "viruses1+viruses5",
+    "area": "Diagnosis and testing",
+    "level": "application",
+    "stem": "Which pairing of hepatitis B marker and test category is correct?",
+    "options": [
+      "HBsAg: serology showing recovery. Anti-HBs: antigen detection showing active infection",
+      "HBsAg: a nucleic acid test. Anti-HBs: cell culture",
+      "HBsAg: an antibody that shows vaccine immunity. Anti-HBs: an antigen that shows replication",
+      "HBsAg: antigen detection showing infection. Anti-HBs: antibody (serology) showing recovery or vaccine immunity"
+    ],
+    "answer": 3,
+    "why": "HBsAg is a viral protein, so detecting it is antigen detection and shows infection. Anti-HBs is the host antibody, so it is a serologic marker of recovery or vaccine immunity."
+  },
+  {
+    "id": "HUB-064",
+    "m": "viruses1+viruses4",
+    "area": "Diagnosis and testing",
+    "level": "application",
+    "stem": "A child with a maculopapular rash has a measles-specific titer of 1:16 in the acute sample and 1:64 in a sample taken 3 weeks later. Which interpretation fits?",
+    "options": [
+      "A fourfold rise, consistent with recent measles infection",
+      "A twofold rise, below the threshold for recent infection",
+      "A fourfold rise, which shows that the child is still shedding virus",
+      "A fourfold fall, which indicates past infection"
+    ],
+    "answer": 0,
+    "why": "1:16 to 1:64 is a fourfold rise, and a fourfold or greater rise between acute and convalescent samples collected 2 to 4 weeks apart indicates recent infection. The titer shows the antibody response, not how much virus is being shed."
+  },
+  {
+    "id": "HUB-065",
+    "m": "viruses1+viruses3+viruses5",
+    "area": "Vaccines and passive protection",
+    "level": "concept",
+    "stem": "Which pair of tumor-associated viruses each have a vaccine that prevents infection?",
+    "options": [
+      "EBV and HCV",
+      "HPV and HCV",
+      "HPV and HBV",
+      "HBV and EBV"
+    ],
+    "answer": 2,
+    "why": "HPV (Gardasil 9) and HBV (a recombinant HBsAg subunit vaccine) are both linked to malignant transformation and have vaccines. EBV and HCV are also linked to cancer, but no vaccine is available for either."
+  },
+  {
+    "id": "HUB-066",
+    "m": "viruses1+viruses4+viruses5",
+    "area": "Transmission and hygiene",
+    "level": "application",
+    "stem": "A daycare reports a child with hepatitis A and an outbreak of norovirus gastroenteritis. Which hygiene measure addresses both?",
+    "options": [
+      "Washing hands with soap and water for at least 20 seconds",
+      "Alcohol-based sanitizer alone, because both viruses are enveloped",
+      "Antibiotic prophylaxis for classmates",
+      "Airborne Precautions for exposed contacts"
+    ],
+    "answer": 0,
+    "why": "Both viruses spread by the fecal-oral route, and norovirus lacks an envelope, so alcohol sanitizer is less effective. Soap and water removes virus from the hands. Antibiotics do not act on viruses."
+  },
+  {
+    "id": "HUB-067",
+    "m": "viruses1+viruses4",
+    "area": "Transmission and hygiene",
+    "level": "concept",
+    "stem": "Norovirus and rotavirus survive stomach acid, and norovirus persists on surfaces for days. Which structural feature explains this?",
+    "options": [
+      "A DNA genome",
+      "Lack of a lipid envelope",
+      "A thick peptidoglycan wall",
+      "Matrix proteins that link the capsid to an envelope"
+    ],
+    "answer": 1,
+    "why": "A nonenveloped virion has no lipid layer to dissolve, so it resists acid, bile, drying, and many disinfectants. Both viruses have RNA genomes, and viruses have no peptidoglycan."
+  },
+  {
+    "id": "HUB-068",
+    "m": "viruses1+viruses4+viruses5",
+    "area": "Spread within the body and pregnancy",
+    "level": "integration",
+    "stem": "Which pairing of virus and route to distant tissue is correct?",
+    "options": [
+      "Rabies: bloodstream viremia. Poliovirus: peripheral nerves from the gut. Dengue: the local bite site",
+      "Rabies: lymph, then liver. Poliovirus: skin. Dengue: along nerves",
+      "Rabies: along peripheral nerves. Poliovirus: lymphatic tissue and blood, then the nervous system in a small fraction. Dengue: viremia through the bloodstream",
+      "Rabies: along peripheral nerves. Poliovirus: confined to the gut epithelium. Dengue: viremia through the bloodstream"
+    ],
+    "answer": 2,
+    "why": "Rabies replicates at the bite site and moves along nerves, not through blood. Poliovirus enters through the gut, spreads through lymphatic tissue and blood, and reaches the nervous system in about 1% of infections in non-immunized people. Arboviruses cause viremia."
+  },
+  {
+    "id": "HUB-069",
+    "m": "viruses3+viruses4+viruses5",
+    "area": "Spread within the body and pregnancy",
+    "level": "application",
+    "stem": "Which pairing of virus and pregnancy-related concern is correct?",
+    "options": [
+      "Rubella: fetal anemia and hydrops. Parvovirus B19: congenital malformations. HEV: infant skin lesions",
+      "Rubella: malformations in the first trimester. Parvovirus B19: maternal rash only. HEV: mild illness in pregnancy",
+      "Rubella: fetal anemia and hydrops. Parvovirus B19: malformations. HEV: high maternal mortality in the third trimester",
+      "Rubella: malformations, greatest in the first trimester. Parvovirus B19: fetal anemia and hydrops. HEV: high maternal mortality in the third trimester"
+    ],
+    "answer": 3,
+    "why": "Rubella causes congenital rubella syndrome, with the worst damage in the first trimester. B19 infects fetal erythroid precursors, causing anemia that can progress to hydrops. HEV reaches up to about 20 to 25% mortality in third-trimester pregnancy."
+  },
+  {
+    "id": "HUB-070",
+    "m": "viruses3+viruses5",
+    "area": "Spread within the body and pregnancy",
+    "level": "integration",
+    "stem": "Which pairing of perinatal infection and prevention or management matches the lectures?",
+    "options": [
+      "HBV: antiretroviral therapy. HIV: vaccine within 24 hours. Neonatal HSV: oral valacyclovir at home",
+      "HBV: vaccine within 24 hours, plus HBIG if the mother is HBsAg-positive. HIV: antiretroviral therapy, plus scheduled cesarean at 38 weeks if HIV RNA is above 1,000 copies/mL or unknown. Neonatal HSV: IV acyclovir started immediately",
+      "HBV: scheduled cesarean at 38 weeks. HIV: HBIG. Neonatal HSV: observation until lesions appear",
+      "HBV: vaccine at 6 months. HIV: no therapy because the mother is treated. Neonatal HSV: IV acyclovir after culture results"
+    ],
+    "answer": 1,
+    "why": "HBV is prevented with a birth-dose vaccine, plus HBIG when the mother is HBsAg-positive. HIV prevention uses antiretroviral therapy, and a scheduled cesarean at 38 weeks is recommended when HIV RNA is above 1,000 copies/mL or unknown. Neonatal herpes is an emergency, and IV acyclovir starts immediately."
+  },
+  {
+    "id": "HUB-071",
+    "m": "viruses1+viruses3",
+    "area": "Vaccine platforms and vectors",
+    "level": "application",
+    "stem": "Which statement correctly describes adenovirus, both as a wild-type virus and as a gene-therapy vector?",
+    "options": [
+      "Wild-type adenovirus is nonenveloped dsDNA with a fiber at each vertex. As a vector it carries large genes, but its strong immune response limits repeat dosing",
+      "Wild-type adenovirus is an enveloped RNA virus. As a vector it integrates into host DNA for long-lasting expression",
+      "Wild-type adenovirus is nonenveloped ssDNA. As a vector it is not known to cause disease and has low immunogenicity",
+      "Wild-type adenovirus is enveloped dsDNA with a tegument. As a vector it is used mainly outside the body"
+    ],
+    "answer": 0,
+    "why": "Adenovirus is a nonenveloped, icosahedral dsDNA virus with a fiber at each of 12 vertices. As a vector it accepts large genes, but the strong immune response limits repeat dosing. The low-immunogenicity profile belongs to AAV, and integration belongs to lentivirus."
+  },
+  {
+    "id": "HUB-072",
+    "m": "viruses2+viruses3",
+    "area": "Vaccine platforms and vectors",
+    "level": "concept",
+    "stem": "Which influenza vaccine fits the definition of a recombinant subunit vaccine?",
+    "options": [
+      "Inactivated virus grown in embryonated chicken eggs",
+      "A live temperature-sensitive mutant virus",
+      "Inactivated virus grown in MDCK cells",
+      "Purified hemagglutinin made in insect cells"
+    ],
+    "answer": 3,
+    "why": "A subunit vaccine delivers a purified viral protein. The recombinant influenza vaccine uses a recombinant insect virus carrying the HA gene, and the purified HA is the antigen."
+  },
+  {
+    "id": "HUB-073",
+    "m": "viruses2+viruses5",
+    "area": "Vaccine platforms and vectors",
+    "level": "application",
+    "stem": "Which statement about Ervebo is supported?",
+    "options": [
+      "It is an mRNA vaccine that protects against Zaire and Sudan viruses",
+      "It is a recombinant subunit vaccine with an adjuvant that protects against Sudan and Bundibugyo viruses",
+      "It is a live, attenuated viral vector vaccine carrying an Ebola glycoprotein gene, approved for Zaire ebolavirus and not for Sudan or Bundibugyo virus",
+      "It is a killed whole-virus vaccine approved for Zaire ebolavirus and Bundibugyo virus"
+    ],
+    "answer": 2,
+    "why": "Ervebo is a live, attenuated recombinant vesicular stomatitis virus that carries an Ebola surface glycoprotein gene, which is the viral vector platform. It is approved for Zaire ebolavirus, and no vaccine is approved for Sudan or Bundibugyo virus."
+  },
+  {
+    "id": "HUB-074",
+    "m": "viruses1+viruses2+viruses3+viruses5",
+    "area": "Host defenses and viral evasion",
+    "level": "integration",
+    "stem": "Which statement correctly links the interferon response to viral evasion and to therapy?",
+    "options": [
+      "Influenza NS-1 boosts interferon production, Ebola proteins strengthen interferon action, and recombinant interferon alpha treats influenza",
+      "Influenza NS-1 can inhibit interferon production, two Ebola proteins block interferon induction and action, and recombinant interferon alpha is used for chronic hepatitis B",
+      "Influenza NS-1 blocks complement, Ebola proteins degrade MHC class I, and recombinant interferon alpha is used for HIV",
+      "Influenza NS-1 inhibits neuraminidase, Ebola proteins cut precursor proteins, and recombinant interferon alpha is used for rabies"
+    ],
+    "answer": 1,
+    "why": "NS-1 is an influenza virulence factor that can inhibit interferon production, and two Ebola proteins blunt the early antiviral response by blocking interferon induction and action. Recombinant interferon alpha inhibits viral protein synthesis and is used for chronic hepatitis B."
+  },
+  {
+    "id": "HUB-075",
+    "m": "viruses1+viruses5",
+    "area": "Host defenses and viral evasion",
+    "level": "application",
+    "stem": "Inmazeb and Ebanga neutralize Zaire ebolavirus. Which mechanism from the immunity lecture do they use?",
+    "options": [
+      "Binding the outer surface glycoprotein, which can block receptor binding and mark virions for clearance",
+      "Entering infected cells to degrade the viral genome inside the capsid",
+      "Cutting viral precursor proteins to leave immature particles",
+      "Blocking viral DNA from joining the host chromosome"
+    ],
+    "answer": 0,
+    "why": "Both products are monoclonal antibodies that target the Ebola glycoprotein. Antibodies neutralize infectivity by binding outer surface proteins, and they do not act on the genome or enzymes inside the cell."
+  },
+  {
+    "id": "HUB-076",
+    "m": "viruses1+viruses3+viruses4",
+    "area": "Spread within the body and pregnancy",
+    "level": "integration",
+    "stem": "Which pairing of virus and pattern of spread is correct?",
+    "options": [
+      "RSV: viremia to the liver. Measles: confined to the airway. Zoster: spread through blood to many dermatomes",
+      "RSV: replication in the skin. Measles: local replication at the entry site. Zoster: viremia",
+      "RSV: systemic spread through viremia. Measles: local infection. Zoster: a systemic primary infection",
+      "RSV: local infection of respiratory epithelium without viremia. Measles: respiratory tract, then blood and reticuloendothelial cells, then skin. Zoster: local reactivation in one dermatome"
+    ],
+    "answer": 3,
+    "why": "RSV can be severe in infants but stays in the airway, with no viremia. Measles spreads systemically and replicates a second time in reticuloendothelial cells. Zoster is reactivation of latent VZV in one dermatome."
+  },
+  {
+    "id": "HUB-077",
+    "m": "viruses3+viruses4",
+    "area": "Spread within the body and pregnancy",
+    "level": "application",
+    "stem": "Which pairing of clinical finding and virus is correct?",
+    "options": [
+      "Koplik spots: rubella virus. Slapped-cheek rash: HHV-6. Vesicles: parvovirus B19",
+      "Koplik spots: mumps virus. Slapped-cheek rash: measles virus. Vesicles: HHV-6",
+      "Koplik spots: measles virus. Slapped-cheek rash: parvovirus B19. Vesicles: VZV",
+      "Koplik spots: parvovirus B19. Slapped-cheek rash: rubella virus. Vesicles: measles virus"
+    ],
+    "answer": 2,
+    "why": "Koplik spots on the cheek lining point to measles, the slapped-cheek rash is classic for parvovirus B19, and vesicles are typical of HSV and VZV. HHV-6 causes roseola, with a rash after the fever resolves."
+  },
+  {
+    "id": "HUB-078",
+    "m": "viruses1+viruses2+viruses5",
+    "area": "Host defenses and viral evasion",
+    "level": "integration",
+    "stem": "Why do missed doses of an antiretroviral regimen risk resistance, and why do drug combinations help?",
+    "options": [
+      "HIV copies its genome with a proofreading polymerase, so resistance arises when the patient stops therapy",
+      "HIV copies its genome with an error-prone polymerase, so missed doses let resistant mutants multiply, and drugs from different classes make it harder for one mutant to escape",
+      "HIV integrates into host DNA, so resistance is inherited from the host cell",
+      "HIV mutates in the presence of a drug, so combination therapy prevents mutation"
+    ],
+    "answer": 1,
+    "why": "HIV is one of the viruses with an error-prone polymerase, so mutants arise often. Incomplete drug exposure lets resistant mutants multiply. Drugs from different classes block different steps, so a single mutation is unlikely to defeat the whole regimen."
   }
 ];
