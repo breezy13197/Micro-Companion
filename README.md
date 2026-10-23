@@ -13,10 +13,11 @@ A set of web pages that students open in a browser. No installation, no server, 
 | `index.html` | The hub page itself. Students open this one first. |
 | `bacteria1.html` to `bacteria4.html` | The four Bacteria companions (study pages for each lecture). |
 | `viruses1.html` to `viruses5.html` | The five Viruses companions. |
+| 'mycoses.html' | The Mycoses companion |
 | `banks/` | The questions and flashcards, plus a small "manifest" file per companion that describes its sections. |
 | `shared/` | Code and styling shared by every companion. |
 
-`banks/hub.js` is the hub's own question bank: 38 questions and 25 flashcards that each need **two or more Bacteria lectures** at once. (There are no integration questions that involve the Viruses lectures yet.)
+`banks/hub.js` is the hub's own question bank: 78 questions and 47 flashcards that each need **two or more Bacteria/Viruses lectures** at once.
 
 ---
 
@@ -36,6 +37,7 @@ companions/
   viruses3.html
   viruses4.html
   viruses5.html
+  mycoses.html
   banks/
     hub.js
     bacteria1.js    bacteria1.manifest.js
@@ -47,6 +49,7 @@ companions/
     viruses3.js     viruses3.manifest.js
     viruses4.js     viruses4.manifest.js
     viruses5.js     viruses5.manifest.js
+    mycoses.js      mycoses.manifest.js
   shared/
     activities.js  engine.js  helpers.js  menu.js  storage.js  welcome.js
     sections.css   shell.css  styles.css  welcome.css
@@ -61,7 +64,7 @@ If an `index.html` from another course is already in this folder, rename or move
 ## Step 2. Open the hub and check it
 
 1. Open `index.html` in a browser (Chrome, Edge, or Firefox).
-2. You should see six rings (Bacteria I to IV, Viruses I and II) and the "Integration" card at the bottom.
+2. You should see ten rings (Bacteria I to IV, Viruses I to V, Mycoses) and the "Integration" card at the bottom.
 3. Click **How this works** in the left menu, then scroll to **What is loaded right now**.
 
 You should see a table like this:
@@ -77,6 +80,7 @@ You should see a table like this:
 | Viruses III: Herpes to Flu | 125 | manifest loaded |
 | Viruses IV: Childhood & Enteric | 67 | manifest loaded |
 | Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV | 76 | manifest loaded |
+| Mycoses: Fungal Infections and Antifungals | 86 | manifest loaded |
 | Integration & review | 38 | not needed |
 
 (The question counts will change when you add or remove questions. What matters is that every row says "manifest loaded".)
@@ -109,15 +113,13 @@ On a narrow screen the left-hand menu folds away behind a **Menu** button, so th
 
 ## Colors
 
-The hub uses the **Gram stain** scheme you chose: aubergine `#3B1758` and safranin pink `#E8437F`. The four companions keep their own colors inside their cards, taken from your Claude Design mockup.
-
 To change the hub's colors later, open `index.html` in a text editor and search for `--accent:` (near the top). That block controls the whole hub.
 
 ## The Integration question bank
 
-- 38 questions in 12 concept areas, each tagged with the companions it draws on (for example `bacteria2+bacteria4`). Levels: 9 concept, 19 application, 10 integration.
+- 78 questions in 22 concept areas, each tagged with the companions it draws on (for example `bacteria2+bacteria4`). Levels: 9 concept, 19 application, 10 integration.
 - Every question was checked against your Question Writing Guidelines: single best answer, 4 options, a rationale for each, no "all/none of the above," no NOT/EXCEPT stems, no absolute terms (always, never, only) or vague terms (usually, commonly), correct answers spread evenly across A to D.
-- IDs run `HUB-001` to `HUB-038` and must **never be reused or renumbered**, even if you delete a question.
+- IDs run `HUB-001` to `HUB-078` and must **never be reused or renumbered**, even if you delete a question.
 - Every fact comes from your lecture cards. Please read through the questions before students see them. You know the lectures better than I do.
 
 ### If you edit questions later
