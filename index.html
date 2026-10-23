@@ -469,8 +469,10 @@ HUB.META = {
     ink:'#073540', head2:'#0F6F80', accent:'#0B5563', soft:'#A9D2D9', warm:'#FF9F6B', tintA:'#E3F2F4', tintB:'#FFF0E6', plateHi:'#1A7F92', track:'#D5E8EB' },
   viruses4:{ title:'Viruses IV: Childhood and enteric tract viruses', kicker:'VIRUSES IV — CHILDHOOD & ENTERIC', tag1:'Spot the virus.', tag2:'Guard the patient.',
     ink:'#1F2A80', head2:'#1F2A80', accent:'#E5489F', soft:'#F2B6D6', warm:'#E5489F', tintA:'#E9ECFA', tintB:'#FDE7F3', plateHi:'#3A4BD0', track:'#E1E4F4' }, 
-   viruses5:{ title:'Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV', kicker:'VIRUSES V — HEPATITIS & HIV', tag1:'Know the virus.', tag2:'Choose the intervention.',
+  viruses5:{ title:'Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV', kicker:'VIRUSES V — HEPATITIS & HIV', tag1:'Know the virus.', tag2:'Choose the intervention.',
     ink:'#4A1D06', head2:'#8A3B12', accent:'#8A3B12', soft:'#C9B8F0', warm:'#C9B8F0', tintA:'#FBEAE0', tintB:'#F0EAFC', plateHi:'#B5532A', track:'#EBDDD5' },
+  mycoses:{ title:'Mycoses: Fungal Infections and Antifungals', kicker:'MYCOSES — FUNGI & ANTIFUNGALS', tag1:'Know the fungus.', tag2:'Choose the drug.',
+    ink:'#2B290F', head2:'#4B4719', accent:'#4B4719', soft:'#8FB2F4', warm:'#8FB2F4', tintA:'#F2EFD9', tintB:'#E8F0FD', plateHi:'#6B6624', track:'#E6E2C8' },
   hub:{ title:'Integration & review', kicker:'INTEGRATION — ACROSS LECTURES', tag1:'Join the lectures.', tag2:'Answer across topics.',
     ink:'#212529', head2:'#6c757d', accent:'#495057', soft:'#adb5bd', warm:'#6c757d', tintA:'#e9ecef', tintB:'#f8f9fa', plateHi:'#6c757d', track:'#dee2e6' }
 };
@@ -536,7 +538,11 @@ HUB.capture = function(expected){
 
 <script src="banks/viruses5.js"></script>
 <script src="banks/viruses5.manifest.js"></script>
-<script>HUB.capture('viruses5');</script>   
+<script>HUB.capture('viruses5');</script>  
+
+<script src="banks/mycoses.js"></script>
+<script src="banks/mycoses.manifest.js"></script>
+<script>HUB.capture('mycoses');</script>   
 
 <!-- The hub's own bank has no companion page, so it has no manifest. -->
 <script src="banks/hub.js"></script>
