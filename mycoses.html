@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mycoses · Fungal Infections and Antifungals — PHA3109 Study Companion</title>
+<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
+<style>
+:root{
+  --olive:#4B4719; --olive-deep:#2B290F; --olive-lift:#6B6624; --olive-ink:#3A3714;
+  --cf:#8FB2F4; --cf-deep:#5E86D8; --cf-soft:#E8F0FD; --cf-ink:#2A55AE;
+  --gold:#E0A010;
+
+  /* the "primary" family every shared component reads */
+  --green:#4B4719; --green-bright:#6B6624; --green-soft:#F2EFD9; --green-line:#D8D2A4;
+  --amber:#8A5A00; --amber-soft:#FDEFD0;
+
+  /* correct / complete keep a true green, so olive never reads as "right" */
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-line:#BFE6D4; --ok-ink:#1C7554;
+
+  --ink:#25230F; --ink-mid:#55512F; --ink-soft:#858160;
+  --page:#FAF9F2; --line:#E6E2C8;
+  --shadow:0 2px 16px rgba(75,71,25,.09);
+
+  --w-deep:#2B290F; --w-band:#4B4719; --w-lift:#6B6624;
+  --w-hero-1:#F2EFD9; --w-hero-2:#FBFAF0; --w-hero-3:#E8F0FD;
+  --w-hl:#8FB2F4; --w-hl-hover:#7AA0EA; --w-hl-ink:#2A55AE; --w-hl-strong:#3A64BB; --w-on-hl:#262310;
+  --w-hl-soft:#E8F0FD;
+  --w-art-1:#F2EFD9; --w-art-2:#E8F0FD; --w-art-line:#D8D2A4;
+  --w-check:#6B6624;
+  --w-kp-bg:#FAF9F2;
+  --w-shadow-rgb:75,71,25;
+  --w-t1-bg:#EDE9C2; --w-t1-fg:#55512F;
+  --w-t2-bg:#E3ECFB; --w-t2-fg:#2A55AE;
+  --w-t3-bg:#E3F2EA; --w-t3-fg:#1C7A55;
+  --w-t4-bg:#FDEFD0; --w-t4-fg:#8A5A00;
+  --w-t5-bg:#E1EEF8; --w-t5-fg:#1D6FA0;
+  --w-t6-bg:#F9E1E8; --w-t6-fg:#B03A5E;
+}
+body{
+  background:
+    radial-gradient(900px 420px at 92% -8%, #E8F0FD 0%, rgba(232,240,253,0) 62%),
+    radial-gradient(760px 380px at 2% -4%, #F2EFD9 0%, rgba(242,239,217,0) 58%),
+    var(--page);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{color:var(--ink)}
+h2{letter-spacing:-.015em}
+
+/* shared components, re-inked from green to olive / ok-green */
+.mod-head.current{background:var(--green-soft);color:var(--olive-ink)}
+.mod-head.current .mod-badge{background:#fff;color:var(--olive-ink)}
+.mod-head .mod-badge.done{background:var(--ok-soft);color:var(--ok-ink)}
+.sub button.current{background:var(--green-soft);color:var(--olive-ink)}
+.sub button.done .dot{background:var(--ok)}
+.sub button.current .dot{background:var(--olive-lift)}
+.ring-wrap{background:var(--green-soft)}
+.ring-num{color:var(--olive-ink)}
+.ring-cap{color:var(--ink-mid)}
+.pill{background:var(--green-soft);color:var(--olive-ink)}
+.btn:hover{background:var(--olive-deep)}
+.btn.ghost.on{background:var(--green-soft);border-color:var(--green-line);color:var(--olive-ink)}
+.opt.sel{color:var(--olive-ink)}
+.opt.reveal{border-color:var(--ok);color:var(--ok-ink)}
+.opt.sel.bad{background:var(--rose-soft)}
+.dnd-pill{color:var(--olive-ink)}
+.dnd-ghost{color:var(--olive-ink)}
+.dnd-row.correct{border-color:var(--ok);background:var(--ok-soft)}
+.dnd-row.correct .dnd-slot{border-color:var(--ok)}
+.choice:hover:not(:disabled){background:#F7F5E4}
+.choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.feedback{border-left-color:var(--ok)}
+.feedback.miss{border-left-color:var(--rose)}
+.apply{background:var(--green-soft)}
+.apply .tag{background:#E0DCB0;color:var(--olive-ink)}
+.predict .tag{background:#FBE3A6;color:#6B4600}
+.mod-badge.done,.home-num.done{background:var(--ok-soft);color:var(--ok-ink)}
+.home-status.done{color:var(--ok-ink)}
+.s-strong{color:var(--ok-ink)}
+.lock-dot.done{background:var(--ok)}
+.fc-front{background:linear-gradient(140deg,#F7F5E4,#E8F0FD);border:1px solid var(--green-line)}
+.score-hero{background:linear-gradient(135deg,var(--olive-lift),var(--olive))}
+.score-hero .big{color:var(--cf)}
+.bd-fill{background:var(--olive-lift)!important}
+.reset:hover{color:var(--rose)}
+.back-to-hub{color:var(--olive-lift)}
+input[type=range]{background:linear-gradient(90deg,var(--green-line),var(--olive-lift))}
+input[type=range]::-webkit-slider-thumb{border-color:var(--olive)}
+input[type=range]::-moz-range-thumb{border-color:var(--olive)}
+.box.clinical{background:#E8F0FD}
+.clinical .tag{background:#C9DAF8;color:var(--cf-ink)}
+
+.btn.outline{background:#fff;color:var(--olive);border:1.5px solid var(--green-line)}
+.btn.outline:hover{background:var(--green-soft);color:var(--olive-deep)}
+
+/* custom activity pieces */
+.lab-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:#fff;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:8px 15px;font-size:.86rem;color:var(--ink-mid);cursor:pointer}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button.on{background:var(--olive);color:#fff}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.lab-row .opt:disabled{opacity:.5;cursor:not-allowed}
+.stage-name{font-size:1.1rem;font-weight:750;color:var(--olive);min-height:1.6em}
+.meter{height:12px;border-radius:99px;background:#EAE6CC;overflow:hidden;margin:6px 0 2px}
+.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--ok));width:0;transition:width .4s}
+.report{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.scroll-x{overflow-x:auto}
+.figure svg text{font-family:var(--font)}
+.cell-parts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="back-to-hub" href="hub.html"><span class="arrow">&larr;</span>Back to hub</a>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12.5a8.5 8.5 0 0 1 17 0z"/><path d="M10 12.5v6a2 2 0 0 0 4 0v-6"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="14" cy="8" r="1"/></svg></div>
+      <div><div class="brand-title">Mycoses &middot; Fungal Infections</div><div class="brand-sub">PHA3109 Microbiology &amp; Immunology</div></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="18" fill="none" stroke="#D8D2A4" stroke-width="5"/>
+        <circle id="ringFill" cx="22" cy="22" r="18" fill="none" stroke="#5E86D8" stroke-width="5" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113" transform="rotate(-90 22 22)"/>
+      </svg>
+      <div><div class="ring-num" id="ringPct">0%</div>
+      <div class="ring-cap">of the companion<br>complete</div></div>
+    </div>
+    <button class="reset" id="resetBtn">Clear my saved progress</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="topTitle">Welcome</h1><div class="meta" id="topMeta">Mycoses &middot; PHA3109 Microbiology &amp; Immunology</div></div>
+      <div class="pill" id="topPill">Not started</div>
+    </div>
+
+<section class="section welcome" data-key="start">
+
+  <div class="hero">
+    <div>
+      <div class="kicker">PHA3109 &middot; Microbiology &amp; Immunology</div>
+      <h2 class="hero-title">Know the fungus.<span>Choose the drug.</span></h2>
+      <p>Mycoses &mdash; fungal cell biology, the antifungal drug classes, skin and endemic infections, Candida, Cryptococcus, and Aspergillus. Predict, build, sort, and decide your way through the material. The lecture supplies the content; this companion supplies the practice.</p>
+      <div class="btn-row">
+        <button class="btn lg" data-go="m1home">Start Module 1</button>
+        <button class="btn lg outline" data-go="flashcards">Try the flashcards</button>
+      </div>
+      <div class="hero-note"><span class="hero-dots"><i style="background:#4B4719"></i><i style="background:#8FB2F4"></i><i style="background:#E0A010"></i></span>Built around one question: how do the fungus, the host, and the drug target fit together?</div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 400 400" role="img" aria-label="Illustration of a budding yeast cell with a nucleus, ringed by small spores"><defs><radialGradient id="hg" cx="42%" cy="34%" r="78%"><stop offset="0" stop-color="#8A8438"/><stop offset="1" stop-color="#2B290F"/></radialGradient></defs><circle cx="200" cy="205" r="186" fill="none" stroke="#8FB2F4" stroke-width="2.4" stroke-dasharray="1 9" stroke-linecap="round"/><line x1="334.0" y1="205.0" x2="364.0" y2="205.0" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="364.0" cy="205.0" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="320.7" y1="263.1" x2="347.8" y2="276.2" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="347.8" cy="276.2" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="283.5" y1="309.8" x2="302.3" y2="333.2" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="302.3" cy="333.2" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="229.8" y1="335.6" x2="236.5" y2="364.9" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="236.5" cy="364.9" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="170.2" y1="335.6" x2="163.5" y2="364.9" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="163.5" cy="364.9" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="116.5" y1="309.8" x2="97.7" y2="333.2" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="97.7" cy="333.2" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="79.3" y1="263.1" x2="52.2" y2="276.2" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="52.2" cy="276.2" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="66.0" y1="205.0" x2="36.0" y2="205.0" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="36.0" cy="205.0" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="79.3" y1="146.9" x2="52.2" y2="133.8" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="52.2" cy="133.8" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="116.5" y1="100.2" x2="97.7" y2="76.8" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="97.7" cy="76.8" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="170.2" y1="74.4" x2="163.5" y2="45.1" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="163.5" cy="45.1" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="229.8" y1="74.4" x2="236.5" y2="45.1" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="236.5" cy="45.1" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="283.5" y1="100.2" x2="302.3" y2="76.8" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="302.3" cy="76.8" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><line x1="320.7" y1="146.9" x2="347.8" y2="133.8" stroke="#5E86D8" stroke-width="5" stroke-linecap="round"/><circle cx="347.8" cy="133.8" r="7" fill="#8FB2F4" stroke="#5E86D8" stroke-width="2.5"/><circle cx="168" cy="224" r="108" fill="url(#hg)"/><circle cx="168" cy="224" r="108" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3"/><circle cx="268" cy="128" r="54" fill="url(#hg)"/><circle cx="268" cy="128" r="54" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3"/><circle cx="152" cy="214" r="34" fill="#E8F0FD" stroke="#5E86D8" stroke-width="4"/><circle cx="146" cy="208" r="10" fill="#8FB2F4"/><g fill="#E8F0FD" opacity=".85"><circle cx="206" cy="262" r="8"/><circle cx="116" cy="268" r="8"/><circle cx="214" cy="204" r="8"/><circle cx="266" cy="132" r="9"/></g><path d="M86 330 C 120 300 150 336 188 322" fill="none" stroke="#8FB2F4" stroke-width="10" stroke-linecap="round"/><path d="M104 316 l-2 -18 M150 330 l-2 18" stroke="#5E86D8" stroke-width="4" stroke-linecap="round"/><circle cx="334" cy="92" r="7" fill="#8FB2F4"/><circle cx="62" cy="300" r="6" fill="#6B6624"/><circle cx="354" cy="280" r="5" fill="#8FB2F4"/><g font-weight="700" font-size="13"><rect x="8" y="96" width="92" height="30" rx="15" fill="#fff"/><circle cx="26" cy="111" r="6" fill="#6B6624"/><text x="40" y="116" fill="#25230F">Yeast</text><rect x="290" y="326" width="98" height="30" rx="15" fill="#fff"/><circle cx="308" cy="341" r="6" fill="#5E86D8"/><text x="322" y="346" fill="#25230F">Hyphae</text></g></svg>
+      <div class="hero-badge"><b data-stat="modules">0</b><span>Modules</span></div>
+    </div>
+  </div>
+
+  <div class="statband" aria-label="What is inside this companion">
+    <div class="stat"><span data-ico="layers"></span><div><b data-stat="modules">0</b><span>Modules</span></div></div>
+    <div class="stat"><span data-ico="spark"></span><div><b data-stat="activities">0</b><span>Hands-on activities</span></div></div>
+    <div class="stat"><span data-ico="question"></span><div><b data-stat="questions">0</b><span>Quiz questions</span></div></div>
+    <div class="stat"><span data-ico="cards"></span><div><b data-stat="cards">0</b><span>Flashcards</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="sect-head"><div><div class="eyebrow">Your path</div><h2>Six modules, one pharmacist&rsquo;s question each</h2></div></div>
+    <div class="mod-cards" style="--w-cols:3">
+      <button class="mod-card" data-go="m1home">
+        <span class="chip-ico tone-1" data-ico="microbe"></span>
+        <h3>Meet the fungi: cells, forms, hosts, and tests</h3><p>What makes a fungus different, and who is at risk?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m2home">
+        <span class="chip-ico tone-2" data-ico="flask"></span>
+        <h3>Attack the fungus: drug targets and mechanisms</h3><p>Which target does each antifungal class hit?</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m3home">
+        <span class="chip-ico tone-3" data-ico="layers"></span>
+        <h3>When fungi invade the skin</h3><p>Cutaneous and subcutaneous infections, and why depth matters.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m4home">
+        <span class="chip-ico tone-4" data-ico="dna"></span>
+        <h3>From soil to systemic infection</h3><p>Endemic fungi, dimorphism, and dissemination.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m5home">
+        <span class="chip-ico tone-5" data-ico="spark"></span>
+        <h3>Candida: from commensal to pathogen</h3><p>Why a normal yeast becomes invasive, and how to treat it.</p><span class="go">Open module &rarr;</span>
+      </button>
+      <button class="mod-card" data-go="m6home">
+        <span class="chip-ico tone-6" data-ico="shield"></span>
+        <h3>Opportunistic fungal threats</h3><p>Cryptococcus, Aspergillus, and who is at risk.</p><span class="go">Open module &rarr;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="why">
+      <div class="why-art">
+<svg viewBox="0 0 420 230" role="img" aria-label="Three steps: predict, interact, explain">
+  <g fill="none" style="stroke:var(--w-art-line)" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round">
+    <path d="M118 96 C 140 60, 170 60, 190 92"/><path d="M232 92 C 252 60, 282 60, 302 96"/>
+  </g>
+  <g>
+    <circle cx="80" cy="112" r="46" fill="#fff" style="stroke:var(--w-hl)" stroke-width="4"/>
+    <text x="80" y="122" text-anchor="middle" font-size="34" font-weight="800" style="fill:var(--w-deep)">?</text>
+    <text x="80" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">1 Predict</text>
+    <circle cx="210" cy="112" r="46" style="fill:var(--w-band)"/>
+    <path d="M196 96 v34 l9 -8 6 13 7 -3 -6 -13 12 -1 z" style="fill:var(--w-hl)"/>
+    <text x="210" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">2 Interact</text>
+    <circle cx="340" cy="112" r="46" fill="#fff" style="stroke:var(--ok)" stroke-width="4"/>
+    <path d="M320 113 l14 14 26 -30" fill="none" style="stroke:var(--ok)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="340" y="188" text-anchor="middle" font-size="14" font-weight="750" style="fill:var(--ink)">3 Explain</text>
+  </g>
+</svg>
+        <div class="badge-hl"><small>Every section</small>Practice first</div>
+      </div>
+      <div>
+        <div class="eyebrow">How it works</div>
+        <h2>Not a repeat of the slides</h2>
+        <p class="lede">You will not find the lecture re-typed here. Each section gives you something a live class has little time for.</p>
+        <ul class="checks">
+          <li><span><b>Predict.</b> Short questions come before the reveal. A wrong pick nudges you to try again, so one slip never blocks your progress.</span></li>
+          <li><span><b>Interact.</b> Build a fungal cell, flip a temperature switch, block an enzyme in the sterol pathway, and change a patient&rsquo;s defenses to watch Candida turn invasive.</span></li>
+          <li><span><b>Explain.</b> Every answer comes with the reasoning, not only right or wrong.</span></li>
+          <li><span><b>Consult.</b> Before the exam, act as the pharmacist for three patients and connect host, organism, pathogenesis, diagnosis, and treatment.</span></li>
+          <li><span><b>Adapt.</b> After each quiz, the concepts you missed become a targeted practice round. The Final Mastery Exam unlocks once all modules and the consult are complete.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-ico" data-ico="book"></div>
+    <div class="cta-body"><h2>Ready to begin?</h2><p>Start with what makes a fungus different from a bacterium. Your progress saves in this browser as you go.</p></div>
+    <button class="btn hl lg" data-go="m1home">Start Module 1 &rarr;</button>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m1home">
+  <div class="modhero">
+    <div class="kicker">Module 1</div>
+    <h2>Meet the fungi</h2>
+    <p>Fungi are not bacteria with a different name. They are eukaryotes with their own wall, their own membrane sterol, and their own ways of changing shape. This module shows what makes a fungus a fungus, why some people are far more vulnerable than others, and how the laboratory finds it.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Why are fungi different from bacteria, and what decides whether an exposure becomes a disease?</span></div>
+    <div class="ghost-num" aria-hidden="true">1</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Compare the fungal cell with bacterial and human cells, and name the structures a drug can target selectively.</li><li>Predict the form a fungus takes (yeast, mold, or spherule) from the temperature and the organism.</li><li>Link a host defect to the fungi that exploit it, and match a specimen to the test that finds the fungus.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m1s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Anatomy of a fungal cell</span><span class="home-desc">Build a fungal, a bacterial, and a human cell, and see which parts only the fungus has.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m1s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Yeast, mold, or dimorphic?</span><span class="home-desc">Predict which form a fungus takes at room temperature and at body temperature.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m1s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">The host defense challenge</span><span class="home-desc">Change one host defect at a time and predict which fungi take advantage.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m1s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">The fungal investigation lab</span><span class="home-desc">Match five specimens to the test that finds the fungus, then sort three kinds of fungal harm.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m1quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 1 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s1">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 1</div>
+    <h2>Anatomy of a fungal cell</h2>
+    <p class="lede">A fungal cell is built like a human cell on the inside and like nothing in the human body on the outside. That outside, a wall and a different membrane sterol, is where antifungal drugs find their targets.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Fungi are eukaryotes, with a nucleus, mitochondria, and endoplasmic reticulum. A fungal cell is about 4 µm across, compared with about 1 µm for a typical bacterium.</li><li>The fungal cell wall is built from chitin (a polymer of N-acetylglucosamine) and β-glucan. Bacteria use peptidoglycan, and human cells have no wall.</li><li>The fungal membrane contains ergosterol. Human membranes contain cholesterol, and bacterial membranes contain no sterols.</li><li>Fungi make sexual and asexual spores, not endospores. They need organic carbon, and none are obligate anaerobes.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 660 234" role="img" aria-label="Three cells side by side: a fungal cell with a layered wall and a nucleus, a small bacterial cell with a peptidoglycan wall, and a human cell with no wall"><rect x="2" y="2" width="656" height="230" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><ellipse cx="120" cy="108" rx="84" ry="62" fill="#FBFAF0" stroke="#6B6624" stroke-width="9"/><ellipse cx="120" cy="108" rx="76" ry="54" fill="none" stroke="#5E86D8" stroke-width="6"/><ellipse cx="120" cy="108" rx="68" ry="46" fill="none" stroke="#4B4719" stroke-width="4"/><circle cx="104" cy="104" r="17" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3"/><ellipse cx="146" cy="120" rx="13" ry="8" fill="#6B6624"/><text x="120" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F" >Fungal cell</text><text x="120" y="214" text-anchor="middle" font-size="11" font-weight="400" fill="#55512F" >chitin + β-glucan wall, ergosterol</text><ellipse cx="330" cy="108" rx="62" ry="36" fill="#FBFAF0" stroke="#E0A010" stroke-width="8"/><ellipse cx="330" cy="108" rx="54" ry="29" fill="none" stroke="#858160" stroke-width="2.5" stroke-dasharray="3 3"/><path d="M300 108 q10 -18 20 0 t20 0 t20 0" fill="none" stroke="#4B4719" stroke-width="3.5" stroke-linecap="round"/><text x="330" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F" >Bacterial cell</text><text x="330" y="214" text-anchor="middle" font-size="11" font-weight="400" fill="#55512F" >peptidoglycan wall, no sterols</text><ellipse cx="540" cy="108" rx="78" ry="58" fill="#FBFAF0" stroke="#D4536B" stroke-width="5"/><circle cx="522" cy="104" r="17" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3"/><ellipse cx="566" cy="120" rx="13" ry="8" fill="#6B6624"/><text x="540" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F" >Human cell</text><text x="540" y="214" text-anchor="middle" font-size="11" font-weight="400" fill="#55512F" >no wall, cholesterol</text></svg><p class="caption">The fungal cell looks like the human cell inside (nucleus, mitochondria) and unlike it on the outside (a wall and a different sterol). The bacterium differs in both places.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Build the cell</h2>
+    <p class="try-note">Pick a cell type, add only the parts that cell has, and check. Build all three types to finish.</p>
+    <div id="act-cellBuilder"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c1a"><p>Which polymer is a main structural component of the fungal cell wall?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1b"><p>Which membrane lipid separates a fungal cell from a human cell?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c1c"><p>Why can a drug that blocks chitin or β-glucan synthesis be selective for fungi?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When you can name the structure a drug hits, you can predict its safety. Wall polymers and ergosterol are absent or different in humans, which is why the antifungal classes you will meet in Module 2 each aim at one of them.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s2">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 2</div>
+    <h2>Yeast, mold, or dimorphic?</h2>
+    <p class="lede">A fungus can live as a yeast, as a mold, or as both. Temperature decides which form the dimorphic fungi take, and the form you see under the microscope is a clue to the organism.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Yeasts are single cells that reproduce by budding. Candida and Cryptococcus are yeasts.</li><li>Molds grow as branching filaments called hyphae. Aspergillus, Mucor, and the dermatophytes are molds.</li><li>Thermally dimorphic fungi are molds at room temperature and yeasts at 37 °C. Histoplasma, Blastomyces, and Sporothrix follow this pattern.</li><li>Coccidioides is the odd one: at 37 °C it forms a spherule full of endospores rather than a budding yeast.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 660 240" role="img" aria-label="Three fungal forms: budding yeast cells, a mold with branching septate hyphae, and a spherule filled with endospores"><rect x="2" y="2" width="656" height="236" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><circle cx="86" cy="100" r="30" fill="#F2EFD9" stroke="#4B4719" stroke-width="4"/><circle cx="124" cy="78" r="16" fill="#F2EFD9" stroke="#4B4719" stroke-width="4"/><circle cx="62" cy="150" r="20" fill="#F2EFD9" stroke="#4B4719" stroke-width="4"/><text x="90" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F" >Yeast</text><text x="90" y="214" text-anchor="middle" font-size="11" font-weight="400" fill="#55512F" >single cells that bud</text><path d="M240 160 L330 130 L400 90 M330 130 L420 150 M400 90 L450 70" fill="none" stroke="#6B6624" stroke-width="7" stroke-linecap="round"/><g stroke="#2B290F" stroke-width="2.5"><path d="M268 150 v-14 M300 140 v-14 M358 112 v-14 M375 140 v-14"/></g><text x="340" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F" >Mold</text><text x="340" y="214" text-anchor="middle" font-size="11" font-weight="400" fill="#55512F" >branching hyphae with septa</text><circle cx="570" cy="108" r="52" fill="#E8F0FD" stroke="#5E86D8" stroke-width="5"/><g fill="#2A55AE"><circle cx="548" cy="92" r="6"/><circle cx="574" cy="86" r="6"/><circle cx="592" cy="106" r="6"/><circle cx="560" cy="116" r="6"/><circle cx="582" cy="130" r="6"/><circle cx="545" cy="132" r="6"/></g><text x="570" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F" >Spherule</text><text x="570" y="214" text-anchor="middle" font-size="11" font-weight="400" fill="#55512F" >Coccidioides in tissue</text></svg><p class="caption">Candida and Cryptococcus are yeasts. Aspergillus, Mucor, and the dermatophytes are molds. Coccidioides is a mold in the soil and a spherule in tissue.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The morphology simulator</h2>
+    <p class="try-note">Make a prediction first. Then pick an organism and a temperature. See both temperatures for Histoplasma and Coccidioides to finish.</p>
+    <div id="act-morphLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c2a"><p>Which fungus is thermally dimorphic?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2b"><p>At 37 °C in tissue, which structure does Coccidioides form?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c2c"><p>A culture at room temperature shows branching filaments, but a tissue sample shows small budding cells. Which term describes this pattern?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A microscopy report that says yeast or hyphae narrows the list at once. Remember that a dimorphic fungus is a mold in the lab at room temperature and a yeast or spherule in the patient. Mold cultures of these organisms are a hazard for laboratory staff, which is why they are handled with care.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s3">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 3</div>
+    <h2>The host defense challenge</h2>
+    <p class="lede">Healthy people inhale fungal spores every day without harm. Disease happens when a specific defense is missing, and each defect opens the door to a predictable set of fungi.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Inhalation is the usual portal of entry. Candida is the exception, because it is already part of the normal flora.</li><li>Fungi make no endotoxin or exotoxin. Tissue damage comes from the host response, which is granulomatous (macrophages, giant cells, lymphocytes) or suppurative (neutrophils).</li><li>The defect predicts the fungus: neutropenia points to Candida and Aspergillus, T-cell loss to Cryptococcus, and ketoacidosis to Mucor and Rhizopus.</li><li>Lost barriers and lost flora, from catheters and antibiotics, point to Candida.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Host defect</th><th>Fungi to expect</th><th>Why</th></tr></thead><tbody><tr><td><b>Neutropenia</b> (chemotherapy, transplant)</td><td>Candida, Aspergillus</td><td>Neutrophils kill yeasts and hyphae</td></tr><tr><td><b>Loss of T cells</b> (advanced HIV)</td><td>Cryptococcus, mucosal Candida, Pneumocystis</td><td>Cell-mediated immunity is lost</td></tr><tr><td><b>Corticosteroids or transplant therapy</b></td><td>Aspergillus, Cryptococcus, reactivated endemic fungi</td><td>Macrophage and T-cell function are suppressed</td></tr><tr><td><b>Diabetic ketoacidosis</b></td><td>Mucor, Rhizopus</td><td>Acidic, high-glucose tissue favors these molds</td></tr><tr><td><b>Lost barriers or flora</b> (catheter, antibiotics)</td><td>Candida</td><td>Skin and normal flora normally hold Candida in check</td></tr></tbody></table><p class="caption">The host-risk matrix from the lecture. In the activity, you predict the row before you see it.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Predict the risk profile</h2>
+    <p class="try-note">Choose each patient, commit to a prediction, then read the risk profile. Answer all five to finish.</p>
+    <div id="act-hostPredict"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c3a"><p>A patient with prolonged neutropenia develops a new lung infiltrate. Which pair of fungi should be suspected?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c3b"><p>Which metabolic emergency is classically linked to Mucor and Rhizopus infection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c3c"><p>What mainly produces tissue damage in a fungal infection?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Ask what the patient is missing. A neutropenic patient, a patient with HIV, and a patient in ketoacidosis each need a different fungal differential, and the right antifungal depends on getting that differential right.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1s4">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Section 4</div>
+    <h2>The fungal investigation lab</h2>
+    <p class="lede">A fungal infection is found with the right test on the right specimen. Fungi can also harm without infecting, through toxins and allergy, so the first question is what kind of harm is happening.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>KOH dissolves human cells to reveal fungal hyphae. India ink outlines the capsule of Cryptococcus.</li><li>Culture on Sabouraud agar identifies the organism, and cultures of dimorphic fungi held at 20 °C show the mold form.</li><li>Serology (Coccidioides IgM and IgG), the Histoplasma urine antigen, PCR, and MALDI-TOF round out the toolkit.</li><li>Fungal harm has three forms: mycosis (infection), mycotoxicosis (poisoning by a fungal toxin), and allergy. Amanita α-amanitin, ergot, and aflatoxin are the toxin examples.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Test</th><th>What it finds</th><th>Example</th></tr></thead><tbody><tr><td><b>Microscopy</b></td><td>Hyphae or yeast in the specimen</td><td>KOH on a skin scraping; India ink for the Cryptococcus capsule</td></tr><tr><td><b>Culture</b></td><td>The organism and its growth form</td><td>Sabouraud agar; 20 °C culture shows the mold form of dimorphic fungi</td></tr><tr><td><b>Serology and antigen</b></td><td>Antibody or fungal antigen</td><td>Coccidioides IgM and IgG; Histoplasma urine antigen</td></tr><tr><td><b>PCR and MALDI-TOF</b></td><td>Fungal DNA or a protein fingerprint</td><td>Species-level identification</td></tr></tbody></table><p class="caption">Pick the test that fits the specimen. The activity below uses five specimens.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Match the test, then sort the harm</h2>
+    <p class="try-note">Drag each specimen onto the test that finds the fungus. Then sort the six examples of fungal harm. Both must be checked.</p>
+    <div id="act-dxMatch"></div>
+    <h3 style="margin-top:26px">Then sort the kinds of fungal harm</h3>
+    <p class="try-note">Choose one category for every example, then check.</p>
+    <div id="act-harmSort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c4a"><p>Which stain outlines the capsule of Cryptococcus in cerebrospinal fluid?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4b"><p>What does potassium hydroxide do to a skin scraping so that fungi can be seen?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c4c"><p>Which toxin from Amanita mushrooms inhibits RNA polymerase II?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Before choosing a drug, make sure the problem is a mycosis. A poisoning from a mushroom or an allergic reaction to spores needs a different plan, and an antifungal helps only when a living fungus is causing the disease.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m1quiz">
+  <div class="card">
+    <div class="eyebrow">Module 1 &middot; Mastery check</div>
+    <h2>Module 1 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 1 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m1"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m2home">
+  <div class="modhero">
+    <div class="kicker">Module 2</div>
+    <h2>Attack the fungus</h2>
+    <p>Every antifungal class hits one target, and that target explains what the drug treats, how it is given, and what it can harm. This module builds the map from the cell wall to the membrane, the sterol pathway, and DNA.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>Which target does this drug hit, and what does that mean for its use, route, and risks?</span></div>
+    <div class="ghost-num" aria-hidden="true">2</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Match each antifungal class (echinocandins, polyenes, azoles, allylamines, flucytosine, griseofulvin) to its molecular target.</li><li>Predict how blocking a step in ergosterol synthesis changes the pathway, and explain why azoles cause drug interactions.</li><li>Choose a drug, route, and formulation for a patient by linking mechanism to toxicity and to the infection site.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Explore first</div>
+    <h2>The antifungal target map</h2>
+    <p class="try-note">Every class hits one target. Select a numbered hotspot to see which drugs act there. This warm-up is optional.</p>
+    <div id="act-targetMap"></div>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m2s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Destroying the cell wall</span><span class="home-desc">Block β-glucan synthase and watch the wall fail, then see why a penicillin-type drug cannot do this.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m2s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Disrupting the membrane</span><span class="home-desc">Compare conventional and liposomal amphotericin B at a fungal and a kidney membrane.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m2s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Blocking ergosterol synthesis</span><span class="home-desc">Block a step in the pathway and predict which intermediate builds up, then sort imidazoles from triazoles.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m2s4">
+      <span class="home-num">4</span>
+      <span class="home-body"><span class="home-title">Beyond the membrane</span><span class="home-desc">Match five drugs to their mechanisms, then watch flucytosine become fluorouracil only in the fungus.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m2quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 2 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s1">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 1</div>
+    <h2>Destroying the cell wall</h2>
+    <p class="lede">The echinocandins attack a structure that humans do not have. They are the newest first-line class for invasive Candida, and their mechanism explains both their strengths and their limits.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Echinocandins (caspofungin, anidulafungin, micafungin) inhibit β-glucan synthase, so the wall weakens and the fungus lyses.</li><li>None of the echinocandins is orally active, so they are given by IV infusion.</li><li>They cause few CYP-mediated interactions, because they do not inhibit CYP and are poor CYP substrates. That is fewer than the azoles.</li><li>Antibacterial drugs are ineffective against fungi. A penicillin targets peptidoglycan, which a fungal wall does not contain.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Target disruption</h2>
+    <p class="try-note">Choose a scene and press Next step. Play both scenes to the end to finish.</p>
+    <div id="act-wallSteps"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c5a"><p>Which enzyme do the echinocandins inhibit?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c5b"><p>Which statement describes the route of caspofungin, anidulafungin, and micafungin?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c5c"><p>How do the echinocandins compare with the azoles for CYP-mediated effects on other drugs?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">For a patient with a long medication list, a drug with few CYP interactions is an advantage. The trade-off is the route: because an echinocandin is IV only, the plan must include when and how to move to an oral drug.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s2">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 2</div>
+    <h2>Disrupting the membrane</h2>
+    <p class="lede">Amphotericin B is old, effective, and hard on the kidneys. Its mechanism explains why it works on fungi and why a different packaging of the same molecule protects the patient.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Polyenes (amphotericin B, nystatin, natamycin) have a hydrophilic sugar region and a hydrophobic macrocycle with 4 to 7 conjugated double bonds.</li><li>Current evidence says amphotericin B aggregates extract ergosterol from the membrane (a sterol sponge). Pores and ion leakage are secondary. Binding to ergosterol is preferred over binding to cholesterol.</li><li>Amphotericin B is the only polyene given IV. Its toxicities are nephrotoxicity and infusion reactions, and the liposomal form limits renal toxicity.</li><li>Oral nystatin is not absorbed from the gut, so it has no systemic risk. Natamycin is used only for infections of the eye.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 660 200" role="img" aria-label="Schematic of a polyene molecule with a hydrophobic run of conjugated double bonds and a hydrophilic face with a sugar"><rect x="2" y="2" width="656" height="196" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><rect x="40" y="48" width="250" height="40" rx="20" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3"/><g stroke="#4B4719" stroke-width="4" stroke-linecap="round"><path d="M70 68 h30 M110 68 h30 M150 68 h30 M190 68 h30 M230 68 h30"/></g><rect x="40" y="96" width="250" height="40" rx="20" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><g stroke="#858160" stroke-width="3"><path d="M70 110 h190 M70 122 h190"/></g><circle cx="268" cy="116" r="12" fill="#fff" stroke="#E0A010" stroke-width="3"/><text x="165" y="38" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2B290F" >Hydrophobic face: 4 to 7 conjugated double bonds</text><text x="165" y="156" text-anchor="middle" font-size="11.5" font-weight="700" fill="#2B290F" >Hydrophilic face: hydroxyl groups and a sugar</text><text x="165" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#55512F" >A polyene such as amphotericin B (schematic)</text><text x="480" y="80" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2B290F" >Only amphotericin B is given IV.</text><text x="480" y="104" text-anchor="middle" font-size="12" font-weight="400" fill="#55512F" >Nystatin and natamycin are too toxic for IV use.</text><text x="480" y="126" text-anchor="middle" font-size="12" font-weight="400" fill="#55512F" >Natamycin is used for infections of the eye.</text></svg><p class="caption">A polyene has two faces. The number of conjugated double bonds tracks both antifungal activity and toxicity.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The polyene mechanism explorer</h2>
+    <p class="try-note">Make a prediction first. Then switch between formulations and membranes. See all four views to finish.</p>
+    <div id="act-polyLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c6a"><p>According to current evidence, how does amphotericin B kill fungal cells?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6b"><p>Which pair describes the main toxicities of amphotericin B?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c6c"><p>What is the purpose of the liposomal amphotericin B formulation?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Ask about baseline kidney function before amphotericin B, and watch creatinine during treatment. When kidney risk is high, the liposomal form is a way to keep an effective drug in the plan.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s3">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 3</div>
+    <h2>Blocking ergosterol synthesis</h2>
+    <p class="lede">Two classes shut down the same factory at different steps. Seeing where each block sits tells you what accumulates, which drug is oral, and why the azoles interact with so many other medicines.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Azoles block CYP450 14α-demethylase (CYP51), the enzyme that removes the 14α-methyl group from lanosterol. The azole nitrogen binds the iron of the heme.</li><li>Allylamines (terbinafine, naftifine, butenafine) inhibit squalene epoxidase, an earlier step. Squalene builds up and is toxic to the cell. Tolnaftate has a different structure but the same mechanism.</li><li>Imidazoles (ketoconazole, clotrimazole) are used mostly on the skin. Triazoles (fluconazole, itraconazole) are preferred orally. Mold-active azoles are voriconazole, posaconazole, and isavuconazole.</li><li>Because azoles also inhibit many human CYP450 isoforms, they have numerous drug-drug interactions.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The pathway inhibition challenge</h2>
+    <p class="try-note">Make a prediction first. Then add each drug and watch the pathway. Try both drugs to finish.</p>
+    <div id="act-ergoLab"></div>
+    <h3 style="margin-top:26px">Then sort the azoles</h3>
+    <p class="try-note">Choose imidazole or triazole for every drug, then check.</p>
+    <div id="act-azoleRings"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c7a"><p>Which enzyme do the azole antifungals inhibit?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c7b"><p>Which enzyme do terbinafine and naftifine inhibit?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c7c"><p>Why do the azoles cause so many drug interactions?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Whenever an azole is added or stopped, check the whole medication list. A CYP-metabolized drug can rise sharply, and the effect can reverse when the azole is stopped. Terbinafine is the contrast: it works earlier in the pathway and is chosen for the skin and nails.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2s4">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Section 4</div>
+    <h2>Beyond the membrane</h2>
+    <p class="lede">Two drugs reach inside the cell: one corrupts DNA synthesis and one blocks cell division. Matching every class to its mechanism is the skill that lets you reason about a new patient.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Flucytosine is taken up by cytosine permease and converted by cytosine deaminase to fluorouracil. Fluorouracil inhibits thymidylate synthase. Human cells lack cytosine deaminase.</li><li>Flucytosine is used with amphotericin B, because resistance develops quickly when it is used alone. Its main adverse reaction is bone marrow toxicity.</li><li>Griseofulvin binds tubulin and blocks the mitotic spindle. It is used orally for cutaneous infections that do not respond to topical agents, and it is ineffective topically.</li><li>Terbinafine is lipophilic and distributes to hair, skin, nails, and fat after oral dosing, which makes it useful for nail infections.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Mechanism matching lab</h2>
+    <p class="try-note">Drag each drug onto its mechanism, then check. After that, play both scenes of the flucytosine animation.</p>
+    <div id="act-mechMatch"></div>
+    <h3 style="margin-top:26px">Why flucytosine spares human cells</h3>
+    <p class="try-note">Choose a scene and press Next step.</p>
+    <div id="act-flucytoSteps"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c8a"><p>Which drug is converted inside fungal cells to fluorouracil?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c8b"><p>Why is flucytosine selective for fungi?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c8c"><p>Which antifungal binds tubulin and blocks the mitotic spindle?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Case to reason through: a patient has a toenail infection, and topical products have not reached the infection. Oral terbinafine is lipophilic and distributes to nails, so it can reach the site that a cream cannot. Compare that with griseofulvin, which is reserved for cases where topical agents fail, and ask about liver monitoring for either drug.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m2quiz">
+  <div class="card">
+    <div class="eyebrow">Module 2 &middot; Mastery check</div>
+    <h2>Module 2 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 2 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m2"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m3home">
+  <div class="modhero">
+    <div class="kicker">Module 3</div>
+    <h2>When fungi invade the skin</h2>
+    <p>Some fungi never get past the outer, keratin-rich layer. Others are pushed deeper by a puncture. Where the fungus enters and which tissue it can use decide the disease, the test, and the drug.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do the entry route and the infected tissue decide whether a fungus stays on the surface or goes deeper?</span></div>
+    <div class="ghost-num" aria-hidden="true">3</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Sort infections into the four lecture categories and explain why depth and host status are separate ideas.</li><li>Identify a tinea presentation from the site, the ring-shaped lesion, and the KOH finding.</li><li>Explain why a nail or hair infection needs an oral drug, and follow a thorn puncture to sporotrichosis and its treatment.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m3s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Classify the mycosis</span><span class="home-desc">Sort six patients into the four mycosis categories and see why depth and host status are separate ideas.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m3s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Dermatophyte detective</span><span class="home-desc">Work a ringworm case from the lesion to the KOH finding to a nail treatment decision.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m3s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">The rose gardener’s case</span><span class="home-desc">Follow a thorn puncture to a diagnosis, a lab finding, and a treatment.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m3quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 3 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s1">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 1</div>
+    <h2>Classify the mycosis</h2>
+    <p class="lede">The lecture groups mycoses into four categories. Two of them describe where the fungus lives. Two describe how it got there or who it infects. Mixing those up is the most common classification slip.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Cutaneous: infection of superficial keratinized structures only (skin, hair, nails).</li><li>Subcutaneous: trauma introduces the fungus into deeper tissue.</li><li>Systemic: typically follows inhalation of spores.</li><li>Opportunistic: nonpathogenic or weakly pathogenic fungi that cause disease mainly in immunocompromised patients.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 660 240" role="img" aria-label="Skin cross-section with four layers from the keratin surface down to deep tissues, labeled with the infection category that reaches each layer"><rect x="2" y="2" width="656" height="236" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><rect x="40" y="26" width="580" height="34" rx="6" fill="#D8D2A4" stroke="#6B6624" stroke-width="2.5"/><rect x="40" y="62" width="580" height="46" rx="6" fill="#F2EFD9" stroke="#858160" stroke-width="2"/><rect x="40" y="110" width="580" height="60" rx="6" fill="#E8F0FD" stroke="#5E86D8" stroke-width="2"/><rect x="40" y="172" width="580" height="54" rx="6" fill="#FDEFD0" stroke="#E0A010" stroke-width="2"/><text x="70" y="48" text-anchor="start" font-size="12.5" font-weight="800" fill="#2B290F" >Stratum corneum (keratin)</text><text x="70" y="90" text-anchor="start" font-size="12.5" font-weight="800" fill="#2B290F" >Living epidermis</text><text x="70" y="144" text-anchor="start" font-size="12.5" font-weight="800" fill="#2B290F" >Dermis and subcutaneous tissue</text><text x="70" y="203" text-anchor="start" font-size="12.5" font-weight="800" fill="#2B290F" >Deeper tissues, blood, and organs</text><text x="610" y="48" text-anchor="end" font-size="12" font-weight="700" fill="#2A55AE" >Cutaneous</text><text x="610" y="144" text-anchor="end" font-size="12" font-weight="700" fill="#2A55AE" >Subcutaneous (after trauma)</text><text x="610" y="203" text-anchor="end" font-size="12" font-weight="700" fill="#2A55AE" >Systemic (after inhalation)</text></svg><p class="caption">Depth is one idea: how far the fungus gets. Host status is a separate idea. An opportunistic fungus is defined by who it infects, not by where.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The infection depth sorter</h2>
+    <p class="try-note">Choose a category for each patient, then check your answers.</p>
+    <div id="act-depthSort"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c9a"><p>A fungus is limited to the skin, hair, and nails. Which category applies?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9b"><p>What typically introduces a fungus into subcutaneous tissue?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c9c"><p>Which feature defines an opportunistic fungus?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When you review a patient chart, ask two separate questions: how far has the fungus spread, and what is wrong with the host? The answers point to different tests and different drugs.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s2">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 2</div>
+    <h2>Dermatophyte detective</h2>
+    <p class="lede">Dermatophytes eat keratin, so they stay where keratin is. That single fact explains the sites they infect, the test you use, and why some cases need a pill instead of a cream.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Dermatophytes (Trichophyton, Epidermophyton, Microsporum) infect skin, hair, and nails but not deeper tissue.</li><li>Tinea names the body part: capitis (head), corporis (body), cruris (groin), pedis (foot). Onychomycosis is a nail infection.</li><li>Diagnosis: KOH preparation of scrapings shows septate hyphae; culture uses Sabouraud agar.</li><li>Topical agents (terbinafine, clotrimazole, tolnaftate, undecylenic acid) treat skin. Hair and nail infections need oral griseofulvin, itraconazole, or terbinafine.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Genus</th><th>Form in tissue</th><th>Spread</th><th>Clinical clue</th><th>Lab finding</th></tr></thead><tbody><tr><td><i>Trichophyton</i>, <i>Epidermophyton</i></td><td>Hyphae</td><td>Mainly human to human</td><td>Itchy ring with a clear center</td><td>KOH: septate hyphae; Sabouraud agar</td></tr><tr><td><i>Microsporum</i></td><td>Hyphae</td><td>Animal to human; also human to human</td><td>Ringworm of head or body</td><td>KOH: septate hyphae; Sabouraud agar</td></tr><tr><td><i>Malassezia</i></td><td>Hyphae and yeasts</td><td>Human to human</td><td>Scaly, often hypopigmented, not itchy</td><td>KOH: hyphae and yeasts</td></tr></tbody></table><p class="caption">The three dermatophyte genera and Malassezia, from the lecture. Source can be people (anthropophilic), animals (zoophilic), or soil (geophilic).</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The clinic case</h2>
+    <p class="try-note">Answer each step in order. A wrong answer lets you try again.</p>
+    <div id="act-dermCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c10a"><p>Which finding in a KOH preparation indicates a dermatophyte?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10b"><p>Which term names a ringworm infection of the groin?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c10c"><p>Why do hair and nail infections need oral therapy?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A patient asks whether a cream bought over the counter is enough for a thick toenail. Explain that the nail is deep keratin, and that an oral drug such as terbinafine is the usual path, with attention to liver effects and interactions.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3s3">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Section 3</div>
+    <h2>The rose gardener’s case</h2>
+    <p class="lede">Sporothrix is a soil and plant mold that turns into a yeast at body temperature. A small puncture is enough to bring it under the skin.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Sporotrichosis is a subcutaneous mycosis caused by the dimorphic fungus Sporothrix schenckii.</li><li>Entry is by penetrating injury, such as a rose thorn. Lesions are a local pustule or ulcer with nodules, usually painless.</li><li>Tissue shows cigar-shaped yeasts. Culture at 20 °C shows hyphae with daisy-like conidia.</li><li>Treatment is itraconazole or terbinafine. Prevention is skin protection.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Step</th><th>What the lecture says</th></tr></thead><tbody><tr><td>Organism</td><td><i>Sporothrix schenckii</i>, a dimorphic fungus in soil and vegetation</td></tr><tr><td>Forms</td><td>Mold on plants; yeast in human tissue</td></tr><tr><td>Entry</td><td>Puncture, such as a rose thorn</td></tr><tr><td>Findings</td><td>Local pustule or ulcer with nodules up the arm; painless; little systemic illness in healthy people</td></tr><tr><td>Treatment</td><td>Itraconazole or terbinafine; protect the skin</td></tr></tbody></table><p class="caption">Sporotrichosis, sometimes called rose gardener’s disease.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The clinic case</h2>
+    <p class="try-note">Answer each step. The case moves on after a correct answer.</p>
+    <div id="act-roseCase"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c11a"><p>Which organism causes rose gardener’s disease?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c11b"><p>What do cigar-shaped yeasts in a tissue sample suggest?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c11c"><p>Which drug is used to treat sporotrichosis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Counsel gardeners on protection: gloves and long sleeves when handling roses, moss, or hay lower the chance of a puncture. Ask patients to report new nodules along an arm, which suggest spread along the lymphatics.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m3quiz">
+  <div class="card">
+    <div class="eyebrow">Module 3 &middot; Mastery check</div>
+    <h2>Module 3 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 3 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m3"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m4home">
+  <div class="modhero">
+    <div class="kicker">Module 4</div>
+    <h2>From soil to systemic infection</h2>
+    <p>Dimorphic fungi grow as molds in soil and change shape in the lung. Whether the infection stays in the chest or spreads to bone, skin, and meninges depends on the immune response.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How does a soil exposure turn into a lung infection, and what decides whether it spreads?</span></div>
+    <div class="ghost-num" aria-hidden="true">4</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Match each endemic fungus to its tissue form, geographic range, and clinical clue.</li><li>Put the Coccidioides life cycle in order and explain how cell-mediated immunity changes the outcome.</li><li>Choose a reasonable first treatment for an endemic mycosis from the organism and the severity.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m4s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Endemic fungal investigation</span><span class="home-desc">Match six patients to Coccidioides, Histoplasma, Blastomyces, or Paracoccidioides.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m4s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">The Coccidioides life cycle</span><span class="home-desc">Put the six life-cycle steps in order, then compare strong and impaired immunity.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m4s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Systemic mycosis case files</span><span class="home-desc">Work three case files from microscopy and history to an initial treatment.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m4quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 4 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s1">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 1</div>
+    <h2>Endemic fungal investigation</h2>
+    <p class="lede">These four fungi share a soil habitat, an inhaled spore, and a temperature switch. They differ in the shape they take in tissue and in where they live. That shape and place are your fastest clues.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>All four are dimorphic: a mold in soil that becomes a yeast (or a spherule for Coccidioides) in the lung.</li><li>Portal of entry is inhalation. At 20 °C each grows as a mold in the laboratory.</li><li>Tissue forms: Coccidioides, spherules; Histoplasma, small yeasts inside macrophages; Blastomyces, yeast with one broad-based bud; Paracoccidioides, yeast with multiple buds.</li><li>Ranges are expanding, so geography is a clue and not a rule.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Fungus</th><th>Habitat</th><th>Where it is found</th><th>Tissue form</th><th>Clinical clue</th></tr></thead><tbody><tr><td><i>Coccidioides</i></td><td>Soil</td><td>Southwestern US and Latin America</td><td>Spherules with endospores</td><td>Valley fever; may spread to bone and meninges</td></tr><tr><td><i>Histoplasma</i></td><td>Soil with bird and bat droppings</td><td>Ohio and Mississippi River valleys; many countries</td><td>Small yeasts inside macrophages</td><td>Cavitary lung disease; liver and spleen granulomas</td></tr><tr><td><i>Blastomyces</i></td><td>Soil</td><td>Midwestern, south-central, and southeastern US; Canada</td><td>Yeast with one broad-based bud</td><td>Pneumonia; ulcerated skin lesions</td></tr><tr><td><i>Paracoccidioides</i></td><td>Soil</td><td>Latin America, especially Brazil</td><td>Yeast with multiple buds</td><td>Ulcerated lesions of the face and mouth</td></tr></tbody></table><p class="caption">The four endemic dimorphic fungi. Ranges are expanding, so a patient outside the historical area can still have one of these diseases.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The exposure detective</h2>
+    <p class="try-note">Choose the organism for each patient, then check.</p>
+    <div id="act-exposureMatch"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c12a"><p>Which tissue form is distinctive for Coccidioides?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12b"><p>A patient in the Ohio River valley has cavitary lung disease and small yeasts inside macrophages. Which organism is likely?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c12c"><p>Which fungus shows a yeast with a single broad-based bud?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Travel and exposure history is part of the interview. Ask where the patient lives, where they have traveled, and whether they dig soil or clean bird or bat roosts, because the answers narrow the list before a test returns.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s2">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 2</div>
+    <h2>The Coccidioides life cycle</h2>
+    <p class="lede">Coccidioides is the only endemic fungus in this lecture that makes a spherule. Knowing the cycle explains why the infection can multiply in tissue and why immunity decides the outcome.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Arthrospores form in soil, are inhaled, and become spherules in the lung.</li><li>A spherule fills with endospores. When the wall ruptures, endospores are released and form new spherules.</li><li>Just over half of infections are asymptomatic or minimal. About 1% disseminate to meninges, bone, or skin.</li><li>Cell-mediated immunity forms granulomas that wall off the fungus. Dissemination occurs when that immunity is inadequate.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Build the infection pathway</h2>
+    <p class="try-note">Arrange the steps in order and check. Then compare the two immune outcomes.</p>
+    <div id="act-coccidOrder"></div>
+    <h3 style="margin-top:26px">What changes with weak immunity?</h3>
+    <p class="try-note">Select each panel. This part is optional.</p>
+    <div id="act-immuneToggle"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c13a"><p>Which structure fills with endospores?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c13b"><p>Which immune response walls off Coccidioides in the lung?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c13c"><p>Which sites are typical destinations of disseminated Coccidioides?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Patients who take high-dose steroids or biologics, or who have advanced HIV, are the ones to flag. Weak cell-mediated immunity is the setup for dissemination, which is why risk history changes how aggressively the infection is treated.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4s3">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Section 3</div>
+    <h2>Systemic mycosis case files</h2>
+    <p class="lede">Treatment follows organism and severity. Most endemic mycoses begin with an azole, and the question is when the situation is severe enough to move to amphotericin B.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Histoplasma, Blastomyces, and Paracoccidioides: itraconazole is the usual first choice for mild to moderate disease.</li><li>Coccidioides: fluconazole or itraconazole for persistent infection or mild dissemination. Meningitis: fluconazole.</li><li>Severe disease of any of the four: amphotericin B.</li><li>Asymptomatic or mild primary coccidioidomycosis often needs no treatment, but higher-risk patients are treated. There is no vaccine.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Organism</th><th>Form in tissue</th><th>Clinical clue</th><th>First-line drug</th></tr></thead><tbody><tr><td><i>Coccidioides</i></td><td>Spherule with endospores</td><td>Valley fever; may disseminate</td><td>Fluconazole or itraconazole; amphotericin B if severe</td></tr><tr><td><i>Histoplasma</i></td><td>Small yeasts in macrophages</td><td>Cavitary lung disease; liver and spleen granulomas</td><td>Itraconazole; amphotericin B if severe</td></tr><tr><td><i>Blastomyces</i></td><td>Broad-based budding yeast</td><td>Pneumonia and ulcerated skin lesions</td><td>Itraconazole; amphotericin B if severe</td></tr><tr><td><i>Paracoccidioides</i></td><td>Yeast with multiple buds</td><td>Ulcerated lesions of face and mouth</td><td>Itraconazole; amphotericin B if severe</td></tr></tbody></table><p class="caption">The lecture comparison table. Severity moves the choice toward amphotericin B.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The case files</h2>
+    <p class="try-note">Answer each step. The case moves on after a correct answer.</p>
+    <div id="act-caseFiles"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c14a"><p>Which drug is the usual first choice for mild to moderate histoplasmosis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14b"><p>Which drug is used for Coccidioides meningitis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c14c"><p>Which change moves therapy toward amphotericin B in an endemic mycosis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Coccidioides and Histoplasma are CYP-interacting azole cases. Before itraconazole, review the full medication list, because absorption, acid suppression, and CYP interactions can change drug levels.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m4quiz">
+  <div class="card">
+    <div class="eyebrow">Module 4 &middot; Mastery check</div>
+    <h2>Module 4 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 4 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m4"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m5home">
+  <div class="modhero">
+    <div class="kicker">Module 5</div>
+    <h2>Candida: from commensal to pathogen</h2>
+    <p>Candida lives on most of us without harm. Disease needs a change in the host: lost flora, a broken barrier, weak immunity, or a plastic catheter. This module lets you change those conditions and watch what the yeast does.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>What lets a normal-flora yeast invade, and how should the treatment change as it does?</span></div>
+    <div class="ghost-num" aria-hidden="true">5</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Predict how antibiotics, barrier loss, immune suppression, and catheters change the behavior of Candida.</li><li>Match an infection site and severity to a topical, oral, or IV treatment.</li><li>Decide when fluconazole can be assumed effective and when an echinocandin or susceptibility result is needed.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m5s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">From colonization to infection</span><span class="home-desc">Change four patient conditions and watch Candida move from commensal to invasive.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m5s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">Localized or invasive?</span><span class="home-desc">Match six presentations to topical, oral, or IV therapy.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m5s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">Beyond Candida albicans</span><span class="home-desc">Match species to their traits, then work the ICU candidemia case from organism to step-down.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m5quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 5 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s1">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 1</div>
+    <h2>From colonization to infection</h2>
+    <p class="lede">Candida albicans is part of the normal flora. The lecture’s rule is simple: intact skin and cell-mediated immunity prevent overgrowth. This lab lets you break each protection and see what follows.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Candida is normal flora. Intact skin and cell-mediated immunity prevent overgrowth.</li><li>Invasion involves the yeast-to-hypha switch and biofilm formation on catheters.</li><li>C. albicans causes thrush, vaginitis, esophagitis, diaper rash, and chronic mucocutaneous candidiasis.</li><li>It can disseminate to cause endocarditis, candidemia, and endophthalmitis, and it can infect IV and urinary catheters.</li></ul></div>
+    
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The Candida invasion simulator</h2>
+    <p class="try-note">Make a prediction first. Then switch conditions on and off. Find overgrowth, biofilm, and invasive disease to finish.</p>
+    <div id="act-candidaSim"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c15a"><p>What normally keeps Candida from overgrowing on healthy skin?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c15b"><p>Which change marks the shift from colonization to tissue invasion?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c15c"><p>Which structure supports biofilm formation by Candida?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Every central line and every course of broad-spectrum antibiotics changes a patient’s risk of invasive candidiasis. When you review the chart of an ICU patient, the line and the antibiotic list are part of the fungal risk assessment.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s2">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 2</div>
+    <h2>Localized or invasive?</h2>
+    <p class="lede">Treatment follows the site and the severity. A rash and a bloodstream infection are the same organism but belong in different parts of the formulary.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Mucosal and skin disease: topical clotrimazole, nystatin, or miconazole.</li><li>Moderate to severe thrush, esophageal disease, and vaginitis (as an option): fluconazole.</li><li>Candidemia: an echinocandin first, with removal or replacement of the central venous catheter.</li><li>Prevention: fluconazole for high-risk infants under 1,000 g in nurseries with a high rate of invasive candidiasis. No vaccine exists.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Site</th><th>Treatment from the lecture</th></tr></thead><tbody><tr><td>Thrush</td><td>Topical clotrimazole or nystatin; fluconazole if moderate to severe; voriconazole for refractory disease</td></tr><tr><td>Esophageal candidiasis</td><td>Fluconazole</td></tr><tr><td>Skin infections</td><td>Topical clotrimazole or nystatin</td></tr><tr><td>Vaginitis</td><td>Topical clotrimazole or miconazole, or oral fluconazole</td></tr><tr><td>Chronic mucocutaneous</td><td>Fluconazole or itraconazole</td></tr><tr><td>Candidemia</td><td>Echinocandin first, and remove or replace the central venous catheter</td></tr></tbody></table><p class="caption">Treatment follows the site and the severity. Surface infections use topical agents; deeper disease uses systemic drugs.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Clinical triage</h2>
+    <p class="try-note">Choose the route and drug type for every presentation, then check.</p>
+    <div id="act-candidaTriage"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c16a"><p>Which drug is the lecture choice for esophageal candidiasis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c16b"><p>Which drug class is first-line for candidemia?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c16c"><p>What nonpharmacologic step is part of treating candidemia with a central line?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Route is a clinical decision. A cream is reasonable for a diaper rash, but the same logic would fail a patient with yeast in the blood, so a pharmacist checking an order should ask where the infection is before judging the drug.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5s3">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Section 3</div>
+    <h2>Beyond Candida albicans</h2>
+    <p class="lede">The species name changes the plan. A fluconazole step-down that is safe for C. albicans can fail for C. krusei, so identification and susceptibility results are part of the treatment decision.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>C. glabrata has reduced susceptibility to fluconazole, and an echinocandin is often preferred.</li><li>C. krusei is intrinsically resistant to fluconazole.</li><li>C. parapsilosis is linked to catheters and skin colonization.</li><li>C. auris is often multidrug resistant and spreads in healthcare settings. Echinocandins are first-line.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Species</th><th>Why it matters</th></tr></thead><tbody><tr><td><i>C. glabrata</i></td><td>Reduced susceptibility to fluconazole; an echinocandin is often preferred</td></tr><tr><td><i>C. krusei</i></td><td>Intrinsically resistant to fluconazole</td></tr><tr><td><i>C. parapsilosis</i></td><td>Linked to catheters and skin colonization</td></tr><tr><td><i>C. auris</i></td><td>Often multidrug resistant; spreads in healthcare settings; echinocandin is first-line (CDC)</td></tr></tbody></table><p class="caption">Non-albicans species change the drug choice. Susceptibility results guide therapy.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The ICU candidemia case</h2>
+    <p class="try-note">Match the species first. Then answer each step of the ICU case in order.</p>
+    <div id="act-candidemiaCase"></div>
+    <h3 style="margin-top:26px">First, match the species</h3>
+    <p class="try-note">Choose a species for each trait, then check. This part is optional.</p>
+    <div id="act-speciesMatch"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c17a"><p>Which species is intrinsically resistant to fluconazole?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17b"><p>Which species has been reported as multidrug resistant and spreads in healthcare settings?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c17c"><p>When is a step-down from an echinocandin to fluconazole appropriate?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">A culture report that says Candida is not the end of the story. Ask for the species and the susceptibility result before agreeing to a fluconazole step-down.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m5quiz">
+  <div class="card">
+    <div class="eyebrow">Module 5 &middot; Mastery check</div>
+    <h2>Module 5 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 5 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m5"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section modhome" data-key="m6home">
+  <div class="modhero">
+    <div class="kicker">Module 6</div>
+    <h2>Opportunistic fungal threats</h2>
+    <p>When defenses fail, fungi that rarely trouble healthy people become life-threatening. This module covers meningitis from Cryptococcus, the three faces of Aspergillus, and how to match a patient’s defect to the likely fungus.</p>
+    <div class="q-strip"><b>Pharmacist&rsquo;s question</b><span>How do the patient’s immune status, the fungus’s form, and the site of disease guide diagnosis and therapy?</span></div>
+    <div class="ghost-num" aria-hidden="true">6</div>
+  </div>
+  <div class="card goal-card">
+    <div class="eyebrow">By the end you can</div>
+    <ul class="checks"><li>Interpret an India ink finding and put the Cryptococcus meningitis treatment steps in order, including ART timing and IRIS.</li><li>Distinguish invasive aspergillosis, aspergilloma, and ABPA by host and lung condition.</li><li>Match a patient’s defect to Candida, Aspergillus, Cryptococcus, or Mucor and Rhizopus.</li></ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">In this module</div>
+    <div class="home-list">
+    <button class="home-item" data-goto="m6s1">
+      <span class="home-num">1</span>
+      <span class="home-body"><span class="home-title">Cryptococcus and the CNS</span><span class="home-desc">Arrange the five steps of cryptococcal meningitis care and see why ART timing matters.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m6s2">
+      <span class="home-num">2</span>
+      <span class="home-body"><span class="home-title">The many faces of Aspergillus</span><span class="home-desc">Change the lung condition and immune status and find all three forms of Aspergillus disease.</span></span>
+      <span class="home-status">Not started</span>
+    </button>    <button class="home-item" data-goto="m6s3">
+      <span class="home-num">3</span>
+      <span class="home-body"><span class="home-title">The immunocompromised patient</span><span class="home-desc">Match six immunocompromised patients to Candida, Aspergillus, Cryptococcus, or Mucor and Rhizopus.</span></span>
+      <span class="home-status">Not started</span>
+    </button><button class="home-item" data-goto="m6quiz">
+      <span class="home-num">&#10003;</span>
+      <span class="home-body"><span class="home-title">Module 6 quiz</span><span class="home-desc">Eight questions, then a targeted round on what you missed.</span></span>
+      <span class="home-status">Not started</span>
+    </button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s1">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 1</div>
+    <h2>Cryptococcus and the CNS</h2>
+    <p class="lede">Cryptococcus enters by inhalation and spreads to the brain when cell-mediated immunity is weak. The order of treatment is the lesson: kill the yeast first, then restore immunity.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Cryptococcus neoformans is a yeast with a polysaccharide capsule that resists phagocytosis. India ink shows the capsule.</li><li>It is a leading cause of death in advanced HIV disease. Disease occurs with compromised cell-mediated immunity and spreads to the CNS.</li><li>Induction: liposomal amphotericin B plus flucytosine. Then fluconazole for consolidation and suppression. Echinocandins are inactive.</li><li>ART is started about 4 to 6 weeks after antifungal therapy begins, because earlier ART risks IRIS, which may be deadly.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 660 174" role="img" aria-label="India ink preparation showing round yeast cells each surrounded by a clear halo that marks the capsule"><rect x="2" y="2" width="656" height="170" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><rect x="30" y="20" width="270" height="130" rx="10" fill="#26231A"/><g fill="#F2EFD9" stroke="#D8D2A4" stroke-width="2"><circle cx="90" cy="72" r="26" fill="#26231A" stroke="#F2EFD9" stroke-width="3"/><circle cx="90" cy="72" r="13" fill="#6B6624"/><circle cx="190" cy="96" r="26" fill="#26231A" stroke="#F2EFD9" stroke-width="3"/><circle cx="190" cy="96" r="13" fill="#6B6624"/><circle cx="238" cy="52" r="20" fill="#26231A" stroke="#F2EFD9" stroke-width="3"/><circle cx="238" cy="52" r="10" fill="#6B6624"/></g><text x="165" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#F2EFD9" >India ink: clear halo is the capsule</text><text x="480" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#2B290F" >The polysaccharide capsule</text><text x="480" y="78" text-anchor="middle" font-size="13" font-weight="800" fill="#2B290F" >resists phagocytosis.</text><text x="480" y="106" text-anchor="middle" font-size="11.5" font-weight="400" fill="#55512F" >India ink does not enter the capsule,</text><text x="480" y="124" text-anchor="middle" font-size="11.5" font-weight="400" fill="#55512F" >so the yeast appears with a halo.</text></svg><p class="caption">The halo on India ink is the capsule. Mucicarmine stains the capsule red in tissue.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The meningitis treatment sequence</h2>
+    <p class="try-note">Arrange the steps in order, then check.</p>
+    <div id="act-cryptoSeq"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c18a"><p>What does a clear halo around yeast on India ink indicate?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18b"><p>Which induction regimen treats cryptococcal meningitis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c18c"><p>Why is ART delayed after cryptococcal meningitis therapy begins?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">In a patient with HIV and meningitis, drug choice and ART timing are separate decisions. Explain to the care team why the antifungal drugs come first and which warning signs after ART should prompt a call.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s2">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 2</div>
+    <h2>The many faces of Aspergillus</h2>
+    <p class="lede">One organism gives three diseases, and the host decides which. The same inhaled spore can sit quietly in a cavity, trigger an allergic response, or invade a vessel.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Aspergillosis is commonly caused by Aspergillus fumigatus or A. flavus. It is acquired by inhaling conidia.</li><li>Forms: invasive disease, aspergilloma (fungus ball), and allergic disease (ABPA).</li><li>Risk: lung disease or weak immunity such as neutropenia or high-dose steroids. Hyphae can invade blood vessels and disseminate.</li><li>Invasive disease: voriconazole; alternatives are isavuconazole or liposomal amphotericin B. Posaconazole or voriconazole can be used for prophylaxis in high-risk patients.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Form</th><th>What happens</th><th>Therapy from the lecture</th></tr></thead><tbody><tr><td>Invasive aspergillosis</td><td>Hyphae invade blood vessels and may disseminate</td><td>Voriconazole; isavuconazole or liposomal amphotericin B as alternatives</td></tr><tr><td>Aspergilloma</td><td>Fungus ball in an existing cavity</td><td>Based on severity</td></tr><tr><td>Allergic (ABPA)</td><td>Allergic response in the lung</td><td>Steroids and itraconazole for less severe infection</td></tr></tbody></table><p class="caption">Aspergillus is commonly A. fumigatus or A. flavus. Transmission is by inhaled conidia.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The three-way differential</h2>
+    <p class="try-note">Make a prediction first. Then change both settings until you have found all three forms.</p>
+    <div id="act-aspLab"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c19a"><p>Which finding best describes an aspergilloma?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c19b"><p>Which drug is first-line for invasive aspergillosis?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c19c"><p>Which person is at greatest risk of invasive aspergillosis?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">For a patient entering a long neutropenic period, ask whether prophylaxis with posaconazole or voriconazole is planned, and then check the interaction list, because both are azoles.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6s3">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Section 3</div>
+    <h2>The immunocompromised patient</h2>
+    <p class="lede">The host defect is often the best clue to the fungus. This sorting task asks you to read the patient first and the microscope second.</p>
+    <div class="keypoints"><h4>Key points</h4><ul><li>Neutropenia and high-dose steroids favor Aspergillus and Candida.</li><li>Advanced HIV and weak cell-mediated immunity favor Cryptococcus and mucosal Candida.</li><li>Diabetic ketoacidosis favors Mucor and Rhizopus, which are molds with nonseptate hyphae that invade blood vessels.</li><li>Septate hyphae suggest Aspergillus. Nonseptate hyphae suggest Mucor or Rhizopus.</li></ul></div>
+    <div class="figure scroll-x"><table><thead><tr><th>Organism</th><th>Form in tissue</th><th>Clinical findings</th><th>Host risk</th></tr></thead><tbody><tr><td><i>Candida</i></td><td>Yeast, pseudohyphae</td><td>Thrush, candidemia, catheter infection</td><td>Lost flora, broken barriers, catheters, weak immunity</td></tr><tr><td><i>Cryptococcus</i></td><td>Yeast with large capsule</td><td>Meningitis</td><td>Compromised cell-mediated immunity, advanced HIV</td></tr><tr><td><i>Aspergillus</i></td><td>Mold with septate hyphae</td><td>Fungus ball, invasive lung disease, sinusitis</td><td>Lung disease, neutropenia, high-dose steroids</td></tr><tr><td><i>Mucor</i>, <i>Rhizopus</i></td><td>Mold with nonseptate hyphae</td><td>Necrotic lesions as mold invades blood vessels</td><td>Diabetic ketoacidosis, renal acidosis, cancer</td></tr></tbody></table><p class="caption">All four occur worldwide. Mucor and Rhizopus appear in this module as secondary organisms.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>The fungal differential</h2>
+    <p class="try-note">Choose the most likely fungus for each patient, then check.</p>
+    <div id="act-hostRisk"></div>
+  </div>
+  <div class="card">
+    <div class="box predict">
+<h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
+<div class="cp-item" data-check="c20a"><p>Which condition raises the risk of Mucor and Rhizopus infection?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c20b"><p>Which hyphal feature separates Mucor and Rhizopus from Aspergillus?</p><div class="choices"></div><div class="feedback"></div></div>
+<div class="cp-item" data-check="c20c"><p>A patient with advanced HIV is at greatest risk of which opportunistic fungus?</p><div class="choices"></div><div class="feedback"></div></div>
+</div>
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">When a call arrives about a transplant patient with a new lung infiltrate, the pharmacist’s first question is about the defect: neutropenia, steroids, or T-cell loss. That answer narrows the fungi and the drugs.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="m6quiz">
+  <div class="card">
+    <div class="eyebrow">Module 6 &middot; Mastery check</div>
+    <h2>Module 6 quiz</h2>
+    <p class="lede">Eight questions drawn from the Module 6 pool. Answer every one, then submit. Any concept area you miss becomes a targeted practice round.</p>
+    <div class="quiz-body" data-quiz="m6"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit quiz</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="consult">
+  <div class="card">
+    <div class="eyebrow">Integration challenge</div>
+    <h2>The Fungal Consult Service</h2>
+    <p class="lede">You are the pharmacist on the consult service. Three patients are waiting. For each one, walk the whole chain: the host, the organism, how it causes disease, the evidence that confirms it, and the treatment. Finish all three consults to unlock the Final Mastery Exam.</p>
+    <div class="keypoints"><h4>How to work a consult</h4><ul><li>Start with the host. The defect usually names the fungus before any test does.</li><li>Use the diagnostic clue to confirm or change your first idea.</li><li>Choose the drug from the organism and the site, then check route, toxicity, and interactions.</li></ul></div>
+    <div class="figure"><svg viewBox="0 0 660 124" role="img" aria-label="Five linked boxes: host factors, organism, pathogenesis, diagnostic evidence, and treatment"><rect x="2" y="2" width="656" height="120" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><rect x="20" y="38" width="112" height="46" rx="12" fill="#F2EFD9" stroke="#6B6624" stroke-width="3"/><text x="76" y="66" text-anchor="middle" font-size="12" font-weight="800" fill="#2B290F" >Host factors</text><text x="76" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#55512F" >1</text><path d="M133 61 h12" stroke="#4B4719" stroke-width="3" stroke-linecap="round"/><path d="M140 55 l6 6 -6 6" fill="none" stroke="#4B4719" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="146" y="38" width="112" height="46" rx="12" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3"/><text x="202" y="66" text-anchor="middle" font-size="12" font-weight="800" fill="#2B290F" >Organism</text><text x="202" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#55512F" >2</text><path d="M259 61 h12" stroke="#4B4719" stroke-width="3" stroke-linecap="round"/><path d="M266 55 l6 6 -6 6" fill="none" stroke="#4B4719" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="272" y="38" width="112" height="46" rx="12" fill="#F2EFD9" stroke="#6B6624" stroke-width="3"/><text x="328" y="66" text-anchor="middle" font-size="12" font-weight="800" fill="#2B290F" >Pathogenesis</text><text x="328" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#55512F" >3</text><path d="M385 61 h12" stroke="#4B4719" stroke-width="3" stroke-linecap="round"/><path d="M392 55 l6 6 -6 6" fill="none" stroke="#4B4719" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="398" y="38" width="112" height="46" rx="12" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3"/><text x="454" y="66" text-anchor="middle" font-size="12" font-weight="800" fill="#2B290F" >Diagnostic evidence</text><text x="454" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#55512F" >4</text><path d="M511 61 h12" stroke="#4B4719" stroke-width="3" stroke-linecap="round"/><path d="M518 55 l6 6 -6 6" fill="none" stroke="#4B4719" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="524" y="38" width="112" height="46" rx="12" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><text x="580" y="66" text-anchor="middle" font-size="12" font-weight="800" fill="#2B290F" >Treatment</text><text x="580" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#55512F" >5</text><text x="330" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#55512F" >Each link constrains the next. Say the chain out loud for every case.</text></svg><p class="caption">The consult chain you will explain for every patient.</p></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
+    <h2>Three patient consults</h2>
+    <p class="try-note">Answer each step in order. A wrong choice lets you try again. You can work the consults in any order.</p>
+    <div id="act-consult">
+      <h3>Consult A &middot; Persistent fever in the ICU</h3>
+      <div id="act-consultA"></div>
+      <h3 style="margin-top:30px">Consult B &middot; Headache in advanced HIV</h3>
+      <div id="act-consultB"></div>
+      <h3 style="margin-top:30px">Consult C &middot; Pulmonary infection during chemotherapy</h3>
+      <div id="act-consultC"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="box clinical"><h3><span class="tag">PHARMACIST&rsquo;S LENS</span></h3><p style="margin:0">Three different patients, one habit: ask what is wrong with the host, name the fungus it favors, and let the site and severity choose the drug. If a result contradicts your first guess, change the guess rather than the story.</p></div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="flashcards">
+  <div class="card">
+    <div class="eyebrow">Retrieval practice</div>
+    <h2>Flashcards</h2>
+    <p class="lede">Say the answer out loud before you flip the card. Retrieval from memory strengthens recall far more than rereading does.</p>
+    <div class="fc-stage">
+      <div class="fc" id="fcCard" tabindex="0" role="button" aria-label="Flashcard. Press Enter to flip.">
+        <div class="fc-face fc-front"><div>
+          <div class="fc-term" id="fcFront"></div>
+          <div class="fc-hint">click, tap, or press Enter to flip</div>
+        </div></div>
+        <div class="fc-face fc-back"><div class="fc-def" id="fcBack"></div></div>
+      </div>
+    </div>
+    <div class="fc-bar">
+      <button class="btn ghost" id="fcPrev">Previous</button>
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn ghost" id="fcNext">Next</button>
+    </div>
+  </div>
+  <div class="card pager"></div>
+</section>
+
+<section class="section" data-key="final">
+  <div class="card">
+    <div class="eyebrow">Final Mastery Exam</div>
+    <h2>25-question mastery exam</h2>
+    <p class="lede">A mixed set drawn from all six modules and the consult cases: recall, application, and integration. After you submit, any concept area you missed becomes a targeted practice round, drawing on fresh questions where possible.</p>
+    <div class="quiz-body" data-quiz="final"></div>
+    <div class="controls" style="margin-top:22px">
+      <button class="btn q-submit">Submit exam</button>
+      <button class="btn ghost q-retake">Start over</button>
+      <span class="caption q-warn" style="margin:0"></span>
+    </div>
+  </div>
+  <div class="card hidden q-result"></div>
+  <div class="card pager"></div>
+</section>
+
+  </main>
+</div>
+
+<script src="banks/mycoses.js"></script>
+<script src="banks/mycoses.manifest.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/helpers.js"></script>
+<script src="shared/activities.js"></script>
+<script src="shared/welcome.js"></script>
+<script>
+
+var BADGES = {home:'&#8962;', m1:'1', m2:'2', m3:'3', m4:'4', m5:'5', m6:'6', consult:'&#9877;', flash:'&#10022;', final:'&#9733;'};
+var MODULES = MANIFEST.modules.map(function(m){
+  var mod = {id:m.id, badge:BADGES[m.id]||'&#8226;', title:m.title,
+             sections:m.sections.map(function(s){return {key:s.key,label:s.label};})};
+  if(m.unlockAfter) mod.unlockAfter = m.unlockAfter;
+  return mod;
+});
+var FLOW = []; MODULES.forEach(function(m){ m.sections.forEach(function(s){ FLOW.push(s); }); });
+var UNGRADED = [];
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(!s.checks && !s.activity && !s.quiz) UNGRADED.push(s.key);
+});});
+var SECTION_REQ = {}, QUIZ_KEY_FOR_SECTION = {};
+MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
+  if(s.checks || s.activity){
+    SECTION_REQ[s.key] = {checks:s.checks||[]};
+    if(s.activity) SECTION_REQ[s.key].activity = s.activity;
+  }
+  if(s.quiz) QUIZ_KEY_FOR_SECTION[s.key] = s.quiz;
+});});
+var AREA_SECTION = MANIFEST.areaSection;
+var MODULE_QUIZ_SIZE = 8;
+var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
+
+function $(id){return document.getElementById(id);}
+function svgEl(inner,vb,label){return '<svg viewBox="'+vb+'" role="img" aria-label="'+label+'">'+inner+'</svg>';}
+function segControl(labels,onPick){
+  var box=el('div','seg'),buttons={};
+  labels.forEach(function(p){
+    var b=el('button',null,p[1]);b.type='button';b.setAttribute('data-v',p[0]);
+    b.onclick=function(){onPick(p[0]);};box.appendChild(b);buttons[p[0]]=b;
+  });
+  return {box:box,buttons:buttons,set:function(v){Object.keys(buttons).forEach(function(k){buttons[k].classList.toggle('on',k===v);});}};
+}
+
+
+
+Act.explore('act-targetMap',{name:'targetMap',svg:'<svg viewBox="0 0 660 304" role="img" aria-label="A fungal cell cutaway with five numbered drug targets: the wall, the membrane, ergosterol synthesis, DNA synthesis, and the mitotic spindle"><rect x="2" y="2" width="656" height="300" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><ellipse cx="330" cy="152" rx="250" ry="118" fill="#FFFFFF" stroke="#6B6624" stroke-width="12"/><ellipse cx="330" cy="152" rx="238" ry="106" fill="none" stroke="#5E86D8" stroke-width="6"/><ellipse cx="330" cy="152" rx="226" ry="94" fill="#FFFFFF" stroke="#4B4719" stroke-width="5"/><circle cx="330" cy="152" r="40" fill="#E8F0FD" stroke="#5E86D8" stroke-width="4"/><text x="330" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#2A55AE" >DNA</text><g data-hs="wall"><ellipse cx="330" cy="152" rx="250" ry="118" fill="none" stroke="transparent" stroke-width="30"/><circle cx="108" cy="82" r="22" fill="#FDEFD0" stroke="#E0A010" stroke-width="3.5"/><text x="108" y="87" text-anchor="middle" font-size="14" font-weight="800" fill="#2B290F" >1</text></g><g data-hs="membrane"><circle cx="540" cy="82" r="22" fill="#FDEFD0" stroke="#E0A010" stroke-width="3.5"/><text x="540" y="87" text-anchor="middle" font-size="14" font-weight="800" fill="#2B290F" >2</text></g><g data-hs="pathway"><rect x="440" y="196" width="104" height="44" rx="14" fill="#F2EFD9" stroke="#6B6624" stroke-width="3.5"/><text x="492" y="214" text-anchor="middle" font-size="11" font-weight="700" fill="#2B290F" >Ergosterol</text><text x="492" y="229" text-anchor="middle" font-size="11" font-weight="700" fill="#2B290F" >synthesis</text><circle cx="556" cy="206" r="16" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><text x="556" y="211" text-anchor="middle" font-size="13" font-weight="800" fill="#2B290F" >3</text></g><g data-hs="dna"><circle cx="330" cy="152" r="48" fill="transparent"/><circle cx="330" cy="110" r="16" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><text x="330" y="115" text-anchor="middle" font-size="13" font-weight="800" fill="#2B290F" >4</text></g><g data-hs="spindle"><path d="M180 205 q20 -40 40 0 M180 205 q20 40 40 0" fill="none" stroke="#6B6624" stroke-width="3.5"/><circle cx="200" cy="205" r="5" fill="#6B6624"/><circle cx="168" cy="236" r="16" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><text x="168" y="241" text-anchor="middle" font-size="13" font-weight="800" fill="#2B290F" >5</text></g><text x="330" y="288" text-anchor="middle" font-size="12" font-weight="700" fill="#55512F" >Select a numbered hotspot to see the target and the drug class</text></svg>',ids:['wall','membrane','pathway','dna','spindle'],
+  start:'Select a numbered hotspot on the cell, or one of the buttons below it.',
+  items:{
+   wall:{title:'1 · Cell wall',html:'<p><b>Echinocandins</b> (caspofungin, anidulafungin, micafungin) inhibit β-glucan synthase and weaken the wall. All are given by IV infusion.</p>'},
+   membrane:{title:'2 · Membrane',html:'<p><b>Polyenes</b> (amphotericin B, nystatin, natamycin) bind ergosterol. Aggregates extract the sterol, and the leaky membrane loses ions and small molecules.</p>'},
+   pathway:{title:'3 · Ergosterol synthesis',html:'<p><b>Azoles</b> block 14α-demethylase (CYP51). <b>Allylamines</b> (terbinafine, naftifine) block squalene epoxidase earlier in the same pathway.</p>'},
+   dna:{title:'4 · DNA synthesis',html:'<p><b>Flucytosine</b> is converted inside the fungus to fluorouracil, which blocks thymidylate synthase and DNA synthesis.</p>'},
+   spindle:{title:'5 · Mitotic spindle',html:'<p><b>Griseofulvin</b> binds tubulin and blocks the mitotic spindle. It is used orally for cutaneous infections that do not respond to topical agents.</p>'}
+  }});
+
+/* ---- m1s1 · Anatomy of a fungal cell ---- */
+
+(function cellBuilder(){
+  var host=$('act-cellBuilder'),name='cellBuilder',vkey=name+'_v';
+  var built=(state.activities[vkey]||[]).slice();
+  var TYPES=[['fungal','Fungal cell'],['bacterial','Bacterial cell'],['human','Human cell']];
+  var PARTS=[['chitin','Chitin wall layer'],['glucan','β-glucan wall layer'],['pepti','Peptidoglycan wall'],['ergo','Ergosterol in membrane'],['chol','Cholesterol in membrane'],['nuc','Nucleus'],['mito','Mitochondria'],['er','Endoplasmic reticulum']];
+  var ANS={fungal:['chitin','glucan','ergo','nuc','mito','er'],bacterial:['pepti'],human:['chol','nuc','mito','er']};
+  var WHY={
+    chitin:'Chitin is a polymer of N-acetylglucosamine and is found in the fungal wall only.',
+    glucan:'β-glucan is the second main polymer of the fungal wall, and the target of the echinocandins.',
+    pepti:'Peptidoglycan is the bacterial wall polymer. Fungi and humans do not make it.',
+    ergo:'Ergosterol is the fungal membrane sterol. It is the target of the polyenes and, through its synthesis, of the azoles.',
+    chol:'Cholesterol is the sterol of human membranes. Fungal and bacterial membranes do not use it.',
+    nuc:'Fungi and humans are eukaryotes, so both have a nucleus. A bacterium has a nucleoid with no membrane around it.',
+    mito:'Mitochondria belong to eukaryotes. Bacteria have none.',
+    er:'The endoplasmic reticulum belongs to eukaryotes. Bacteria have none.'};
+  var type='fungal',chosen=[];
+  var seg=segControl(TYPES,function(v){type=v;chosen=[];msg.className='feedback show';msg.innerHTML='Choose the parts this cell has, then check.';paint();});
+  var row=el('div','lab-row');row.innerHTML='<span class="lab-label">Build a</span>';row.appendChild(seg.box);
+  var chips=el('div','act-chips'),fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  var ctl=el('div','controls'),chk=el('button','btn','Check this cell'),clr=el('button','btn ghost','Clear parts');
+  chk.type=clr.type='button';ctl.appendChild(chk);ctl.appendChild(clr);
+  [row,chips,fig,ctl,msg,prog].forEach(function(x){host.appendChild(x);});
+  var chipEls={};
+  PARTS.forEach(function(p){
+    var b=el('button','act-chip',p[1]);b.type='button';
+    b.onclick=function(){var i=chosen.indexOf(p[0]);if(i>-1)chosen.splice(i,1);else chosen.push(p[0]);paint();};
+    chips.appendChild(b);chipEls[p[0]]=b;
+  });
+  function has(k){return chosen.indexOf(k)>-1;}
+  function draw(){
+    var s='<rect x="2" y="2" width="636" height="236" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>';
+    var cx=320,cy=120,rx=190,ry=92;
+    if(type==='bacterial'){rx=150;ry=62;}
+    if(has('chitin'))s+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+(rx+20)+'" ry="'+(ry+20)+'" fill="none" stroke="#6B6624" stroke-width="9"/>';
+    if(has('glucan'))s+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+(rx+10)+'" ry="'+(ry+10)+'" fill="none" stroke="#5E86D8" stroke-width="7"/>';
+    if(has('pepti'))s+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+(rx+12)+'" ry="'+(ry+12)+'" fill="none" stroke="#E0A010" stroke-width="10"/>';
+    var mcol=has('ergo')?'#4B4719':(has('chol')?'#D4536B':'#B9B58E');
+    s+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="#FFFFFF" stroke="'+mcol+'" stroke-width="'+((has('ergo')||has('chol'))?6:2.5)+'"'+((has('ergo')||has('chol'))?'':' stroke-dasharray="5 4"')+'/>';
+    if(type==='bacterial'){s+='<path d="M250 120 q16 -30 32 0 t32 0 t32 0 t32 0" fill="none" stroke="#4B4719" stroke-width="4" stroke-linecap="round"/><text x="320" y="168" text-anchor="middle" font-size="12" fill="#55512F">nucleoid (no membrane)</text>';}
+    if(has('nuc'))s+='<circle cx="270" cy="106" r="38" fill="#E8F0FD" stroke="#5E86D8" stroke-width="4"/><text x="270" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#2A55AE">Nucleus</text>';
+    if(has('mito'))s+='<ellipse cx="380" cy="146" rx="32" ry="17" fill="#EDE9C2" stroke="#6B6624" stroke-width="3"/><path d="M360 146 q6 -10 12 0 t12 0 t12 0" fill="none" stroke="#6B6624" stroke-width="2.5"/>';
+    if(has('er'))s+='<path d="M330 78 q22 -12 44 0 t44 0 M330 94 q22 -12 44 0 t44 0" fill="none" stroke="#8FB2F4" stroke-width="5" stroke-linecap="round"/>';
+    s+='<text x="320" y="226" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">'+TYPES.filter(function(t){return t[0]===type;})[0][1]+' ('+chosen.length+' parts placed)</text>';
+    fig.innerHTML=svgEl(s,'0 0 640 240','The cell you are building, drawn from the parts you chose');
+  }
+  function paint(){
+    seg.set(type);
+    PARTS.forEach(function(p){chipEls[p[0]].classList.toggle('on',has(p[0]));});
+    draw();
+    prog.textContent='Cells built correctly: '+built.length+' of 3'+(built.length?' ('+built.map(function(k){return TYPES.filter(function(t){return t[0]===k;})[0][1].toLowerCase();}).join(', ')+')':'')+'.';
+    TYPES.forEach(function(t){seg.buttons[t[0]].classList.toggle('built',built.indexOf(t[0])>-1);});
+  }
+  function check(){
+    var want=ANS[type],miss=want.filter(function(k){return !has(k);}),extra=chosen.filter(function(k){return want.indexOf(k)<0;});
+    if(!miss.length&&!extra.length){
+      msg.className='feedback show';
+      msg.innerHTML='<strong>That is a complete '+TYPES.filter(function(t){return t[0]===type;})[0][1].toLowerCase()+'.</strong>'+
+        (type==='fungal'?' Compare it with the human cell: the chitin, the β-glucan, and ergosterol are the parts a human cell does not have, so they are the selective drug targets.':
+         type==='bacterial'?' Its wall polymer, peptidoglycan, is the target of antibacterial wall inhibitors. Antifungals aimed at chitin or β-glucan are not aimed at bacteria.':
+         ' It has no wall at all, and its sterol is cholesterol. A drug that needs a wall or ergosterol has nothing to bind.');
+      if(built.indexOf(type)===-1){built.push(type);Act.keep(vkey,built.slice());}
+      if(built.length>=3&&!state.activities[name])Act.done(name,true);
+    }else{
+      msg.className='feedback show miss';
+      var h='<strong>Not quite.</strong> ';
+      if(miss.length)h+='Still missing: '+miss.map(function(k){return PARTS.filter(function(p){return p[0]===k;})[0][1].toLowerCase();}).join(', ')+'. ';
+      if(extra.length)h+='Remove: '+extra.map(function(k){return PARTS.filter(function(p){return p[0]===k;})[0][1].toLowerCase()+' ('+WHY[k]+')';}).join(' ');
+      msg.innerHTML=h;
+    }
+    paint();
+  }
+  chk.onclick=check;clr.onclick=function(){chosen=[];paint();};
+  msg.innerHTML='Choose the parts this cell has, then check. Switch cell types to build all three.';
+  paint();
+  Act.register(name,{solve:function(){TYPES.forEach(function(t){type=t[0];chosen=ANS[t[0]].slice();check();});}});
+})();
+
+/* ---- m1s2 · Yeast, mold, or dimorphic? ---- */
+
+(function morphLab(){
+  var host=$('act-morphLab'),name='morphLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,org='histo',temp=25;
+  var ORGS=[['candida','Candida'],['asper','Aspergillus'],['histo','Histoplasma'],['cocci','Coccidioides']];
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var oseg=segControl(ORGS,function(v){org=v;paint();});
+  var tseg=segControl([['25','Room temperature (25 °C)'],['37','Body temperature (37 °C)']],function(v){temp=Number(v);paint();});
+  var r1=el('div','lab-row');r1.innerHTML='<span class="lab-label">Organism</span>';r1.appendChild(oseg.box);
+  var r2=el('div','lab-row');r2.innerHTML='<span class="lab-label">Grown at</span>';r2.appendChild(tseg.box);
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [r1,r2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  function hy(d,w){return '<path d="'+d+'" fill="none" stroke="#6B6624" stroke-width="'+(w||7)+'" stroke-linecap="round"/>';}
+  function yeast(x,y,r,bud){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#F2EFD9" stroke="#4B4719" stroke-width="3.5"/>'+(bud?'<circle cx="'+(x+r*0.9)+'" cy="'+(y-r*0.8)+'" r="'+(r*0.5)+'" fill="#F2EFD9" stroke="#4B4719" stroke-width="3.5"/>':'');}
+  function draw(){
+    var s='<rect x="2" y="2" width="636" height="206" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>',lab2='';
+    if(org==='candida'){
+      s+=yeast(120,100,26,1)+yeast(220,120,22,1)+yeast(300,84,24,0)+yeast(360,130,20,1)+
+        '<g fill="#F2EFD9" stroke="#4B4719" stroke-width="3"><ellipse cx="450" cy="96" rx="26" ry="11" transform="rotate(-20 450 96)"/><ellipse cx="490" cy="82" rx="26" ry="11" transform="rotate(-20 490 82)"/><ellipse cx="530" cy="68" rx="26" ry="11" transform="rotate(-20 530 68)"/></g>'+
+        '<text x="200" y="176" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">Budding yeast</text><text x="490" y="176" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">Pseudohyphae</text>';
+    }else if(org==='asper'){
+      s+=hy('M60 150 L190 120 L300 86 M190 120 L290 150 M300 86 L360 66')+
+        '<g stroke="#2B290F" stroke-width="2.5"><path d="M100 140 v-16 M150 128 v-16 M230 108 v-16 M262 96 v-16 M240 138 v-16"/></g>'+
+        '<circle cx="372" cy="60" r="20" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3.5"/><g fill="#5E86D8"><circle cx="372" cy="32" r="5"/><circle cx="394" cy="42" r="5"/><circle cx="400" cy="62" r="5"/><circle cx="350" cy="38" r="5"/><circle cx="344" cy="62" r="5"/></g>'+
+        '<text x="372" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#25230F">Conidia in radiating chains</text><text x="160" y="176" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">Septate hyphae</text>';
+    }else if(org==='histo'){
+      if(temp===25){
+        s+=hy('M60 150 L190 120 L300 86 M190 120 L290 150 M300 86 L400 70')+
+          '<g fill="#5E86D8" stroke="#2A55AE" stroke-width="2"><circle cx="150" cy="104" r="8"/><circle cx="250" cy="96" r="8"/><circle cx="340" cy="62" r="8"/><circle cx="330" cy="146" r="8"/></g>'+
+          '<text x="260" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#25230F">Microconidia on the hyphae</text><text x="230" y="186" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">Mold form</text>';
+      }else{
+        s+='<circle cx="320" cy="100" r="76" fill="#FBFAF0" stroke="#6B6624" stroke-width="4" stroke-dasharray="6 4"/><circle cx="290" cy="90" r="22" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3"/>'+
+          '<g fill="#F2EFD9" stroke="#4B4719" stroke-width="2.5"><ellipse cx="340" cy="86" rx="9" ry="6"/><ellipse cx="364" cy="108" rx="9" ry="6"/><ellipse cx="332" cy="126" rx="9" ry="6"/><ellipse cx="300" cy="130" rx="9" ry="6"/><ellipse cx="366" cy="80" rx="9" ry="6"/></g>'+
+          '<text x="320" y="194" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">Small budding yeasts inside a macrophage</text>';
+      }
+    }else{
+      if(temp===25){
+        s+=hy('M50 100 L590 100',6)+
+          '<g fill="#F2EFD9" stroke="#4B4719" stroke-width="3"><rect x="300" y="82" width="30" height="36" rx="3"/><rect x="336" y="82" width="30" height="36" rx="3"/><rect x="372" y="82" width="30" height="36" rx="3"/><rect x="408" y="82" width="30" height="36" rx="3"/><rect x="444" y="82" width="30" height="36" rx="3"/></g>'+
+          '<text x="387" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#25230F">Barrel-shaped arthrospores (arthroconidia)</text><text x="160" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">Mold form</text>';
+      }else{
+        s+='<circle cx="250" cy="100" r="62" fill="#E8F0FD" stroke="#5E86D8" stroke-width="5"/><g fill="#2A55AE"><circle cx="226" cy="82" r="6"/><circle cx="252" cy="74" r="6"/><circle cx="276" cy="92" r="6"/><circle cx="240" cy="108" r="6"/><circle cx="266" cy="122" r="6"/><circle cx="222" cy="120" r="6"/><circle cx="284" cy="112" r="6"/></g>'+
+          '<path d="M360 100 h40" stroke="#4B4719" stroke-width="3" stroke-linecap="round"/><path d="M394 92 l10 8 -10 8" fill="none" stroke="#4B4719" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+
+          '<circle cx="470" cy="100" r="40" fill="none" stroke="#5E86D8" stroke-width="4" stroke-dasharray="7 5"/><g fill="#2A55AE"><circle cx="440" cy="66" r="5"/><circle cx="500" cy="70" r="5"/><circle cx="516" cy="116" r="5"/><circle cx="470" cy="150" r="5"/><circle cx="426" cy="122" r="5"/></g>'+
+          '<text x="250" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#25230F">Spherule full of endospores</text><text x="470" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#25230F">Rupture releases endospores</text>';
+      }
+    }
+    fig.innerHTML=svgEl(s,'0 0 640 210','The form this organism takes at the chosen temperature');
+  }
+  var TXT={
+    candida:'<strong>Yeast, with pseudohyphae.</strong> Candida is a yeast that also makes pseudohyphae. Temperature does not flip it between a mold and a yeast, so it is not a thermally dimorphic fungus.',
+    asper:'<strong>Mold at either temperature.</strong> Aspergillus grows as septate hyphae and releases conidia. It is a mold, not a dimorphic fungus.',
+    histo25:'<strong>Mold at room temperature.</strong> Histoplasma grows as hyphae with microconidia in soil and in a culture held near 20 to 25 °C.',
+    histo37:'<strong>Yeast at body temperature.</strong> In tissue, Histoplasma switches to small budding yeasts that live inside macrophages. That switch is thermal dimorphism.',
+    cocci25:'<strong>Mold at room temperature.</strong> Coccidioides grows as hyphae that break into barrel-shaped arthrospores. Inhaled arthrospores start the infection.',
+    cocci37:'<strong>Spherule at body temperature.</strong> In tissue, Coccidioides forms a spherule filled with endospores. When it ruptures, the endospores form new spherules. It does not bud like a yeast.'};
+  function key(){return org==='candida'||org==='asper'?org:org+temp;}
+  function paint(){
+    oseg.set(org);tseg.set(String(temp));
+    Object.keys(oseg.buttons).forEach(function(k){oseg.buttons[k].disabled=!unlocked;});
+    Object.keys(tseg.buttons).forEach(function(k){tseg.buttons[k].disabled=!unlocked;});
+    draw();
+    if(!unlocked){msg.className='feedback show';msg.innerHTML='Answer the prediction above to unlock the controls.';prog.textContent='';return;}
+    msg.className='feedback show';msg.innerHTML=TXT[key()];
+    var k=org+temp;
+    if(org==='histo'||org==='cocci'){if(seen.indexOf(k)===-1){seen.push(k);Act.keep(vkey,seen.slice());}}
+    var need=['histo25','histo37','cocci25','cocci37'].filter(function(x){return seen.indexOf(x)>-1;}).length;
+    prog.textContent='Dimorphic forms seen: '+need+' of 4 (Histoplasma and Coccidioides, each at both temperatures).';
+    if(need>=4&&!state.activities[name])Act.done(name,true);
+  }
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: Histoplasma is grown on two plates, one at room temperature and one at 37 °C. What do you expect to see?',
+    options:['Mold at room temperature and yeast at 37 °C','Mold on both plates','Yeast on both plates','Yeast at room temperature and mold at 37 °C'],answer:0,
+    why:'Histoplasma is thermally dimorphic: a mold with microconidia in the environment and a small budding yeast in the body.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;['histo','cocci'].forEach(function(o){org=o;[25,37].forEach(function(t){temp=t;paint();});});}});
+})();
+
+/* ---- m1s3 · The host defense challenge ---- */
+
+Act.predict('act-hostPredict',{name:'hostPredict',
+  start:'Choose a patient above. Predict which fungi gain the advantage, and the reasoning appears once you commit.',
+  items:(function(){
+    var O=['Candida and Aspergillus','Cryptococcus and mucosal Candida','Aspergillus, Cryptococcus, and reactivated endemic fungi','Mucor and Rhizopus','Candida from lost barriers and flora'];
+    function r(t){return '<p style="margin:0"><b>Risk profile:</b> '+t+'</p>';}
+    return [
+     {id:'p1',title:'Chemotherapy, ANC near zero',prompt:'A patient on chemotherapy has had almost no neutrophils for two weeks. Which fungi become more dangerous?',options:O,answer:0,
+      why:'Neutrophils kill yeasts and hyphae, so their absence opens the way to Candida and Aspergillus.',reveal:r('Candida and Aspergillus. The defect is the missing neutrophil.')},
+     {id:'p2',title:'Advanced HIV, CD4 count very low',prompt:'A patient with advanced HIV has lost most CD4 T cells. Which fungi become more dangerous?',options:O,answer:1,
+      why:'Cell-mediated immunity controls these organisms, and the lecture also links Pneumocystis to this defect.',reveal:r('Cryptococcus, mucosal Candida, and Pneumocystis. The defect is T-cell function.')},
+     {id:'p3',title:'Months of high-dose prednisone',prompt:'A transplant recipient takes high-dose corticosteroids for months. Which fungi become more dangerous?',options:O,answer:2,
+      why:'Steroids and transplant drugs blunt macrophage and T-cell function, so molds, encapsulated yeasts, and dormant endemic fungi can all take hold.',reveal:r('Aspergillus, Cryptococcus, and reactivation of endemic fungi.')},
+     {id:'p4',title:'Diabetic ketoacidosis',prompt:'A patient arrives in diabetic ketoacidosis with a painful, dark nasal lesion. Which fungi become more dangerous?',options:O,answer:3,
+      why:'These molds thrive in acidic, high-glucose conditions and invade blood vessels, so tissue turns black and necrotic.',reveal:r('Mucor and Rhizopus. The setting is metabolic, not an immune-cell defect.')},
+     {id:'p5',title:'ICU line plus broad-spectrum antibiotics',prompt:'An ICU patient has a central venous catheter and has received weeks of broad-spectrum antibiotics. Which fungi become more dangerous?',options:O,answer:4,
+      why:'The catheter breaks the skin barrier, and antibiotics remove normal flora that keep Candida in check.',reveal:r('Candida. The defect is the lost barrier and lost competing flora.')}
+    ];})()});
+
+/* ---- m1s4 · The fungal investigation lab ---- */
+
+Act.dnd('act-dxMatch',{name:'dxMatch',
+  pills:['KOH microscopy','India ink','Antigen test','Serology','Culture at 20 °C'],
+  rows:[
+   {text:'<b>Skin scraping</b> from a scaly, ring-shaped rash, dissolved in 10% potassium hydroxide to show septate hyphae.',answer:'KOH microscopy',why:'KOH dissolves human cells and keratin, leaving fungal elements visible.'},
+   {text:'<b>Cerebrospinal fluid</b> from a patient with meningitis, mixed with a dark stain to outline a capsule.',answer:'India ink',why:'The dark stain is excluded by the polysaccharide capsule of Cryptococcus, which appears as a clear halo.'},
+   {text:'<b>Urine</b> from a patient with suspected disseminated histoplasmosis.',answer:'Antigen test',why:'The lecture lists the Histoplasma urine antigen as a diagnostic test.'},
+   {text:'<b>Blood</b> drawn to look for IgM and IgG after possible exposure to Coccidioides.',answer:'Serology',why:'Antibody tests (IgM and IgG) are used for coccidioidomycosis.'},
+   {text:'<b>Tissue</b> plated and held at 20 °C to see the mold form of a dimorphic fungus.',answer:'Culture at 20 °C',why:'Culture at room temperature shows the mold form, such as Coccidioides with its arthrospores.'}
+  ]});
+Act.sort('act-harmSort',{name:'harmSort',options:['Mycosis','Mycotoxicosis','Allergy'],
+  rows:[
+   {text:'Aspergillus grows in the lungs of a patient with neutropenia.',answer:'Mycosis',why:'The fungus itself infects the tissue.'},
+   {text:'A person eats a mushroom that contains α-amanitin, which inhibits RNA polymerase II.',answer:'Mycotoxicosis',why:'The harm comes from a fungal toxin that is swallowed, not from fungal growth in the body.'},
+   {text:'Grain contaminated with Claviceps (ergot) causes poisoning from ergotamine.',answer:'Mycotoxicosis',why:'Ergot alkaloids are fungal toxins.'},
+   {text:'Peanuts contaminated with Aspergillus flavus raise the long-term risk of liver cancer.',answer:'Mycotoxicosis',why:'Aflatoxin is a fungal toxin linked to hepatocellular carcinoma.'},
+   {text:'An asthmatic patient wheezes with eosinophilia after inhaling Aspergillus spores (allergic bronchopulmonary aspergillosis).',answer:'Allergy',why:'The response to inhaled fungal antigens, not fungal invasion, causes the disease.'},
+   {text:'Candida albicans causes white plaques on the tongue (thrush).',answer:'Mycosis',why:'This is a fungal infection of the mucosa.'}
+  ]});
+
+/* ---- m2s1 · Destroying the cell wall ---- */
+
+(function(){
+  function scene(p,drugLabel){
+    var s='<rect x="2" y="2" width="636" height="236" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>';
+    s+='<text x="320" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F">Outside of the fungal cell (top) · inside the cell (bottom)</text>';
+    s+='<g id="'+p+'-wall"><rect x="40" y="60" width="560" height="38" rx="8" fill="#D8D2A4" stroke="#6B6624" stroke-width="3"/><g stroke="#5E86D8" stroke-width="5" stroke-linecap="round"><path d="M70 72 h64 M160 84 h64 M250 72 h64 M340 84 h64 M430 72 h64 M520 84 h56"/></g><text x="64" y="52" font-size="11.5" font-weight="700" fill="#55512F">Wall: chitin and β-glucan</text></g>';
+    s+='<g id="'+p+'-thin"><rect x="40" y="76" width="560" height="10" rx="5" fill="#D8D2A4" stroke="#6B6624" stroke-width="2"/></g>';
+    s+='<rect x="40" y="100" width="560" height="22" rx="10" fill="#FFFFFF" stroke="#4B4719" stroke-width="4"/>';
+    s+='<g id="'+p+'-syn"><rect x="270" y="94" width="96" height="40" rx="14" fill="#8FB2F4" stroke="#2A55AE" stroke-width="3"/><text x="318" y="119" text-anchor="middle" font-size="11.5" font-weight="800" fill="#262310">β-glucan synthase</text></g>';
+    s+='<g id="'+p+'-drug"><g transform="translate(90 180)"><rect x="-44" y="-16" width="88" height="32" rx="16" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><text y="5" text-anchor="middle" font-size="11.5" font-weight="800" fill="#2B290F">'+drugLabel+'</text></g></g>';
+    s+='<g id="'+p+'-x"><g transform="translate(318 114)"><circle r="20" fill="#fff" stroke="#D4536B" stroke-width="3"/><path d="M-8 -8 l16 16 M8 -8 l-16 16" stroke="#D4536B" stroke-width="4" stroke-linecap="round"/></g></g>';
+    s+='<g id="'+p+'-burst"><g stroke="#D4536B" stroke-width="4" stroke-linecap="round"><path d="M70 46 l-18 -14 M330 44 l0 -20 M590 46 l18 -14"/></g><text x="320" y="214" text-anchor="middle" font-size="13" font-weight="800" fill="#B03A5E">Cell swells and bursts</text></g>';
+    s+='<g id="'+p+'-ok"><text x="320" y="214" text-anchor="middle" font-size="13" font-weight="800" fill="#1C7554">Wall unchanged, cell survives</text></g>';
+    return svgEl(s,'0 0 640 240','Cross-section of a fungal cell wall and membrane with the wall enzyme β-glucan synthase');
+  }
+  function set(p,o){var r={};Object.keys(o).forEach(function(k){r[p+'-'+k]=o[k];});return r;}
+  Act.stepper('act-wallSteps',{name:'wallSteps',scenes:[
+   {id:'echino',label:'Echinocandin',intro:'An echinocandin meets its target in the membrane of a fungal cell.',svg:scene('e','Echinocandin'),steps:[
+    {caption:'The wall is built from chitin and β-glucan. β-glucan synthase in the membrane keeps adding glucan to the wall.',set:set('e',{thin:{o:0},x:{o:0},burst:{o:0},ok:{o:0},drug:{t:[0,0],o:1}})},
+    {caption:'The echinocandin reaches the membrane. It is a large IV drug, and none of the class is active by mouth.',set:set('e',{drug:{t:[228,-62]}})},
+    {caption:'It inhibits β-glucan synthase, so no new glucan reaches the wall.',set:set('e',{x:{o:1},syn:{o:0.4}})},
+    {caption:'The wall thins while the cell keeps growing and the pressure inside stays high.',set:set('e',{wall:{o:0.1},thin:{o:1}})},
+    {caption:'The weakened wall can no longer hold the cell, and the cell bursts. Human cells have no wall, so the drug has no equivalent target there.',set:set('e',{burst:{o:1}})}]},
+   {id:'pen',label:'Antibacterial wall inhibitor',intro:'A penicillin-type drug targets the bacterial wall polymer, peptidoglycan.',svg:scene('b','β-lactam'),steps:[
+    {caption:'The same fungal cell, now exposed to an antibacterial wall inhibitor such as a penicillin.',set:set('b',{thin:{o:0},x:{o:0},burst:{o:0},ok:{o:0},drug:{t:[0,0],o:1}})},
+    {caption:'The drug looks for peptidoglycan cross-links to block.',set:set('b',{drug:{t:[120,-52]}})},
+    {caption:'A fungal wall contains no peptidoglycan. It is made of chitin and β-glucan, so there is nothing for the drug to bind.',set:set('b',{x:{o:1}})},
+    {caption:'β-glucan synthase keeps working, the wall stays intact, and the fungus survives. Antibacterial drugs are ineffective against fungal infections.',set:set('b',{x:{o:0},ok:{o:1}})}]}
+  ]});
+})();
+
+/* ---- m2s2 · Disrupting the membrane ---- */
+
+(function polyLab(){
+  var host=$('act-polyLab'),name='polyLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,form='conv',site='fungal';
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var fseg=segControl([['conv','Conventional amphotericin B'],['lipo','Liposomal amphotericin B']],function(v){form=v;paint();});
+  var sseg=segControl([['fungal','Fungal cell membrane'],['kidney','Kidney cell membrane']],function(v){site=v;paint();});
+  var r1=el('div','lab-row');r1.innerHTML='<span class="lab-label">Formulation</span>';r1.appendChild(fseg.box);
+  var r2=el('div','lab-row');r2.innerHTML='<span class="lab-label">Look at</span>';r2.appendChild(sseg.box);
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [r1,r2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  var KILL={conv:3,lipo:3},TOX={conv:3,lipo:1};
+  function bar(y,label,val,col){var w=val/3*300;return '<text x="20" y="'+(y-7)+'" font-size="12" font-weight="700" fill="#25230F">'+label+'</text><rect x="20" y="'+y+'" width="300" height="18" rx="9" fill="#EFEBD2"/><rect x="20" y="'+y+'" width="'+w+'" height="18" rx="9" fill="'+col+'"/>';}
+  function heads(y){var s='',i;for(i=0;i<14;i++)s+='<circle cx="'+(40+i*34)+'" cy="'+y+'" r="9" fill="#EDE9C2" stroke="#6B6624" stroke-width="2"/>';return s;}
+  function draw(){
+    var s='<rect x="2" y="2" width="636" height="262" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>';
+    var sterolCol=site==='fungal'?'#4B4719':'#D4536B',nm=site==='fungal'?'ergosterol':'cholesterol';
+    s+=heads(70)+heads(104);
+    var sx=[70,138,240,342,410,478,546],i;
+    for(i=0;i<sx.length;i++)s+='<rect x="'+(sx[i]-6)+'" y="78" width="12" height="18" rx="3" fill="'+sterolCol+'"/>';
+    if(site==='fungal'){
+      s+='<g><rect x="120" y="46" width="130" height="42" rx="14" fill="#8FB2F4" stroke="#2A55AE" stroke-width="3"/><text x="185" y="72" text-anchor="middle" font-size="11.5" font-weight="800" fill="#262310">AmB aggregate</text><rect x="320" y="46" width="130" height="42" rx="14" fill="#8FB2F4" stroke="#2A55AE" stroke-width="3"/><text x="385" y="72" text-anchor="middle" font-size="11.5" font-weight="800" fill="#262310">AmB aggregate</text></g>';
+      s+='<g stroke="#D4536B" stroke-width="3" stroke-linecap="round"><path d="M200 122 v22 M230 122 v22 M360 122 v22 M390 122 v22"/></g><text x="300" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#B03A5E">Sterol pulled out · ions and small molecules leak</text>';
+    }else if(form==='conv'){
+      s+='<rect x="320" y="46" width="130" height="42" rx="14" fill="#8FB2F4" stroke="#2A55AE" stroke-width="3"/><text x="385" y="72" text-anchor="middle" font-size="11.5" font-weight="800" fill="#262310">AmB binds some</text>';
+      s+='<g stroke="#D4536B" stroke-width="3" stroke-linecap="round"><path d="M360 122 v22 M390 122 v22"/></g><text x="300" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#B03A5E">Some binding to cholesterol · kidney injury risk</text>';
+    }else{
+      s+='<circle cx="150" cy="48" r="26" fill="none" stroke="#5E86D8" stroke-width="3.5" stroke-dasharray="6 4"/><text x="150" y="52" text-anchor="middle" font-size="11" font-weight="800" fill="#2A55AE">liposome</text><circle cx="300" cy="48" r="26" fill="none" stroke="#5E86D8" stroke-width="3.5" stroke-dasharray="6 4"/><text x="300" y="52" text-anchor="middle" font-size="11" font-weight="800" fill="#2A55AE">liposome</text>';
+      s+='<text x="300" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#1C7554">Drug stays packaged near kidney cells · less injury</text>';
+    }
+    s+=bar(196,'Killing of fungi (teaching model)',KILL[form],'#6B6624')+bar(240,'Kidney injury risk (teaching model)',TOX[form],'#D4536B');
+    s+='<text x="330" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#25230F">'+(site==='fungal'?'Fungal membrane (ergosterol)':'Human kidney cell membrane (cholesterol)')+'</text>';
+    fig.innerHTML=svgEl(s,'0 0 640 266','Membrane drawing showing amphotericin B with the chosen formulation at the chosen membrane');
+  }
+  var TXT={
+   conv_fungal:'<strong>Conventional, fungal membrane.</strong> Amphotericin B binds ergosterol preferentially. Aggregates extract the sterol (a sterol sponge), and pores and ion leakage follow as secondary effects.',
+   lipo_fungal:'<strong>Liposomal, fungal membrane.</strong> The antifungal effect is kept. The liposome delivers amphotericin B to the fungus, so killing is similar.',
+   conv_kidney:'<strong>Conventional, kidney.</strong> Binding to cholesterol is weaker than to ergosterol but not absent, so renal toxicity and infusion reactions limit conventional use.',
+   lipo_kidney:'<strong>Liposomal, kidney.</strong> The liposomal form limits renal toxicity, which is why it is chosen for patients with kidney risk.'};
+  function paint(){
+    fseg.set(form);sseg.set(site);
+    [fseg,sseg].forEach(function(sg){Object.keys(sg.buttons).forEach(function(k){sg.buttons[k].disabled=!unlocked;});});
+    draw();
+    if(!unlocked){msg.innerHTML='Answer the prediction above to unlock the controls.';prog.textContent='';return;}
+    var k=form+'_'+site;msg.innerHTML=TXT[k];
+    if(seen.indexOf(k)===-1){seen.push(k);Act.keep(vkey,seen.slice());}
+    prog.textContent='Views seen: '+seen.length+' of 4. The bars are a teaching model, not patient data.';
+    if(seen.length>=4&&!state.activities[name])Act.done(name,true);
+  }
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a patient with kidney risk is switched from conventional to liposomal amphotericin B. What is expected?',
+    options:['Kidney toxicity falls while antifungal activity is kept','Antifungal activity is lost because ergosterol binding stops','The drug becomes active by mouth','The drug starts to bind β-glucan synthase'],answer:0,
+    why:'The liposomal preparation exists to limit renal toxicity. The mechanism, binding ergosterol, is unchanged.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;['conv','lipo'].forEach(function(f){['fungal','kidney'].forEach(function(s){form=f;site=s;paint();});});}});
+})();
+
+/* ---- m2s3 · Blocking ergosterol synthesis ---- */
+
+(function ergoLab(){
+  var host=$('act-ergoLab'),name='ergoLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,drug='none';
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var seg=segControl([['none','No drug'],['terb','Terbinafine (allylamine)'],['fluc','Fluconazole (azole)']],function(v){drug=v;paint();});
+  var r1=el('div','lab-row');r1.innerHTML='<span class="lab-label">Add a drug</span>';r1.appendChild(seg.box);
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [r1,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  var LV={none:{sq:1,lan:2,erg:3},terb:{sq:4,lan:0.4,erg:0.4},fluc:{sq:1,lan:4,erg:0.4}};
+  function box(x,label,v,col,hot){
+    var h=Math.max(6,v*20);
+    return '<rect x="'+x+'" y="'+(188-h)+'" width="92" height="'+h+'" rx="10" fill="'+col+'"'+(hot?' stroke="#D4536B" stroke-width="3"':'')+'/><text x="'+(x+46)+'" y="208" text-anchor="middle" font-size="12" font-weight="800" fill="#25230F">'+label+'</text>';
+  }
+  function draw(){
+    var L=LV[drug],s='<rect x="2" y="2" width="636" height="236" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>';
+    s+='<path d="M120 100 H 188 M280 100 H 348 M440 100 H 508" stroke="#4B4719" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 7"/>';
+    s+='<text x="154" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#55512F">squalene epoxidase</text><text x="394" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#55512F">14α-demethylase (CYP51)</text>';
+    s+=(drug==='terb'?'<g transform="translate(154 112)"><circle r="14" fill="#fff" stroke="#D4536B" stroke-width="3"/><path d="M-6 -6 l12 12 M6 -6 l-12 12" stroke="#D4536B" stroke-width="3.5" stroke-linecap="round"/></g>':'');
+    s+=(drug==='fluc'?'<g transform="translate(394 112)"><circle r="14" fill="#fff" stroke="#D4536B" stroke-width="3"/><path d="M-6 -6 l12 12 M6 -6 l-12 12" stroke="#D4536B" stroke-width="3.5" stroke-linecap="round"/></g>':'');
+    s+=box(36,'Squalene',L.sq,'#E0A010',drug==='terb')+box(212,'Lanosterol',L.lan,'#8FB2F4',drug==='fluc')+box(500,'Ergosterol',L.erg,'#6B6624',false);
+    s+='<text x="382" y="150" text-anchor="middle" font-size="11" fill="#55512F">(other steps omitted)</text>';
+    s+='<text x="320" y="228" text-anchor="middle" font-size="11.5" fill="#55512F">Bar height = relative amount in the fungal cell (teaching model)</text>';
+    fig.innerHTML=svgEl(s,'0 0 640 238','Three bars for squalene, lanosterol, and ergosterol at the chosen drug setting');
+  }
+  var TXT={
+   none:'<strong>No drug.</strong> Squalene flows through squalene epoxidase and then on to lanosterol. CYP51 removes the 14α-methyl group from lanosterol, and the cell ends up with plenty of ergosterol.',
+   terb:'<strong>Terbinafine blocks squalene epoxidase.</strong> The first committed step stops, so squalene builds up, and the buildup is toxic to the cell. Less lanosterol and less ergosterol are made.',
+   fluc:'<strong>Fluconazole blocks CYP51.</strong> The azole nitrogen binds the heme iron, lanosterol cannot lose its 14α-methyl group, and ergosterol falls. The block is later in the pathway, so lanosterol is the intermediate that builds up.'};
+  function paint(){
+    seg.set(drug);Object.keys(seg.buttons).forEach(function(k){seg.buttons[k].disabled=!unlocked;});
+    draw();
+    if(!unlocked){msg.innerHTML='Answer the prediction above to unlock the controls.';prog.textContent='';return;}
+    msg.innerHTML=TXT[drug];
+    if(drug!=='none'&&seen.indexOf(drug)===-1){seen.push(drug);Act.keep(vkey,seen.slice());}
+    prog.textContent='Drugs tried: '+seen.length+' of 2.';
+    if(seen.length>=2&&!state.activities[name])Act.done(name,true);
+  }
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: an azole blocks CYP51, the step that removes a methyl group from lanosterol. Which compound builds up behind the block?',
+    options:['Lanosterol','Squalene','Ergosterol','β-glucan'],answer:0,
+    why:'A blocked enzyme leaves its substrate piling up. CYP51 acts on lanosterol, so lanosterol is the substrate that accumulates and ergosterol falls.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;['terb','fluc'].forEach(function(d){drug=d;paint();});}});
+})();
+Act.sort('act-azoleRings',{name:'azoleRings',options:['Imidazole azole','Triazole azole'],
+  rows:[
+   {text:'<b>Ketoconazole</b>. Oral use restricted by the FDA in 2013; topical use is common.',answer:'Imidazole azole',why:'Imidazoles are used more for topical infections because of greater side effects or less favorable pharmacokinetics.'},
+   {text:'<b>Clotrimazole</b>, available over the counter.',answer:'Imidazole azole',why:'Clotrimazole is an imidazole used on the skin and mucosa.'},
+   {text:'<b>Miconazole</b>, a topical cream.',answer:'Imidazole azole',why:'Miconazole is an imidazole with mainly topical use.'},
+   {text:'<b>Fluconazole</b>, which crosses the blood-brain barrier.',answer:'Triazole azole',why:'Fluconazole is one of the first triazoles, a preferred oral class.'},
+   {text:'<b>Itraconazole</b>, one of the first triazoles introduced.',answer:'Triazole azole',why:'Triazoles have better oral bioavailability, which is why they are preferred by mouth.'},
+   {text:'<b>Voriconazole</b>, a mold-active azole.',answer:'Triazole azole',why:'Voriconazole is a triazole with activity against Aspergillus.'}
+  ]});
+
+/* ---- m2s4 · Beyond the membrane ---- */
+
+Act.dnd('act-mechMatch',{name:'mechMatch',
+  pills:['Flucytosine','Griseofulvin','Caspofungin','Amphotericin B','Terbinafine'],
+  rows:[
+   {text:'<b>Converted inside the fungus to fluorouracil</b>, which blocks thymidylate synthase and DNA synthesis. Used with amphotericin B.',answer:'Flucytosine',why:'Cytosine permease brings it in and cytosine deaminase converts it. Human cells lack cytosine deaminase.'},
+   {text:'<b>Binds tubulin</b> and blocks the mitotic spindle. Taken by mouth for cutaneous infections.',answer:'Griseofulvin',why:'It interferes with cell division and is ineffective as a topical agent.'},
+   {text:'<b>Inhibits β-glucan synthase.</b> Given by IV infusion.',answer:'Caspofungin',why:'Echinocandins weaken the wall and have few CYP interactions.'},
+   {text:'<b>Extracts ergosterol from the membrane.</b> Toxicity includes kidney injury.',answer:'Amphotericin B',why:'The sterol sponge mechanism, with a liposomal form to limit renal toxicity.'},
+   {text:'<b>Inhibits squalene epoxidase</b> and reaches skin, hair, nails, and fat after oral dosing.',answer:'Terbinafine',why:'High lipophilicity lets it distribute to keratin-rich tissues, which is why it works for nail infections.'}
+  ]});
+(function(){
+  function boxes(p,human){
+    var s='<rect x="2" y="2" width="636" height="206" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>';
+    s+='<text x="320" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="#25230F">'+(human?'Human cell':'Fungal cell')+'</text>';
+    var xs=[30,190,350,510],lb=[['Flucytosine','outside the cell'],['Cytosine permease','brings it in'],[human?'No cytosine deaminase':'Cytosine deaminase','makes fluorouracil'],['Thymidylate synthase','blocked, no thymine']],i;
+    for(i=0;i<4;i++){
+      s+='<g id="'+p+'-b'+i+'"><rect x="'+xs[i]+'" y="70" width="110" height="68" rx="14" fill="'+(human&&i>=2?'#FBE9ED':'#F2EFD9')+'" stroke="'+(human&&i>=2?'#D4536B':'#6B6624')+'" stroke-width="3"/><text x="'+(xs[i]+55)+'" y="98" text-anchor="middle" font-size="11.5" font-weight="800" fill="#25230F">'+lb[i][0]+'</text><text x="'+(xs[i]+55)+'" y="116" text-anchor="middle" font-size="10.5" fill="#55512F">'+lb[i][1]+'</text></g>';
+      if(i<3)s+='<g id="'+p+'-a'+i+'"><path d="M'+(xs[i]+112)+' 104 h'+(46)+'" stroke="#4B4719" stroke-width="3" stroke-linecap="round"/><path d="M'+(xs[i]+150)+' 96 l10 8 -10 8" fill="none" stroke="#4B4719" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>';
+    }
+    s+='<g id="'+p+'-end"><text x="320" y="176" text-anchor="middle" font-size="13" font-weight="800" fill="'+(human?'#1C7554':'#B03A5E')+'">'+(human?'No fluorouracil is made, so the human cell is spared':'DNA synthesis stops and the fungus cannot grow')+'</text></g>';
+    return svgEl(s,'0 0 640 210',human?'Flucytosine in a human cell: no cytosine deaminase, so no fluorouracil':'Flucytosine in a fungal cell: uptake, conversion to fluorouracil, and thymidylate synthase blocked');
+  }
+  function hide(p,from){var o={},i;for(i=from;i<4;i++){o[p+'-b'+i]={o:0};if(i<3)o[p+'-a'+i]={o:0};}o[p+'-end']={o:0};return o;}
+  Act.stepper('act-flucytoSteps',{name:'flucytoSteps',scenes:[
+   {id:'fun',label:'In the fungus',intro:'Follow flucytosine through a fungal cell.',svg:boxes('f',false),steps:[
+    {caption:'Flucytosine is a nucleoside analog, a look-alike of cytosine.',set:hide('f',1)},
+    {caption:'Cytosine permease in the fungal membrane takes it up.',set:(function(){var o=hide('f',2);o['f-b1']={o:1};o['f-a0']={o:1};return o;})()},
+    {caption:'Cytosine deaminase converts it to fluorouracil.',set:(function(){var o=hide('f',3);o['f-b2']={o:1};o['f-a1']={o:1};return o;})()},
+    {caption:'Fluorouracil inhibits thymidylate synthase, which stops thymine synthesis and DNA synthesis. Resistance develops quickly when flucytosine is used alone, so it is combined with amphotericin B.',set:{'f-b3':{o:1},'f-a2':{o:1},'f-end':{o:1}}}]},
+   {id:'hum',label:'In a human cell',intro:'The same drug in a human cell.',svg:boxes('h',true),steps:[
+    {caption:'Flucytosine reaches a human cell.',set:hide('h',1)},
+    {caption:'Some drug can get in.',set:(function(){var o=hide('h',2);o['h-b1']={o:1};o['h-a0']={o:1};return o;})()},
+    {caption:'Human cells do not contain cytosine deaminase, so the conversion step never happens.',set:(function(){var o=hide('h',3);o['h-b2']={o:1};o['h-a1']={o:1};return o;})()},
+    {caption:'No fluorouracil is made, and thymidylate synthase keeps working. That difference is the basis of its selectivity, although bone marrow toxicity can still occur.',set:{'h-b3':{o:1},'h-a2':{o:0},'h-end':{o:1}}}]}
+  ]});
+})();
+
+/* ---- m3s1 · Classify the mycosis ---- */
+
+Act.sort('act-depthSort',{name:'depthSort',options:['Cutaneous','Subcutaneous','Systemic','Opportunistic'],
+ rows:[
+  {text:'A ring-shaped, itchy lesion on the neck. Fungus lives in keratin only.',answer:'Cutaneous',why:'Cutaneous infection stays in superficial keratinized structures: skin, hair, and nails.'},
+  {text:'A pustule and nodules on the hand after a thorn puncture.',answer:'Subcutaneous',why:'Trauma carries the fungus into deeper tissue.'},
+  {text:'A traveler returns from the southwestern desert with a fever and cough after inhaling soil spores.',answer:'Systemic',why:'Systemic mycoses typically follow inhalation of spores from dimorphic fungi.'},
+  {text:'A fungus ball in a lung cavity in a patient with weak immunity. The mold is harmless to healthy people.',answer:'Opportunistic',why:'Opportunistic fungi are weakly pathogenic and cause disease mainly in immunocompromised patients.'},
+  {text:'Hypopigmented, scaly plaques on the trunk that do not itch.',answer:'Cutaneous',why:'Malassezia stays on the superficial skin surface.'},
+  {text:'Candida in the bloodstream of a patient with a central line and neutropenia.',answer:'Opportunistic',why:'Candida is normal flora that invades when defenses fail. The category follows the host, not the depth.'}
+ ]});
+
+/* ---- m3s2 · Dermatophyte detective ---- */
+
+Act.stages('act-dermCase',{name:'dermCase',stages:[
+ {lead:'A 9-year-old has an itchy, ring-shaped red lesion on the neck. The center looks clearer than the edge. A new kitten at home has patchy hair loss.',
+  prompt:'What is the likely diagnosis?',options:['Tinea corporis','Cutaneous candidiasis of the nail','Sporotrichosis','Coccidioidomycosis'],answer:0,
+  why:'A ring with an inflamed border and a clearer center is the classic body ringworm (tinea corporis).',
+  reveal:'The kitten points to an animal source. Microsporum can spread from animals to people.'},
+ {prompt:'Which test on a skin scraping supports a dermatophyte?',options:['KOH preparation showing septate hyphae','India ink showing a capsule','Urinary antigen test','Culture at 37 °C on blood agar'],answer:0,
+  why:'KOH dissolves human cells and leaves the fungal hyphae visible. Dermatophytes show septate hyphae, and culture uses Sabouraud agar.'},
+ {lead:'An adult has thick, discolored, brittle toenails. A pharmacy cream has not helped after months.',
+  prompt:'Which treatment is the best next step?',options:['Oral terbinafine','Topical clotrimazole','Topical terbinafine cream','Topical undecylenic acid'],answer:0,
+  why:'Hair and nail infections need oral therapy, because topical drugs do not penetrate deeply enough.',
+  reveal:'Oral terbinafine is lipophilic and reaches nails. Oral griseofulvin or itraconazole are alternatives.'},
+ {prompt:'The patient asks what to do to avoid another infection. Which advice fits the lecture?',options:['Keep the skin cool and dry','Take a daily oral antifungal','Apply antibiotics to the feet','Avoid soil and plants'],answer:0,
+  why:'Dermatophytes favor warm, humid areas, so keeping the skin cool and dry is the prevention step.'}
+]});
+
+/* ---- m3s3 · The rose gardener’s case ---- */
+
+Act.stages('act-roseCase',{name:'roseCase',stages:[
+ {lead:'A landscaper pricks a finger on a rose thorn. Weeks later a pustule appears on the hand, with a line of firm nodules up the forearm. The lesions are painless and he feels well.',
+  prompt:'Which route of entry best explains this infection?',options:['A puncture that placed the fungus under the skin','Inhaled spores','Contact with a catheter','Spread from a pet'],answer:0,
+  why:'Sporothrix lives on plants and soil. A thorn puncture carries it into subcutaneous tissue.'},
+ {prompt:'A sample is examined by KOH. Which finding would you expect?',options:['Cigar-shaped yeasts','Septate hyphae only','Encapsulated yeast','Spherules'],answer:0,
+  why:'In tissue Sporothrix is a yeast, often cigar-shaped.',reveal:'The organism is dimorphic: a mold on plants at room temperature, a yeast in human tissue.'},
+ {prompt:'The same sample is cultured at 20 °C. What grows?',options:['Hyphae with daisy-like conidia','Spherules with endospores','Budding yeast with a capsule','Black-spored mold with sporangia'],answer:0,
+  why:'At 20 °C, Sporothrix grows as a mold with daisy-like conidia. This is thermal dimorphism.'},
+ {prompt:'Which treatment fits the lecture for sporotrichosis?',options:['Itraconazole or terbinafine','Liposomal amphotericin B with flucytosine','An echinocandin','Griseofulvin by mouth'],answer:0,
+  why:'Itraconazole or terbinafine treats Sporothrix. Prevention is skin protection when handling plants.'}
+]});
+
+/* ---- m4s1 · Endemic fungal investigation ---- */
+
+Act.sort('act-exposureMatch',{name:'exposureMatch',options:['Coccidioides','Histoplasma','Blastomyces','Paracoccidioides'],
+ rows:[
+  {text:'Large thick-walled spheres packed with endospores in lung tissue.',answer:'Coccidioides',why:'The spherule is the distinctive tissue form of Coccidioides.'},
+  {text:'Tiny yeasts crowded inside macrophages. The patient lives in the Ohio River valley.',answer:'Histoplasma',why:'Histoplasma lives in macrophages and is endemic along the Ohio and Mississippi River valleys.'},
+  {text:'Yeast with a single broad-based bud, plus ulcerated skin lesions.',answer:'Blastomyces',why:'A single broad-based bud is the Blastomyces clue.'},
+  {text:'Yeast with multiple buds and ulcerated lesions of the face and mouth in a farmer from Brazil.',answer:'Paracoccidioides',why:'Multiple buds and Latin American origin point to Paracoccidioides.'},
+  {text:'Urinary antigen test is positive. Liver and spleen granulomas on imaging.',answer:'Histoplasma',why:'Urinary antigen testing is listed for Histoplasma.'},
+  {text:'Valley fever with erythema nodosum after a trip to the southwestern desert.',answer:'Coccidioides',why:'Erythema nodosum is a delayed hypersensitivity response to Coccidioides antigens.'}
+ ]});
+
+/* ---- m4s2 · The Coccidioides life cycle ---- */
+
+Act.order('act-coccidOrder',{name:'coccidOrder',items:[
+  'Mold in soil makes arthrospores at the ends of its hyphae.',
+  'Arthrospores are inhaled into the lung.',
+  'At body temperature the arthrospores differentiate into spherules.',
+  'Each spherule fills with endospores.',
+  'The spherule wall ruptures and releases the endospores.',
+  'Endospores form new spherules, and the cycle repeats until immunity contains it or it spreads.'
+ ]});
+Act.explore('act-immuneToggle',{name:'immuneToggle',svg:'<svg viewBox="0 0 660 174" role="img" aria-label="Two panels: a walled-off spherule under strong cellular immunity, and scattered spherules spreading under impaired immunity"><rect x="2" y="2" width="656" height="170" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/><g data-hs="strong"><circle cx="190" cy="86" r="52" fill="#E8F0FD" stroke="#5E86D8" stroke-width="4"/><circle cx="190" cy="86" r="22" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><text x="190" y="152" text-anchor="middle" font-size="12.5" font-weight="800" fill="#2B290F" >Strong cell-mediated immunity</text><text x="190" y="90" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2B290F" >spherule</text></g><g data-hs="weak"><g fill="#FDEFD0" stroke="#E0A010" stroke-width="2.5"><circle cx="440" cy="62" r="12"/><circle cx="480" cy="92" r="12"/><circle cx="520" cy="62" r="12"/><circle cx="560" cy="102" r="12"/><circle cx="470" cy="122" r="12"/></g><text x="500" y="152" text-anchor="middle" font-size="12.5" font-weight="800" fill="#2B290F" >Impaired cell-mediated immunity</text></g><path d="M270 86 H 380" stroke="#858160" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/></svg>',ids:['strong','weak'],
+ start:'Select a panel, or one of the buttons below, to compare the two outcomes.',
+ items:{
+  strong:{title:'Strong cell-mediated immunity',html:'<p>Activated macrophages and lymphocytes form a <b>granuloma</b> that walls off the fungus. Granulomas are collections of cells, not pus. Most infections stay in the lung.</p>'},
+  weak:{title:'Impaired cell-mediated immunity',html:'<p>Without an adequate cellular response, endospores spread by direct extension or through the blood. Granulomatous lesions can form in nearly any organ. Common sites are skin, bone, and the meninges.</p>'}
+ }});
+
+/* ---- m4s3 · Systemic mycosis case files ---- */
+
+Act.stages('act-caseFiles',{name:'caseFiles',stages:[
+ {lead:'Case 1. A birdwatcher from the Ohio River valley has fever, cough, and cavitary lung lesions. Biopsy shows small yeasts inside macrophages. Urine antigen is positive.',
+  prompt:'Which organism is the cause?',options:['Histoplasma','Blastomyces','Coccidioides','Paracoccidioides'],answer:0,
+  why:'Macrophage yeasts, cavitary disease, and urinary antigen match Histoplasma.'},
+ {prompt:'The illness is mild to moderate. Which first-line drug fits the lecture?',options:['Itraconazole','Caspofungin','Terbinafine','Flucytosine alone'],answer:0,
+  why:'Itraconazole is the usual first choice for mild-to-moderate disease, with amphotericin B for severe disease.'},
+ {lead:'Case 2. A man has pneumonia and ulcerated skin lesions. Microscopy shows yeast with a single broad-based bud.',
+  prompt:'Which organism is the cause?',options:['Blastomyces','Paracoccidioides','Histoplasma','Sporothrix'],answer:0,
+  why:'A broad-based bud with skin ulcers points to Blastomyces.'},
+ {lead:'Case 3. A patient with Valley fever develops headache and neck stiffness. Coccidioides is found in the CSF.',
+  prompt:'What does this presentation mean for the infection?',options:['It has disseminated to the meninges','It is confined to the lungs','It is a contaminated specimen','It is an allergic reaction'],answer:0,
+  why:'The meninges are a common site of dissemination when cell-mediated immunity is inadequate.'},
+ {prompt:'Which drug does the lecture list for Coccidioides meningitis?',options:['Fluconazole','Griseofulvin','An echinocandin','Terbinafine'],answer:0,
+  why:'Fluconazole is the lecture treatment for coccidioidal meningitis because it reaches the CNS.'}
+]});
+
+/* ---- m5s1 · From colonization to infection ---- */
+
+(function candidaSim(){
+  var host=$('act-candidaSim'),name='candidaSim',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false;
+  var on={abx:false,barrier:false,immune:false,line:false};
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var row=el('div','lab-row');row.innerHTML='<span class="lab-label">Change the patient</span>';
+  var defs=[['abx','Broad-spectrum antibiotics'],['barrier','Broken skin or mucosal barrier'],['immune','Weak cell-mediated immunity'],['line','Central venous catheter']];
+  var btns={};
+  defs.forEach(function(d){var b=el('button','opt');b.type='button';b.textContent=d[1];b.onclick=function(){if(!unlocked)return;on[d[0]]=!on[d[0]];paint();};btns[d[0]]=b;row.appendChild(b);});
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [row,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  function outcome(){
+    var n=0;for(var k in on)if(on[k])n++;
+    if((on.line&&(on.abx||on.immune))||(on.barrier&&on.immune))return 'invasive';
+    if(on.line)return 'biofilm';
+    if(n>0)return 'overgrowth';
+    return 'commensal';
+  }
+  function draw(o){
+    var s='<rect x="2" y="2" width="636" height="206" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>';
+    s+='<rect x="30" y="120" width="580" height="16" rx="6" fill="#D8D2A4" stroke="#6B6624" stroke-width="2"/><text x="40" y="150" font-size="11.5" font-weight="700" fill="#55512F">Skin or mucosal surface</text>';
+    var n=o==='commensal'?3:o==='overgrowth'?9:o==='biofilm'?5:7,i;
+    for(i=0;i<n;i++){var x=60+i*(o==='commensal'?170:58);s+='<ellipse cx="'+x+'" cy="104" rx="11" ry="8" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3"/>'+(i%2===0&&o!=='commensal'?'<ellipse cx="'+(x+14)+'" cy="97" rx="5" ry="4" fill="#E8F0FD" stroke="#5E86D8" stroke-width="2.5"/>':'');}
+    if(o==='invasive'||o==='biofilm'){
+      s+='<path d="M520 30 V 150" stroke="#858160" stroke-width="10" stroke-linecap="round"/><text x="534" y="44" font-size="11.5" font-weight="700" fill="#55512F">catheter</text>';
+      s+='<ellipse cx="520" cy="96" rx="22" ry="26" fill="#E8F0FD" stroke="#5E86D8" stroke-width="3" stroke-dasharray="5 4"/><text x="520" y="100" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2A55AE">biofilm</text>';
+    }
+    if(o==='invasive'){
+      s+='<g stroke="#5E86D8" stroke-width="4" stroke-linecap="round" fill="none"><path d="M120 110 L150 150 L130 190"/><path d="M240 110 L270 150 L250 190"/><path d="M380 110 L410 150 L390 190"/></g>';
+      s+='<text x="320" y="24" text-anchor="middle" font-size="12.5" font-weight="800" fill="#B03A5E">Yeast-to-hypha switch · tissue invasion</text>';
+    }else s+='<text x="320" y="24" text-anchor="middle" font-size="12.5" font-weight="800" fill="#25230F">'+(o==='commensal'?'Few yeasts, held in check':o==='overgrowth'?'Overgrowth on the surface':'Biofilm starts on the catheter')+'</text>';
+    fig.innerHTML=svgEl(s,'0 0 640 210','Candida yeast cells on a surface that change in number and shape depending on the chosen patient conditions');
+  }
+  var TXT={
+   commensal:'<strong>Commensal state.</strong> Intact skin and cell-mediated immunity keep Candida as part of the normal flora.',
+   overgrowth:'<strong>Mucosal or skin overgrowth.</strong> Lost competing flora or a damaged barrier lets yeasts multiply. This is thrush, vaginitis, or a diaper rash.',
+   biofilm:'<strong>Catheter biofilm.</strong> Yeasts attach to plastic and form a biofilm. The catheter is a source of future bloodstream infection.',
+   invasive:'<strong>Invasive disease.</strong> Yeast switches to hyphae and invades tissue, and a catheter biofilm can seed the blood. This is candidemia, endocarditis, or endophthalmitis.'};
+  function paint(){
+    defs.forEach(function(d){btns[d[0]].classList.toggle('sel',on[d[0]]);btns[d[0]].disabled=!unlocked;});
+    var o=outcome();draw(o);
+    if(!unlocked){msg.innerHTML='Answer the prediction above to unlock the controls.';prog.textContent='';return;}
+    msg.innerHTML=TXT[o];
+    if(o!=='commensal'&&seen.indexOf(o)===-1){seen.push(o);Act.keep(vkey,seen.slice());}
+    prog.textContent='Outcomes found: '+seen.length+' of 3 (overgrowth, biofilm, invasive). Teaching model.';
+    if(seen.length>=3&&!state.activities[name])Act.done(name,true);
+  }
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a patient in the ICU has a central line and is receiving broad-spectrum antibiotics. What is the risk?',
+    options:['Candida can form a catheter biofilm and invade the blood','Candida can no longer grow','Candida will cause only a skin rash','Candida will be killed by the antibiotics'],answer:0,
+    why:'Antibiotics remove competing flora, and the catheter gives the yeast a surface for a biofilm. Both raise the risk of bloodstream invasion.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;
+    [{abx:true},{barrier:false,line:true},{line:true,abx:true}].forEach(function(c){on={abx:false,barrier:false,immune:false,line:false};for(var k in c)on[k]=c[k];paint();});
+    on={abx:false,barrier:false,immune:false,line:false};on.abx=true;paint();on={abx:true,barrier:false,immune:false,line:true};paint();on={abx:false,barrier:false,immune:false,line:true};paint();}});
+})();
+
+/* ---- m5s2 · Localized or invasive? ---- */
+
+Act.sort('act-candidaTriage',{name:'candidaTriage',options:['Topical agent','Oral fluconazole','IV echinocandin'],
+ rows:[
+  {text:'Mild oral thrush in an otherwise healthy adult.',answer:'Topical agent',why:'Mild thrush is treated first with topical clotrimazole or nystatin.'},
+  {text:'Painful swallowing from esophageal candidiasis.',answer:'Oral fluconazole',why:'Esophageal candidiasis is treated with fluconazole.'},
+  {text:'Candida diaper rash on an infant.',answer:'Topical agent',why:'Skin infections are treated with a topical agent such as clotrimazole or nystatin.'},
+  {text:'Candida in the blood of an ICU patient with a central line.',answer:'IV echinocandin',why:'Candidemia needs an echinocandin first, plus removal or replacement of the catheter.'},
+  {text:'Moderate to severe thrush.',answer:'Oral fluconazole',why:'Fluconazole is added when thrush is moderate to severe.'},
+  {text:'Chronic mucocutaneous candidiasis.',answer:'Oral fluconazole',why:'Fluconazole or itraconazole is used for this chronic form.'}
+ ]});
+
+/* ---- m5s3 · Beyond Candida albicans ---- */
+
+Act.sort('act-speciesMatch',{name:'speciesMatch',options:['C. glabrata','C. krusei','C. parapsilosis','C. auris'],
+ rows:[
+  {text:'Intrinsically resistant to fluconazole.',answer:'C. krusei',why:'Fluconazole should not be assumed effective against C. krusei.'},
+  {text:'Often multidrug resistant and spreads between patients in healthcare settings.',answer:'C. auris',why:'Echinocandin is first-line for C. auris (CDC).'},
+  {text:'Linked to catheters and skin colonization.',answer:'C. parapsilosis',why:'This species is associated with catheters and skin colonization.'},
+  {text:'Reduced susceptibility to fluconazole, so an echinocandin is often preferred.',answer:'C. glabrata',why:'Reduced fluconazole susceptibility makes echinocandins the usual choice.'}
+ ]});
+Act.stages('act-candidemiaCase',{name:'candidemiaCase',stages:[
+ {lead:'A 62-year-old in the ICU has had a fever for four days. He has a central venous catheter and has received broad-spectrum antibiotics for two weeks. Blood cultures grow yeast.',
+  prompt:'Which organism is the most likely cause?',options:['Candida','Cryptococcus','Sporothrix','Coccidioides'],answer:0,
+  why:'Broad-spectrum antibiotics and a central line are the setup for Candida bloodstream infection.'},
+ {prompt:'Which initial antifungal class should be started?',options:['Echinocandin','Imidazole cream','Allylamine','Griseofulvin'],answer:0,
+  why:'An echinocandin such as caspofungin or micafungin is the first choice for candidemia.'},
+ {prompt:'Which action on the central line belongs in the plan?',options:['Remove or replace it','Flush it with antifungal cream','Leave it in place for convenience','Cover it with dressing only'],answer:0,
+  why:'The catheter may carry a biofilm, so it should be removed or replaced.'},
+ {lead:'Five days later he is stable and afebrile. The isolate is Candida albicans and is susceptible to fluconazole.',
+  prompt:'What is a reasonable next step?',options:['Step down to oral fluconazole','Add a topical cream','Stop all treatment','Switch to griseofulvin'],answer:0,
+  why:'Step-down to fluconazole is for stable patients with a susceptible isolate.'},
+ {lead:'In a second patient the isolate is Candida krusei.',
+  prompt:'What should be done about fluconazole?',options:['Do not rely on it, because the species is intrinsically resistant','Use it, because all Candida respond','Use it at a lower dose','Use it only for the catheter site'],answer:0,
+  why:'C. krusei is intrinsically resistant to fluconazole, so step-down depends on species and susceptibility.',
+  reveal:'C. auris is another case where the culture result changes the plan: it is often multidrug resistant and an echinocandin is first-line.'}
+]});
+
+/* ---- m6s1 · Cryptococcus and the CNS ---- */
+
+Act.order('act-cryptoSeq',{name:'cryptoSeq',items:[
+  'India ink on CSF shows encapsulated yeast, so the diagnosis is cryptococcal meningitis.',
+  'Induction: start liposomal amphotericin B plus flucytosine. An echinocandin is inactive against Cryptococcus.',
+  'Consolidation and long-term suppression: switch to fluconazole.',
+  'Start ART about 4 to 6 weeks after antifungal therapy begins.',
+  'Watch for IRIS after ART starts, because rising CD4 cells can cause a profound inflammatory response.'
+ ]});
+
+/* ---- m6s2 · The many faces of Aspergillus ---- */
+
+(function aspLab(){
+  var host=$('act-aspLab'),name='aspLab',vkey=name+'_v';
+  var seen=(state.activities[vkey]||[]).slice(),unlocked=false,lung='normal',imm='intact';
+  var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
+  var s1=segControl([['normal','Normal lungs'],['cavity','Existing lung cavity'],['allergic','Allergic airway response']],function(v){lung=v;paint();});
+  var s2=segControl([['intact','Intact immunity'],['weak','Neutropenia or high-dose steroids']],function(v){imm=v;paint();});
+  var r1=el('div','lab-row');r1.innerHTML='<span class="lab-label">Lung condition</span>';r1.appendChild(s1.box);
+  var r2=el('div','lab-row');r2.innerHTML='<span class="lab-label">Immune status</span>';r2.appendChild(s2.box);
+  var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
+  [r1,r2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
+  function outcome(){if(imm==='weak')return 'invasive';if(lung==='cavity')return 'aspergilloma';if(lung==='allergic')return 'abpa';return 'none';}
+  function draw(o){
+    var s='<rect x="2" y="2" width="636" height="206" rx="14" fill="#FAF9F2" stroke="#E6E2C8"/>';
+    s+='<path d="M200 40 C 110 40, 80 110, 110 170 C 140 200, 230 190, 250 150 C 270 100, 250 50, 200 40 Z" fill="#E8F0FD" stroke="#5E86D8" stroke-width="4"/>';
+    s+='<path d="M440 40 C 530 40, 560 110, 530 170 C 500 200, 410 190, 390 150 C 370 100, 390 50, 440 40 Z" fill="#E8F0FD" stroke="#5E86D8" stroke-width="4"/>';
+    if(o==='aspergilloma')s+='<circle cx="190" cy="110" r="30" fill="#FFFFFF" stroke="#5E86D8" stroke-width="3"/><circle cx="190" cy="110" r="16" fill="#6B6624"/><text x="190" y="190" text-anchor="middle" font-size="11" font-weight="800" fill="#25230F">fungus ball in cavity</text>';
+    if(o==='invasive'){s+='<g stroke="#6B6624" stroke-width="4" stroke-linecap="round" fill="none"><path d="M160 90 L190 120 L170 150 M190 120 L220 100 M440 90 L470 120 L450 150 M470 120 L500 100"/></g><circle cx="310" cy="100" r="12" fill="#FDEFD0" stroke="#E0A010" stroke-width="3"/><text x="320" y="150" text-anchor="middle" font-size="11" font-weight="800" fill="#B03A5E">hyphae invade vessels</text>';}
+    if(o==='abpa')s+='<g stroke="#D4536B" stroke-width="3" stroke-linecap="round"><path d="M150 100 h50 M150 120 h50 M450 100 h50 M450 120 h50"/></g><text x="320" y="190" text-anchor="middle" font-size="11" font-weight="800" fill="#25230F">allergic inflammation, no tissue invasion</text>';
+    s+='<text x="320" y="24" text-anchor="middle" font-size="12.5" font-weight="800" fill="#25230F">Inhaled Aspergillus conidia</text>';
+    fig.innerHTML=svgEl(s,'0 0 640 210','Two lungs showing the pattern of Aspergillus disease for the selected lung condition and immune status');
+  }
+  var TXT={
+   none:'<strong>No lasting disease.</strong> Inhaled conidia do not take hold in healthy lungs with intact immunity. Change a setting to see a disease form.',
+   aspergilloma:'<strong>Aspergilloma.</strong> A fungus ball grows in an existing cavity. The mass sits in the space and does not invade tissue.',
+   abpa:'<strong>Allergic disease (ABPA).</strong> The lungs react to the fungus with an allergic inflammatory response rather than by tissue invasion. The lecture lists steroids and itraconazole for less severe infections.',
+   invasive:'<strong>Invasive aspergillosis.</strong> With neutropenia or high-dose steroids, hyphae invade blood vessels and can disseminate. The lecture treatment is voriconazole, with isavuconazole or liposomal amphotericin B as alternatives.'};
+  function paint(){
+    s1.set(lung);s2.set(imm);
+    [s1,s2].forEach(function(sg){Object.keys(sg.buttons).forEach(function(k){sg.buttons[k].disabled=!unlocked;});});
+    var o=outcome();draw(o);
+    if(!unlocked){msg.innerHTML='Answer the prediction above to unlock the controls.';prog.textContent='';return;}
+    msg.innerHTML=TXT[o];
+    if(o!=='none'&&seen.indexOf(o)===-1){seen.push(o);Act.keep(vkey,seen.slice());}
+    prog.textContent='Forms found: '+seen.length+' of 3. Teaching model.';
+    if(seen.length>=3&&!state.activities[name])Act.done(name,true);
+  }
+  var gate=Act.gate(gateBox,{name:name,
+    prompt:'Predict: a patient is neutropenic after chemotherapy and inhales Aspergillus conidia. Which form of disease is most dangerous?',
+    options:['Invasive aspergillosis with vessel invasion','A harmless fungus ball','Dermatophyte infection of nails','A thrush infection of the mouth'],answer:0,
+    why:'Neutrophils normally kill hyphae. Without them, hyphae invade blood vessels and can spread.'},
+    function(){unlocked=true;paint();});
+  paint();
+  Act.register(name,{solve:function(){gate.solve();unlocked=true;[['cavity','intact'],['allergic','intact'],['normal','weak']].forEach(function(c){lung=c[0];imm=c[1];paint();});}});
+})();
+
+/* ---- m6s3 · The immunocompromised patient ---- */
+
+Act.sort('act-hostRisk',{name:'hostRisk',options:['Candida','Aspergillus','Cryptococcus','Mucor and Rhizopus'],
+ rows:[
+  {text:'Central line and broad-spectrum antibiotics. Blood cultures grow yeast.',answer:'Candida',why:'Lost flora and a catheter are the Candida setup.'},
+  {text:'Neutropenia after chemotherapy, new lung infiltrates, and septate hyphae on biopsy.',answer:'Aspergillus',why:'Septate hyphae and neutropenia point to Aspergillus.'},
+  {text:'Advanced HIV, headache, and encapsulated yeast in the CSF.',answer:'Cryptococcus',why:'Weak cell-mediated immunity and a capsule point to Cryptococcus.'},
+  {text:'Diabetic ketoacidosis with necrotic facial tissue. Nonseptate hyphae invade blood vessels.',answer:'Mucor and Rhizopus',why:'Ketoacidosis and nonseptate hyphae with vessel invasion are the Mucor and Rhizopus clues.'},
+  {text:'A transplant recipient on high-dose steroids with a cavity containing a fungus ball.',answer:'Aspergillus',why:'High-dose steroids and a fungus ball point to Aspergillus.'},
+  {text:'A patient with advanced HIV and a positive India ink preparation after pigeon dropping exposure.',answer:'Cryptococcus',why:'Pigeon droppings are a soil source of Cryptococcus, and India ink shows the capsule.'}
+ ]});
+
+/* ---- consult ---- */
+Act.stages('act-consultA',{name:'consultA',stages:[
+ {lead:'Case A. A 62-year-old in the ICU has persistent fever. He has a central venous catheter and has received broad-spectrum antibiotics for two weeks. Blood cultures are positive for yeast.',prompt:'Host factors: which features of this patient raise his risk of a fungal bloodstream infection?',options:['Lost normal flora from antibiotics and a central line', 'Intact skin and normal immunity', 'A recent trip to the desert', 'A thorn injury'],answer:0,why:'Antibiotics remove competing flora and the catheter gives yeast a surface to colonize.'},
+ {prompt:'Organism: which fungus is the most likely cause?',options:['Candida', 'Cryptococcus', 'Aspergillus', 'Trichophyton'],answer:0,why:'Candida is normal flora that invades when barriers and defenses are disturbed.'},
+ {prompt:'Pathogenesis: which two features let this organism invade and persist?',options:['Yeast-to-hypha switch and biofilm on the catheter', 'A polysaccharide capsule and neurotropism', 'Spherules filled with endospores', 'Keratin digestion in the nails'],answer:0,why:'Invasion involves the yeast-to-hypha switch and biofilm formation on catheters.'},
+ {prompt:'Diagnostic evidence: which finding would support C. albicans?',options:['Gram-positive yeast that forms germ tubes', 'Cigar-shaped yeasts in tissue', 'Yeast with a halo on India ink', 'Nonseptate hyphae with sporangia'],answer:0,why:'Candida is Gram-positive and C. albicans forms germ tubes. A PCR assay is also available.'},
+ {prompt:'Treatment: which plan fits the lecture?',options:['An echinocandin and removal or replacement of the catheter', 'Oral griseofulvin and a topical cream', 'Voriconazole alone with the line kept', 'Liposomal amphotericin B plus flucytosine'],answer:0,why:'Echinocandin first, with catheter removal or replacement. Step down to fluconazole only for a stable patient with a susceptible isolate.',reveal:'Species matters. C. krusei is intrinsically resistant to fluconazole and C. auris is often multidrug resistant, so an echinocandin is first-line there.'}
+]});
+Act.stages('act-consultB',{name:'consultB',stages:[
+ {lead:'Case B. A man with advanced HIV has had two weeks of headache and fever. CSF India ink shows encapsulated yeast.',prompt:'Host factors: which defect explains his susceptibility?',options:['Compromised cell-mediated immunity from low CD4 T cells', 'Neutropenia', 'A broken skin barrier', 'Complement deficiency'],answer:0,why:'Cryptococcal disease often occurs with compromised cell-mediated immunity.'},
+ {prompt:'Organism: which fungus is the likely cause?',options:['Cryptococcus neoformans', 'Candida albicans', 'Aspergillus fumigatus', 'Sporothrix schenckii'],answer:0,why:'Encapsulated yeast in the CSF of a patient with advanced HIV points to Cryptococcus.'},
+ {prompt:'Pathogenesis: which feature helps the yeast survive and spread to the CNS?',options:['A polysaccharide capsule that resists phagocytosis', 'A chitin spherule wall', 'Biofilm on catheters', 'Dimorphism at 37 °C'],answer:0,why:'The capsule resists phagocytosis, and the yeast spreads from the lungs to the CNS.'},
+ {prompt:'Diagnostic evidence: how does the capsule appear on India ink?',options:['As a clear halo around each yeast', 'As septate branching hyphae', 'As spherules with endospores', 'As cigar-shaped cells'],answer:0,why:'India ink is excluded by the capsule, so each cell shows a halo.'},
+ {prompt:'Treatment: which sequence fits the lecture?',options:['Liposomal amphotericin B plus flucytosine, then fluconazole, with ART about 4 to 6 weeks after antifungal therapy begins', 'An echinocandin, then ART immediately', 'Fluconazole alone, then amphotericin B', 'Terbinafine, then ART at once'],answer:0,why:'Induction with liposomal amphotericin B plus flucytosine, then fluconazole. Delaying ART lowers the risk of IRIS, which may be deadly.',reveal:'Echinocandins are inactive against Cryptococcus.'}
+]});
+Act.stages('act-consultC',{name:'consultC',stages:[
+ {lead:'Case C. A woman has been neutropenic for ten days after chemotherapy. She has fever and new lung infiltrates. A biopsy shows branching, septate hyphae.',prompt:'Host factors: which defect is most important?',options:['Neutropenia', 'Low CD4 T cells', 'Broken skin barrier', 'Ketoacidosis'],answer:0,why:'Neutrophils kill hyphae. Without them, molds can invade the lung.'},
+ {prompt:'Organism: which fungus fits the biopsy?',options:['Aspergillus', 'Mucor', 'Cryptococcus', 'Candida albicans only'],answer:0,why:'Septate hyphae point to Aspergillus. Mucor and Rhizopus have nonseptate hyphae.'},
+ {prompt:'Pathogenesis: what does the organism do in this host?',options:['Inhaled conidia germinate and hyphae invade blood vessels', 'Spherules fill with endospores', 'A fungus ball stays walled in a cavity with no invasion', 'Yeasts grow inside macrophages'],answer:0,why:'In neutropenia the hyphae invade vessels and can disseminate.'},
+ {prompt:'Diagnostic evidence: which microscopic pattern is typical?',options:['Tree-branch septate hyphae', 'Encapsulated yeast', 'Cigar-shaped yeast', 'Spherules'],answer:0,why:'Aspergillus shows septate hyphae that branch like a tree.'},
+ {prompt:'Treatment: which drug is first-line?',options:['Voriconazole', 'Fluconazole', 'Terbinafine', 'Nystatin'],answer:0,why:'Voriconazole is first-line for invasive aspergillosis. Isavuconazole or liposomal amphotericin B are alternatives.',reveal:'As an azole, voriconazole needs a full medication review for CYP interactions.'}
+]});
+
+(function(){
+  var name='consult',names=['consultA','consultB','consultC'];
+  function check(){
+    var all=names.every(function(n){return state.activities[n]!==undefined&&state.activities[n]!==null;});
+    var has=state.activities[name]!==undefined&&state.activities[name]!==null;
+    if(all&&!has)Act.done(name,true);
+  }
+  setInterval(check,400);
+})();
+
+
+initWelcome();
+</script>
+<script src="shared/engine.js"></script>
+<script src="shared/menu.js"></script>
+</body>
+</html>
