@@ -13,7 +13,7 @@ A set of web pages that students open in a browser. No installation, no server, 
 | `index.html` | The hub page itself. Students open this one first. |
 | `bacteria1.html` to `bacteria4.html` | The four Bacteria companions (study pages for each lecture). |
 | `viruses1.html` to `viruses5.html` | The five Viruses companions. |
-| 'mycoses.html' | The Mycoses companion |
+| `mycoses.html` | The Mycoses companion |
 | `banks/` | The questions and flashcards, plus a small "manifest" file per companion that describes its sections. |
 | `shared/` | Code and styling shared by every companion. |
 
