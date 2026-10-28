@@ -14,12 +14,10 @@
 <style>
 :root{
   --accent:#6B4FD8; --accent-soft:#EFEBFC; --accent-deep:#4B34A8;
-  --ok:#2FA97A; --ok-soft:#E7F6EF;
-  --no:#D4536B; --no-soft:#FDECEF;
-  --bac:#2E7DA8; --bac-soft:#E6F2F8;
-  --vir:#C2456A; --vir-soft:#FCEBF0;
-  --fun:#9A6A10; --fun-soft:#FFF4E0;
-  --ink:#1D2B33; --ink-mid:#4A5C68; --ink-soft:#6F808C;
+  --ok:#2FA97A; --ok-soft:#E7F6EF; --ok-ink:#1B6F4F;
+  --no:#D4536B; --no-soft:#FDECEF; --no-ink:#A8324A;
+  --bac:#2E7DA8; --vir:#C2456A; --fun:#9A6A10;
+  --ink:#1D2B33; --ink-mid:#4A5C68; --ink-soft:#5B6B77;
   --page:#F2F5F7; --card:#FFFFFF; --line:#E4EAEE;
   --r-lg:20px; --r-md:14px; --r-sm:10px;
   --shadow:0 2px 14px rgba(29,43,51,.07);
@@ -32,30 +30,36 @@ body{font-family:var(--font);color:var(--ink);line-height:1.6;font-size:16px;
 h1,h2,h3,h4{line-height:1.3;margin:0 0 .5em}
 p{margin:0 0 1em}
 button{font-family:inherit;font-size:1rem;cursor:pointer}
+button[aria-disabled="true"]{cursor:default}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 .wrap{max-width:1020px;margin:0 auto;padding:24px 16px 60px}
 .mock-note{background:#FFF8E6;border:1px dashed #E2C47A;border-radius:var(--r-md);padding:10px 14px;
   font-size:.85rem;color:#6B5310;margin-bottom:16px}
 .mock-note b{color:#4F3C08}
 .card{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:24px}
-.eyebrow{font-size:.72rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.eyebrow{font-size:.72rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-deep)}
 .title-row{display:flex;gap:14px;align-items:center;margin-bottom:6px}
 .badge{width:46px;height:46px;border-radius:13px;flex:0 0 46px;display:grid;place-items:center;
   background:linear-gradient(140deg,#8A72EA,var(--accent));color:#fff;font-size:1.4rem}
 h1{font-size:1.5rem;margin:0}
 .sub{color:var(--ink-mid);font-size:.92rem;margin:0}
+.stage-h{font-size:1.15rem;margin:0 0 .6em}
+.stage-h:focus{outline:none}
+.stage-h:focus-visible{outline:3px solid var(--accent)}
 
 /* step tracker */
 .steps{display:flex;gap:6px;margin:20px 0 18px;padding:0;list-style:none;flex-wrap:wrap}
 .steps li{flex:1 1 0;min-width:96px;font-size:.78rem;font-weight:650;color:var(--ink-soft);
   border-top:4px solid var(--line);padding-top:6px}
 .steps li.on{color:var(--accent-deep);border-color:var(--accent)}
-.steps li.done{color:var(--ok);border-color:var(--ok)}
+.steps li.done{color:var(--ok-ink);border-color:var(--ok)}
 
 .chart{background:#FAFAFD;border:1px solid var(--line);border-left:5px solid var(--accent);
   border-radius:var(--r-md);padding:16px 18px;margin-bottom:18px}
 .chart h3{font-size:.95rem;margin-bottom:6px}
+.chart p:last-child{margin-bottom:0}
 .chart dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0;font-size:.92rem}
 .chart dt{font-weight:650;color:var(--ink-mid)}
 .chart dd{margin:0}
@@ -64,23 +68,25 @@ h1{font-size:1.5rem;margin:0}
 .q{border:1px solid var(--line);border-radius:var(--r-md);padding:18px;margin-bottom:14px}
 .q-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
 .tag{white-space:nowrap;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent-deep)}
+.tag.plain{background:#EEF3F5;color:var(--ink-mid)}
 .q-stem{font-weight:600;margin-bottom:12px}
 .choices{display:grid;gap:8px}
 .choice{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:var(--r-sm);
   padding:10px 14px;color:var(--ink);line-height:1.45}
-.choice:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.choice:hover:not([aria-disabled="true"]){border-color:var(--accent);background:var(--accent-soft)}
 .choice.right{border-color:var(--ok);background:var(--ok-soft)}
+.choice.right::before{content:"\2713\00a0";font-weight:800;color:var(--ok-ink)}
 .choice.wrong{border-color:var(--no);background:var(--no-soft);color:var(--ink-mid)}
-.choice:disabled{cursor:default}
+.choice.wrong::before{content:"\2717\00a0";font-weight:800;color:var(--no-ink)}
 .feedback{margin-top:10px;font-size:.92rem;border-radius:var(--r-sm);padding:10px 14px;display:none}
 .feedback.show{display:block}
 .feedback.good{background:var(--ok-soft);border-left:4px solid var(--ok)}
 .feedback.bad{background:var(--no-soft);border-left:4px solid var(--no)}
-.reveal{margin-top:8px;font-size:.88rem;color:var(--ink-mid)}
+.reveal{color:var(--ink-mid)}
 
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .btn{border:0;border-radius:99px;padding:10px 20px;font-weight:650;background:var(--accent);color:#fff}
-.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn[aria-disabled="true"]{opacity:.45}
 .btn.ghost{background:transparent;color:var(--accent-deep);border:1.5px solid var(--accent)}
 
 /* lab bench */
@@ -88,7 +94,7 @@ h1{font-size:1.5rem;margin:0}
 @media (max-width:760px){.bench{grid-template-columns:1fr}}
 .panel h3{font-size:1rem;margin-bottom:4px}
 .panel .hint{font-size:.84rem;color:var(--ink-soft);margin-bottom:10px}
-.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.75rem;margin-bottom:10px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.78rem;margin-bottom:10px;color:var(--ink-mid)}
 .legend span{display:inline-flex;align-items:center;gap:5px}
 .legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
 .suspects{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
@@ -97,57 +103,61 @@ h1{font-size:1.5rem;margin:0}
 .sus::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px}
 .sus.bac::before{background:var(--bac)} .sus.vir::before{background:var(--vir)} .sus.fun::before{background:var(--fun)}
 .sus .nm{font-weight:650;font-size:.86rem;line-height:1.25;display:block;font-style:italic}
-.sus .kd{font-size:.7rem;color:var(--ink-soft)}
-.sus.picked{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-.sus.hunch{border-style:dashed;opacity:.62}
-.sus.cleared{background:#F4F6F8;color:var(--ink-soft);cursor:default}
-.sus.cleared .nm{text-decoration:line-through}
-.stamp{display:none;position:absolute;right:6px;bottom:5px;font-size:.6rem;font-weight:800;letter-spacing:.06em;
-  color:var(--ok);border:1.5px solid var(--ok);border-radius:4px;padding:0 4px;transform:rotate(-4deg);background:#fff}
-.sus.cleared .stamp{display:block}
-.sus.culprit{border-color:var(--ok);background:var(--ok-soft)}
+.sus .kd{font-size:.72rem;color:var(--ink-soft);display:block}
+.sus .st{display:none;margin-top:3px;font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-mid)}
+.sus.lowered{background:#F4F6F8}
+.sus.lowered .st{display:block}
+.sus.hunch{border-style:dashed;background:#F8F8FB}
+.sus[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .mode{display:flex;gap:0;margin:0 0 10px;border:1.5px solid var(--accent);border-radius:99px;overflow:hidden;width:max-content;max-width:100%}
-.mode button{border:0;background:#fff;color:var(--accent-deep);padding:6px 14px;font-size:.82rem;font-weight:650}
+.mode button{border:0;background:#fff;color:var(--accent-deep);padding:10px 16px;font-size:.84rem;font-weight:650}
 .mode button.on{background:var(--accent);color:#fff}
 
 .tests{display:grid;gap:8px}
 .test{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;
-  border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff;padding:9px 12px;color:var(--ink)}
-.test:hover:not(:disabled){border-color:var(--accent)}
+  border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff;padding:10px 12px;color:var(--ink);min-height:48px}
+.test:hover:not([aria-disabled="true"]){border-color:var(--accent)}
 .test .tn{font-weight:650;font-size:.88rem;display:block}
-.test .td{font-size:.76rem;color:var(--ink-soft)}
-.test .tc{font-size:.72rem;font-weight:700;color:var(--accent-deep);white-space:nowrap}
-.test:disabled{background:#F4F6F8;cursor:default}
-.test:disabled .tc{color:var(--ok)}
+.test .td{font-size:.78rem;color:var(--ink-soft)}
+.test .tc{font-size:.74rem;font-weight:700;color:var(--accent-deep);white-space:nowrap}
+.test[aria-disabled="true"]{background:#F4F6F8}
+.test[aria-disabled="true"] .tc{color:var(--ok-ink)}
 .counter{display:flex;gap:14px;font-size:.84rem;color:var(--ink-mid);margin:12px 0 0;flex-wrap:wrap}
 .counter b{color:var(--ink)}
 
 .log{margin-top:18px}
+.log h3{font-size:1rem}
 .result{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:var(--r-md);
   padding:12px 14px;margin-bottom:10px;background:#fff}
 .result.new{animation:pop .25s ease}
 @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.result.new{animation:none}}
 .result h4{font-size:.92rem;margin:0 0 4px}
 .result .rv{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86rem;
   background:#F6F7FB;border-radius:6px;padding:6px 10px;margin-bottom:6px}
 .result p{font-size:.88rem;margin:0 0 4px}
-.result .cl{font-size:.8rem;color:var(--ok);font-weight:650}
-.result .cl.none{color:var(--no)}
+.result .cl{font-size:.82rem;color:var(--accent-deep);font-weight:650}
 .result.wrongacc{border-left-color:var(--no)}
 
 .accuse{margin-top:14px;padding:14px;border-radius:var(--r-md);background:var(--accent-soft)}
 .accuse p{margin:0 0 8px;font-size:.9rem}
 
 /* debrief */
-.stars{font-size:1.9rem;letter-spacing:4px;color:#E2A516;margin:4px 0 8px}
-.stars .off{color:#DDE3E7}
+.checklist{list-style:none;margin:8px 0 16px;padding:0}
+.checklist li{display:flex;gap:10px;align-items:flex-start;padding:5px 0;font-size:.94rem}
+.checklist .mk{font-weight:800;min-width:1.2em}
+.checklist .mk.ok{color:var(--ok-ink)} .checklist .mk.miss{color:var(--no-ink)}
+.worklist{margin:6px 0 16px;padding-left:1.1em;font-size:.9rem}
+.worklist li{margin-bottom:6px}
+.role{font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent-deep);white-space:nowrap}
 .trail{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0 16px}
 .trail th,.trail td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
 .trail th{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
 .trail .mk{font-weight:800}
-.trail .mk.ok{color:var(--ok)} .trail .mk.miss{color:var(--no)}
-.go{display:inline-block;font-size:.76rem;font-weight:650;color:var(--accent-deep);text-decoration:none;
-  background:var(--accent-soft);border-radius:99px;padding:1px 9px;margin:2px 4px 2px 0}
+.trail .mk.ok{color:var(--ok-ink)} .trail .mk.miss{color:var(--no-ink)}
+.go{display:inline-block;font-size:.78rem;font-weight:650;color:var(--accent-deep);text-decoration:none;
+  background:var(--accent-soft);border-radius:99px;padding:5px 12px;margin:2px 4px 2px 0}
+.go:hover{text-decoration:underline}
 .tablewrap{overflow-x:auto}
 @media (max-width:600px){
   .trail thead{display:none}
@@ -160,11 +170,11 @@ h1{font-size:1.5rem;margin:0}
 details.instr{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:12px 16px}
 details.instr summary{font-weight:700;cursor:pointer}
 details.instr li{font-size:.88rem;margin-bottom:6px}
-.hidden{display:none !important}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="sr-only" id="live" role="status" aria-live="polite" aria-atomic="true"></div>
+<main class="wrap">
 
   <div class="mock-note"><b>Mockup for review.</b> This is one sample case, not yet connected to the hub. It saves nothing, so refreshing the page starts over. Notes for you are at the bottom of the page.</div>
 
@@ -179,12 +189,7 @@ details.instr li{font-size:.88rem;margin-bottom:6px}
     <p class="sub">Draws on Bacteria I, II, and IV, Viruses I and III, and Mycoses. About 15 minutes.</p>
 
     <ol class="steps" id="steps" aria-label="Case progress">
-      <li data-s="0">1 &middot; Briefing</li>
-      <li data-s="1">2 &middot; Lab bench</li>
-      <li data-s="2">3 &middot; Confirm</li>
-      <li data-s="3">4 &middot; Treat</li>
-      <li data-s="4">5 &middot; Prevent</li>
-      <li data-s="5">Debrief</li>
+      <li data-s="0"></li><li data-s="1"></li><li data-s="2"></li><li data-s="3"></li><li data-s="4"></li><li data-s="5"></li>
     </ol>
 
     <div id="stage"></div>
@@ -194,18 +199,22 @@ details.instr li{font-size:.88rem;margin-bottom:6px}
     <summary>Notes for the instructor (students would not see this)</summary>
     <ul>
       <li><b>How each step is tagged.</b> Every question and test carries the companion(s) it draws on, in the same <code>bacteria2+mycoses</code> format as the Integration bank. In the real tool, a missed step would send the student back to that companion, and the debrief links point there now.</li>
-      <li><b>How the lab bench is scored.</b> Five tests clear every suspect except the culprit. 5 tests = 3 stars, 6 = 2, 7 or more = 1, and each wrong accusation takes away a star (minimum 1). The two "wasted" tests are a repeat blood culture (it clears no one) and the Histoplasma urine antigen (useful, but the biopsy clears Histoplasma too).</li>
-      <li><b>Facts that need your eye.</b> (1) The lectures list voriconazole, posaconazole, and isavuconazole as the mold-active azoles, so Treat question 2 says fluconazole is not among them. The lecture implies this but does not state it outright. (2) Mycoplasma is left out of the suspect list because no lecture names a test that rules it out. It is mentioned in the Gram stain result instead. (3) The Gram stain result says "few white cells" because the patient is neutropenic. (4) The influenza and CMV tests rely on the general PCR content in Viruses I, not on a disease-specific test from Viruses III.</li>
-      <li><b>Overlap.</b> Mycoses &ldquo;Three patient consults,&rdquo; Case C, also has a neutropenic patient with Aspergillus. The difference is that Case C gives students the biopsy result. Here they have to decide to order it, and rule out bacteria and viruses first.</li>
+      <li><b>How the lab bench works.</b> A test result makes suspects <i>less likely</i>; it never removes them, and every suspect stays selectable. The student does not have to rule everyone out. Naming <i>Aspergillus</i> is accepted once the biopsy has been ordered, because tissue showing the organism is the evidence the diagnosis needs. Naming it earlier gets a &ldquo;reasonable working diagnosis, now get tissue&rdquo; message, not a penalty. A banner on the bench says treatment does not wait for the workup.</li>
+      <li><b>How it is scored.</b> There are no stars and no penalty for ordering extra tests. The debrief shows a four-item reasoning checklist (looked for bacteria, looked for a virus, got tissue evidence, named only diagnoses the evidence supported) and labels each test the student ordered as <i>Decisive</i>, <i>Supporting</i>, or <i>Reasonable, adds little here</i>.</li>
+      <li><b>Points that go beyond your lectures.</b> These came from review feedback citing outside guidance (IDSA and CDC), and I did not re-check the guideline text: (1) a negative acid-fast smear lowers suspicion for TB but does not exclude it; (2) when invasive aspergillosis is strongly suspected, antifungal treatment starts while the workup continues; (3) repeating blood cultures can be appropriate during persistent neutropenic fever. Please confirm you are comfortable teaching each.</li>
+      <li><b>Facts that need your eye.</b> (1) The lectures list voriconazole, posaconazole, and isavuconazole as the mold-active azoles, so Treat question 2 says fluconazole is not among them. The lectures imply this but do not state it outright. (2) Mycoplasma is left out of the suspect list because no lecture names a test that rules it out; it is mentioned in the Gram stain result instead. (3) The Gram stain result says &ldquo;few white cells&rdquo; because the patient is neutropenic. (4) The influenza and CMV tests rely on the general PCR content in Viruses I, not on a disease-specific test from Viruses III. (5) The biopsy explanation says Candida can switch between yeast and hyphal forms, which follows the Mycoses bank, so the biopsy only lowers suspicion for it.</li>
+      <li><b>Overlap.</b> Mycoses &ldquo;Three patient consults,&rdquo; Case C, also has a neutropenic patient with Aspergillus. The difference is that Case C gives students the biopsy result. Here they have to decide to order it, and weigh bacteria and viruses first.</li>
     </ul>
   </details>
-</div>
+</main>
 
 <script>
 /* =====================================================================
    CASE DATA: the shape a future banks/detective.js entry would take.
    `m` = companion(s) the step draws on. `sec` = where to send a student
    who misses it (file + section label, shown in the debrief).
+   Tests use `lowers` (suspects the result makes LESS likely), never
+   "clears": a negative result lowers suspicion, it does not exclude.
    ===================================================================== */
 var CASE = {
   id: 'DET-01',
@@ -226,14 +235,14 @@ var CASE = {
       sec:[['bacteria2.html','Bacteria II'],['mycoses.html','Mycoses · Destroying the cell wall']],
       stem:'Her fever has continued through four days of piperacillin-tazobactam. Which explanation best fits this lack of response?',
       options:[
-        { t:'The cause may have no peptidoglycan for a beta-lactam to act on, as with a fungus or a virus', ok:true,
-          why:'Beta-lactams block peptidoglycan cross-linking. Fungal walls are made of chitin and β-glucan, and viruses have no wall, so neither gives the drug a target.' },
+        { t:'The cause may be an organism with no peptidoglycan for a beta-lactam to act on, such as a fungus or a virus', ok:true,
+          why:'Beta-lactams block peptidoglycan cross-linking. Fungal walls are made of chitin and β-glucan, and viruses have no wall, so neither gives the drug a target. This does not prove the cause is not bacterial, since a resistant or uncovered bacterium is still possible, but it widens the list.' },
         { t:'Piperacillin-tazobactam lacks activity against Gram-negative rods',
-          why:'Piperacillin-tazobactam gives broad coverage that includes many Gram-negative and anaerobic organisms. A gap in its coverage is not the best explanation.' },
+          why:'Piperacillin-tazobactam gives broad coverage that includes many Gram-negative and anaerobic organisms, so a gap in coverage is not the best explanation.' },
         { t:'Tazobactam blocks the action of piperacillin inside the bacterial cell',
           why:'Tazobactam is a beta-lactamase inhibitor. It protects piperacillin from being broken down, so it helps the drug rather than blocking it.' },
         { t:'Low neutrophil counts leave bactericidal drugs such as beta-lactams unable to work',
-          why:'Neutropenia weakens bacteriostatic drugs, which rely on the host to clear the bacteria they hold in check. A bactericidal beta-lactam kills bacteria on its own.' }
+          why:'Neutropenia weakens bacteriostatic drugs, which rely on the host to clear the bacteria they hold in check. A bactericidal beta-lactam kills bacteria on its own, so this does not explain the failure.' }
       ] },
     { id:'DET-01-B2', short:'Which fungi her defect favors', m:'mycoses',
       sec:[['mycoses.html','Mycoses · The host defense challenge']],
@@ -244,7 +253,7 @@ var CASE = {
         { t:'Cryptococcus and mucosal Candida',
           why:'This pair follows loss of T cells, as in advanced HIV. Her defect is missing neutrophils.' },
         { t:'Mucor and Rhizopus',
-          why:'Mucor and Rhizopus follow ketoacidosis. Nothing in her chart points to it.' },
+          why:'The lecture links Mucor and Rhizopus to ketoacidosis, and her chart shows neutropenia instead. That makes them a weaker match, not an excluded one: hyphal shape on a biopsy is what separates them from Aspergillus.' },
         { t:'Cryptococcus and reactivated endemic fungi',
           why:'This pattern follows high-dose steroids and transplant drugs, which blunt macrophage and T-cell function.' }
       ] }
@@ -266,56 +275,63 @@ var CASE = {
     { id:'his',  n:'Histoplasma',              k:'fun' }
   ],
 
-  /* clears: suspects this result rules out. Order here = order on the menu. */
+  /* lowers: suspects this result makes less likely. Order here = order on the menu.
+     role/use: how the debrief describes the test; none of them is penalized. */
   tests:[
     { id:'gram', n:'Sputum Gram stain', d:'Result in about an hour', m:'bacteria1+bacteria3',
       sec:[['bacteria1.html','Bacteria I'],['bacteria3.html','Bacteria III']],
       result:'Few white cells. No bacteria seen.',
-      why:'Pneumococcus would show Gram-positive diplococci, S. aureus Gram-positive cocci in clusters, and Pseudomonas Gram-negative rods. A blank stain does not clear organisms the stain cannot show: mycobacteria resist the dyes, and Mycoplasma has no wall to stain.',
-      clears:['spn','sau','pae'] },
+      why:'Pneumococcus would show Gram-positive diplococci, S. aureus Gram-positive cocci in clusters, and Pseudomonas Gram-negative rods. None were seen, which makes them less likely. A blank stain is not a complete screen: mycobacteria resist the dyes, Mycoplasma has no wall to stain, and a poor sputum sample can miss bacteria.',
+      lowers:['spn','sau','pae'],
+      role:'Supporting', use:'Looks for the common lung bacteria.' },
     { id:'afb', n:'Modified acid-fast stain of sputum', d:'Result in about an hour', m:'bacteria1+bacteria4',
       sec:[['bacteria1.html','Bacteria I'],['bacteria4.html','Bacteria IV']],
       result:'No acid-fast organisms seen.',
-      why:'The mycolic acid wall of M. tuberculosis holds carbol fuchsin after an acid-alcohol wash, and Nocardia is weakly acid-fast. A negative stain clears both.',
-      clears:['mtb','noc'] },
+      why:'The mycolic acid wall of M. tuberculosis holds carbol fuchsin after an acid-alcohol wash, and Nocardia is weakly acid-fast. A negative smear makes both less likely but does not exclude either: a negative acid-fast smear does not rule out TB, so the team would keep it in mind if the picture changed.',
+      lowers:['mtb','noc'],
+      role:'Supporting', use:'Looks for mycobacteria and Nocardia.' },
     { id:'rpcr', n:'Respiratory virus PCR (nasal swab)', d:'Result in a few hours', m:'viruses1+viruses3',
       sec:[['viruses1.html','Viruses I'],['viruses3.html','Viruses III']],
       result:'Influenza RNA: not detected.',
-      why:'RT-PCR amplifies specific viral RNA sequences, so it can look for influenza directly in the swab.',
-      clears:['flu'] },
+      why:'RT-PCR amplifies specific viral RNA sequences, so it can look for influenza directly in the swab. A negative result makes influenza less likely.',
+      lowers:['flu'],
+      role:'Supporting', use:'Looks for influenza.' },
     { id:'cmv', n:'CMV PCR (blood)', d:'Result in about a day', m:'viruses1+viruses3',
       sec:[['viruses1.html','Viruses I'],['viruses3.html','Viruses III · CMV and the transplant patient']],
       result:'CMV DNA: not detected.',
-      why:'CMV is a herpesvirus that stays latent and reactivates when immunity falls. It is worth ruling out in a patient on chemotherapy, and PCR detects its DNA.',
-      clears:['cmv'] },
+      why:'CMV is a herpesvirus that stays latent and reactivates when immunity falls, so it is worth checking in a patient on chemotherapy. PCR detects its DNA, and a negative result makes active CMV disease less likely today.',
+      lowers:['cmv'],
+      role:'Supporting', use:'Looks for active CMV.' },
     { id:'blood', n:'Repeat blood cultures', d:'Result in about two days', m:'bacteria1',
       sec:[['bacteria1.html','Bacteria I']],
       result:'No growth after 48 hours.',
-      why:'Her admission cultures already showed no growth, and the infection is in the lung tissue. Repeating a negative test cleared no one new and cost two days.',
-      clears:[] },
+      why:'Repeating blood cultures is reasonable when fever persists during neutropenia, because bacteria or yeast in the blood would change her care. Here a second negative set adds little to the lung question: it does not separate the suspects for her nodules.',
+      lowers:[],
+      role:'Reasonable, adds little here', use:'Repeat cultures are appropriate in persistent neutropenic fever, but a second negative set does not separate the lung suspects.' },
     { id:'histo', n:'Histoplasma urine antigen', d:'Result in about a day', m:'mycoses',
       sec:[['mycoses.html','Mycoses · Endemic fungal investigation']],
       result:'Negative.',
-      why:'The urine antigen is the lecture test for Histoplasma. It also fits her history: no travel and no river-valley exposure.',
-      clears:['his'] },
+      why:'The urine antigen is the lecture test for Histoplasma. A negative result makes it less likely, and it fits her history: no travel and no river-valley exposure.',
+      lowers:['his'],
+      role:'Reasonable, adds little here', use:'Her history has no exposure that raises Histoplasma, so suspicion was low to begin with.' },
     { id:'bx', n:'CT-guided lung biopsy with fungal stain', d:'Result in about a day', m:'mycoses',
       sec:[['mycoses.html','Mycoses · The immunocompromised patient']],
       result:'Branching hyphae with cross-walls (septate), branching like a tree. Hyphae are invading the walls of small blood vessels.',
-      why:'Septate hyphae clear Mucor and Rhizopus, whose hyphae are nonseptate. Hyphae also clear the yeasts: Candida (yeasts and pseudohyphae), Cryptococcus (an encapsulated yeast), and Histoplasma (small yeasts inside macrophages).',
-      clears:['muc','can','cry','his'] }
+      why:'Tissue shows the organism and what it is doing to the host. Septate, tree-like hyphae invading vessels in a neutropenic patient fit Aspergillus. Mucor and Rhizopus have nonseptate hyphae, so these hyphae argue against them. Cryptococcus is an encapsulated yeast and Histoplasma is a small yeast inside macrophages, so neither fits. Candida usually shows yeasts and pseudohyphae, but it can switch forms, so the team weighs the whole picture and not shape alone: for Candida the biopsy makes it less likely, not excluded.',
+      lowers:['muc','can','cry','his'],
+      role:'Decisive', use:'Shows the organism and how it behaves in tissue.' }
   ],
-  bestTests:5,
 
   confirm:[
-    { id:'DET-01-C1', short:'Telling Aspergillus from Nocardia', m:'bacteria4+mycoses',
+    { id:'DET-01-C1', short:'Why Nocardia is less likely', m:'bacteria4+mycoses',
       sec:[['bacteria4.html','Bacteria IV'],['mycoses.html','Mycoses']],
-      stem:'Nocardia also forms branching filaments under the microscope. Which finding from her workup best separates her organism from Nocardia?',
+      stem:'Nocardia also forms branching filaments under the microscope. Which findings from her case make Nocardia less likely?',
       options:[
-        { t:'The negative modified acid-fast stain, since Nocardia is weakly acid-fast', ok:true,
-          why:'Nocardia holds the stain weakly, and her sample showed nothing. Together with septate hyphae, that points away from Nocardia.' },
+        { t:'No soil exposure in her history, and no weakly acid-fast filaments on the stain', ok:true,
+          why:'Nocardia is acquired from soil by inhalation and is weakly acid-fast. Her history and stain both point away from it. These lower suspicion but do not exclude it, so tissue showing the organism is what settles the question.' },
         { t:'Growth in oxygen-rich lung tissue, since Nocardia is anaerobic',
           why:'Nocardia is aerobic. Its anaerobic look-alike is Actinomyces.' },
-        { t:'No response to piperacillin, since Nocardia responds to penicillin G',
+        { t:'No response to piperacillin-tazobactam, since Nocardia responds to penicillin G',
           why:'Penicillin G treats Actinomyces. Nocardia is treated with TMP-SMX.' },
         { t:'No sulfur granules in the biopsy, since Nocardia forms them',
           why:'Sulfur granules are the mark of Actinomyces sinus tracts, not Nocardia.' }
@@ -409,49 +425,77 @@ var CASE = {
 
 /* =====================================================================
    PAGE LOGIC (mockup only)
+   Accessibility notes: every state change is announced through the
+   #live region; controls that change state use aria-disabled/aria-pressed
+   instead of being removed or disabled, and the control that was used gets
+   focus back after the bench redraws.
    ===================================================================== */
-var S = { step:0, bench:{ ordered:[], cleared:{}, hunch:{}, picked:null, mode:'pick', wrong:0, solved:false }, misses:{} };
-var stage = document.getElementById('stage');
+var STEP_LABELS = ['1 · Briefing','2 · Lab bench','3 · Confirm','4 · Treat','5 · Prevent','Debrief'];
+var STEP_TITLES = ['Step 1 of 5 · Briefing','Step 2 of 5 · Lab bench','Step 3 of 5 · Confirm','Step 4 of 5 · Treat','Step 5 of 5 · Prevent','Case closed'];
 var KIND = { bac:'Bacterium', vir:'Virus', fun:'Fungus' };
+var REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function freshState(){
+  return { step:0, focusKey:null, misses:{},
+    bench:{ ordered:[], lowered:{}, hunch:{}, picked:null, mode:'pick', wrong:0, log:[], fresh:false } };
+}
+var S = freshState();
+var stage = document.getElementById('stage');
+var live = document.getElementById('live');
 
 function h(tag, attrs, html){ var e=document.createElement(tag); for(var k in (attrs||{})) e.setAttribute(k,attrs[k]); if(html!=null) e.innerHTML=html; return e; }
+function plain(html){ var d=document.createElement('div'); d.innerHTML=html; return d.textContent.replace(/\s+/g,' ').trim(); }
+function say(html){ live.textContent=''; setTimeout(function(){ live.textContent=plain(html); }, 60); }
 function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function byId(list,id){ return list.filter(function(x){ return x.id===id; })[0]; }
 function tagLabel(m){ return m.split('+').map(function(x){ return x.replace(/^bacteria/,'Bacteria ').replace(/^viruses/,'Viruses ').replace(/^mycoses$/,'Mycoses').replace(/ (\d)$/,function(_,d){return ' '+['','I','II','III','IV','V'][+d];}); }); }
 function tags(m){ return tagLabel(m).map(function(t){ return '<span class="tag">'+t+'</span>'; }).join(''); }
+function scrollTo(el){ if(el && el.scrollIntoView) el.scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'nearest'}); }
 
 function paintSteps(){
   [].forEach.call(document.querySelectorAll('#steps li'), function(li){
-    var s=+li.getAttribute('data-s'); li.className = s<S.step ? 'done' : (s===S.step ? 'on' : '');
+    var s=+li.getAttribute('data-s');
+    li.className = s<S.step ? 'done' : (s===S.step ? 'on' : '');
+    li.innerHTML = STEP_LABELS[s] + (s<S.step ? '<span class="sr-only"> (completed)</span>' : (s===S.step ? '<span class="sr-only"> (current step)</span>' : ''));
+    if(s===S.step) li.setAttribute('aria-current','step'); else li.removeAttribute('aria-current');
   });
 }
-function go(step){ S.step=step; paintSteps(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
-
+function go(step){
+  S.step=step; paintSteps(); render();
+  var hd=document.getElementById('stageH'); if(hd) hd.focus({preventScroll:true});
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function heading(){ return '<h2 class="stage-h" id="stageH" tabindex="-1">'+STEP_TITLES[S.step]+'</h2>'; }
 function chartCard(){
   var dl = CASE.chart.map(function(r){ return '<dt>'+r[0]+'</dt><dd>'+r[1]+'</dd>'; }).join('');
   return '<div class="chart"><h3>Patient chart</h3><dl>'+dl+'</dl></div>';
 }
 
 /* A question set: one question at a time, retry until right (like Act.stages). */
+var qCount=0;
 function questionSet(list, nextLabel, onDone){
   var i=0, host=h('div');
   function show(){
     host.innerHTML='';
-    var q=list[i], box=h('div',{'class':'q'});
-    box.innerHTML='<div class="q-meta"><span class="tag" style="background:#EEF3F5;color:#4A5C68">Question '+(i+1)+' of '+list.length+'</span>'+tags(q.m)+'</div><div class="q-stem">'+q.stem+'</div>';
-    var ch=h('div',{'class':'choices'}), fb=h('div',{'class':'feedback'}), missed=false;
+    var q=list[i], box=h('div',{'class':'q'}), sid='qs'+(++qCount);
+    box.innerHTML='<div class="q-meta"><span class="tag plain">Question '+(i+1)+' of '+list.length+'</span>'+tags(q.m)+'</div><div class="q-stem" id="'+sid+'">'+q.stem+'</div>';
+    var ch=h('div',{'class':'choices',role:'group','aria-labelledby':sid}), fb=h('div',{'class':'feedback'}), missed=false;
     shuffle(q.options).forEach(function(o){
       var b=h('button',{'class':'choice',type:'button'},o.t);
       b.onclick=function(){
+        if(b.getAttribute('aria-disabled')==='true') return;
         if(o.ok){
-          [].forEach.call(ch.children,function(c){ c.disabled=true; });
+          [].forEach.call(ch.children,function(c){ c.setAttribute('aria-disabled','true'); });
           b.classList.add('right'); fb.className='feedback show good'; fb.innerHTML='<b>Correct.</b> '+o.why;
+          say('Correct. '+o.why);
           if(missed) S.misses[q.id]=q;
           var nx=h('div',{'class':'controls'}), nb=h('button',{'class':'btn',type:'button'}, i<list.length-1?'Next question':nextLabel);
-          nb.onclick=function(){ if(i<list.length-1){ i++; show(); } else onDone(); };
+          nb.onclick=function(){ if(i<list.length-1){ i++; show(); var f=host.querySelector('.q-stem'); if(f){ f.setAttribute('tabindex','-1'); f.focus({preventScroll:true}); } } else onDone(); };
           nx.appendChild(nb); box.appendChild(nx); nb.focus();
         } else {
-          missed=true; b.classList.add('wrong'); b.disabled=true;
+          missed=true; b.classList.add('wrong'); b.setAttribute('aria-disabled','true');
           fb.className='feedback show bad'; fb.innerHTML='<b>Not quite.</b> '+o.why+' <span class="reveal">Try again.</span>';
+          say('Not quite. '+o.why+' Try again.');
         }
       };
       ch.appendChild(b);
@@ -462,22 +506,22 @@ function questionSet(list, nextLabel, onDone){
 }
 
 function render(){
-  stage.innerHTML='';
+  stage.innerHTML=heading();
   if(S.step===0){
-    stage.innerHTML='<p>A page from the oncology unit: the team wants to know what is growing in this patient&rsquo;s lungs before they change her treatment. Read the chart, then answer two questions to frame the case.</p>'+chartCard();
+    stage.insertAdjacentHTML('beforeend','<p>A page from the oncology unit: the team wants to know what is growing in this patient’s lungs before they change her treatment. Read the chart, then answer two questions to frame the case.</p>'+chartCard());
     stage.appendChild(questionSet(CASE.briefing,'Go to the lab bench',function(){ go(1); }));
   }
   else if(S.step===1){ renderBench(); }
   else if(S.step===2){
-    stage.innerHTML='<p>You named <b><i>Aspergillus</i></b>. Before the team changes treatment, confirm the call.</p>';
+    stage.insertAdjacentHTML('beforeend','<p>You named <b><i>Aspergillus</i></b> as the diagnosis the evidence supports. Before the team settles on it, test your reasoning.</p>');
     stage.appendChild(questionSet(CASE.confirm,'Go to treatment',function(){ go(3); }));
   }
   else if(S.step===3){
-    stage.innerHTML='<p>The team agrees: invasive aspergillosis. Now choose her treatment.</p>';
+    stage.insertAdjacentHTML('beforeend','<p>The tissue supports invasive aspergillosis. Now settle her therapy.</p>');
     stage.appendChild(questionSet(CASE.treat,'Go to prevention',function(){ go(4); }));
   }
   else if(S.step===4){
-    stage.innerHTML='<p>She is improving on voriconazole. Plan ahead for her next round of chemotherapy.</p>';
+    stage.insertAdjacentHTML('beforeend','<p>She is improving on voriconazole. Plan ahead for her next round of chemotherapy.</p>');
     stage.appendChild(questionSet(CASE.prevent,'Close the case',function(){ go(5); }));
   }
   else renderDebrief();
@@ -486,118 +530,152 @@ function render(){
 /* ---------------- Lab bench ---------------- */
 function renderBench(){
   var B=S.bench;
-  stage.innerHTML='<p><b>Your goal:</b> clear every suspect but one, then name the culprit. Each test you order clears the suspects its result rules out. A good detective orders the tests that clear the most and skips the ones that tell you nothing new.</p>';
+  stage.innerHTML=heading()+
+    '<div class="chart"><h3>Treatment does not wait for every result</h3><p>With neutropenia, a persistent fever, and new lung nodules, the team would start a mold-active antifungal while the tests run. Your job here is to build the diagnosis.</p></div>'+
+    '<p><b>Your goal:</b> weigh the evidence and name the diagnosis it supports. Each result makes some suspects <i>less likely</i>; it does not remove them, and you do not have to rule out everyone. Order the tests that help most, and name the culprit when the evidence supports it.</p>';
   var grid=h('div',{'class':'bench'});
 
   var left=h('div',{'class':'panel'});
-  left.innerHTML='<h3>Suspects</h3><div class="hint">Use &ldquo;Mark a hunch&rdquo; to dim suspects you think are unlikely. That is just a note to yourself; only a test result clears a suspect.</div>'+
+  left.innerHTML='<h3>Suspects</h3><div class="hint">Use &ldquo;Mark a hunch&rdquo; to flag suspects you think are unlikely. That is a note to yourself; only test results change what the evidence says.</div>'+
     '<div class="legend"><span><i style="background:var(--bac)"></i>Bacterium</span><span><i style="background:var(--vir)"></i>Virus</span><span><i style="background:var(--fun)"></i>Fungus</span></div>';
-  var mode=h('div',{'class':'mode',role:'group','aria-label':'Tap mode'});
+  var mode=h('div',{'class':'mode',role:'group','aria-label':'What tapping a suspect does'});
   [['pick','Pick a culprit'],['hunch','Mark a hunch']].forEach(function(m){
-    var b=h('button',{type:'button','class':B.mode===m[0]?'on':'','aria-pressed':B.mode===m[0]?'true':'false'},m[1]);
-    b.onclick=function(){ B.mode=m[0]; renderBench(); }; mode.appendChild(b);
+    var b=h('button',{type:'button','class':B.mode===m[0]?'on':'','aria-pressed':B.mode===m[0]?'true':'false','data-key':'mode:'+m[0]},m[1]);
+    b.onclick=function(){ B.mode=m[0]; S.focusKey='mode:'+m[0]; renderBench(); say(m[1]+' mode.'); };
+    mode.appendChild(b);
   });
   left.appendChild(mode);
   var sg=h('div',{'class':'suspects'});
   CASE.suspects.forEach(function(s){
-    var cls='sus '+s.k+(B.cleared[s.id]?' cleared':'')+(B.hunch[s.id]&&!B.cleared[s.id]?' hunch':'')+(B.picked===s.id?' picked':'');
-    var b=h('button',{type:'button','class':cls,'aria-label':s.n+', '+KIND[s.k]+(B.cleared[s.id]?', cleared':'')},
-      '<span class="nm">'+s.n+'</span><span class="kd">'+KIND[s.k]+'</span><span class="stamp">CLEARED</span>');
-    if(B.cleared[s.id]) b.disabled=true;
+    var low=!!B.lowered[s.id], hun=!!B.hunch[s.id], pk=B.picked===s.id;
+    var cls='sus '+s.k+(low?' lowered':'')+(hun?' hunch':'');
+    var pressed = B.mode==='pick' ? pk : hun;
+    var b=h('button',{type:'button','class':cls,'aria-pressed':pressed?'true':'false','data-key':'sus:'+s.id},
+      '<span class="nm">'+s.n+'</span><span class="kd">'+KIND[s.k]+'</span><span class="st">Less likely so far</span>'+(hun?'<span class="sr-only">Marked as a hunch</span>':''));
     b.onclick=function(){
-      if(B.mode==='hunch'){ B.hunch[s.id]=!B.hunch[s.id]; if(B.picked===s.id) B.picked=null; }
-      else { B.picked = B.picked===s.id ? null : s.id; }
+      S.focusKey='sus:'+s.id;
+      if(B.mode==='hunch'){ B.hunch[s.id]=!B.hunch[s.id]; if(B.picked===s.id) B.picked=null; say(s.n+(B.hunch[s.id]?' marked as a hunch.':' hunch removed.')); }
+      else { B.picked = B.picked===s.id ? null : s.id; say(s.n+(B.picked?' selected as the culprit.':' deselected.')); }
       renderBench();
     };
     sg.appendChild(b);
   });
   left.appendChild(sg);
 
-  var remaining=CASE.suspects.filter(function(s){ return !B.cleared[s.id]; }).length;
+  var pickedName = B.picked ? byId(CASE.suspects,B.picked).n : null;
   var acc=h('div',{'class':'accuse'});
-  var pickedName = B.picked ? CASE.suspects.filter(function(s){return s.id===B.picked;})[0].n : null;
   acc.innerHTML='<p>'+(pickedName?'Ready to name <b><i>'+pickedName+'</i></b>?':'Pick a suspect card to name it as the culprit.')+'</p>';
-  var ab=h('button',{type:'button','class':'btn'},'Name the culprit'); ab.disabled=!B.picked;
-  ab.onclick=accuse; acc.appendChild(ab); left.appendChild(acc);
+  var ab=h('button',{type:'button','class':'btn','data-key':'accuse','aria-disabled':B.picked?'false':'true'},'Name the culprit');
+  ab.onclick=function(){ if(ab.getAttribute('aria-disabled')==='true'){ say('Pick a suspect card first.'); return; } accuse(); };
+  acc.appendChild(ab); left.appendChild(acc);
 
   var right=h('div',{'class':'panel'});
   right.innerHTML='<h3>Order a test</h3><div class="hint">Results appear below the bench.</div>';
   var tl=h('div',{'class':'tests'});
   CASE.tests.forEach(function(t){
     var done=B.ordered.indexOf(t.id)>-1;
-    var b=h('button',{type:'button','class':'test'},'<span><span class="tn">'+t.n+'</span><span class="td">'+t.d+'</span></span><span class="tc">'+(done?'&#10003; Done':'Order')+'</span>');
-    if(done) b.disabled=true;
-    b.onclick=function(){ order(t); };
+    var b=h('button',{type:'button','class':'test','data-key':'test:'+t.id,'aria-disabled':done?'true':'false'},
+      '<span><span class="tn">'+t.n+'</span><span class="td">'+t.d+'</span></span><span class="tc">'+(done?'&#10003; Done':'Order')+'</span>');
+    b.onclick=function(){ if(b.getAttribute('aria-disabled')==='true') return; order(t); };
     tl.appendChild(b);
   });
   right.appendChild(tl);
-  right.appendChild(h('div',{'class':'counter'},'<span>Tests ordered: <b>'+B.ordered.length+'</b></span><span>Suspects left: <b>'+remaining+'</b> of '+CASE.suspects.length+'</span>'));
+  var nLow=Object.keys(B.lowered).length;
+  right.appendChild(h('div',{'class':'counter'},'<span>Tests ordered: <b>'+B.ordered.length+'</b></span><span>Less likely so far: <b>'+nLow+'</b> of '+CASE.suspects.length+'</span>'));
 
   grid.appendChild(left); grid.appendChild(right); stage.appendChild(grid);
 
-  var log=h('div',{'class':'log',id:'log'});
-  if(B.log && B.log.length){ log.innerHTML='<h3 style="font-size:1rem">Results</h3>'+B.log.slice().reverse().join('');
-    if(B.fresh){ log.querySelector('.result').classList.add('new'); B.fresh=false; } }
+  var log=h('section',{'class':'log','aria-label':'Results so far'});
+  if(B.log.length){
+    log.innerHTML='<h3>Results</h3>'+B.log.slice().reverse().join('');
+    if(B.fresh){ log.querySelector('.result').classList.add('new'); B.fresh=false; }
+  }
   stage.appendChild(log);
+
+  if(S.focusKey){
+    var el=stage.querySelector('[data-key="'+S.focusKey+'"]');
+    if(el) el.focus({preventScroll:true});
+    S.focusKey=null;
+  }
 }
 
 function order(t){
-  var B=S.bench; B.ordered.push(t.id); B.log=B.log||[];
-  var newly=t.clears.filter(function(id){ return !B.cleared[id]; });
-  newly.forEach(function(id){ B.cleared[id]=t.id; });
-  var names=newly.map(function(id){ return '<i>'+CASE.suspects.filter(function(s){return s.id===id;})[0].n+'</i>'; });
-  var cl = names.length ? '<div class="cl">&#10003; Cleared: '+names.join(', ')+'</div>'
-                        : '<div class="cl none">Cleared no one new.</div>';
-  B.fresh=true; B.log.push('<div class="result"><h4>'+t.n+' &nbsp;'+tags(t.m)+'</h4><div class="rv">'+t.result+'</div><p>'+t.why+'</p>'+cl+'</div>');
+  var B=S.bench;
+  B.ordered.push(t.id);
+  var newly=t.lowers.filter(function(id){ return !B.lowered[id]; });
+  newly.forEach(function(id){ B.lowered[id]=t.id; });
+  var names=newly.map(function(id){ return '<i>'+byId(CASE.suspects,id).n+'</i>'; });
+  var cl = names.length ? 'Less likely now: '+names.join(', ')+'.' : 'No suspect became newly less likely.';
+  B.log.push('<div class="result"><h4>'+t.n+' &nbsp;'+tags(t.m)+'</h4><div class="rv">'+t.result+'</div><p>'+t.why+'</p><div class="cl">'+cl+'</div></div>');
+  B.fresh=true; S.focusKey='test:'+t.id;
   renderBench();
-  var first=document.querySelector('#log .result'); if(first) first.scrollIntoView({behavior:'smooth',block:'nearest'});
+  say(t.n+' result: '+t.result+' '+t.why+' '+cl);
+  scrollTo(document.querySelector('.log .result'));
 }
 
 function accuse(){
-  var B=S.bench, s=CASE.suspects.filter(function(x){return x.id===B.picked;})[0];
-  var left=CASE.suspects.filter(function(x){ return !B.cleared[x.id] && !x.culprit; });
-  B.log=B.log||[];
-  if(s.culprit && left.length===0){ B.solved=true; go(2); return; }
+  var B=S.bench, s=byId(CASE.suspects,B.picked);
+  S.focusKey='accuse';
   if(s.culprit){
-    B.log.push('<div class="result wrongacc"><h4>Right instinct, not yet proven</h4><p>Your evidence fits <i>Aspergillus</i>, but the team will not change treatment while '+left.length+' other suspect'+(left.length>1?'s are':' is')+' still uncleared. A patient this immunosuppressed can carry more than one infection. Order tests to clear '+(left.length>1?'them':'it')+'.</p></div>');
+    if(B.ordered.indexOf('bx')>-1){ say('Correct. Aspergillus is supported by the tissue evidence.'); go(2); return; }
+    var t1='Reasonable working diagnosis', b1='In a neutropenic patient like this, the team would start a mold-active antifungal now rather than wait for every result. To confirm it, though, you need to see the organism in tissue. Which test shows that?';
+    B.log.push('<div class="result"><h4>'+t1+'</h4><p>'+b1+'</p></div>');
+    say(t1+'. '+b1);
   } else {
     B.wrong++;
-    var clearer=CASE.tests.filter(function(t){ return t.clears.indexOf(s.id)>-1; })[0];
-    B.log.push('<div class="result wrongacc"><h4>Not the culprit: <i>'+s.n+'</i></h4><p>The team ran the confirming test and it came back negative. A test from the menu would have cleared this suspect: <b>'+(clearer?clearer.n:'')+'</b>. Accusing without evidence costs a star.</p></div>');
+    var did=B.ordered.map(function(id){ return byId(CASE.tests,id); }).filter(function(t){ return t.lowers.indexOf(s.id)>-1; });
+    var next=CASE.tests.filter(function(t){ return t.lowers.indexOf(s.id)>-1 && B.ordered.indexOf(t.id)<0; })[0];
+    var body = did.length
+      ? 'Your results already made this less likely ('+did.map(function(t){return t.n;}).join(', ')+'). Less likely is not the same as excluded, but nothing in the case supports it over a mold.'
+      : 'Nothing in the chart or your results points to this yet.';
+    if(next) body+=' A test that would help you weigh it: <b>'+next.n+'</b>.';
+    body+=' The debrief will note that this diagnosis was not supported.';
+    var t2='Not supported by the evidence: <i>'+s.n+'</i>';
+    B.log.push('<div class="result wrongacc"><h4>'+t2+'</h4><p>'+body+'</p></div>');
+    say(plain(t2)+'. '+body);
   }
-  B.fresh=true; B.picked=null; renderBench();
-  var first=document.querySelector('#log .result'); if(first) first.scrollIntoView({behavior:'smooth',block:'nearest'});
+  B.fresh=true; B.picked=null;
+  renderBench();
+  scrollTo(document.querySelector('.log .result'));
 }
 
 /* ---------------- Debrief ---------------- */
 function renderDebrief(){
-  var B=S.bench, n=B.ordered.length;
-  var stars = n<=CASE.bestTests ? 3 : (n===CASE.bestTests+1 ? 2 : 1);
-  stars=Math.max(1, stars-B.wrong);
-  var starHtml=''; for(var i=0;i<3;i++) starHtml+= i<stars ? '&#9733;' : '<span class="off">&#9733;</span>';
+  var B=S.bench;
+  function did(id){ return B.ordered.indexOf(id)>-1; }
+  var checks=[
+    ['Looked for a bacterial cause (Gram or acid-fast stain)', did('gram')||did('afb')],
+    ['Looked for a viral cause (a PCR test)', did('rpcr')||did('cmv')],
+    ['Got tissue evidence of the organism (biopsy)', did('bx')],
+    ['Named only diagnoses the evidence supported', B.wrong===0]
+  ];
+  var nOk=checks.filter(function(c){ return c[1]; }).length;
 
-  var html='<h2 style="font-size:1.3rem">Case closed</h2><div class="stars" aria-label="'+stars+' of 3 stars">'+starHtml+'</div>'+
-    '<p>You ordered <b>'+n+'</b> test'+(n===1?'':'s')+' (the tightest workup uses '+CASE.bestTests+')'+(B.wrong?' and made <b>'+B.wrong+'</b> wrong accusation'+(B.wrong>1?'s':''):'')+'. Stars count the lab bench only, since every question lets you retry.</p>';
+  var html=heading()+
+    '<p>Your reasoning checklist: <b>'+nOk+' of '+checks.length+'</b>. Ordering extra tests carries no penalty; the checklist asks whether the evidence you gathered supports your conclusion.</p><ul class="checklist">'+
+    checks.map(function(c){ return '<li><span class="mk '+(c[1]?'ok':'miss')+'" aria-hidden="true">'+(c[1]?'&#10003;':'&#9675;')+'</span><span>'+c[0]+'<span class="sr-only">'+(c[1]?': yes':': not yet')+'</span></span></li>'; }).join('')+'</ul>';
 
-  var wasted=B.ordered.map(function(id){ return CASE.tests.filter(function(t){return t.id===id;})[0]; })
-    .filter(function(t){ return !CASE.suspects.some(function(s){ return B.cleared[s.id]===t.id; }); });
-  if(wasted.length) html+='<p><b>Tests that cleared no one new:</b> '+wasted.map(function(t){return t.n;}).join(', ')+'.</p>';
+  html+='<h3 style="font-size:1rem">Your workup</h3>';
+  if(B.ordered.length){
+    html+='<ul class="worklist">'+B.ordered.map(function(id){ var t=byId(CASE.tests,id);
+      return '<li><b>'+t.n+'</b> <span class="role">'+t.role+'</span><br>'+t.use+'</li>'; }).join('')+'</ul>';
+  } else html+='<p>You did not order any tests.</p>';
 
   var rows='';
   function row(label, item, ok){
     var links=item.sec.map(function(s){ return '<a class="go" href="'+s[0]+'">'+s[1]+' &rarr;</a>'; }).join('');
-    rows+='<tr><td class="mk '+(ok?'ok':'miss')+'">'+(ok?'&#10003;':'&#8635;')+'</td><td>'+label+'</td><td>'+tags(item.m)+'</td><td>'+(ok?'':links)+'</td></tr>';
+    rows+='<tr><td class="mk '+(ok?'ok':'miss')+'"><span aria-hidden="true">'+(ok?'&#10003;':'&#8635;')+'</span><span class="sr-only">'+(ok?'Right first time':'Needed a retry')+'</span></td><td>'+label+'</td><td>'+tags(item.m)+'</td><td>'+(ok?'':links)+'</td></tr>';
   }
   [['Briefing',CASE.briefing],['Confirm',CASE.confirm],['Treat',CASE.treat],['Prevent',CASE.prevent]].forEach(function(g){
-    g[1].forEach(function(q,i){ row('<b>'+g[0]+'</b> &middot; '+q.short, q, !S.misses[q.id]); });
+    g[1].forEach(function(q){ row('<b>'+g[0]+'</b> &middot; '+q.short, q, !S.misses[q.id]); });
   });
   html+='<h3 style="font-size:1rem;margin-top:14px">Your trail</h3><p class="sub" style="margin-bottom:6px">&#10003; right first time &middot; &#8635; needed a retry, with a link back to the companion that teaches it.</p>'+
-    '<div class="tablewrap"><table class="trail"><thead><tr><th></th><th>Step</th><th>Draws on</th><th>Review</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    '<div class="tablewrap"><table class="trail"><caption class="sr-only">Each question, whether it was right first time, and where to review it</caption><thead><tr><th scope="col"><span class="sr-only">Result</span></th><th scope="col">Step</th><th scope="col">Draws on</th><th scope="col">Review</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 
-  html+='<div class="chart" style="border-left-color:var(--ok)"><h3>The case in one line</h3><p style="margin:0">Neutropenia + fever that ignores a beta-lactam + lung nodules &rarr; think mold. Clear bacteria with the Gram and acid-fast stains, clear viruses with PCR, then let the biopsy separate the fungi: septate, tree-branching hyphae invading vessels mean invasive aspergillosis, treated with voriconazole and prevented with a mold-active azole.</p></div>';
+  html+='<div class="chart" style="border-left-color:var(--ok)"><h3>The case in one line</h3><p>Neutropenia + fever that ignores a beta-lactam + lung nodules &rarr; think mold, and start mold-active treatment while the workup runs. Stains and PCR make bacteria and viruses less likely; tissue is what shows the organism. Septate, tree-branching hyphae invading vessels fit invasive aspergillosis, which is treated with voriconazole and prevented with a mold-active azole.</p></div>';
   stage.innerHTML=html;
   var c=h('div',{'class':'controls'}), r=h('button',{type:'button','class':'btn ghost'},'Replay this case');
-  r.onclick=function(){ S={ step:0, bench:{ ordered:[], cleared:{}, hunch:{}, picked:null, mode:'pick', wrong:0, solved:false }, misses:{} }; go(0); };
+  r.onclick=function(){ S=freshState(); go(0); };
   c.appendChild(r); stage.appendChild(c);
 }
 
