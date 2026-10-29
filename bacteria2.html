@@ -1558,9 +1558,10 @@ function syncChains(){
   var baseSave = saveState;
   saveState = function(){
     var ch = syncChains();
-    baseSave();
+    var ok = baseSave();
     if(ch && typeof paintNav === 'function') paintNav();
     if(typeof refreshLenses === 'function') refreshLenses();
+    return ok;
   };
 })();
 
