@@ -1905,6 +1905,9 @@ Act.stages('act-consultC',{name:'consultC',stages:[
     if(all&&!has)Act.done(name,true);
   }
   setInterval(check,400);
+  /* Registered after consultA/B/C, so Act.solveAll() solves the three cases
+     first and then runs the same check right away instead of waiting for the timer. */
+  Act.register(name,{solve:check});
 })();
 
 
