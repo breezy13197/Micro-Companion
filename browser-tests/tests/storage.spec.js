@@ -115,3 +115,35 @@ test.describe('when saving fails after the page has loaded', () => {
     expect(await page.evaluate(() => localStorage.getItem('companion.bacteria1.v1'))).toBe('{"checks":{"keep":1}}');
   });
 });
+
+test.describe('shared storage code', () => {
+
+  test('a backup downloaded from a companion can be loaded into the hub', async ({ page }) => {
+    await openCompanion(page, 'bacteria1');
+    await page.evaluate(() => Act.solveAll());
+    const backup = await page.evaluate(() => {
+      let captured = null;
+      const real = MCStore.download;
+      MCStore.download = (name, obj) => { captured = obj; };
+      downloadSessionBackup();
+      MCStore.download = real;
+      return captured;
+    });
+    expect(backup.kind).toBe('micro-hub-backup');
+    expect(Object.keys(backup.companions)).toEqual(['bacteria1']);
+
+    await page.evaluate(() => localStorage.clear());
+    await page.goto('/index.html');
+    await page.evaluate(b => applyBackup(b), backup);
+    const stored = await page.evaluate(() => localStorage.getItem('companion.bacteria1.v1'));
+    expect(JSON.parse(stored).activities).toEqual(backup.companions.bacteria1 ? JSON.parse(backup.companions.bacteria1).activities : null);
+  });
+
+  test('the hub and a companion use the very same storage code', async ({ page }) => {
+    await page.goto('/index.html');
+    const hubSrc = await page.evaluate(() => MCStore.writeAll.toString() + MCStore.validateCompanionRaw.toString());
+    await openCompanion(page, 'bacteria1');
+    const compSrc = await page.evaluate(() => MCStore.writeAll.toString() + MCStore.validateCompanionRaw.toString());
+    expect(hubSrc).toBe(compSrc);
+  });
+});

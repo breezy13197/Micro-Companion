@@ -6,8 +6,10 @@
    content script and engine.js (they both read/write `state` as
    soon as they run, not just inside click handlers).
    ============================================================ */
-var KEY='companion.'+(typeof TOPIC_ID!=='undefined'?TOPIC_ID:'default')+'.v1', memory={};
-var storageWorks=(function(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return true;}catch(e){return false;}})();
+var KEY='companion.'+(typeof TOPIC_ID!=='undefined'?TOPIC_ID:'default')+'.v1';
+/* Reading, writing, the backup format, and the "could not be saved" warning
+   all live in shared/storage-core.js (MCStore), which must load before this
+   file. This file only decides what a companion's progress looks like. */
 /* ------------------------------------------------------------
    STUDENT-MADE FLASHCARDS (state.myCards)
    A list of {id, t, d, ts}: id = a short unique code, t = the front
@@ -129,7 +131,7 @@ function loadState(){
      re-checks are RECHECK_DAYS in engine.js. */
   var blank={checks:{},activities:{},best:{},flags:{},lastSection:null,areaStats:{},myCards:[],
              pending:{},attempts:{},recorded:{},lastScore:{},seenQ:{},spaced:{},mastered:{}};
-  try{var raw=storageWorks?localStorage.getItem(KEY):memory[KEY];
+  try{var raw=MCStore.get(KEY);
       var s=raw?Object.assign(blank,JSON.parse(raw)):blank;
       /* Never trust the saved shape of myCards: it can arrive from an
          older save (key absent), or from a backup file the hub restored.
@@ -140,45 +142,22 @@ function loadState(){
 }
 /* Saves progress and says whether it worked (true/false). When the browser
    refuses the write (storage full, or blocked after the first check), the
-   work is still kept in `memory` so the page keeps running, but the student
-   is told with a banner that stays up until a save succeeds again — see
-   showSaveWarning(). When storage was blocked from the start the page
-   already says so in the top bar, so no banner is added for that case. */
+   work is still kept in memory by MCStore so the page keeps running, and a
+   warning bar with a backup button stays up until a save succeeds again. */
 function saveState(){
   var raw;
   try{raw=JSON.stringify(state);}catch(e){raw=null;}
-  if(raw===null){showSaveWarning(true);return false;}
-  memory[KEY]=raw;
-  if(!storageWorks)return true;
-  try{localStorage.setItem(KEY,raw);showSaveWarning(false);return true;}
-  catch(e){showSaveWarning(true);return false;}
+  var ok=(raw!==null)&&MCStore.set(KEY,raw);
+  MCStore.warn(!ok,downloadSessionBackup);
+  return ok;
 }
-/* Downloads this companion's progress as a file the hub's "Save / load
-   progress" screen can load back in. Built from the in-memory copy, so it
-   works even when the browser will no longer accept writes. */
+/* Downloads this companion's progress in the hub's backup format, so the
+   hub's "Save / load progress" screen can load it back in. Built from the
+   in-memory state, so it works even when the browser refuses writes. */
 function downloadSessionBackup(){
-  var companions={};
-  try{companions[typeof TOPIC_ID!=='undefined'?TOPIC_ID:'default']=JSON.stringify(state);}catch(e){}
-  var blob=new Blob([JSON.stringify({kind:'micro-hub-backup',version:1,exportedAt:new Date().toISOString(),
-    label:'unsaved session',hub:{},companions:companions},null,2)],{type:'application/json'});
-  var url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='microbiology-progress-'+(typeof TOPIC_ID!=='undefined'?TOPIC_ID:'companion')+'-'+new Date().toISOString().slice(0,10)+'.json';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  setTimeout(function(){URL.revokeObjectURL(url);},4000);
-}
-function showSaveWarning(show){
-  function apply(){
-    var bar=document.getElementById('saveWarning');
-    if(!show){if(bar)bar.parentNode.removeChild(bar);return;}
-    if(bar)return;
-    bar=document.createElement('div');bar.id='saveWarning';bar.setAttribute('role','alert');
-    bar.style.cssText='position:sticky;top:0;z-index:9999;background:#fff3cd;color:#5c4400;border-bottom:2px solid #e0a73c;padding:10px 14px;font:600 14px/1.4 system-ui,sans-serif;';
-    bar.appendChild(document.createTextNode('Your latest progress could not be saved. Your browser storage may be full or blocked. Keep this tab open and download a backup so you do not lose your work. '));
-    var b=document.createElement('button');b.type='button';b.textContent='Download backup';
-    b.style.cssText='margin-left:8px;padding:4px 10px;font:inherit;cursor:pointer;';
-    b.onclick=downloadSessionBackup;bar.appendChild(b);
-    document.body.insertBefore(bar,document.body.firstChild);
-  }
-  if(document.body)apply();else document.addEventListener('DOMContentLoaded',apply);
+  var id=typeof TOPIC_ID!=='undefined'?TOPIC_ID:'default',companions={};
+  try{companions[id]=JSON.stringify(state);}catch(e){}
+  MCStore.download('microbiology-progress-'+id+'-'+new Date().toISOString().slice(0,10)+'.json',
+    MCStore.buildBackup('unsaved session',{},companions));
 }
 var state=loadState();
