@@ -68,3 +68,50 @@ test.describe('saved progress', () => {
     await expect(page.locator('#ringPct')).toHaveText('0%');
   });
 });
+
+/* Storage that passes the start-up check and then fills up: writes of
+   anything but the test key start throwing once `full` is set. */
+async function fillStorageLater(page) {
+  await page.addInitScript(() => {
+    window.__full = false;
+    const real = Storage.prototype.setItem;
+    Storage.prototype.setItem = function (k, v) {
+      if (window.__full && k !== '__t') throw new DOMException('quota', 'QuotaExceededError');
+      return real.call(this, k, v);
+    };
+  });
+}
+
+test.describe('when saving fails after the page has loaded', () => {
+
+  test('a companion shows a lasting warning and returns false from saveState', async ({ page }) => {
+    await fillStorageLater(page);
+    await openCompanion(page, 'bacteria1');
+    expect(await page.evaluate(() => saveState())).toBe(true);
+    await expect(page.locator('#saveWarning')).toHaveCount(0);
+    await page.evaluate(() => { window.__full = true; });
+    expect(await page.evaluate(() => saveState())).toBe(false);
+    await expect(page.locator('#saveWarning')).toContainText('could not be saved');
+    // The warning offers a downloadable backup of the in-memory session.
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.locator('#saveWarning button').click()]);
+    expect(dl.suggestedFilename()).toContain('bacteria1');
+    // It goes away once saving works again.
+    await page.evaluate(() => { window.__full = false; });
+    expect(await page.evaluate(() => saveState())).toBe(true);
+    await expect(page.locator('#saveWarning')).toHaveCount(0);
+  });
+
+  test('restoring a backup reports failure and leaves existing progress untouched', async ({ page }) => {
+    await fillStorageLater(page);
+    await page.goto('/index.html');
+    await page.evaluate(() => { localStorage.setItem('companion.bacteria1.v1', '{"checks":{"keep":1}}'); window.__full = true; });
+    let msg = '';
+    page.on('dialog', d => { msg = d.message(); d.accept(); });
+    const result = await page.evaluate(() => applyBackup({
+      companions: { bacteria1: '{"checks":{"new":1}}', bacteria2: '{"checks":{}}' }, hub: {}
+    }));
+    expect(result.failed).toBeTruthy();
+    expect(msg).toContain('Restore failed');
+    expect(await page.evaluate(() => localStorage.getItem('companion.bacteria1.v1'))).toBe('{"checks":{"keep":1}}');
+  });
+});

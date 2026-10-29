@@ -604,7 +604,27 @@ var storageWorks = (function(){
 })();
 var memory = {};
 function rawGet(k){ try{ return storageWorks ? localStorage.getItem(k) : (memory[k]||null); }catch(e){ return null; } }
-function rawSet(k,v){ try{ if(storageWorks) localStorage.setItem(k,v); else memory[k]=v; }catch(e){} }
+/* Returns true if the value was stored, false if the browser refused it
+   (storage full, or blocked after the availability check above). */
+function rawSet(k,v){ try{ if(storageWorks) localStorage.setItem(k,v); else memory[k]=v; return true; }catch(e){ return false; } }
+function rawRemove(k){ try{ if(storageWorks) localStorage.removeItem(k); else delete memory[k]; }catch(e){} }
+/* Persistent warning shown whenever a hub save fails; removed by the next
+   save that works. The button downloads what the hub still holds in memory. */
+function showSaveWarning(show){
+  var bar = document.getElementById("saveWarning");
+  if(!show){ if(bar) bar.parentNode.removeChild(bar); return; }
+  if(bar || !document.body) return;
+  bar = document.createElement("div");
+  bar.id = "saveWarning"; bar.setAttribute("role","alert");
+  bar.style.cssText = "position:sticky;top:0;z-index:9999;background:#fff3cd;color:#5c4400;border-bottom:2px solid #e0a73c;padding:10px 14px;font:600 14px/1.4 system-ui,sans-serif;";
+  bar.appendChild(document.createTextNode("Your latest progress could not be saved. Your browser storage may be full or blocked. Keep this tab open and download a backup so you do not lose your work. "));
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = "Download backup";
+  b.style.cssText = "margin-left:8px;padding:4px 10px;font:inherit;cursor:pointer;";
+  b.onclick = function(){ downloadBackup("unsaved session"); };
+  bar.appendChild(b);
+  document.body.insertBefore(bar, document.body.firstChild);
+}
 
 function blankHub(){
   return { history:[], seen:{}, cards:{known:{},again:{}}, flags:{}, lastExam:null, attempt:null };
@@ -622,7 +642,12 @@ function loadHub(){
   }
   catch(e){ return blankHub(); }
 }
-function saveHub(){ try{ rawSet(HUB_KEY, JSON.stringify(H)); }catch(e){} }
+function saveHub(){
+  var ok = false;
+  try{ ok = rawSet(HUB_KEY, JSON.stringify(H)); }catch(e){}
+  if(storageWorks) showSaveWarning(!ok);
+  return ok;
+}
 var H = loadHub();
 
 function companionState(topicId){
@@ -656,7 +681,11 @@ function setCompanionFlag(topicId, qid, on){
   if(!obj.flags || typeof obj.flags !== "object") obj.flags = {};
   if(on) obj.flags[qid] = Date.now();
   else delete obj.flags[qid];
-  rawSet(key, JSON.stringify(obj));
+  if(!rawSet(key, JSON.stringify(obj)) && storageWorks){
+    showSaveWarning(true);
+    return false;
+  }
+  return true;
 }
 
 /* ============================================================= PROGRESS ==
@@ -839,19 +868,30 @@ function parseBackupFile(text){
   }
   return { ok:true, payload:payload };
 }
+/* All-or-nothing: every previous value is remembered before anything is
+   written, and if any write fails everything already written is put back,
+   so a student is never left with a half-restored mix of old and new. */
 function applyBackup(payload){
-  var written = [], skipped = [];
+  var written = [], skipped = [], undo = [], failed = null;
+  var oldH = H;
   Object.keys(payload.companions).forEach(function(id){
-    if(validateCompanionRaw(payload.companions[id]).ok){
-      rawSet("companion." + id + ".v1", payload.companions[id]);
-      written.push(id);
-    }else{
-      skipped.push(id);
-    }
+    if(failed) return;
+    if(!validateCompanionRaw(payload.companions[id]).ok){ skipped.push(id); return; }
+    var key = "companion." + id + ".v1";
+    undo.push({ key:key, prev:rawGet(key) });
+    if(rawSet(key, payload.companions[id])) written.push(id);
+    else failed = id;
   });
-  if(isPlainObject(payload.hub)){
+  if(!failed && isPlainObject(payload.hub)){
+    undo.push({ key:HUB_KEY, prev:rawGet(HUB_KEY) });
     H = Object.assign(blankHub(), payload.hub);
-    saveHub();
+    if(!saveHub()) failed = "hub history";
+  }
+  if(failed){
+    undo.forEach(function(u){ if(u.prev === null) rawRemove(u.key); else rawSet(u.key, u.prev); });
+    H = oldH;
+    alert("Restore failed: this browser would not save \"" + failed + "\" (storage may be full). Nothing was changed on this device.");
+    return { written:[], skipped:skipped, failed:failed };
   }
   if(skipped.length){
     toast(skipped.length + " compan" + (skipped.length===1?"y":"ies") + " in that file "+
