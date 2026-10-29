@@ -12,11 +12,11 @@ The file `.github/workflows/browser-tests.yml` tells GitHub to run these tests b
 
 **What you will see:** on each pull request, a list of checks appears near the merge button, one per browser (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`). A green tick means that browser passed. A red cross means something broke; click **Details**, then open the saved report at the bottom of the run to see which test failed and a screenshot.
 
-**Which ones matter:** only `chromium` (Chrome and Edge) blocks a merge. The other four run too, so you can see problems, but they are allowed to fail for now. They have not been run before, so a red cross there may be an old problem rather than something the pull request broke. Once they are all green, delete the line `continue-on-error: ...` in the workflow file to make them count too.
+**Which ones matter:** all five. They each passed on the first run, so none are treated as optional.
 
 **Why it is needed:** the tests only protect students if they actually get run. Doing it automatically means a change cannot be merged by accident without being checked first.
 
-**One optional setting (on GitHub, not in this folder):** to make a red `chromium` check actually *stop* a merge, go to the repository's **Settings → Branches**, add a rule for `main`, and tick **Require status checks to pass**, then choose `chromium`. Without this, a red check is a warning but GitHub still lets you click Merge.
+**One optional setting (on GitHub, not in this folder):** to make a red check actually *stop* a merge, go to the repository's **Settings → Branches**, add a rule for `main`, and tick **Require status checks to pass**, then choose all five (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`). Without this, a red check is a warning but GitHub still lets you click Merge.
 
 ---
 

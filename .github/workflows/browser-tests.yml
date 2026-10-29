@@ -1,11 +1,9 @@
 # Runs the browser tests in browser-tests/ on every pull request, and again
 # whenever something is merged into main.
 #
-# Chrome (chromium) is the one that must pass. The other browsers are run
-# too, so problems show up, but they do not block a merge yet: they have not
-# been run before, so a failure there may be an old problem rather than
-# something the pull request broke. Remove the "continue-on-error" line
-# below once they are all passing.
+# All five browser projects must pass. Each one is its own check on the pull
+# request; make them required under Settings -> Branches so a red one blocks
+# the merge.
 name: Browser tests
 
 on:
@@ -21,7 +19,6 @@ jobs:
     name: ${{ matrix.project }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    continue-on-error: ${{ matrix.project != 'chromium' }}
     strategy:
       fail-fast: false
       matrix:
