@@ -1177,6 +1177,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--olive)}
 
 <script src="banks/mycoses.js"></script>
 <script src="banks/mycoses.manifest.js"></script>
+<script src="shared/storage-core.js"></script>
 <script src="shared/storage.js"></script>
 <script src="shared/helpers.js"></script>
 <script src="shared/activities.js"></script>
@@ -1904,6 +1905,9 @@ Act.stages('act-consultC',{name:'consultC',stages:[
     if(all&&!has)Act.done(name,true);
   }
   setInterval(check,400);
+  /* Registered after consultA/B/C, so Act.solveAll() solves the three cases
+     first and then runs the same check right away instead of waiting for the timer. */
+  Act.register(name,{solve:check});
 })();
 
 

@@ -6,6 +6,20 @@ This folder holds an automatic checker. It opens the hub and all eight companion
 
 ---
 
+## Automatic checking on GitHub
+
+The file `.github/workflows/browser-tests.yml` tells GitHub to run these tests by itself every time someone opens or updates a pull request, and again after each merge into `main`. You do not need to do anything for this to work.
+
+**What you will see:** on each pull request, a list of checks appears near the merge button, one per browser (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`). A green tick means that browser passed. A red cross means something broke; click **Details**, then open the saved report at the bottom of the run to see which test failed and a screenshot.
+
+**Which ones matter:** all five. They each passed on the first run, so none are treated as optional.
+
+**Why it is needed:** the tests only protect students if they actually get run. Doing it automatically means a change cannot be merged by accident without being checked first.
+
+**One optional setting (on GitHub, not in this folder):** to make a red check actually *stop* a merge, go to the repository's **Settings → Branches**, add a rule for `main`, and tick **Require status checks to pass**, then choose all five (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`). Without this, a red check is a warning but GitHub still lets you click Merge.
+
+---
+
 ## What "browser compatibility testing" means here
 
 Chrome, Firefox and Safari each read the same web page slightly differently. A page can look perfect in one and be broken in another. The checker uses a free tool called **Playwright** to open the pages in all three engines and compare the results.

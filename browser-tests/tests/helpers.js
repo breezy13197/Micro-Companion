@@ -3,22 +3,20 @@ const { expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 
-/* The list of companions is read from the real files, so adding
-   viruses6.html or bacteria5.html (or removing one) needs no change here.
-   Anything in the main folder named bacteriaN.html or virusesN.html counts. */
+/* Discover every companion by its matching manifest, including Mycoses. */
 const siteRoot = path.resolve(__dirname, '..', '..');
 const COMPANIONS = fs.readdirSync(siteRoot)
-  .map(f => f.match(/^((?:bacteria|viruses)(\d+))\.html$/))
-  .filter(Boolean)
-  .sort((a, b) => a[1].replace(/\d+$/, '').localeCompare(b[1].replace(/\d+$/, '')) || Number(a[2]) - Number(b[2]))
-  .map(m => m[1]);
+  .filter(f => f.endsWith('.html') && fs.existsSync(path.join(siteRoot, 'banks', f.replace(/\.html$/, '.manifest.js'))))
+  .map(f => f.replace(/\.html$/, ''))
+  .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
 /* The hub writes the count as a word up to ten ("Eight companions.") and as a
    number after that. This builds the same sentence from the number of files. */
 const NUMBER_WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
-const COUNT_TEXT = COMPANIONS.length === 1
+const COMPANION_COUNT = COMPANIONS.length;
+const COUNT_TEXT = COMPANION_COUNT === 1
   ? 'One companion.'
-  : (NUMBER_WORDS[COMPANIONS.length] || COMPANIONS.length) + ' companions.';
+  : (NUMBER_WORDS[COMPANION_COUNT] || COMPANION_COUNT) + ' companions.';
 
 
 /* Starts listening for anything that goes wrong on a page: JavaScript
@@ -55,4 +53,4 @@ async function solveCheckpoint(page, host) {
   await expect(host.locator('.choice.right')).toHaveCount(1);
 }
 
-module.exports = { COMPANIONS, COUNT_TEXT, watchProblems, openCompanion, hasSidewaysScroll, solveCheckpoint };
+module.exports = { COMPANIONS, COMPANION_COUNT, COUNT_TEXT, watchProblems, openCompanion, hasSidewaysScroll, solveCheckpoint };
