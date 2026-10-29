@@ -76,21 +76,21 @@ If an `index.html` from another course is already in this folder, rename or move
 
 You should see a table like this:
 
-| Bank | Questions | Structure map |
-|---|---|---|
-| Bacteria I: Introduction | 77 | manifest loaded |
-| Bacteria II: Antibacterials | 91 | manifest loaded |
-| Bacteria III: Cocci and rods | 111 | manifest loaded |
-| Bacteria IV: Other pathogens | 87 | manifest loaded |
-| Viruses I: Introduction | 98 | manifest loaded |
-| Viruses II: Antivirals and Vaccines | 106 | manifest loaded |
-| Viruses III: Herpes to Flu | 125 | manifest loaded |
-| Viruses IV: Childhood & Enteric | 67 | manifest loaded |
-| Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV | 76 | manifest loaded |
-| Mycoses: Fungal Infections and Antifungals | 86 | manifest loaded |
-| Integration & review | 38 | not needed |
+| Bank | Questions | Checkpoints | Cards | Structure map | Hub exams |
+|---|---|---|---|---|---|
+| Bacteria I: Introduction | 77 | 53 | 47 | manifest loaded | locked · 0% |
+| Bacteria II: Antibacterials | 91 | 55 | 38 | manifest loaded | locked · 0% |
+| Bacteria III: Cocci and rods | 111 | 59 | 60 | manifest loaded | locked · 0% |
+| Bacteria IV: Other pathogens | 87 | 87 | 61 | manifest loaded | locked · 0% |
+| Viruses I: Introduction | 98 | 55 | 69 | manifest loaded | locked · 0% |
+| Viruses II: Antivirals and Vaccines | 106 | 54 | 89 | manifest loaded | locked · 0% |
+| Viruses III: Herpes to Flu | 125 | 47 | 64 | manifest loaded | locked · 0% |
+| Viruses IV: Childhood and enteric tract viruses | 67 | 54 | 51 | manifest loaded | locked · 0% |
+| Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV | 76 | 68 | 68 | manifest loaded | locked · 0% |
+| Mycoses: Fungal Infections and Antifungals | 86 | 60 | 66 | manifest loaded | locked · 0% |
+| Integration & review | 78 | 0 | 47 | not needed | unlocked |
 
-(The question counts will change when you add or remove questions. What matters is that every row says "manifest loaded".)
+(The numbers will change when you add or remove questions, and "Hub exams" will change as progress is made. What matters is that every row says "manifest loaded", except the last, which says "not needed".)
 
 **What this does:** This table is the hub's own health check. If a row says "missing" or a red note appears on the dashboard, a file is misnamed or in the wrong folder. Go back to Step 1.
 
@@ -126,7 +126,7 @@ To change the hub's colors later, open `index.html` in a text editor and search 
 
 ## The Integration question bank
 
-- 78 questions in 22 concept areas, each tagged with the companions it draws on (for example `bacteria2+bacteria4`). Levels: 9 concept, 19 application, 10 integration.
+- 78 questions in 22 concept areas, each tagged with the companions it draws on (for example `bacteria2+bacteria4`). Levels: 16 concept, 39 application, 23 integration.
 - Every question was checked against your Question Writing Guidelines: single best answer, 4 options, a rationale for each, no "all/none of the above," no NOT/EXCEPT stems, no absolute terms (always, never, only) or vague terms (usually, commonly), correct answers spread evenly across A to D.
 - IDs run `HUB-001` to `HUB-078` and must **never be reused or renumbered**, even if you delete a question.
 - Every fact comes from your lecture cards. Please read through the questions before students see them. You know the lectures better than I do.
