@@ -1,0 +1,58 @@
+# Runs the browser tests in browser-tests/ on every pull request, and again
+# whenever something is merged into main.
+#
+# Chrome (chromium) is the one that must pass. The other browsers are run
+# too, so problems show up, but they do not block a merge yet: they have not
+# been run before, so a failure there may be an old problem rather than
+# something the pull request broke. Remove the "continue-on-error" line
+# below once they are all passing.
+name: Browser tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: ${{ matrix.project != 'chromium' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { project: chromium,      browser: chromium }
+          - { project: firefox,       browser: firefox }
+          - { project: webkit,        browser: webkit }
+          - { project: mobile-chrome, browser: chromium }
+          - { project: mobile-safari, browser: webkit }
+    defaults:
+      run:
+        working-directory: browser-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: browser-tests/package-lock.json
+      - name: Install the test tool
+        run: npm ci
+      - name: Install the browser
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Run the tests
+        run: npx playwright test --project=${{ matrix.project }}
+      - name: Keep the report if something failed
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.project }}
+          path: |
+            browser-tests/playwright-report
+            browser-tests/failures-summary.txt
+          retention-days: 14
