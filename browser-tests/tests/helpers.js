@@ -16,9 +16,13 @@ const COMPANIONS = fs.readdirSync(siteRoot)
 /* The hub writes the count as a word up to ten ("Eight companions.") and as a
    number after that. This builds the same sentence from the number of files. */
 const NUMBER_WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
-const COUNT_TEXT = COMPANIONS.length === 1
+/* The hub also lists companions that are not named bacteriaN or virusesN
+   (mycoses.html), so the total it shows is counted separately. */
+const COMPANION_COUNT = fs.readdirSync(siteRoot)
+  .filter(f => /^(?:bacteria\d+|viruses\d+|mycoses)\.html$/.test(f)).length;
+const COUNT_TEXT = COMPANION_COUNT === 1
   ? 'One companion.'
-  : (NUMBER_WORDS[COMPANIONS.length] || COMPANIONS.length) + ' companions.';
+  : (NUMBER_WORDS[COMPANION_COUNT] || COMPANION_COUNT) + ' companions.';
 
 
 /* Starts listening for anything that goes wrong on a page: JavaScript
@@ -55,4 +59,4 @@ async function solveCheckpoint(page, host) {
   await expect(host.locator('.choice.right')).toHaveCount(1);
 }
 
-module.exports = { COMPANIONS, COUNT_TEXT, watchProblems, openCompanion, hasSidewaysScroll, solveCheckpoint };
+module.exports = { COMPANIONS, COMPANION_COUNT, COUNT_TEXT, watchProblems, openCompanion, hasSidewaysScroll, solveCheckpoint };
