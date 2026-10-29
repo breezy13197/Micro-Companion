@@ -1271,12 +1271,19 @@ document.getElementById('resetBtn').onclick=function(){
      effect of "reset progress" would be a far worse surprise than keeping it. */
   var keep=(state.myCards||[]).slice();
   try{
-    if(storageWorks){localStorage.removeItem(KEY);}else{delete memory[KEY];}
+    if(storageWorks){localStorage.removeItem(KEY);}
+    delete memory[KEY];
     if(keep.length){
       var raw=JSON.stringify({myCards:keep});
-      if(storageWorks){localStorage.setItem(KEY,raw);}else{memory[KEY]=raw;}
+      memory[KEY]=raw;
+      if(storageWorks){localStorage.setItem(KEY,raw);}
     }
-  }catch(e){}
+  }catch(e){
+    /* Do not reload: reloading would throw away the in-memory copy the
+       student could still download. */
+    alert('Your progress could not be cleared because the browser refused the change. Nothing was reloaded, so your flashcards are still here.');
+    return;
+  }
   location.reload();
 };
 

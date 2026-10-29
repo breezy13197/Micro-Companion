@@ -138,6 +138,47 @@ function loadState(){
       cleanReviewState(s);
       return s;}catch(e){blank.myCards=[];return blank;}
 }
-function saveState(){try{var raw=JSON.stringify(state);
-  if(storageWorks){localStorage.setItem(KEY,raw);}else{memory[KEY]=raw;}}catch(e){}}
+/* Saves progress and says whether it worked (true/false). When the browser
+   refuses the write (storage full, or blocked after the first check), the
+   work is still kept in `memory` so the page keeps running, but the student
+   is told with a banner that stays up until a save succeeds again — see
+   showSaveWarning(). When storage was blocked from the start the page
+   already says so in the top bar, so no banner is added for that case. */
+function saveState(){
+  var raw;
+  try{raw=JSON.stringify(state);}catch(e){raw=null;}
+  if(raw===null){showSaveWarning(true);return false;}
+  memory[KEY]=raw;
+  if(!storageWorks)return true;
+  try{localStorage.setItem(KEY,raw);showSaveWarning(false);return true;}
+  catch(e){showSaveWarning(true);return false;}
+}
+/* Downloads this companion's progress as a file the hub's "Save / load
+   progress" screen can load back in. Built from the in-memory copy, so it
+   works even when the browser will no longer accept writes. */
+function downloadSessionBackup(){
+  var companions={};
+  try{companions[typeof TOPIC_ID!=='undefined'?TOPIC_ID:'default']=JSON.stringify(state);}catch(e){}
+  var blob=new Blob([JSON.stringify({kind:'micro-hub-backup',version:1,exportedAt:new Date().toISOString(),
+    label:'unsaved session',hub:{},companions:companions},null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='microbiology-progress-'+(typeof TOPIC_ID!=='undefined'?TOPIC_ID:'companion')+'-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url);},4000);
+}
+function showSaveWarning(show){
+  function apply(){
+    var bar=document.getElementById('saveWarning');
+    if(!show){if(bar)bar.parentNode.removeChild(bar);return;}
+    if(bar)return;
+    bar=document.createElement('div');bar.id='saveWarning';bar.setAttribute('role','alert');
+    bar.style.cssText='position:sticky;top:0;z-index:9999;background:#fff3cd;color:#5c4400;border-bottom:2px solid #e0a73c;padding:10px 14px;font:600 14px/1.4 system-ui,sans-serif;';
+    bar.appendChild(document.createTextNode('Your latest progress could not be saved. Your browser storage may be full or blocked. Keep this tab open and download a backup so you do not lose your work. '));
+    var b=document.createElement('button');b.type='button';b.textContent='Download backup';
+    b.style.cssText='margin-left:8px;padding:4px 10px;font:inherit;cursor:pointer;';
+    b.onclick=downloadSessionBackup;bar.appendChild(b);
+    document.body.insertBefore(bar,document.body.firstChild);
+  }
+  if(document.body)apply();else document.addEventListener('DOMContentLoaded',apply);
+}
 var state=loadState();
