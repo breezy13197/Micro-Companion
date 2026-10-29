@@ -51,7 +51,7 @@ companions/
     viruses5.js     viruses5.manifest.js
     mycoses.js      mycoses.manifest.js
   shared/
-    activities.js  engine.js  helpers.js  menu.js  storage.js  welcome.js
+    activities.js  engine.js  helpers.js  menu.js  storage-core.js  storage.js  welcome.js
     sections.css   shell.css  styles.css  welcome.css
 ```
 
