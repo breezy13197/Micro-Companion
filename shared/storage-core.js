@@ -40,8 +40,10 @@ var MCStore=(function(){
   function get(k){
     if(unsaved[k])return memory[k];
     try{
-      if(works){var v=localStorage.getItem(k);return v===null?null:v;}
-      return memory[k]===undefined?null:memory[k];
+      /* A full store can reject the start-up write while existing progress
+         remains readable. Only fall back to memory when reading fails. */
+      var v=localStorage.getItem(k);
+      return v===null?null:v;
     }catch(e){return memory[k]===undefined?null:memory[k];}
   }
 
@@ -52,15 +54,15 @@ var MCStore=(function(){
      student progress will not be remembered. */
   function set(k,v){
     memory[k]=v;
-    if(!works)return true;
+    if(!works){unsaved[k]=true;return true;}
     try{localStorage.setItem(k,v);delete unsaved[k];return true;}
     catch(e){unsaved[k]=true;return false;}
   }
 
   function remove(k){
     delete memory[k];delete unsaved[k];
-    try{if(works)localStorage.removeItem(k);return true;}
-    catch(e){return false;}
+    try{localStorage.removeItem(k);return true;}
+    catch(e){return !works;}
   }
 
   function isPlainObject(v){return v!==null&&typeof v==='object'&&!Array.isArray(v);}

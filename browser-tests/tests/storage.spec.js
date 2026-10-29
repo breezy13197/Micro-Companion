@@ -118,6 +118,25 @@ test.describe('when saving fails after the page has loaded', () => {
 
 test.describe('shared storage code', () => {
 
+  test('existing progress remains readable when storage is full at startup', async ({ page }) => {
+    await page.goto('/index.html');
+    await page.evaluate(() => localStorage.setItem('companion.bacteria1.v1', JSON.stringify({ checks: { saved: 1 } })));
+    await page.addInitScript(() => {
+      Storage.prototype.setItem = function () { throw new DOMException('quota', 'QuotaExceededError'); };
+    });
+    await openCompanion(page, 'bacteria1');
+    expect(await page.evaluate(() => state.checks.saved)).toBe(1);
+    await page.goto('/index.html');
+    expect(await page.evaluate(() => companionState('bacteria1').checks.saved)).toBe(1);
+    expect(await page.evaluate(() => {
+      const key = 'companion.bacteria1.v1';
+      MCStore.set(key, JSON.stringify({ checks: { latest: 1 } }));
+      return JSON.parse(MCStore.get(key)).checks.latest;
+    })).toBe(1);
+    expect(await page.evaluate(() => MCStore.remove('companion.bacteria1.v1'))).toBe(true);
+    expect(await page.evaluate(() => MCStore.get('companion.bacteria1.v1'))).toBe(null);
+  });
+
   test('a backup downloaded from a companion can be loaded into the hub', async ({ page }) => {
     await openCompanion(page, 'bacteria1');
     await page.evaluate(() => Act.solveAll());
