@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { COMPANIONS, COUNT_TEXT, watchProblems, openCompanion } = require('./helpers');
+const { COMPANIONS, COMPANION_COUNT, COUNT_TEXT, watchProblems, openCompanion } = require('./helpers');
 
 const VIEWS = {
   dash: 'Dashboard', companions: 'My companions', exam: 'Build an exam',
@@ -23,7 +23,7 @@ test.describe('hub (index.html)', () => {
     await expect(page.locator('#main')).toContainText(COUNT_TEXT);
     // One progress card per companion file in the folder, plus the hub's own
     // "Integration & review" card.
-    await expect(page.locator('#main .d-card')).toHaveCount(COMPANIONS.length + 1);
+    await expect(page.locator('#main .d-card')).toHaveCount(COMPANION_COUNT + 1);
     expect(problems.list()).toEqual([]);
   });
 
@@ -41,9 +41,9 @@ test.describe('hub (index.html)', () => {
     await page.goto('/index.html');
     await openHubView(page, 'help');
     const chips = page.locator('#main table.tbl tr td:nth-child(5) .chip');
-    await expect(chips).toHaveCount(COMPANIONS.length + 1); // every companion plus the hub's own bank
+    await expect(chips).toHaveCount(COMPANION_COUNT + 1); // every companion plus the hub's own bank
     const texts = await chips.allTextContents();
-    expect(texts.filter(t => t === 'manifest loaded')).toHaveLength(COMPANIONS.length);
+    expect(texts.filter(t => t === 'manifest loaded')).toHaveLength(COMPANION_COUNT);
     expect(texts.filter(t => t === 'not needed')).toHaveLength(1);
     await expect(page.locator('#main .note.bad')).toHaveCount(0);
   });
