@@ -125,7 +125,8 @@ test.describe('keyboard and screen-reader behavior', () => {
 
     // Submit by keyboard (some questions are unanswered, so a confirm appears).
     page.once('dialog', d => d.accept());
-    await tabTo(page, page.getByRole('button', { name: 'Submit', exact: true }));
+    // Submit sits above the question, so reach it backwards (Firefox's Tab does not wrap round the page).
+    await tabTo(page, page.getByRole('button', { name: 'Submit', exact: true }), { shift: true });
     await page.keyboard.press('Enter');
     const heading = page.locator('#main h2').first();
     await expect(heading).toBeFocused();
