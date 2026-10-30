@@ -17,7 +17,9 @@ permissions:
 jobs:
   test:
     name: ${{ matrix.project }}
-    runs-on: ubuntu-latest
+    # Pinned so the machine does not change underneath the tests when GitHub moves
+    # "ubuntu-latest" to Ubuntu 26.04. Move to ubuntu-26.04 once the tests pass there.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     strategy:
       fail-fast: false
@@ -32,8 +34,8 @@ jobs:
       run:
         working-directory: browser-tests
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
@@ -46,7 +48,7 @@ jobs:
         run: npx playwright test --project=${{ matrix.project }}
       - name: Keep the report if something failed
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: report-${{ matrix.project }}
           path: |

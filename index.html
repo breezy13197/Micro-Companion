@@ -39,6 +39,9 @@ p{margin:0 0 1em;max-width:70ch}
 button,input,select,textarea{font:inherit;color:inherit}
 a{color:var(--accent-deep)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.qstem:focus,#main h1:focus,#main h2:focus{outline:none}
+.qstem:focus-visible,#main h1:focus-visible,#main h2:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
 [hidden]{display:none!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -446,6 +449,7 @@ body{background:var(--page)}
      change the name in all three places. Nothing else to edit.
      ============================================================ -->
 <script src="shared/storage-core.js"></script>
+<script src="shared/a11y.js"></script>
 <script>
 var HUB = { topics:[], byId:{}, missing:[] };
 /* Display names and the colors from the Claude Design mockup. The manifests
@@ -1296,6 +1300,7 @@ function setView(v){
   });
   render();
   window.scrollTo({top:0, behavior:"smooth"});
+  MCA11y.focusHeading($("main"));   /* keyboard users start at the new screen's heading */
 }
 $("nav").addEventListener("click", function(e){
   var b = e.target.closest("button[data-view]");
@@ -2065,7 +2070,7 @@ function resumeExam(){
     if(EXAM.endsAt <= Date.now()){ gradeExam(true); return; }
     EXAM.tick = setInterval(paintTimer, 500);
   }
-  renderExam();
+  renderExam("question");
 }
 function resumeBannerEl(){
   var r = loadSavedExam();
@@ -2101,7 +2106,7 @@ function startExam(adaptive){
   EXAM.endsAt = EXAMSETUP.timed ? Date.now() + EXAMSETUP.minutes*60000 : null;
   if(EXAM.tick) clearInterval(EXAM.tick);
   if(EXAM.endsAt) EXAM.tick = setInterval(paintTimer, 500);
-  renderExam();
+  renderExam("question");
 }
 function paintTimer(){
   var t = $("timer"); if(!t || !EXAM.endsAt) return;
@@ -2110,7 +2115,11 @@ function paintTimer(){
   t.className = "timer" + (left <= 30 ? " crit" : left <= 120 ? " warn" : "");
   if(left <= 0){ clearInterval(EXAM.tick); EXAM.tick = null; gradeExam(true); }
 }
-function renderExam(){
+/* focusKey says where the keyboard cursor goes after the redraw: "question"
+   moves to the question text (a different question is showing); any other
+   value is a data-fk on the control the student just used, so answering
+   never throws them back to the top of the page. */
+function renderExam(focusKey){
   persistExam();
   var M = $("main"); M.innerHTML = "";
   var it = EXAM.items[EXAM.i], q = it.q, t = HUB.byId[it.topic];
@@ -2141,12 +2150,15 @@ function renderExam(){
   if(q.level) meta.appendChild(el("span",{class:"chip", text:q.level}));
   if(q.area) meta.appendChild(el("span",{class:"chip", text:q.area}));
   card.appendChild(meta);
-  card.appendChild(el("div",{class:"qstem", text:q.stem}));
+  card.appendChild(el("div",{class:"qstem", id:"qstem", tabindex:"-1", text:q.stem}));
 
-  var box = el("div",{class:"choices"});
+  var box = el("div",{class:"choices", role:"group", "aria-labelledby":"qstem"});
   EXAM.orders[EXAM.i].forEach(function(realIdx, pos){
-    var b = el("button",{class:"choice" + (EXAM.picks[EXAM.i] === realIdx ? " picked" : ""), onclick:function(){
-      EXAM.picks[EXAM.i] = realIdx; renderExam();
+    var isPicked = EXAM.picks[EXAM.i] === realIdx;
+    var b = el("button",{class:"choice" + (isPicked ? " picked" : ""), "data-fk":"choice-" + pos,
+      "aria-pressed": isPicked ? "true" : "false", onclick:function(){
+      EXAM.picks[EXAM.i] = realIdx; renderExam("choice-" + pos);
+      MCA11y.announce("Answer " + LETTERS[pos] + " selected.");
     }},[
       el("span",{class:"mk", text:LETTERS[pos]}),
       el("span",{text:q.options[realIdx]})
@@ -2156,16 +2168,19 @@ function renderExam(){
   card.appendChild(box);
 
   var nav = el("div",{class:"qnav"});
-  var back = el("button",{class:"btn", text:"← Back", onclick:function(){ if(EXAM.i>0){ EXAM.i--; renderExam(); } }});
+  var back = el("button",{class:"btn", text:"← Back", onclick:function(){ if(EXAM.i>0){ EXAM.i--; renderExam("question"); } }});
   back.disabled = EXAM.i === 0;
   var mid = el("div",{class:"row"},[
     el("button",{class:"btn" + (EXAM.flags[EXAM.i]?" primary":""), text: EXAM.flags[EXAM.i] ? "Flagged" : "Flag for later",
-      onclick:function(){ EXAM.flags[EXAM.i] = !EXAM.flags[EXAM.i]; renderExam(); }}),
-    el("button",{class:"btn", text:"Clear answer", onclick:function(){ EXAM.picks[EXAM.i] = null; renderExam(); }})
+      "data-fk":"flag", "aria-pressed": EXAM.flags[EXAM.i] ? "true" : "false",
+      onclick:function(){ EXAM.flags[EXAM.i] = !EXAM.flags[EXAM.i]; renderExam("flag");
+        MCA11y.announce(EXAM.flags[EXAM.i] ? "Flagged for later." : "Flag removed."); }}),
+    el("button",{class:"btn", text:"Clear answer", "data-fk":"clear", onclick:function(){ EXAM.picks[EXAM.i] = null; renderExam("clear");
+      MCA11y.announce("Answer cleared."); }})
   ]);
   var next = EXAM.i === EXAM.items.length - 1
     ? el("button",{class:"btn primary", text:"Finish and submit", onclick:function(){ gradeExam(false); }})
-    : el("button",{class:"btn primary", text:"Next →", onclick:function(){ EXAM.i++; renderExam(); }});
+    : el("button",{class:"btn primary", text:"Next →", onclick:function(){ EXAM.i++; renderExam("question"); }});
   nav.appendChild(back); nav.appendChild(mid); nav.appendChild(next);
   card.appendChild(nav);
 
@@ -2174,12 +2189,19 @@ function renderExam(){
     gn.appendChild(el("button",{class:"gn" + (EXAM.picks[i]!==null?" answered":"") +
       (EXAM.flags[i]?" flagged":"") + (i===EXAM.i?" current":""),
       text:String(i+1), "aria-label":"Go to question " + (i+1),
-      onclick:function(){ EXAM.i = i; renderExam(); }}));
+      onclick:function(){ EXAM.i = i; renderExam("question"); }}));
   });
   card.appendChild(el("div",{class:"lead", style:"margin:22px 0 0", text:"Jump to any question:"}));
   card.appendChild(gn);
   M.appendChild(card);
   if(EXAM.endsAt) paintTimer();
+  if(focusKey === "question"){
+    MCA11y.focusEl($("qstem"));
+    MCA11y.announce("Question " + (EXAM.i+1) + " of " + EXAM.items.length +
+      (EXAM.picks[EXAM.i] !== null ? ", answered." : ", not answered."));
+  } else if(focusKey){
+    MCA11y.restoreFocus('[data-fk="' + focusKey + '"]');
+  }
 }
 
 function gradeExam(auto){
@@ -2235,6 +2257,7 @@ function gradeExam(auto){
 
 function renderResults(score, correct, byArea, byTopic, rows, auto){
   var M = $("main"); M.innerHTML = "";
+  setTimeout(function(){ MCA11y.focusHeading(M); }, 0);
   var hero = el("div",{class:"scorehero"});
   hero.appendChild(el("div",{},[ el("div",{class:"big", text:score + "%"}) ]));
   hero.appendChild(el("div",{style:"flex:1 1 280px"},[
@@ -2599,7 +2622,7 @@ function startFlaggedPractice(flags){
   EXAM.live = true;
   EXAM.endsAt = null;
   if(EXAM.tick){ clearInterval(EXAM.tick); EXAM.tick = null; }
-  renderExam();
+  renderExam("question");
 }
 
 /* ---------------------------------------------------------------- HISTORY - */
