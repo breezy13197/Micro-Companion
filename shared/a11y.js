@@ -36,15 +36,34 @@ var MCA11y=(function(){
     var r=liveRegion();r.textContent='';
     setTimeout(function(){r.textContent=String(msg);},30);
   }
+  /* True when the element is really on the page: display:none on the element
+     or any ancestor (for example a "Locked" card that has been hidden after a
+     module unlocks) leaves it with no layout boxes. */
+  function isShown(node){
+    return !!node&&node.getClientRects().length>0&&getComputedStyle(node).visibility!=='hidden';
+  }
+  /* True when the top of the element is visible, and (for an element short
+     enough to fit) the whole element is. */
+  function inView(node){
+    var r=node.getBoundingClientRect(),h=window.innerHeight||document.documentElement.clientHeight;
+    if(r.top<0||r.top>=h)return false;
+    return r.height>h||r.bottom<=h;
+  }
+  /* Moves the keyboard cursor to node. The page is scrolled only when the
+     element would otherwise be off screen, so focus never lands out of sight
+     (for example on results far below the quiz questions). */
   function focusEl(node){
-    if(!node)return false;
+    if(!node||!isShown(node))return false;
     if(!node.hasAttribute('tabindex')&&!/^(a|button|input|select|textarea)$/i.test(node.tagName))node.setAttribute('tabindex','-1');
     try{node.focus({preventScroll:true});}catch(e){try{node.focus();}catch(e2){return false;}}
+    if(!inView(node)){try{node.scrollIntoView({block:node.getBoundingClientRect().height>(window.innerHeight||0)?'start':'center',behavior:'auto'});}catch(e){}}
     return document.activeElement===node;
   }
+  /* First heading that is actually visible, skipping hidden cards. */
   function focusHeading(root){
-    var h=(root||document).querySelector('h1,h2,h3');
-    return focusEl(h);
+    var list=(root||document).querySelectorAll('h1,h2,h3');
+    for(var i=0;i<list.length;i++){if(isShown(list[i]))return focusEl(list[i]);}
+    return false;
   }
   function setPicked(btn,on){
     btn.setAttribute('aria-pressed',on?'true':'false');
@@ -63,5 +82,5 @@ var MCA11y=(function(){
     var n=typeof find==='function'?find():document.querySelector(find);
     return focusEl(n);
   }
-  return {announce:announce,focusEl:focusEl,focusHeading:focusHeading,setPicked:setPicked,markResult:markResult,restoreFocus:restoreFocus};
+  return {announce:announce,isShown:isShown,focusEl:focusEl,focusHeading:focusHeading,setPicked:setPicked,markResult:markResult,restoreFocus:restoreFocus};
 })();

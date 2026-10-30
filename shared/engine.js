@@ -343,6 +343,7 @@ document.querySelectorAll('[data-check]').forEach(function(host){
     if(right){
       box.querySelectorAll('.choice').forEach(function(b,pos){
         b.disabled=true;b.classList.remove('wrong');
+        MCA11y.markResult(b,null);   /* drop the hidden "incorrect" label from an earlier wrong try */
         MCA11y.setPicked(b,ord[pos]===realIdx);
         if(ord[pos]===cp.answer){b.classList.add('right');MCA11y.markResult(b,'right');}
       });
@@ -857,7 +858,13 @@ function openConcept(area){
     back.onclick=function(){
       goTo(FLOW.findIndex(function(f){return f.key===fromKey;}));
       var rc=document.querySelector('.section[data-key="'+fromKey+'"] .q-result');
-      if(rc&&!rc.classList.contains('hidden'))MCA11y.focusEl(rc);
+      if(rc&&!rc.classList.contains('hidden')){
+        /* goTo() has just started a smooth scroll to the top of the page, but the
+           results sit below the questions: scroll to them (instantly, which also
+           cancels that smooth scroll), then focus. */
+        try{rc.scrollIntoView({block:'start',behavior:'auto'});}catch(e){}
+        MCA11y.focusEl(rc);
+      }
     };
     var h=dest&&dest.querySelector('h1,h2');
     if(h&&h.parentNode)h.parentNode.insertBefore(back,h.nextSibling);
