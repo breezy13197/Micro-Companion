@@ -149,12 +149,22 @@ function resolveStartSection(){
   return 0;
 }
 
+var returnFor=null;     /* section that currently shows the "Back to ..." button */
+var pageLoaded=false;   /* set after the first goTo(); the opening section must not steal focus */
 function goTo(i){
   if(i<0||i>=FLOW.length)return;
   current=i;var key=FLOW[i].key;
+  if(returnFor&&returnFor!==key){var rb=document.getElementById('mc-return');if(rb)rb.remove();returnFor=null;}
   document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.dataset.key===key);});
   paintNav();
   window.scrollTo({top:0,behavior:'smooth'});
+  /* Scrolling alone leaves the keyboard cursor on the old button. Move it to
+     the new section's heading so screen-reader and keyboard users land at the
+     top of the new content. */
+  if(pageLoaded){
+    var act=document.querySelector('.section.active');
+    if(act)MCA11y.focusHeading(act);
+  }
   state.lastSection=key;saveState();
   setSectionParam(key);
 }
@@ -317,8 +327,10 @@ document.querySelectorAll('[data-check]').forEach(function(host){
   var box=host.classList.contains('choices')?host:host.querySelector('.choices');
   var fb=host.classList.contains('choices')?host.parentElement.querySelector('.feedback'):host.querySelector('.feedback');
   var ord=order(cp.options.length);
+  box.setAttribute('role','group');
   ord.forEach(function(realIdx,pos){
     var b=el('button','choice','<span class="mark">'+LETTERS[pos]+'</span>'+cp.options[realIdx]);
+    b.setAttribute('aria-pressed','false');
     b.onclick=function(){answer(realIdx);};
     box.appendChild(b);
   });
@@ -331,19 +343,28 @@ document.querySelectorAll('[data-check]').forEach(function(host){
     if(right){
       box.querySelectorAll('.choice').forEach(function(b,pos){
         b.disabled=true;b.classList.remove('wrong');
-        if(ord[pos]===cp.answer)b.classList.add('right');
+        MCA11y.setPicked(b,ord[pos]===realIdx);
+        if(ord[pos]===cp.answer){b.classList.add('right');MCA11y.markResult(b,'right');}
       });
       fb.className='feedback show';
       fb.innerHTML='<strong>That’s it.</strong>'+cp.why;
       state.checks[id]=realIdx;saveState();paintNav();
     }else{
-      box.querySelectorAll('.choice').forEach(function(b){b.classList.remove('right','wrong');});
-      box.querySelectorAll('.choice')[ord.indexOf(realIdx)].classList.add('wrong');
+      box.querySelectorAll('.choice').forEach(function(b,pos){
+        b.classList.remove('right','wrong');MCA11y.markResult(b,null);
+        MCA11y.setPicked(b,ord[pos]===realIdx);
+      });
+      var wb=box.querySelectorAll('.choice')[ord.indexOf(realIdx)];
+      wb.classList.add('wrong');MCA11y.markResult(wb,'wrong');
       fb.className='feedback show miss';
       fb.innerHTML='<strong>Not quite — try again.</strong>';
     }
   }
   if(state.checks[id]!==undefined)answer(state.checks[id]);
+  /* The feedback box becomes a polite live region only after any saved answer
+     has been replayed, so the result is spoken after a real click without
+     moving the keyboard cursor, and reloading a finished page stays quiet. */
+  fb.setAttribute('role','status');fb.setAttribute('aria-live','polite');
 });
 /* ------------------------------------------------------------
    FLASHCARDS: the course deck, and the student's own deck
@@ -823,7 +844,25 @@ function openConcept(area){
   if(!info)return;
   var idx=FLOW.findIndex(function(f){return f.key===info.key;});
   if(idx<0)return;
+  var from=FLOW[current],fromKey=from&&from.key;
   goTo(idx);
+  /* Keyboard-friendly way back: a "Back to ..." button at the top of the
+     concept's section returns to the page the student came from (the quiz
+     results) and puts the cursor on the results. It is removed again as soon
+     as the student moves to any other section. */
+  if(fromKey&&fromKey!==info.key){
+    var dest=document.querySelector('.section[data-key="'+info.key+'"]');
+    var back=el('button','btn ghost mc-return','← Back to '+from.label);
+    back.type='button';back.id='mc-return';
+    back.onclick=function(){
+      goTo(FLOW.findIndex(function(f){return f.key===fromKey;}));
+      var rc=document.querySelector('.section[data-key="'+fromKey+'"] .q-result');
+      if(rc&&!rc.classList.contains('hidden'))MCA11y.focusEl(rc);
+    };
+    var h=dest&&dest.querySelector('h1,h2');
+    if(h&&h.parentNode)h.parentNode.insertBefore(back,h.nextSibling);
+    returnFor=info.key;
+  }
   setTimeout(function(){
     var target=info.activity?document.getElementById('act-'+info.activity):null;
     if(!target){
@@ -834,6 +873,7 @@ function openConcept(area){
     var card=(target.closest&&target.closest('.card'))||target;
     try{card.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}
     card.classList.remove('q-jumped');void card.offsetWidth;card.classList.add('q-jumped');
+    MCA11y.focusEl(card);
   },380);
 }
 /* Applies one graded attempt to the review queue and the re-check schedule.
@@ -918,6 +958,7 @@ document.querySelectorAll('.quiz-body').forEach(function(body){
   var sec=body.closest('.section');
   var resultCard=sec.querySelector('.q-result');
   var warn=sec.querySelector('.q-warn');
+  warn.setAttribute('role','status');warn.setAttribute('aria-live','polite');
   var submitBtn=sec.querySelector('.q-submit');
   var submitLabel=submitBtn.textContent;
   var questions=[],picks=[],orders=[],mode='normal',heading='',attempt=null,graded=false;
@@ -999,13 +1040,16 @@ document.querySelectorAll('.quiz-body').forEach(function(body){
         '<span class="q-level">'+q.level+'</span>'));
       wrap.appendChild(el('p','q-stem',q.stem));
       var box=el('div','choices');
+      box.setAttribute('role','group');
+      box.setAttribute('aria-label','Answer choices for question '+(i+1));
       ord.forEach(function(realIdx,pos){
         var b=el('button','choice'+((restore&&picks[i]===realIdx)?' picked':''),'<span class="mark">'+LETTERS[pos]+'</span>'+q.options[realIdx]);
+        MCA11y.setPicked(b,!!(restore&&picks[i]===realIdx));
         b.onclick=function(){
           if(graded)return;
           picks[i]=realIdx;
-          box.querySelectorAll('.choice').forEach(function(x){x.classList.remove('picked');});
-          b.classList.add('picked');
+          box.querySelectorAll('.choice').forEach(function(x){x.classList.remove('picked');MCA11y.setPicked(x,false);});
+          b.classList.add('picked');MCA11y.setPicked(b,true);
           wrap.classList.remove('q-missing');
           saveAttempt();
         };
@@ -1045,8 +1089,9 @@ document.querySelectorAll('.quiz-body').forEach(function(body){
       byArea[q.area].total++;if(right)byArea[q.area].got++;
       wrap.querySelectorAll('.choice').forEach(function(b,pos){
         b.disabled=true;b.classList.remove('picked');
-        if(orders[i][pos]===q.answer)b.classList.add('right');
-        else if(orders[i][pos]===picks[i])b.classList.add('wrong');
+        MCA11y.setPicked(b,orders[i][pos]===picks[i]);
+        if(orders[i][pos]===q.answer){b.classList.add('right');MCA11y.markResult(b,'right');}
+        else if(orders[i][pos]===picks[i]){b.classList.add('wrong');MCA11y.markResult(b,'wrong');}
       });
       var fb=wrap.querySelector('.feedback');
       fb.className='feedback show'+(right?'':' miss');
@@ -1112,6 +1157,8 @@ document.querySelectorAll('.quiz-body').forEach(function(body){
     target.classList.remove('q-jumped');
     void target.offsetWidth;
     target.classList.add('q-jumped');
+    target.setAttribute('tabindex','-1');
+    MCA11y.focusEl(target);
   }
 
   /* The review panel: what needs attention, how each concept stands, where
@@ -1232,6 +1279,11 @@ document.querySelectorAll('.quiz-body').forEach(function(body){
     renderReview(resultCard,summary);
     paintStrip();
     try{resultCard.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}
+    /* Graded: move the cursor to the result so it is read out, and the student
+       can tab on to the missed-question links without hunting for them. */
+    resultCard.setAttribute('aria-label','Quiz result');
+    MCA11y.focusEl(resultCard);
+    MCA11y.announce(correct+' of '+questions.length+' correct, '+pct+' percent.');
   }
 
   function startMastery(targets){
@@ -1289,6 +1341,7 @@ var jumpFlash=document.getElementById('jumpFlash');
 if(jumpFlash){jumpFlash.onclick=function(){goTo(FLOW.findIndex(function(f){return f.key==='flashcards';}));};}
 
 goTo(resolveStartSection());
+pageLoaded=true;
 if(!storageWorks){
   document.getElementById('topMeta').textContent=
     (typeof TOPIC_TITLE!=='undefined'?TOPIC_TITLE:'This companion')+
