@@ -41,6 +41,7 @@ Each companion should have a distinct color scheme; the following schemes are in
 |Viruses4|Ultramarine|Magenta|
 |Viruses5|Terracotta|Lilac|
 |Mycoses|Oliver-brown|Cornflower|
+|Parasitology|Hunter Green|Giemsa Rose|
 
 
 

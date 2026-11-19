@@ -478,6 +478,8 @@ HUB.META = {
     ink:'#4A1D06', head2:'#8A3B12', accent:'#8A3B12', soft:'#C9B8F0', warm:'#C9B8F0', tintA:'#FBEAE0', tintB:'#F0EAFC', plateHi:'#B5532A', track:'#EBDDD5' },
   mycoses:{ title:'Mycoses: Fungal Infections and Antifungals', kicker:'MYCOSES — FUNGI & ANTIFUNGALS', tag1:'Know the fungus.', tag2:'Choose the drug.',
     ink:'#2B290F', head2:'#4B4719', accent:'#4B4719', soft:'#8FB2F4', warm:'#8FB2F4', tintA:'#F2EFD9', tintB:'#E8F0FD', plateHi:'#6B6624', track:'#E6E2C8' },
+  parasitology:{ title:'Parasitology: Protozoa and Antiparasitics', kicker:'PARASITOLOGY — PROTOZOA & ANTIMALARIALS', tag1:'Trace the parasite.', tag2:'Break the cycle.',
+    ink:'#12261A', head2:'#1F3D2B', accent:'#1F3D2B', soft:'#F2A7B8', warm:'#E0607E', tintA:'#E7EFE9', tintB:'#FBE6EB', plateHi:'#2E5A40', track:'#DDE6DF' },
   hub:{ title:'Integration & review', kicker:'INTEGRATION — ACROSS LECTURES', tag1:'Join the lectures.', tag2:'Answer across topics.',
     ink:'#212529', head2:'#6c757d', accent:'#495057', soft:'#adb5bd', warm:'#6c757d', tintA:'#e9ecef', tintB:'#f8f9fa', plateHi:'#6c757d', track:'#dee2e6' }
 };
@@ -548,6 +550,10 @@ HUB.capture = function(expected){
 <script src="banks/mycoses.js"></script>
 <script src="banks/mycoses.manifest.js"></script>
 <script>HUB.capture('mycoses');</script>   
+
+<script src="banks/parasitology.js"></script>
+<script src="banks/parasitology.manifest.js"></script>
+<script>HUB.capture('parasitology');</script>
 
 <!-- The hub's own bank has no companion page, so it has no manifest. -->
 <script src="banks/hub.js"></script>
