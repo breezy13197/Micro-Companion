@@ -74,7 +74,7 @@ If an `index.html` from another course is already in this folder, rename or move
 ## Step 2. Open the hub and check it
 
 1. Open `index.html` in a browser (Chrome, Edge, or Firefox).
-2. You should see ten rings (Bacteria I to IV, Viruses I to V, Mycoses) and the "Integration" card at the bottom.
+2. You should see eleven rings (Bacteria I to IV, Viruses I to V, Mycoses, Parasitology) and the "Integration" card at the bottom.
 3. Click **How this works** in the left menu, then scroll to **What is loaded right now**.
 
 You should see a table like this:
@@ -91,6 +91,7 @@ You should see a table like this:
 | Viruses IV: Childhood and enteric tract viruses | 67 | 54 | 51 | manifest loaded | locked · 0% |
 | Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV | 76 | 68 | 68 | manifest loaded | locked · 0% |
 | Mycoses: Fungal Infections and Antifungals | 86 | 60 | 66 | manifest loaded | locked · 0% |
+| Parasitology: Protozoa and Antiparasitics | 150 | 54 | 46 | manifest loaded | locked · 0% |
 | Integration & review | 78 | 0 | 47 | not needed | unlocked |
 
 (The numbers will change when you add or remove questions, and "Hub exams" will change as progress is made. What matters is that every row says "manifest loaded", except the last, which says "not needed".)

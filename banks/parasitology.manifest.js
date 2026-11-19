@@ -68,7 +68,7 @@ var MANIFEST = {
     ]},
 
     { id:'final', title:'Final Mastery Exam', unlockAfter:'*', sections:[
-      { key:'final', label:'30 Question Mastery Exam', quiz:'final' }
+      { key:'final', label:'25 Question Mastery Exam', quiz:'final' }
     ]}
   ],
 
