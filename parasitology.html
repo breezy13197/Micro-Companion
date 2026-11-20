@@ -100,10 +100,11 @@ input[type=range]::-moz-range-thumb{border-color:var(--hunter)}
 
 /* custom activity pieces */
 .lab-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
-.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:#fff;flex-wrap:wrap}
-.seg button{border:0;background:transparent;padding:8px 15px;font-size:.86rem;color:var(--ink-mid);cursor:pointer}
-.seg button+button{border-left:1.5px solid var(--line)}
-.seg button.on{background:var(--hunter);color:#fff}
+/* Each choice is its own pill, so a set that wraps onto several lines on a phone still looks right */
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1.5px solid var(--line);border-radius:999px;background:#fff;padding:8px 15px;font-size:.86rem;line-height:1.35;color:var(--ink-mid);cursor:pointer;text-align:left;max-width:100%}
+.seg button:hover:not(:disabled){border-color:var(--green-line)}
+.seg button.on{background:var(--hunter);border-color:var(--hunter);color:#fff}
 .seg button.seen::after{content:" \2713";font-weight:700}
 .seg button:disabled{opacity:.4;cursor:not-allowed}
 .lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
