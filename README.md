@@ -14,6 +14,7 @@ A set of web pages that students open in a browser. No installation, no server, 
 | `bacteria1.html` to `bacteria4.html` | The four Bacteria companions (study pages for each lecture). |
 | `viruses1.html` to `viruses5.html` | The five Viruses companions. |
 | `mycoses.html` | The Mycoses companion |
+| `parasitology.html` | The Parasitology companion (protozoa, malaria, and antimalarials) |
 | `banks/` | The questions and flashcards, plus a small "manifest" file per companion that describes its sections. |
 | `shared/` | Code and styling shared by every companion. Includes `storage-core.js`, the one piece of code that saves and loads progress, used by the hub and every companion alike. |
 | `browser-tests/` | An automatic checker for you, not for students (see "Checking it works in different browsers" below). |
@@ -40,6 +41,7 @@ companions/
   viruses4.html
   viruses5.html
   mycoses.html
+  parasitology.html
   banks/
     hub.js
     bacteria1.js    bacteria1.manifest.js
@@ -52,6 +54,7 @@ companions/
     viruses4.js     viruses4.manifest.js
     viruses5.js     viruses5.manifest.js
     mycoses.js      mycoses.manifest.js
+    parasitology.js parasitology.manifest.js parasitology.images.js
   shared/
     activities.js  engine.js  helpers.js  menu.js  storage-core.js  storage.js  welcome.js
     sections.css   shell.css  styles.css  welcome.css
@@ -71,7 +74,7 @@ If an `index.html` from another course is already in this folder, rename or move
 ## Step 2. Open the hub and check it
 
 1. Open `index.html` in a browser (Chrome, Edge, or Firefox).
-2. You should see ten rings (Bacteria I to IV, Viruses I to V, Mycoses) and the "Integration" card at the bottom.
+2. You should see eleven rings (Bacteria I to IV, Viruses I to V, Mycoses, Parasitology) and the "Integration" card at the bottom.
 3. Click **How this works** in the left menu, then scroll to **What is loaded right now**.
 
 You should see a table like this:
@@ -88,6 +91,7 @@ You should see a table like this:
 | Viruses IV: Childhood and enteric tract viruses | 67 | 54 | 51 | manifest loaded | locked · 0% |
 | Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV | 76 | 68 | 68 | manifest loaded | locked · 0% |
 | Mycoses: Fungal Infections and Antifungals | 86 | 60 | 66 | manifest loaded | locked · 0% |
+| Parasitology: Protozoa and Antiparasitics | 150 | 54 | 46 | manifest loaded | locked · 0% |
 | Integration & review | 78 | 0 | 47 | not needed | unlocked |
 
 (The numbers will change when you add or remove questions, and "Hub exams" will change as progress is made. What matters is that every row says "manifest loaded", except the last, which says "not needed".)
