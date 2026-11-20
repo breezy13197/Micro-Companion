@@ -103,6 +103,9 @@ input[type=range]::-moz-range-thumb{border-color:var(--olive)}
 .seg button:hover:not(:disabled){border-color:var(--green-line)}
 .seg button.on{background:var(--olive);border-color:var(--olive);color:#fff}
 .seg button:disabled{opacity:.4;cursor:not-allowed}
+.step-label{margin:14px 0 4px;font-size:.95rem;font-weight:600;color:var(--ink)}
+.step-label.step-gap{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line,#E6E2C8)}
+.step-num{display:inline-block;margin-right:8px;padding:2px 9px;border-radius:999px;background:var(--ink);color:var(--paper,#fff);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px}
 .lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
 .lab-row .opt:disabled{opacity:.5;cursor:not-allowed}
 .stage-name{font-size:1.1rem;font-weight:750;color:var(--olive);min-height:1.6em}
@@ -1250,11 +1253,13 @@ Act.explore('act-targetMap',{name:'targetMap',svg:'<svg viewBox="0 0 660 304" ro
     er:'The endoplasmic reticulum belongs to eukaryotes. Bacteria have none.'};
   var type='fungal',chosen=[];
   var seg=segControl(TYPES,function(v){type=v;chosen=[];msg.className='feedback show';msg.innerHTML='Choose the parts this cell has, then check.';paint();});
-  var row=el('div','lab-row');row.innerHTML='<span class="lab-label">Build a</span>';row.appendChild(seg.box);
+  var step1=el('p','step-label');step1.innerHTML='<span class="step-num">Step 1</span> Choose a cell type';
+  var row=el('div','lab-row');row.appendChild(seg.box);
+  var step2=el('p','step-label step-gap');step2.innerHTML='<span class="step-num">Step 2</span> Tap each part that this cell has';
   var chips=el('div','act-chips'),fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
   var ctl=el('div','controls'),chk=el('button','btn','Check this cell'),clr=el('button','btn ghost','Clear parts');
   chk.type=clr.type='button';ctl.appendChild(chk);ctl.appendChild(clr);
-  [row,chips,fig,ctl,msg,prog].forEach(function(x){host.appendChild(x);});
+  [step1,row,step2,chips,fig,ctl,msg,prog].forEach(function(x){host.appendChild(x);});
   var chipEls={};
   PARTS.forEach(function(p){
     var b=el('button','act-chip',p[1]);b.type='button';
