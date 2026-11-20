@@ -3,33 +3,9 @@
 **Standard for all interactive study companions in this project.**
 Reference implementation: bacteria1 companion.
 
-This document exists so that every companion built after this one — pharmacokinetics, whatever comes next — is a variation on the same skeleton rather than a one-off. A new companion should mean writing content and copying the five `shared/` files, not re-deriving how progress tracking, quizzes, or practice activities work.
+This document exists so that every companion built after this one — another Bacteria or Viruses lecture, Mycoses, Parasitology, whatever comes next — is a variation on the same skeleton rather than a one-off. A new companion should mean writing content and linking the files in `shared/` unchanged, not re-deriving how progress tracking, quizzes, or practice activities work.
 
-> **Keeping this document honest.** `shared/engine.js` is the actual contract; this file only describes it. An earlier version of this document omitted the `FLOW` global (§5) and the entire page shell (§6), and a companion built faithfully from the description alone rendered a sidebar and nothing else. Sections 5 and 6 have since been checked line by line against `engine.js`. If you change anything in `shared/`, update those two sections in the same sitting — and if you ever build from this document and hit something it doesn't mention, fix the document rather than only fixing the page.
->
-> **Second correction.** This document listed the flashcard DOM hooks as six bare IDs with no structure, and showed only one of the two checkpoint markup shapes `engine.js` actually supports. A companion built from the description alone satisfied every listed ID with the wrong element structure, which produced a card that was permanently showing its answer face, mirrored, with no visible bug in the reasoning — every ID existed, so nothing in this document caught it. §6 and §7 now spell out the flashcard markup in full, the way the quiz section already was, and document both checkpoint shapes. §8 also gained a section on the targeted mastery round, which existed in `engine.js` but was never written down here at all.
->
-> **Third correction.** The hub described in §13 as a future possibility now exists, and it needs one piece of information no file in this document previously produced: which module and section a checkpoint belongs to. `MODULES` and `SECTION_REQ` carry that, but they live inside each companion's own `.html`, not in a file the hub loads. The hub's first working version could only show quiz scores as a result — no per-module progress — until this gap was noticed and closed with a fifth file, the manifest (§14). If you add a companion and skip its manifest, the hub will not throw an error; it will just quietly fall back to quiz-scores-only for that one companion, the same degraded state this correction describes. Treat §14 as load-bearing as §5 and §6, not as an appendix.
->
-> **Fourth correction.** This one is different in kind from the first three: it isn't a gap `engine.js` exposed, it's a gap *this document's own maintenance process* let through. When hub exam gating shipped (§14.7), a working copy of this file was edited with the new section and the edit was described as delivered — but the edited copy was never copied back to the file actually given out, and never listed among that turn's files. The result was a document that claimed, in conversation, to explain a rule it did not anywhere actually contain. It was caught only because the next change to this section (§14.8, flags) required rereading §14 first and the gap was visible on the page. The fix isn't a new rule so much as a reminder that "I updated the document" is a claim to verify against the file itself, the same way any other claim in here is — re-open the file that was actually written to the delivery location before describing it as current, don't trust the memory of having edited a working copy.
->
-> **Fifth correction.** §14.4 named the drift between a companion's hand-typed `MODULES`/`SECTION_REQ` and its `.manifest.js` copy as a known risk, and even sketched the fix, but filed it as future work "in its own sitting." That sitting has now happened. The manifest is no longer a copy kept in sync by hand — it is the only place the structure is written. Each companion's own content script now **derives** `MODULES`, `FLOW`, `UNGRADED`, `SECTION_REQ`, `QUIZ_KEY_FOR_SECTION`, and `AREA_SECTION` from `MANIFEST` at load time, the same file the hub already read. §3, §5, §11, and §14 described the old, hand-typed shape as current when it no longer is; all four have been updated to describe the derivation instead. This also changes what a missing manifest means: it used to be a degraded-but-working state (§14.3's fallback), because only the hub's dashboard needed it. Now the companion's own page needs it to render at all — `banks/<topic>.manifest.js` is as load-bearing as `shared/engine.js` itself, and its absence is a broken deployment, not a quiet fallback. The reference implementation for this shape is the Membrane Transport / Signal Transduction companion (`signaling.html` + `signaling.manifest.js`). All 8 companions have been migrated. 
-
-> **Sixth correction.** This one adds a file rather than fixing a gap in `engine.js`. Every earlier version of this document told a new companion to hand-build each practice activity in its own content script: §5 called everything after the derivation block "genuinely specific to that topic," §7 gave the sort-row markup to copy, and §8 described the three-call save pattern each bespoke activity had to repeat. That was reasonable while a companion had two or three activities. It stopped being reasonable when the Bacteria I companion needed twenty-one. Drag-and-drop, sorting, ordering, fill-in-the-blank, clickable diagrams, staged cases, step-through animations, and predict-first questions behave, save, and score identically in every topic, which is exactly the situation principle 3 in §1 says belongs in `shared/`. Those mechanics now live in a fifth shared file, `shared/activities.js`, which defines one global, `Act`. §1, §2, §3, §4, §5, §6, §7, §8, §9, §11, §12, and the one count in §14 have been updated to account for it, and §5 has a new subsection with its full contract: each builder's `cfg` shape, what completes it, and what it saves. Two things did *not* change. `engine.js` never references `Act` and is untouched, and the companions built before this file existed neither load it nor need to; the older statements in this document about hand-built activities remain true for a genuinely custom widget that no builder covers. The reference implementation for the toolkit is the Bacteria I companion (`bacteria1.html`). The new material was checked against `activities.js` itself rather than written from memory of it: every builder, every `cfg` field, every stored key, and every exported function named below exists in the file.
-
-> **Seventh correction.** This one is the doc catching up to files that were already real. Two separate gaps, found the same day: First, §2's file tree never grew to list `welcome.css`, `shell.css`, `sections.css`, and `welcome.js` under `shared/` — they've been real, working files since the Bacteria III build, just never added to the tree, so a reader following §2 alone would not know they exist. Second, and more substantive: §15, §16, and §17 describe these four files as living in `_templates/welcome/`, `_templates/shell/`, and `_templates/sections/`, generated into each companion via `shell.template.html`/`module-home.template.html` and the `render_shell.py`/`render_welcome.py`/`render_sections.py` scripts, with a `README.md` in each template folder documenting the token list. None of that is how the three real companions were actually built. All four files live flat in `shared/`, next to `engine.js` and the rest — same folder, same `<link>`/`<script>` pattern as everything else. Every companion's sidebar, Start page, and section markup is hand-written to match the pattern (copied from an existing companion and re-colored), the same way the page shell in §6 always has been — not generated by a script. The `render_*.py` files and their `_template.html`/`_content_example.py` companions still exist in the project and are left in place in case that generation workflow gets adopted for real later, but nothing currently reads them, and no `_templates/` folder or `README.md` exists anywhere in the project. §2, §15, §16, and §17 below have been corrected to say `shared/` and to describe the markup as hand-written, matching what every companion actually does today. Bacteria I and Bacteria II were also brought onto these four shared files during this same pass — before this, only Bacteria III actually linked them; Bacteria I had its own hand-duplicated copy of the same CSS and JS, and Bacteria II had the full text of all four files pasted inline. Both now link the same four files Bacteria III does, verified line-for-line against them first so nothing visible changed.
->
-> This correction also adds §6.4, the back-to-hub link — a new required shell element, not a pre-existing one this document had simply missed.
->
-> **Eighth addition (a feature, not a correction).** Students can now write their own flashcards. They are created, edited and deleted **inside each companion** and are **view-only in the hub**. The panel is built by `shared/engine.js` itself, injected into the existing flashcards section, so no companion's HTML had to change and every companion, including ones already built, gets it as soon as it loads the updated shared files. The cards live in a new `state.myCards` field (§9) and are deliberately outside the completion model, every quiz, and every hub exam. §7, §9, §12, and a new §14.10 describe it; `storage.js`, `engine.js`, `styles.css`, and `index.html` changed, and the hub keeps a second, deliberate copy of the cleaning rule (§14.10 explains why). It was checked by running the real shared files, and the real hub, in a simulated browser — not written from memory of them.
-
-> **Shared storage core (a refactor, no change for students).** The hub and the companions used to carry separate copies of the code that reads and writes the browser's storage, the backup file format, the backup validation rules, and the "could not be saved" warning. They now share one file, `shared/storage-core.js`, which defines `MCStore`. `shared/storage.js` still owns a companion's own state and cleaning rules, and `index.html` still owns the hub's record. Every companion page and the hub must load `storage-core.js` before anything that saves. Saved data and the backup file format are unchanged, so existing progress and old backup files keep working. A new companion needs the one extra `<script>` line shown in §3.
-
-> **Ninth addition (assessment fixes — a behavior change in `shared/`, not a gap).** Four defects in how quizzes record and report evidence were fixed together, in `shared/engine.js`, `shared/storage.js`, `shared/styles.css`, and in `index.html`'s own exam runner. (1) *Adaptive review declared success early*: after a targeted round the engine rebuilt its list of weak areas only from the round's own questions, so a missed concept that never got a follow-up question vanished and the page said "Every concept area is solid." Missed concepts now live on a persistent **review queue** (`state.pending`, §8, §9) and leave it only when answered correctly later. (2) *Repeated Submit inflated evidence*: `grade()` added to `areaStats` and added another Flag button on every call. Grading now happens once per attempt (§8). (3) *Completion and mastery were conflated in the UI*: they are still separate in the rules; each quiz page now shows **practice completed**, **assessment result**, and **review pending** as three indicators (§8). (4) *A refresh lost an unfinished quiz*: attempts are now saved on every answer (§9). The hub's exam runner got the same treatment (§14.11). No existing key changed meaning; every new field is added to `blank` in `loadState()` and cleaned on load, so no `v2` bump was needed. All of it was checked by running the real files in a simulated browser (see the new items in §12), not written from memory of them.
-
-> **Tenth addition (spaced re-checks, review-linked flashcards, hub dashboard indicators).** Three follow-ons to the assessment fixes above, in the same shared files and the hub. (1) *Fixed is not mastered.* A concept answered correctly after a miss no longer simply leaves the review queue (one right answer can be luck): it is scheduled for a re-check after 2 days, and if that holds, once more after 7 days; only then is it counted as **mastered**. Missing it at any point puts it back on the list (§8, §9). (2) *Flashcards feed from review.* A third flashcard deck, "For your review list", shows the cards that belong to the concepts currently needing attention, and the review panel links to it (§7, §8). (3) *The hub dashboard* now shows the same three separate indicators on every companion card (§14.12). New saved fields `spaced` and `mastered` follow the same rule as before: added to `blank` in `loadState()`, cleaned on load, no `v2` bump. Tested by running the real files in a simulated browser; the review-linked flashcard matching is a heuristic and is the one part that should be spot-checked against real card sets (§8).
-
-> **Eleventh addition (keyboard focus and screen-reader fixes).** A new shared file, `shared/a11y.js` (global `MCA11y`), must be loaded before `engine.js` on every companion and before the hub's script. It does five small jobs: announce a message to screen readers, move the keyboard cursor to a heading, mark an answer button as selected (`aria-pressed`), add hidden "Correct answer" / "Your answer, incorrect" wording to graded answers, and put the cursor back on the control a student was using after a redraw. With it: the hub exam keeps focus on the answer just chosen (it used to be lost when the screen was redrawn); checkpoint and quiz answers expose their selected state and checkpoint feedback is read aloud; moving between sections focuses the new heading; submitting a quiz focuses the result; and opening a concept from the review list adds a "Back to ..." button that returns to the results. `browser-tests/tests/keyboard.spec.js` checks all of this with the keyboard only.
+> **Keeping this document honest.** `shared/engine.js` is the actual contract; this file only describes it. If you change anything in `shared/`, update the sections here that describe it in the same sitting. If you ever build from this document and hit something it doesn't mention, fix the document rather than only fixing the page. "I updated the document" is a claim to verify against the file itself, the same as any other claim in here. The **Change history** at the end records the gaps found so far and how each was closed.
 
 ---
 
@@ -37,7 +13,7 @@ This document exists so that every companion built after this one — pharmacoki
 
 Three decisions drive everything else in this document:
 
-1. **No server.** These files are static and get uploaded to an LMS (Brightspace) that serves them as-is. There is no database, no backend, nothing that runs code on the person's behalf. Every piece of "logic" has to be a browser-side JavaScript file.
+1. **No server.** These files are static and get uploaded to a host that serves them as-is: an LMS such as Brightspace, or a static site such as GitHub Pages. There is no database, no backend, nothing that runs code on the person's behalf. Every piece of "logic" has to be a browser-side JavaScript file.
 2. **Questions should be readable without the app.** A future hub needs to pull questions from every companion to build cross-topic exams. That's only possible if each companion's question bank lives in its own file, in a predictable shape, separate from the code that renders it.
 3. **One engine, many topics.** The interactive mechanics — quizzes, checkpoints, flashcards, progress tracking — are identical in kind across every topic. Only the content differs. Duplicating that mechanical code into every companion means every bug gets fixed N times instead of once. The same holds for the practice activities (drag-and-drop, sorting, ordering, fill-in-the-blank, clickable diagrams, staged cases, step-through animations, predict-first questions): they behave, save, and score the same way in every topic, so their mechanics live in `shared/activities.js` and a topic's page only describes what to show.
 
@@ -50,25 +26,25 @@ Everything below follows from these three points.
 ```
 /companions/
   shared/
-    styles.css      the whole design system — one copy, used by every companion
-    storage.js       defines `state`, save/load — one copy
+    styles.css        the whole design system — one copy, used by every companion
+    storage-core.js   defines `MCStore`: reading/writing storage, backup format, save-failure warning — shared with index.html
+    storage.js        defines `state`, save/load — one copy
     helpers.js        el(), shuffle(), order(), stepLabel(), LETTERS — one copy
-    activities.js      the activity toolkit, `Act`: dnd, sort, order, fill, explore, stages, stepper, predict, gate — one copy
-    engine.js          nav, checkpoints, quizzes, flashcards, completion — one copy
-    welcome.css         the Start page's layout, color-neutral — one copy; see §15
-    welcome.js           draws Start-page icons, live counts, and button wiring — one copy; see §15.3
-    menu.js              phone-size "Menu" button that collapses the side menu; injects its own CSS; loaded last by every companion and by index.html
-    shell.css            the sidebar, top bar, and module overview pages, color-neutral — one copy; see §16
-    sections.css         the small marks every content page shares (eyebrow, lede, keypoints, hands-card, step labels) — one copy; see §17
+    activities.js     the activity toolkit, `Act`: dnd, sort, order, fill, explore, stages, stepper, predict, gate — one copy
+    a11y.js           defines `MCA11y`: screen-reader announcements, focus handling, aria-pressed — also loaded by index.html
+    engine.js         nav, checkpoints, quizzes, flashcards, completion — one copy
+    welcome.css       the Start page's layout, color-neutral — one copy; see §15
+    welcome.js        draws Start-page icons, live counts, and button wiring — one copy; see §15.3
+    menu.js           phone-size "Menu" button that collapses the side menu; injects its own CSS; loaded last by every companion and by index.html
+    shell.css         the sidebar, top bar, and module overview pages, color-neutral — one copy; see §16
+    sections.css      the small marks every content page shares (eyebrow, lede, keypoints, hands-card, step labels) — one copy; see §17
   banks/
-    enzymes.js               this topic's checkpoints, quiz pool, flashcards — WITH stable IDs
-    enzymes.manifest.js        this topic's module/section MAP — the ONLY place it's written; see §14
-    pharmacokinetics.js
-    pharmacokinetics.manifest.js
-    hub.js                     the hub's own cross-topic question bank — see §14
+    bacteria1.js            this topic's checkpoints, quiz pool, flashcards — WITH stable IDs
+    bacteria1.manifest.js   this topic's module/section MAP — the ONLY place it's written; see §14
+    bacteria3.images.js     optional: large embedded images for one topic, kept out of the bank so BankBridge never touches them
+    hub.js                  the hub's own cross-topic question bank — see §14
     ...
-  enzymes.html            this topic's markup + its own content script, which DERIVES its structure from enzymes.manifest.js
-  pharmacokinetics.html
+  bacteria1.html            this topic's markup + its own content script, which DERIVES its structure from bacteria1.manifest.js
   ...
   index.html                loads every bank + manifest in /banks; dashboard, exams, flashcards — see §14
 ```
@@ -77,7 +53,7 @@ Everything below follows from these three points.
 
 **`banks/<topic>.js`** is the file a hub reads for questions. It should be understandable without ever opening the matching `.html` file. **`banks/<topic>.manifest.js`** is the file both the hub *and* the companion's own page read for structure: it is the single place a companion's module/section map is written. The `.html` file's content script loads it and derives `MODULES`, `SECTION_REQ`, and everything else in §5's second table from it at runtime — it does not restate that structure by hand. §14 covers why this is a fifth file instead of a few more fields on the bank, and §14.2 covers the derivation itself.
 
-**`<topic>.html`** is a thin loader: the page's unique markup (section content, SVG figures, activity data specific to that topic) plus four `<link>` tags (`styles.css`, `welcome.css`, `shell.css`, `sections.css`) and eight `<script>` tags (bank, manifest, `storage.js`, `helpers.js`, `activities.js`, `welcome.js`, the page's own inline content script, then `engine.js` last) — one script fewer than this if the page builds none of its activities with `Act` and leaves `activities.js` out. It should contain no reusable logic, and no hand-typed copy of what the manifest already says, and no hand-typed copy of what `shared/welcome.css`, `shared/shell.css`, or `shared/sections.css` already style.
+**`<topic>.html`** is a thin loader: the page's unique markup (section content, SVG figures, activity data specific to that topic) plus four `<link>` tags (`styles.css`, `welcome.css`, `shell.css`, `sections.css`) and eleven `<script>` tags in the order §3 gives (bank, manifest, `storage-core.js`, `storage.js`, `helpers.js`, `activities.js`, `welcome.js`, the page's own inline content script, `a11y.js`, `engine.js`, then `menu.js` last), plus a twelfth for a topic that has a `banks/<topic>.images.js` file. It should contain no reusable logic, and no hand-typed copy of what the manifest already says, and no hand-typed copy of what `shared/welcome.css`, `shared/shell.css`, or `shared/sections.css` already style.
 
 ---
 
@@ -85,27 +61,34 @@ Everything below follows from these three points.
 
 ```html
 <link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/welcome.css">
+<link rel="stylesheet" href="shared/shell.css">
+<link rel="stylesheet" href="shared/sections.css">
 ...
-<script src="banks/enzymes.js"></script>            <!-- 1. pure content data -->
-<script src="banks/enzymes.manifest.js"></script>    <!-- 2. defines MANIFEST — structure derives from this -->
-<script src="shared/storage-core.js"></script>       <!-- 3a. defines MCStore: reading/writing, backup format, save-failure warning (the hub loads this too) -->
-<script src="shared/storage.js"></script>            <!-- 3b. defines `state` -->
-<script src="shared/helpers.js"></script>             <!-- 4. el(), shuffle(), order() -->
-<script src="shared/activities.js"></script>           <!-- 5. defines `Act`, the activity toolkit -->
-<script>/* this topic's content script: derives MODULES/SECTION_REQ from MANIFEST, then builds its activities and figures */</script>  <!-- 6 -->
-<script src="shared/engine.js"></script>               <!-- 7. builds the nav, wires everything -->
+<script src="banks/bacteria1.js"></script>            <!-- 1. pure content data -->
+<script src="banks/bacteria1.manifest.js"></script>   <!-- 2. defines MANIFEST — structure derives from this -->
+<!-- <script src="banks/bacteria3.images.js"></script>   2b. optional: only for a topic that has an images file -->
+<script src="shared/storage-core.js"></script>        <!-- 3a. defines MCStore: reading/writing, backup format, save-failure warning (the hub loads this too) -->
+<script src="shared/storage.js"></script>             <!-- 3b. defines `state` -->
+<script src="shared/helpers.js"></script>             <!-- 4. el(), shuffle(), order(), stepLabel() -->
+<script src="shared/activities.js"></script>          <!-- 5. defines `Act`, the activity toolkit -->
+<script src="shared/welcome.js"></script>             <!-- 6. defines initWelcome(); the content script calls it at its end (§15.3) -->
+<script>/* this topic's content script: derives MODULES/SECTION_REQ from MANIFEST, builds its activities and figures, then calls initWelcome() */</script>  <!-- 7 -->
+<script src="shared/a11y.js"></script>                <!-- 8. defines MCA11y; must load before engine.js -->
+<script src="shared/engine.js"></script>              <!-- 9. builds the nav, wires everything -->
+<script src="shared/menu.js"></script>                <!-- 10. the phone-size Menu button; always last -->
 </body>
 ```
 
 This order exists because of three real bugs hit while building companions against this document, and all three are worth understanding rather than just copying the fix:
 
-- **The manifest must load before the content script that derives from it.** The content script's very first block now reads `MANIFEST.modules` to build `MODULES`, `SECTION_REQ`, and the rest of §5's second table. If `banks/<topic>.manifest.js` hasn't loaded yet, `MANIFEST` doesn't exist and that derivation throws on its first line — before a single section of the page has anything to work with. This is a new failure mode this document didn't need to describe before the manifest became load-bearing for the page itself (see the fifth correction at the top of this document); it fails in exactly the same "sidebar with nothing behind it" way §3's last paragraph already describes for a missing `FLOW`, because the root cause is the same class of problem: a global the content script needs isn't defined yet.
+- **The manifest must load before the content script that derives from it.** The content script's very first block now reads `MANIFEST.modules` to build `MODULES`, `SECTION_REQ`, and the rest of §5's second table. If `banks/<topic>.manifest.js` hasn't loaded yet, `MANIFEST` doesn't exist and that derivation throws on its first line — before a single section of the page has anything to work with. This is a new failure mode this document didn't need to describe before the manifest became load-bearing for the page itself (see the fifth correction in the Change history); it fails in exactly the same "sidebar with nothing behind it" way §3's last paragraph already describes for a missing `FLOW`, because the root cause is the same class of problem: a global the content script needs isn't defined yet.
 - **Content-script code runs immediately, not just inside click handlers.** Restoring a saved drag-and-drop layout, building a flashcard deck, rendering a sort activity — all of this happens as soon as the script tag is parsed. That means anything the content script *reads* (`MANIFEST`, `state`, `el()`, `shuffle()`) must already exist. This is why the manifest, `storage.js`, and `helpers.js` all load before the content script, not after.
 - **`engine.js` must load last.** It builds the sidebar nav from `MODULES`, wires every `[data-check]` checkpoint from `CHECKPOINTS`, and renders every `.quiz-body` from `POOL` — all of which must already be defined. It also calls `goTo(0)` at the very end to show the first page, which needs the nav it just built.
 
 **`activities.js` is the fourth link in this chain, and it sits between `helpers.js` and the content script.** What it does at load is small: it injects its own stylesheet into `<head>` and defines `Act`. It reads `state`, `saveState()`, `el()`, `shuffle()`, `order()`, and `LETTERS` only when a builder runs, not when the file loads, so the hard requirement is that all three of those files precede the content script; placing it directly after `helpers.js` keeps the dependency order readable. The content script then calls `Act.dnd(...)`, `Act.sort(...)`, and the rest the moment it runs, not inside click handlers. Load `activities.js` after the content script and the first `Act.` call throws `Act is not defined`. That stops the rest of the content script, so every later activity on the page is never built, while the sidebar and the quizzes still work. It looks like sections with an empty hands-on area, and a progress ring that stalls short of 100% because those sections can never finish. `activities.js` does not need to precede `engine.js` for its own sake (it calls `paintNav()`, which `engine.js` defines, only from inside click handlers, after the page has finished loading), but the content script must precede `engine.js`, and `activities.js` must precede the content script, so the order above follows.
 
-If you add a new shared utility file, put it between `helpers.js` and the content script if the content script needs it while loading; put it after `engine.js` only if nothing before it depends on it (rare). `activities.js` is the first file to be added under this rule.
+If you add a new shared utility file, put it between `helpers.js` and the content script if the content script needs it while loading. If only `engine.js` needs it, put it just before `engine.js`, the way `a11y.js` is. Put it after `engine.js` only if nothing before it depends on it, the way `menu.js` is.
 
 **`engine.js` fails loudly but looks quiet, and now so does the manifest derivation that runs just before it.** Both run top to bottom with no error handling. The derivation's first act is to read `MANIFEST.modules`; `engine.js`'s first act is to build the sidebar from the `MODULES` that derivation produced, and its second is to read `FLOW`. If any global either one expects is missing, it throws *at that line* and every later statement — showing the first page, wiring checkpoints, rendering quizzes, filling pagers — simply never runs. The visible result is a fully-rendered sidebar attached to a blank page, with one error in the browser console and nothing else on screen. That symptom almost always means a missing or malformed `MANIFEST`, a missing global from §5, or a missing DOM hook from §6 — not a styling or path problem. Check the manifest first, since it's the newest link in this chain: `node --check banks/<topic>.manifest.js` catches a syntax error, but only actually loading the page catches a manifest that parses fine but is shaped wrong (a typo'd module id, a `sections` array that isn't one).
 
@@ -115,21 +98,21 @@ If you add a new shared utility file, put it between `helpers.js` and the conten
 
 | What | Pattern | Example |
 |---|---|---|
-| Bank file | `banks/<topic-id>.js` | `banks/enzymes.js` |
-| Manifest file | `banks/<topic-id>.manifest.js` | `banks/enzymes.manifest.js` |
-| HTML page | `<topic-id>.html` | `enzymes.html` |
-| Topic ID | short, lowercase, no spaces | `enzymes`, `pharmacokinetics` |
-| Question ID | `<TOPIC>-###`, zero-padded, sequential, never reused | `ENZ-001` … `ENZ-047` |
-| Flashcard ID | `<TOPIC>-CARD-##` | `ENZ-CARD-01` |
+| Bank file | `banks/<topic-id>.js` | `banks/bacteria1.js` |
+| Manifest file | `banks/<topic-id>.manifest.js` | `banks/bacteria1.manifest.js` |
+| HTML page | `<topic-id>.html` | `bacteria1.html` |
+| Topic ID | short, lowercase, no spaces | `bacteria1`, `mycoses` |
+| Question ID | `<TOPIC>-###`, zero-padded, sequential, never reused | `BAC1-001` … `BAC1-077` |
+| Flashcard ID | `<TOPIC>-CARD-##` | `BAC1-CARD-01` |
 | Checkpoint ID | short key, the object's own property name serves as the ID | `c1`, `c1b`, `c11c` |
-| Storage key | `companion.<topic-id>.v1` | `companion.enzymes.v1` |
+| Storage key | `companion.<topic-id>.v1` | `companion.bacteria1.v1` |
 | Activity name | short camelCase, unique within a companion; it is both the `activity:` value in the manifest and the key in `state.activities` (never ending in `_v`, `_n`, or `_g`; see §9) | `microbeMatch`, `gramSim` |
 | Activity host element | `act-<activity name>` (a convention; a builder accepts any element id) | `act-microbeMatch` |
 | Hub's own storage key | `hub.v1`, fixed — no topic id | `hub.v1` |
 
-**IDs are permanent.** Once assigned, a question's ID is never reused and never renumbered, even if the question is edited or retired. This is what lets a hub say "this practice exam pulled ENZ-014 and PHARM-009," lets anyone track which specific questions students consistently miss, and lets a bad question be deleted without shifting every ID after it. Retrofitting IDs after several banks exist is real work — assign them the moment a question is written.
+**IDs are permanent.** Once assigned, a question's ID is never reused and never renumbered, even if the question is edited or retired. This is what lets a hub say "this practice exam pulled BAC1-014 and MYC-009," lets anyone track which specific questions students consistently miss, and lets a bad question be deleted without shifting every ID after it. Retrofitting IDs after several banks exist is real work — assign them the moment a question is written.
 
-**The storage-key namespace matters more than it looks.** Brightspace serves every companion from the same origin, and browser storage is scoped to the *origin*, not the page. Without a per-topic key, two companions on the same course site would silently share (and overwrite) each other's saved progress. Every bank file must set `TOPIC_ID` before `storage.js` runs.
+**The storage-key namespace matters more than it looks.** The host serves every companion from the same origin (the same web address), and browser storage is scoped to the *origin*, not the page. Without a per-topic key, two companions on the same course site would silently share (and overwrite) each other's saved progress. Every bank file must set `TOPIC_ID` before `storage.js` runs.
 
 ---
 
@@ -140,8 +123,8 @@ These are the global variables each file is responsible for defining. `engine.js
 ### Defined in `banks/<topic>.js`
 
 ```javascript
-var TOPIC_ID    = 'enzymes';                    // used for the storage key
-var TOPIC_TITLE = 'Biochemistry of Enzymes';     // shown in the storage-blocked fallback message
+var TOPIC_ID    = 'bacteria1';                     // used for the storage key
+var TOPIC_TITLE = 'Bacteria I · Introduction';     // shown in the storage-blocked fallback message
 
 var CHECKPOINTS = {
   c1: {
@@ -153,16 +136,16 @@ var CHECKPOINTS = {
 };
 
 var CARDS = [
-  { id:'ENZ-CARD-01', t:'Term', d:'Definition shown on the flip side.' },
-  { id:'ENZ-CARD-02', t:'A reversed-recall prompt works too', d:'Answer.', flip:true },  // flip:true is cosmetic only, both faces render the same way
+  { id:'BAC1-CARD-01', t:'Term', d:'Definition shown on the flip side.' },
+  { id:'BAC1-CARD-02', t:'A reversed-recall prompt works too', d:'Answer.', flip:true },  // flip:true is cosmetic only, both faces render the same way
   ...
 ];
 
 var POOL = [
   {
-    id: 'ENZ-001',
+    id: 'BAC1-001',
     m: 'm1',                                       // which module quiz this belongs to
-    area: 'Enzyme basics',                          // must match a key in MANIFEST.areaSection (banks/<topic>.manifest.js)
+    area: 'Microbial categories',                   // must match a key in MANIFEST.areaSection (banks/<topic>.manifest.js)
     level: 'concept',                                // 'concept' | 'application' | 'integration' — must match FINAL_EXAM_MIX keys
     stem: '...',
     options: ['...', '...', '...', '...'],
@@ -179,11 +162,11 @@ This is the **only** place a companion's module/section structure is written. No
 
 ```javascript
 var MANIFEST = {
-  topic  : 'enzymes',                                 // matches TOPIC_ID
-  title  : 'Biochemistry of Enzymes',                  // matches TOPIC_TITLE
-  file   : 'enzymes.html',                              // page the hub links to
-  accent : '#2FA97A',                                    // this companion's color, for the dashboard
-  accentSoft : '#E7F6EF',
+  topic  : 'bacteria1',                               // matches TOPIC_ID
+  title  : 'Bacteria I · Introduction',                // matches TOPIC_TITLE
+  file   : 'bacteria1.html',                            // page the hub links to
+  accent : '#163C94',                                    // this companion's color, for the dashboard
+  accentSoft : '#E8EEFC',
 
   modules: [
     { id:'m1', title:'Module 1 · ...', sections:[
@@ -199,7 +182,7 @@ var MANIFEST = {
   ],
 
   areaSection: {                                    // where "review this" sends a student after a quiz
-    'Enzyme basics': 'm1s1',
+    'Microbial categories': 'm1s1',
     ...
   }
 };
@@ -251,7 +234,7 @@ var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};  // optional, t
 
 **Only `MANIFEST`, `BADGES`, `MODULE_QUIZ_SIZE`, and `FINAL_EXAM_MIX` are actually written by hand per topic.** `MODULES`, `FLOW`, `UNGRADED`, `SECTION_REQ`, `QUIZ_KEY_FOR_SECTION`, and `AREA_SECTION` are all derived — copy the derivation block above unchanged into a new companion rather than adapting it, the same way `shared/` files are copied unchanged. If a new companion's content script looks different from this block, that's a sign the structure has drifted back into being hand-typed, which is the exact failure mode this derivation exists to remove.
 
-**`FLOW` is still the single most important global in this table**, and still not derived automatically from anything upstream of `MODULES` — it's the one line in this block that has to run explicitly even though everything above it is now generated. `engine.js` references it eighteen times — more than `state` — and uses it for everything positional: which section `goTo(i)` shows, what Back and Next point at, which label appears in the topbar, and how the progress percentage is counted. Omit it and the page renders a sidebar and nothing else (see §3).
+**`FLOW` is still the single most important global in this table**, and still not derived automatically from anything upstream of `MODULES` — it's the one line in this block that has to run explicitly even though everything above it is now generated. `engine.js` references it more often than any other global, `state` included, and uses it for everything positional: which section `goTo(i)` shows, what Back and Next point at, which label appears in the topbar, and how the progress percentage is counted. Omit it and the page renders a sidebar and nothing else (see §3).
 
 **`UNGRADED` is currently vestigial.** It appears in `engine.js`'s header comment but is never read: ungraded sections are identified by *absence* from `SECTION_REQ` and `QUIZ_KEY_FOR_SECTION`, via `isGradable()`. Keep deriving it — it documents intent, and a future engine change may start reading it — but understand that adding a key to it does not make a section ungraded. The thing that actually controls gradability is whether that section's manifest entry carries `checks`, `activity`, or `quiz` — set or remove those in the manifest, not in this derived list.
 
@@ -412,8 +395,8 @@ Every button needs all three children. `.home-num` and `.home-status` are writte
   <button class="home-item" data-goto="m1s1">
     <span class="home-num">1</span>
     <span class="home-body">
-      <span class="home-title">What enzymes do</span>
-      <span class="home-desc">The catalytic cycle, and why enzymes are reusable.</span>
+      <span class="home-title">Microbes at a glance</span>
+      <span class="home-desc">Prions, viruses, bacteria, fungi, and parasites, side by side.</span>
     </span>
     <span class="home-status">Not started</span>
   </button>
@@ -523,7 +506,7 @@ Two shapes exist in the wild, and `wireCheckpoints()` resolves both — this isn
 ```html
 <div class="box apply">
   <h3><span class="tag">1 · INTERPRET</span></h3>
-  <p>On a Michaelis-Menten plot, which point on the horizontal axis corresponds to K<sub>m</sub>?</p>
+  <p>After the safranin counterstain, what color does a Gram-positive cell appear under the microscope?</p>
   <div class="choices" data-check="c8"></div><div class="feedback"></div>
 </div>
 ```
@@ -555,15 +538,20 @@ Reusable component classes already exist for: cards (`.card`), callout boxes (`.
 
 ### Activity markup (the hands-on card)
 
-An activity needs only a host element. Bacteria I puts each one in its own card between the section's explanation and its checkpoint card; where it sits is a page decision, not something `engine.js` cares about.
+An activity needs only a host element. Bacteria I puts each one in its own `.hands-card` between the section's explanation and its checkpoint card; where it sits is a page decision, not something `engine.js` cares about. The class names (`hands-card`, `eyebrow hands`, `try-note`, `lede`) come from `shared/sections.css` (§17).
 
 ```html
 <section class="section" data-key="m1s1">
-  <div class="card"> ...explanation, key points, figures... </div>
   <div class="card">
-    <div class="eyebrow">Hands-on</div>
+    <div class="eyebrow">Module 1 · Section 1</div>
+    <h2>...</h2>
+    <p class="lede">...</p>
+    <div class="keypoints"><h4>Key points</h4><ul>...</ul></div>
+  </div>
+  <div class="card hands-card">
+    <div class="eyebrow hands">Hands-on</div>
     <h2>Match each clue to its microbe</h2>
-    <p class="caption">Drag each label onto the description it fits.</p>
+    <p class="try-note">Drag each label onto the description it fits.</p>
     <div id="act-microbeMatch"></div>       <!-- the builder fills this in -->
   </div>
   <div class="card"> ...the .box.predict checkpoints... </div>
@@ -621,10 +609,10 @@ The token names stay `--green*` regardless of the actual color — they mean "th
 Three places don't pick the override up on their own, because they hold literal hex values:
 
 1. **The progress ring**, whose two `stroke` attributes are inline SVG (§6). Set them to your accent and a light tint of it.
-2. **A darker "green ink" text color (`#1C7554`)** appears in about fourteen rules in `styles.css` — sidebar current-state, `.pill`, `.ring-num`, `.opt.sel` and similar. Add a one-line override for any that look wrong: e.g. `.opt.sel{color:#0A6B62}`.
+2. **A darker "green ink" text color (`#1C7554`)** appears in about a dozen rules in `styles.css` — sidebar current-state, `.pill`, `.ring-num`, `.opt.sel` and similar. Add a one-line override for any that look wrong: e.g. `.opt.sel{color:#0A6B62}`.
 3. **`engine.js` hardcodes `#2FA97A`** for the "Strong" bar in the post-quiz mastery breakdown. Override with `.bd-fill{background:var(--green)!important}` — the `!important` is needed because the engine writes that color as an inline style.
 
-Colors in use so far: HTML question-bank editor — deep indigo; Enzymes — green; Amino Acids &amp; Proteins — teal/cyan; Hemoglobin — deep crimson; Membrane Transport &amp; Signal Transduction — warm amber/gold; Nucleotides — slate blue/steel; Glycogen Metabolism — burnt orange/terracotta; Citric Acid Cycle — deep plum.
+The colors already taken, one two-tone scheme per companion, are listed in the Color Scheme table in `AGENTS.md`. Check it before choosing a new one, and add the new companion's row there once its scheme is chosen.
 
 ---
 
@@ -690,32 +678,32 @@ state = {
     selectionLab_g: 3,                    //   Act.gate: index of the option the student chose
   },
   best: { m1: 87, m2: 100, final: 76 },   // quiz id -> best percentage across attempts
-  flags: { 'ENZ-014': 1788860760164, ... }, // question id -> the Date.now() timestamp when flagged
+  flags: { 'BAC1-014': 1788860760164, ... }, // question id -> the Date.now() timestamp when flagged
   lastSection: 'm2s3',                    // FLOW key of the section the student was last on, or null
   areaStats: {                            // concept area -> real per-question evidence from graded quizzes
-    'Enzyme kinetics': { asked: 6, right: 4, lastAcc: 0.5, lastTs: 1788965696464 }
+    'Gram staining': { asked: 6, right: 4, lastAcc: 0.5, lastTs: 1788965696464 }
   },
   myCards: [                              // flashcards the student wrote themselves (see below)
     { id: 'u3k9fz2a', t: 'Front text', d: 'Back text', ts: 1788965696464 }
   ],
   pending: {                              // the review queue (see below): area -> status
-    'Enzyme kinetics': { status: 'waiting', ts: 1788965696464 }   // 'waiting' | 'retry'
+    'Gram staining': { status: 'waiting', ts: 1788965696464 }   // 'waiting' | 'retry'
   },
   attempts: {                             // ONE unfinished quiz attempt per quiz id; deleted on grading
-    m1: { id:'a9x2k', mode:'normal', heading:'', targets:[], qids:['ENZ-004',...],
+    m1: { id:'a9x2k', mode:'normal', heading:'', targets:[], qids:['BAC1-004',...],
           orders:[[2,0,1,3],...], picks:[null,2,...], ts:1788965696464, deadline:null }
   },
   recorded: { 'a9x2k': 1788965696464 },   // attempt ids already counted (newest 40 kept)
   lastScore: { m1: 63 },                  // most recent NORMAL attempt per quiz (best stays in `best`)
-  seenQ: { 'ENZ-004': 2 },                // question id -> times graded; drives "prefer unfamiliar"
+  seenQ: { 'BAC1-004': 2 },               // question id -> times graded; drives "prefer unfamiliar"
   spaced: {                               // fixed concepts waiting for a re-check: area -> schedule
-    'Enzyme kinetics': { step: 0, due: 1789138496464 }            // step 0 = first re-check, 1 = second
+    'Gram staining': { step: 0, due: 1789138496464 }            // step 0 = first re-check, 1 = second
   },
-  mastered: { 'Enzyme basics': 1789138496464 }                     // area -> when it passed its last re-check
+  mastered: { 'Microbial categories': 1789138496464 }                     // area -> when it passed its last re-check
 }
 ```
 
-Stored under `companion.<TOPIC_ID>.v1` via `localStorage`, with an in-memory fallback (`memory[KEY]`) if storage is blocked (private browsing, restrictive iframe settings) — verified working on this project's Brightspace instance, but always re-check `storageWorks` rather than assuming.
+Stored under `companion.<TOPIC_ID>.v1` via `localStorage`, with an in-memory fallback (`memory[KEY]`) if storage is blocked (private browsing, restrictive iframe settings). Always check `storageWorks` rather than assuming storage is available.
 
 The `v1` suffix exists so a future breaking change to the state shape can bump to `v2` without corrupting old saved progress. `flags`, `lastSection`, and `areaStats` were all added to this shape after `v1` already shipped on live companions; `loadState()`'s `Object.assign(blank, ...)` pattern is what let that happen without a version bump — any saved state from before a field existed simply gets it filled in from `blank` on next load, because the key is absent from the saved JSON rather than present with a conflicting shape. **This is the safe way to add a field to `state` going forward: extend `blank` in `loadState()`, never assume the field exists in old saved data, and never repurpose an existing key's meaning** (that would need the real `v2` bump this suffix exists for).
 
@@ -727,7 +715,7 @@ The `v1` suffix exists so a future breaking change to the state shape can bump t
 
 **Where a flag can be set, and where it's read.** A flag can only be created after a quiz question is graded — see §7's Quiz-section markup update, and §8 above for why this is deliberately outside the completion system. `state.flags` is written by this companion's own page during normal use, exactly like `checks`, `activities`, and `best`. The one exception in the whole project to "a companion's storage is written only by that companion's own page" is the hub, which — after the student explicitly removes a flag from its Flagged questions list — writes `false` into that one key of that one companion's stored object. §14 covers why that specific exception exists and how narrowly it's scoped.
 
-**Resuming a section, and linking to one directly.** `state.lastSection` is written by `engine.js`'s `goTo()` on every navigation, and mirrored into a `?s=<sectionKey>` query parameter on the page's own URL via `history.replaceState` — deliberately `replaceState`, not `pushState`, so browsing between sections never grows the browser's back/forward history; the in-page Back/Next pager already covers that. On load, `engine.js` resolves the starting section itself: an explicit `?s=` in the URL wins first (so a link posted in Brightspace always opens where it says it will, even for a student with older saved progress elsewhere), `state.lastSection` resumes a returning student otherwise, and section 0 is the final fallback — including when a `?s=` value or a saved key doesn't match any real section, which is treated as absent rather than as an error. A locked module's sections already show their lock card instead of real content regardless of how a student navigates there (§8), so landing on one via a resumed or linked section needs no extra handling beyond what already exists for a normal nav click.
+**Resuming a section, and linking to one directly.** `state.lastSection` is written by `engine.js`'s `goTo()` on every navigation, and mirrored into a `?s=<sectionKey>` query parameter on the page's own URL via `history.replaceState` — deliberately `replaceState`, not `pushState`, so browsing between sections never grows the browser's back/forward history; the in-page Back/Next pager already covers that. On load, `engine.js` resolves the starting section itself: an explicit `?s=` in the URL wins first (so a link posted in the LMS always opens where it says it will, even for a student with older saved progress elsewhere), `state.lastSection` resumes a returning student otherwise, and section 0 is the final fallback — including when a `?s=` value or a saved key doesn't match any real section, which is treated as absent rather than as an error. A locked module's sections already show their lock card instead of real content regardless of how a student navigates there (§8), so landing on one via a resumed or linked section needs no extra handling beyond what already exists for a normal nav click.
 
 **Recording real per-concept evidence.** `grade()` already computes a per-`area` right/wrong breakdown (`byArea`) for every quiz submission, purely to render the "Mastery by concept area" panel on the results screen. `state.areaStats` is that same breakdown, kept: on every submission — a retake, a `mode:'mastery'` targeted round, not only a new personal best, since each is real evidence about specific concepts even when the overall score isn't a new high — `grade()` adds that attempt's `asked`/`right` into the matching area's running totals and overwrites `lastAcc` (that attempt's own accuracy for the area) and `lastTs`. `lastAcc` is deliberately *not* part of the running average: it exists so a later reader can tell "this area's lifetime accuracy looks fine, but the most recent attempt on it came back wrong" apart from "this area has always been shaky" — see §14.9 for what the hub does with that distinction. This is the one piece of the completion/mastery system that exists purely to feed the hub; a companion's own page never reads `state.areaStats` back.
 
@@ -750,7 +738,7 @@ Every checkpoint and every `POOL` question follows the same rules, sourced from 
 - Single best answer, never "select all that apply"
 - Independent of other items — no item should depend on a previous one
 - Clear, focused stem in **positive** wording (no "NOT," "EXCEPT")
-- 3–5 homogeneous, parallel-structured answer choices
+- Exactly 4 homogeneous, parallel-structured answer choices
 - Every distractor should be plausible, not a throwaway
 - No absolute terms ("always," "never," "only," "all")
 - No vague terms ("frequently," "usually," "commonly")
@@ -763,14 +751,14 @@ Every checkpoint and every `POOL` question follows the same rules, sourced from 
 
 ## 11. Building a new companion — checklist
 
-1. **Copy `<topic>.html`** from the reference implementation (`signaling.html`, not an unmigrated companion — see the fifth correction at the top of this document). Update the `<title>`, sidebar brand text, and course code. Keep the page shell from §6 exactly as it is — the `.app` wrapper, the sidebar with `#nav` and the ring, the topbar, `#resetBtn`, **and the flashcard section's full markup from §7** are all wired to by `engine.js`. Copying these verbatim is much safer than rebuilding them from the ID lists in §6 alone — the flashcard flip in particular has no visible failure mode from a missing ID, only from a wrong shape.
+1. **Copy `<topic>.html`** from the reference implementation, `bacteria1.html`. Update the `<title>`, sidebar brand text, and course code. Keep the page shell from §6 exactly as it is — the `.app` wrapper, the sidebar with `#nav` and the ring, the topbar, `#resetBtn`, **and the flashcard section's full markup from §7** are all wired to by `engine.js`. Copying these verbatim is much safer than rebuilding them from the ID lists in §6 alone — the flashcard flip in particular has no visible failure mode from a missing ID, only from a wrong shape.
    Then set the companion's accent color per §7, including the ring's two inline `stroke` values.
 2. **Write `banks/<new-topic>.js`**: set `TOPIC_ID` / `TOPIC_TITLE`, then `CHECKPOINTS`, `CARDS`, `POOL` — assign stable IDs as you go, not after the fact.
 3. **Write `banks/<new-topic>.manifest.js`**: this is now where the module/section structure actually lives — `MODULES`, `SECTION_REQ`, `QUIZ_KEY_FOR_SECTION`, and `AREA_SECTION` all come from here, not from the HTML. Follow the `MANIFEST` shape in §5's first table: every module's `sections` array, in order, landing page first and (if the module has one) quiz last; `checks`/`activity`/`quiz` on each section that needs them; `areaSection` mapping every `POOL` area to the section a student should revisit. §14.6 has a short checklist for a manifest specifically.
 4. **Copy the derivation block into the content script** exactly as shown in §5's second table — the `MANIFEST.modules.map(...)` for `MODULES`, then `FLOW`, `UNGRADED`, `SECTION_REQ`, `QUIZ_KEY_FOR_SECTION`, `AREA_SECTION`. Set `BADGES` for this topic's sidebar icons, and `MODULE_QUIZ_SIZE`/`FINAL_EXAM_MIX` if they differ from the defaults — these four are the only structure-adjacent things still written by hand in the content script. Then build this topic's activities after the derivation block by calling the `Act` builders from §5 (`Act.dnd`, `Act.sort`, `Act.order`, `Act.fill`, `Act.explore`, `Act.stages`, `Act.stepper`, `Act.predict`, `Act.gate`). Write a hand-built activity only when none of them fits, and register it with `Act.register()` so it can be tested (§12). The figures the `explore` and `stepper` builders display are SVG strings written in the same script. `bacteria1.html` is the reference for all of this.
    *Easiest way to get this wrong:* editing the derivation block to add a shortcut for this topic instead of changing the manifest data it reads. If a new companion's derivation block doesn't match the reference implementation's line for line, the structure has drifted back into being hand-typed — fix the manifest, not the derivation.
 5. **Leave `shared/` untouched.** If something in `shared/` genuinely doesn't fit a new topic, that's a signal to generalize it, not to fork it. That includes `activities.js`: if a builder almost fits, add an option to the builder so every companion benefits, or write a custom activity in the content script. Don't copy the file into one topic's version of it.
-6. **Update the eight `<script>`/`<link>` tags** (§2) to point at the new bank and manifest filenames; leave the order exactly as in §3 — the manifest loads second, right after the bank and before `storage.js`, and `activities.js` loads fifth, right after `helpers.js` and before the content script.
+6. **Update the `<script>` tags** (§2, §3) to point at the new bank and manifest filenames; leave the order exactly as in §3 — the manifest loads second, right after the bank and before `storage-core.js`; `activities.js` and `welcome.js` load right after `helpers.js` and before the content script; `a11y.js`, `engine.js`, and `menu.js` come after it, in that order.
 7. **Test** per the checklist below before calling it done.
 
 ---
@@ -849,17 +837,17 @@ The hub (`index.html`) is the student's entry point: one dashboard showing progr
 
 ```javascript
 var MANIFEST = {
-  topic  : 'enzymes',                              // matches TOPIC_ID
-  title  : 'Biochemistry of Enzymes',               // matches TOPIC_TITLE
-  file   : 'enzymes.html',                            // page the hub links to
-  accent : '#2FA97A',                                  // this companion's --green, for the dashboard
-  accentSoft : '#E7F6EF',
+  topic  : 'bacteria1',                             // matches TOPIC_ID
+  title  : 'Bacteria I · Introduction',              // matches TOPIC_TITLE
+  file   : 'bacteria1.html',                          // page the hub links to
+  accent : '#163C94',                                  // this companion's primary color, for the dashboard
+  accentSoft : '#E8EEFC',
 
   modules: [
-    { id:'m1', title:'Module 1 · Fundamentals & catalysis', sections:[
+    { id:'m1', title:'Module 1 · What makes a bacterium a bacterium?', sections:[
       { key:'m1home', label:'Module overview' },
-      { key:'m1s1', label:'What enzymes do', checks:['c1','c1b','c1c'] },
-      { key:'m1s4', label:'Enzyme terminology', checks:['c4','c4b'], activity:'sort' },
+      { key:'m1s1', label:'Microbes at a glance', checks:['c1a','c1b','c1c'], activity:'microbeMatch' },
+      { key:'m1s2', label:'Bacterial vs. human cells', checks:['c2a','c2b','c2c'], activity:'cellSort' },
       { key:'m1quiz', label:'Module 1 quiz', quiz:'m1' }
     ]},
     ...
@@ -869,7 +857,7 @@ var MANIFEST = {
   ],
 
   areaSection: {
-    'Enzyme basics' : 'm1s1',
+    'Microbial categories' : 'm1s1',
     ...
   }
 };
@@ -885,7 +873,7 @@ Each section entry folds what used to be `SECTION_REQ` and `QUIZ_KEY_FOR_SECTION
 
 The hub reads a companion's live progress the same way `engine.js` computes it, because it is running the same completion rule from §8 — a section with `checks` is done once every listed checkpoint has been answered *correctly*, a section with `activity` also needs that activity submitted at least once, and a `quiz` section is done once submitted at any score. It gets the checkpoints' correct answers from the bank (`CHECKPOINTS[id].answer`) and the student's saved answers from `companion.<topic>.v1` in `localStorage` (§9) — the same storage key every companion already writes to, which the hub only ever reads, with one narrow, deliberate exception covered in §14.8.
 
-**A companion with no manifest used to be treated as merely degraded; it is now treated as broken, and correctly so.** The original design (see the third correction at the top of this document) had the hub fall back to reporting only `state.best` — quiz scores, no module breakdown — for the short window between a companion being built and its manifest being written, since only the hub's dashboard needed the manifest at all. That window no longer exists in the same way: since a companion's own content script now derives its structure from `MANIFEST` (§5, §14.2), a missing or malformed manifest means the companion's *own page* fails to render, not just that the hub's dashboard shows a plainer card for it. If the hub ever encounters a companion with no manifest under this architecture, that companion's own students are already seeing a broken page, not a working one with a smaller dashboard footprint — see the fifth correction at the top of this document. Treat a missing manifest as a build defect to fix immediately, not a known, tolerable gap to fill in later.
+**A companion with no manifest used to be treated as merely degraded; it is now treated as broken, and correctly so.** The original design (see the third correction in the Change history) had the hub fall back to reporting only `state.best` — quiz scores, no module breakdown — for the short window between a companion being built and its manifest being written, since only the hub's dashboard needed the manifest at all. That window no longer exists in the same way: since a companion's own content script now derives its structure from `MANIFEST` (§5, §14.2), a missing or malformed manifest means the companion's *own page* fails to render, not just that the hub's dashboard shows a plainer card for it. If the hub ever encounters a companion with no manifest under this architecture, that companion's own students are already seeing a broken page, not a working one with a smaller dashboard footprint — see the fifth correction at the top of this document. Treat a missing manifest as a build defect to fix immediately, not a known, tolerable gap to fill in later.
 
 The same progress figure this section computes is also what decides whether a companion's own questions are allowed into a hub exam at all — see §14.7.
 
@@ -895,13 +883,13 @@ Because the manifest is now the single source of this structure rather than one 
 
 ### 14.5 The hub's own question bank
 
-`banks/hub.js` is a bank file like any other — same five fields, same ID rules from §4, same writing standard from §10 — with one difference: it has no companion page of its own, so `CHECKPOINTS` is always empty, and it needs no manifest, since the hub is not one of the companions it reports progress on. Its `POOL` questions each carry an `m` field pointing at a companion's `topic` id rather than a module id, because the hub uses that to decide which companion's page to send a student back to after a miss. Its reason for existing is that a hub built only from stitching together the four companion banks would only ever test one topic per question; deliberately writing items that require two topics at once (a drug's kinetics *and* the physiology it acts on, say) is practice a single-topic companion structurally cannot offer, and is the kind of integration a live lecture has the least time for.
+`banks/hub.js` is a bank file like any other — same five fields, same ID rules from §4, same writing standard from §10 — with one difference: it has no companion page of its own, so `CHECKPOINTS` is always empty, and it needs no manifest, since the hub is not one of the companions it reports progress on. Its `POOL` questions each carry an `m` field pointing at a companion's `topic` id rather than a module id, because the hub uses that to decide which companion's page to send a student back to after a miss. Its reason for existing is that a hub built only from stitching together the companion banks would only ever test one topic per question; deliberately writing items that require two topics at once (an antibiotic's mechanism *and* the bacterial structure it targets, say) is practice a single-topic companion structurally cannot offer, and is the kind of integration a live lecture has the least time for.
 
 **Hub question `m` field can name several companions.** In `banks/hub.js`, `m` is a companion topic id, or several ids joined by `+` with no spaces (for example `bacteria2+bacteria4`). `homeTopics(q)` in `index.html` splits it. It is used in two places:
 1. `poolFor()`: when specific unlocked companions are picked alongside the hub bank, a hub question is offered if **any** of its companions is among them.
 2. The results page: a missed hub question sends the student back to **every** companion it names ("Where to go back to").
 
-**Per-companion look lives in `index.html`.** `HUB.META` holds each companion's display title, tagline, and mockup colors. The manifest's single `accent` only supplies one dark ink color. Viruses I is the fifth companion and follows this pattern. To add another, add a `HUB.META` block and three lines (bank, manifest, `HUB.capture('id')`) in the bank-loading section. The headline ("Five companions.") and the hero ring row adjust to the number of companions automatically.
+**Per-companion look lives in `index.html`.** `HUB.META` holds each companion's display title, tagline, and mockup colors. The manifest's single `accent` only supplies one dark ink color. Every companion follows this pattern. To add another, add a `HUB.META` block and three lines (bank, manifest, `HUB.capture('id')`) in the bank-loading section. The headline ("Eleven companions.") and the hero ring row adjust to the number of companions automatically.
 
 **Module counts.** Headlines count numbered modules only. The final exam is shown as a starred row and an arc segment, and it counts toward the percentage.
 
@@ -917,7 +905,7 @@ Before trusting a new or edited manifest, confirm:
 - [ ] **Load the actual `<topic>.html` page and confirm it renders past the sidebar** (§3, §12's smoke test) — this is the check that didn't exist before the manifest became load-bearing for the page itself, and it catches most shape problems the syntax check can't
 - [ ] Every id in a section's `checks` array exists in that companion's `CHECKPOINTS` (in `banks/<topic>.js`)
 - [ ] Every section carrying a `quiz` value matches an `m` value actually used in that companion's `POOL`
-- [ ] Every key in `areaSection` matches an `area` string actually used in that companion's `POOL` — spelling and capitalisation both, the same requirement §10 already places on `AREA_SECTION` itself
+- [ ] Every key in `areaSection` matches an `area` string actually used in that companion's `POOL` — spelling and capitalization both, since `AREA_SECTION` is looked up by exact match
 - [ ] The hub's dashboard shows a green "manifest loaded" state for this companion (its "how this works" page lists this per companion) rather than the no-manifest fallback described in §14.3 — seeing that fallback now means the companion's own page is broken, not just that its dashboard card is plainer, so treat it as a stop-what-you're-doing signal
 
 ### 14.7 Gating: a companion's questions only unlock at 100%
@@ -968,7 +956,7 @@ If a future change needs the hub to write anything else into companion storage, 
 
 **Regression: "used to get this, now missing it."** `state.areaStats[area].lastAcc` holds only the *most recent* attempt's accuracy for that area, deliberately kept separate from the running `asked`/`right` totals. When lifetime accuracy for an area is decent (≥70%) but `lastAcc` shows the latest attempt came back wrong, `weaknessMap()` adds a second, lighter-weighted evidence part on top of the ordinary miss-rate one, plus a distinct `why` message. This is what stops a student who understood a concept two months ago but has since forgotten it from reading as "fine" just because an early strong attempt is still dragging up their lifetime average.
 
-**What still isn't done here, on purpose.** Regression detection currently only looks at a companion's own quiz history (`state.areaStats`), not hub exam history — a student who aced an area on a companion quiz months ago but has since missed it on hub exams isn't caught by this signal, only by the ordinary recency-weighted blend hub history already contributes. Merging both sources' "most recent outcome" into one regression check would need each hub exam history entry to carry more than the `byArea` aggregate it does today (see §14.6-adjacent exam history notes) — worth doing if regression turns out to matter for hub-exam-only evidence too, but not built speculatively ahead of that need.
+**What still isn't done here, on purpose.** Regression detection currently only looks at a companion's own quiz history (`state.areaStats`), not hub exam history — a student who aced an area on a companion quiz months ago but has since missed it on hub exams isn't caught by this signal, only by the ordinary recency-weighted blend hub history already contributes. Merging both sources' "most recent outcome" into one regression check would need each hub exam history entry to carry more than the `byArea` aggregate it does today — worth doing if regression turns out to matter for hub-exam-only evidence too, but not built speculatively ahead of that need.
 
 ### 14.10 The student's own flashcards in the hub: read-only
 
@@ -976,7 +964,7 @@ Students write cards inside a companion (§9, §7). The hub lets them **study** 
 
 **Where they appear.** In the hub's Flashcards view, below the course-card picker, a "Your own cards" box lists one row per companion that has at least one card ("Bacteria I — my cards, 2 cards"), each with a checkbox (on by default). Ticked rows are shuffled into the same deck as the course cards. A student's card is marked with a dashed edge and a tag reading "My card · Bacteria I". If there are none, the box explains how to make one. The deck's card count and the "Only cards I marked for review" button include them.
 
-**How the hub keeps them straight.** A student's card is filed under the id `my:<companionId>:<cardId>` in the hub's own `known`/`again` marks (`H.cards`). The `my:` prefix and the companion id mean it can never collide with a course card's id (`B1-001`), or with the same short id in another companion. These cards are **not** in a topic's `cards` list, so `flashMastered()` and the "Flashcards · N% mastered" figures on the dashboard still count course cards only.
+**How the hub keeps them straight.** A student's card is filed under the id `my:<companionId>:<cardId>` in the hub's own `known`/`again` marks (`H.cards`). The `my:` prefix and the companion id mean it can never collide with a course card's id (`BAC1-CARD-01`), or with the same short id in another companion. These cards are **not** in a topic's `cards` list, so `flashMastered()` and the "Flashcards · N% mastered" figures on the dashboard still count course cards only.
 
 **A second copy of the cleaning rule — on purpose.** The hub does not load `storage.js`, so `index.html` carries its own `MYCARD_LIMITS` and `cleanMyCards()`. It has to, because the hub reads card text straight from storage, and that text can come from a backup file as well as from a companion page. If you change a limit or a rule in one place, **change both**. When this feature was built, both copies were run against the same 25 messy inputs (wrong types, bad ids, over-long text, duplicates, 250 cards) and produced identical output; if you ever edit one, repeat that comparison rather than assuming they still match.
 
@@ -1043,14 +1031,16 @@ Keep green reserved for "correct / done" (see §7). Never use it as a highlight 
 
 ### 15.4 Manifest requirements
 
-- The first module's first section is the Start page. Its key must match `START_KEY` in the companion's welcome content. Bacteria I uses `start`; new companions should use `start`. (Bacteria II, built first, uses `welcome`.)
+- The first module's first section is the Start page. Its key must match `START_KEY` in the companion's welcome content. Use `start`.¹
 - Module ids are `m1`, `m2`, ... and each module's landing page is `m1home`, `m2home`, ...
 - A flashcards section exists with the key `flashcards`.
 - The Start page carries neither `checks`, `activity`, nor `quiz`, so it is ungraded and never gated (§8, §14).
 
+¹ *Bacteria II, built first, uses `welcome` instead. Leave it as is; changing it would reset where returning students land.*
+
 ### 15.5 Single source of truth for module titles
 
-The module-card title and question come from the **same table that builds the module landing pages.** Do not retype them in the welcome content. Then the two cannot disagree.
+Each module's title and guiding question appear in three places: the manifest's module `title` (which the sidebar uses), the module overview page's banner (§16.2), and that module's card on the Start page. The last two are hand-written, so they must be kept in step by hand: when you change one, change the others in the same sitting. §16.5's checklist confirms they match.
 
 ### 15.6 Testing checklist additions (§12)
 
@@ -1095,9 +1085,9 @@ Each module's first section (`m1home`, `m2home`, ...) is hand-written to match t
 
 The overview page is ungraded and never gated (§8, §14).
 
-### 16.3 One module table, two consumers
+### 16.3 Keeping the overview page and Start-page card in step
 
-Each module's `title`, `q` (the pharmacist's question), `frame`, `goals`, and `items` live in **one table** (`module_content.py`). It builds both the module overview pages and the welcome page's "Your path" cards (§15), so the two cannot disagree. Do not retype a module's title or question anywhere else.
+A module's title and pharmacist's question appear on both its overview page and its Start-page card (§15.5). Both are hand-written, so nothing keeps them in step automatically: edit both together, and use §16.5's checklist to confirm they match.
 
 ### 16.4 Color tokens
 
@@ -1178,28 +1168,36 @@ The highlight bar, the key-points edge, and the hands-card top edge use `--w-hl`
 - [ ] `.keypoints` shows a 4 px left edge in the highlight color on the `--w-kp-bg` tint.
 - [ ] At 375 px wide, no section page scrolls sideways.
 
-### 17.6 Update to §7's hands-on card example
+---
 
-§7's "Activity markup (the hands-on card)" example shows a plain card with `class="eyebrow"` and `class="caption"`. Replace that snippet with the version below. Nothing else about it changes: the card still needs only a heading and an empty host element, and where it sits is still a page decision.
+## Change history
 
-```html
-<section class="section" data-key="m1s1">
-  <div class="card">
-    <div class="eyebrow">Module 1 · Section 1</div>
-    <h2>...</h2>
-    <p class="lede">...</p>
-    <div class="keypoints"><h4>Key points</h4><ul>...</ul></div>
-  </div>
-  <div class="card hands-card">
-    <div class="eyebrow hands">Hands-on</div>
-    <h2>Match each clue to its microbe</h2>
-    <p class="try-note">Drag each label onto the description it fits.</p>
-    <div id="act-microbeMatch"></div>       <!-- the builder fills this in -->
-  </div>
-  <div class="card"> ...the .box.predict checkpoints... </div>
-  <div class="card pager"></div>
-</section>
-```
+These notes record each time this document was found to be wrong or incomplete, and what was changed. The rules they describe are already written into the sections above; this is the record of why. Some early notes come from the biochemistry project this architecture was first built for, so they mention files (such as `signaling.html`) that are not in this project.
 
-The only differences from the earlier example are three class names (`hands-card`, `hands`, `try-note`) and a `.lede` on the opening paragraph.
+> **First correction.** An earlier version of this document omitted the `FLOW` global (§5) and the entire page shell (§6), and a companion built faithfully from the description alone rendered a sidebar and nothing else. Sections 5 and 6 were then checked line by line against `engine.js`.
+>
+> **Second correction.** This document listed the flashcard DOM hooks as six bare IDs with no structure, and showed only one of the two checkpoint markup shapes `engine.js` actually supports. A companion built from the description alone satisfied every listed ID with the wrong element structure, which produced a card that was permanently showing its answer face, mirrored, with no visible bug in the reasoning — every ID existed, so nothing in this document caught it. §6 and §7 now spell out the flashcard markup in full, the way the quiz section already was, and document both checkpoint shapes. §8 also gained a section on the targeted mastery round, which existed in `engine.js` but was never written down here at all.
+>
+> **Third correction.** The hub described in §13 as a future possibility now exists, and it needs one piece of information no file in this document previously produced: which module and section a checkpoint belongs to. `MODULES` and `SECTION_REQ` carry that, but they live inside each companion's own `.html`, not in a file the hub loads. The hub's first working version could only show quiz scores as a result — no per-module progress — until this gap was noticed and closed with a fifth file, the manifest (§14). If you add a companion and skip its manifest, the hub will not throw an error; it will just quietly fall back to quiz-scores-only for that one companion, the same degraded state this correction describes. Treat §14 as load-bearing as §5 and §6, not as an appendix.
+>
+> **Fourth correction.** This one is different in kind from the first three: it isn't a gap `engine.js` exposed, it's a gap *this document's own maintenance process* let through. When hub exam gating shipped (§14.7), a working copy of this file was edited with the new section and the edit was described as delivered — but the edited copy was never copied back to the file actually given out, and never listed among that turn's files. The result was a document that claimed, in conversation, to explain a rule it did not anywhere actually contain. It was caught only because the next change to this section (§14.8, flags) required rereading §14 first and the gap was visible on the page. The fix isn't a new rule so much as a reminder that "I updated the document" is a claim to verify against the file itself, the same way any other claim in here is — re-open the file that was actually written to the delivery location before describing it as current, don't trust the memory of having edited a working copy.
+>
+> **Fifth correction.** §14.4 named the drift between a companion's hand-typed `MODULES`/`SECTION_REQ` and its `.manifest.js` copy as a known risk, and even sketched the fix, but filed it as future work "in its own sitting." That sitting has now happened. The manifest is no longer a copy kept in sync by hand — it is the only place the structure is written. Each companion's own content script now **derives** `MODULES`, `FLOW`, `UNGRADED`, `SECTION_REQ`, `QUIZ_KEY_FOR_SECTION`, and `AREA_SECTION` from `MANIFEST` at load time, the same file the hub already read. §3, §5, §11, and §14 described the old, hand-typed shape as current when it no longer is; all four have been updated to describe the derivation instead. This also changes what a missing manifest means: it used to be a degraded-but-working state (§14.3's fallback), because only the hub's dashboard needed it. Now the companion's own page needs it to render at all — `banks/<topic>.manifest.js` is as load-bearing as `shared/engine.js` itself, and its absence is a broken deployment, not a quiet fallback. (At the time, the reference for this shape was `signaling.html` from the earlier biochemistry project; in this project, use `bacteria1.html`.) 
 
+> **Sixth correction.** This one adds a file rather than fixing a gap in `engine.js`. Every earlier version of this document told a new companion to hand-build each practice activity in its own content script: §5 called everything after the derivation block "genuinely specific to that topic," §7 gave the sort-row markup to copy, and §8 described the three-call save pattern each bespoke activity had to repeat. That was reasonable while a companion had two or three activities. It stopped being reasonable when the Bacteria I companion needed twenty-one. Drag-and-drop, sorting, ordering, fill-in-the-blank, clickable diagrams, staged cases, step-through animations, and predict-first questions behave, save, and score identically in every topic, which is exactly the situation principle 3 in §1 says belongs in `shared/`. Those mechanics now live in a fifth shared file, `shared/activities.js`, which defines one global, `Act`. §1, §2, §3, §4, §5, §6, §7, §8, §9, §11, §12, and the one count in §14 have been updated to account for it, and §5 has a new subsection with its full contract: each builder's `cfg` shape, what completes it, and what it saves. Two things did *not* change. `engine.js` never references `Act` and is untouched, and the companions built before this file existed neither load it nor need to; the older statements in this document about hand-built activities remain true for a genuinely custom widget that no builder covers. The reference implementation for the toolkit is the Bacteria I companion (`bacteria1.html`). The new material was checked against `activities.js` itself rather than written from memory of it: every builder, every `cfg` field, every stored key, and every exported function named below exists in the file.
+
+> **Seventh correction.** This one is the doc catching up to files that were already real. Two separate gaps, found the same day: First, §2's file tree never grew to list `welcome.css`, `shell.css`, `sections.css`, and `welcome.js` under `shared/` — they've been real, working files since the Bacteria III build, just never added to the tree, so a reader following §2 alone would not know they exist. Second, and more substantive: §15, §16, and §17 describe these four files as living in `_templates/welcome/`, `_templates/shell/`, and `_templates/sections/`, generated into each companion via `shell.template.html`/`module-home.template.html` and the `render_shell.py`/`render_welcome.py`/`render_sections.py` scripts, with a `README.md` in each template folder documenting the token list. None of that is how the three real companions were actually built. All four files live flat in `shared/`, next to `engine.js` and the rest — same folder, same `<link>`/`<script>` pattern as everything else. Every companion's sidebar, Start page, and section markup is hand-written to match the pattern (copied from an existing companion and re-colored), the same way the page shell in §6 always has been — not generated by a script. The `render_*.py` scripts and their template files were never used by any companion, and have since been removed from the project. §2, §15, §16, and §17 below have been corrected to say `shared/` and to describe the markup as hand-written, matching what every companion actually does today. Bacteria I and Bacteria II were also brought onto these four shared files during this same pass — before this, only Bacteria III actually linked them; Bacteria I had its own hand-duplicated copy of the same CSS and JS, and Bacteria II had the full text of all four files pasted inline. Both now link the same four files Bacteria III does, verified line-for-line against them first so nothing visible changed.
+>
+> This correction also adds §6.4, the back-to-hub link — a new required shell element, not a pre-existing one this document had simply missed.
+>
+> **Eighth addition (a feature, not a correction).** Students can now write their own flashcards. They are created, edited and deleted **inside each companion** and are **view-only in the hub**. The panel is built by `shared/engine.js` itself, injected into the existing flashcards section, so no companion's HTML had to change and every companion, including ones already built, gets it as soon as it loads the updated shared files. The cards live in a new `state.myCards` field (§9) and are deliberately outside the completion model, every quiz, and every hub exam. §7, §9, §12, and a new §14.10 describe it; `storage.js`, `engine.js`, `styles.css`, and `index.html` changed, and the hub keeps a second, deliberate copy of the cleaning rule (§14.10 explains why). It was checked by running the real shared files, and the real hub, in a simulated browser — not written from memory of them.
+
+> **Shared storage core (a refactor, no change for students).** The hub and the companions used to carry separate copies of the code that reads and writes the browser's storage, the backup file format, the backup validation rules, and the "could not be saved" warning. They now share one file, `shared/storage-core.js`, which defines `MCStore`. `shared/storage.js` still owns a companion's own state and cleaning rules, and `index.html` still owns the hub's record. Every companion page and the hub must load `storage-core.js` before anything that saves. Saved data and the backup file format are unchanged, so existing progress and old backup files keep working. A new companion needs the one extra `<script>` line shown in §3.
+
+> **Ninth addition (assessment fixes — a behavior change in `shared/`, not a gap).** Four defects in how quizzes record and report evidence were fixed together, in `shared/engine.js`, `shared/storage.js`, `shared/styles.css`, and in `index.html`'s own exam runner. (1) *Adaptive review declared success early*: after a targeted round the engine rebuilt its list of weak areas only from the round's own questions, so a missed concept that never got a follow-up question vanished and the page said "Every concept area is solid." Missed concepts now live on a persistent **review queue** (`state.pending`, §8, §9) and leave it only when answered correctly later. (2) *Repeated Submit inflated evidence*: `grade()` added to `areaStats` and added another Flag button on every call. Grading now happens once per attempt (§8). (3) *Completion and mastery were conflated in the UI*: they are still separate in the rules; each quiz page now shows **practice completed**, **assessment result**, and **review pending** as three indicators (§8). (4) *A refresh lost an unfinished quiz*: attempts are now saved on every answer (§9). The hub's exam runner got the same treatment (§14.11). No existing key changed meaning; every new field is added to `blank` in `loadState()` and cleaned on load, so no `v2` bump was needed. All of it was checked by running the real files in a simulated browser (see the new items in §12), not written from memory of them.
+
+> **Tenth addition (spaced re-checks, review-linked flashcards, hub dashboard indicators).** Three follow-ons to the assessment fixes above, in the same shared files and the hub. (1) *Fixed is not mastered.* A concept answered correctly after a miss no longer simply leaves the review queue (one right answer can be luck): it is scheduled for a re-check after 2 days, and if that holds, once more after 7 days; only then is it counted as **mastered**. Missing it at any point puts it back on the list (§8, §9). (2) *Flashcards feed from review.* A third flashcard deck, "For your review list", shows the cards that belong to the concepts currently needing attention, and the review panel links to it (§7, §8). (3) *The hub dashboard* now shows the same three separate indicators on every companion card (§14.12). New saved fields `spaced` and `mastered` follow the same rule as before: added to `blank` in `loadState()`, cleaned on load, no `v2` bump. Tested by running the real files in a simulated browser; the review-linked flashcard matching is a heuristic and is the one part that should be spot-checked against real card sets (§8).
+
+> **Eleventh addition (keyboard focus and screen-reader fixes).** A new shared file, `shared/a11y.js` (global `MCA11y`), must be loaded before `engine.js` on every companion and before the hub's script. It does five small jobs: announce a message to screen readers, move the keyboard cursor to a heading, mark an answer button as selected (`aria-pressed`), add hidden "Correct answer" / "Your answer, incorrect" wording to graded answers, and put the cursor back on the control a student was using after a redraw. With it: the hub exam keeps focus on the answer just chosen (it used to be lost when the screen was redrawn); checkpoint and quiz answers expose their selected state and checkpoint feedback is read aloud; moving between sections focuses the new heading; submitting a quiz focuses the result; and opening a concept from the review list adds a "Back to ..." button that returns to the results. `browser-tests/tests/keyboard.spec.js` checks all of this with the keyboard only.
+>
+> **Twelfth correction (microbiology cleanup).** The examples throughout were switched from the biochemistry project's `enzymes` companion to `bacteria1`. §2 and §3 now list every shared file and the real script order (`storage-core.js`, `a11y.js`, `menu.js`, and the optional `<topic>.images.js` had been missing). The reference implementation is `bacteria1.html` everywhere. §15.5 and §16.3 no longer describe a `module_content.py` table that does not exist. The §17.6 hands-on card example was moved into §7, where it was always meant to go. The color list in §7 now points to the table in `AGENTS.md`.
