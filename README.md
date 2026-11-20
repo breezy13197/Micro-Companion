@@ -20,7 +20,7 @@ A set of web pages that students open in a browser. No installation, no server, 
 | `browser-tests/` | An automatic checker for you, not for students (see "Checking it works in different browsers" below). |
 | `.github/` | Instructions that tell GitHub to run that checker for you on every change. Students never see it. |
 
-`banks/hub.js` is the hub's own question bank: 78 questions and 47 flashcards that each need **two or more Bacteria/Viruses lectures** at once.
+`banks/hub.js` is the hub's own question bank: 78 questions and 47 flashcards that each need **two or more Bacteria/Viruses lectures** at once. (Mycoses and Parasitology do not have integration questions yet.)
 
 ---
 
@@ -56,7 +56,7 @@ companions/
     mycoses.js      mycoses.manifest.js
     parasitology.js parasitology.manifest.js parasitology.images.js
   shared/
-    activities.js  engine.js  helpers.js  menu.js  storage-core.js  storage.js  welcome.js
+    a11y.js  activities.js  engine.js  helpers.js  menu.js  storage-core.js  storage.js  welcome.js
     sections.css   shell.css  styles.css  welcome.css
   browser-tests/               <- optional: the automatic checker
   .github/workflows/
