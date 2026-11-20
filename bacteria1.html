@@ -1372,10 +1372,10 @@ Act.sort('act-cellSort',{name:'cellSort',options:['Bacterial','Human','Shared'],
   var HINT={pairs:'Cells divide in one plane, and each new pair stays joined.',
             chain:'Cells keep dividing in the same plane and stay attached, forming a line.',
             cluster:'Cells divide in several planes and stay attached, forming a clump.'};
-  var top=el('div','lab-row');top.innerHTML='<span class="lab-label">Shape</span>';
+  var top=el('div','lab-row');top.appendChild(stepLabel(1,'Choose a cell shape'));
   var segS=segControl([['coccus','Coccus (sphere)'],['bacillus','Bacillus (rod)'],['spirochete','Spirochete (spiral)']],function(v){shape=v;fix();reset();});
   top.appendChild(segS.box);
-  var mid=el('div','lab-row');mid.innerHTML='<span class="lab-label">Pattern</span>';
+  var mid=el('div','lab-row');mid.appendChild(stepLabel(2,'Choose how the cells stay together after dividing',true));
   var segP=segControl([['pairs','Pairs'],['chain','Chain'],['cluster','Cluster']],function(v){pat=v;fix();reset();});
   mid.appendChild(segP.box);
   var figBox=el('div','figure'),nameBox=el('div','stage-name'),hint=el('p','caption'),

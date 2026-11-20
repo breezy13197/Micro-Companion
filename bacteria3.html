@@ -2268,11 +2268,11 @@ Act.explore('act-anthraxDoors', {name:'anthraxDoors',
       bars=el('div','sim-bars'),msg=el('div','feedback show'),note=el('p','caption'),chips=el('div','act-chips');
   slider.type='range';slider.min='0';slider.max='100';slider.step='10';slider.value='0';
   slider.setAttribute('aria-label','Toxin dose');slider.style.flex='1 1 220px';
-  row1.innerHTML='<span class="sim-label">Toxin</span>';
+  row1.appendChild(stepLabel(1,'Choose a toxin'));
   var seg=el('div','sim-seg'),segBtns={};
   TOX.forEach(function(t){var b=el('button',null,t[1]);b.type='button';b.onclick=function(){tox=t[0];if(tox==='none')dose=0;slider.value=String(dose);paint();};seg.appendChild(b);segBtns[t[0]]=b;});
   row1.appendChild(seg);
-  row2.innerHTML='<span class="sim-label">Dose</span>';row2.appendChild(slider);row2.appendChild(val);
+  row2.appendChild(stepLabel(2,'Set the dose',true));row2.appendChild(slider);row2.appendChild(val);
   note.textContent='Teaching model: bar lengths and drawings show direction and relative size, not measured values.';
   [step,row1,row2,fig,bars,msg,note,chips].forEach(function(x){lab.appendChild(x);});
 

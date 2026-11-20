@@ -29,3 +29,12 @@
 /* the hands-on card: a colored top edge, and a slightly larger instruction line */
 .hands-card{border-top:4px solid var(--w-hl)}
 .try-note{font-size:.9rem;color:var(--ink-soft);margin:0 0 12px}
+
+/* Numbered step labels (stepLabel() in helpers.js) for activities whose
+   controls are used in order. Inside a flex control row they take a full
+   line of their own, so the buttons always sit below the label. */
+.step-label{margin:14px 0 4px;font-size:.95rem;font-weight:600;color:var(--ink);line-height:1.4}
+.step-label.step-gap{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line,#E2E2E2)}
+.lab-row>.step-label,.sim-row>.step-label{flex:0 0 100%;margin:4px 0 0}
+.lab-row>.step-label.step-gap,.sim-row>.step-label.step-gap{margin-top:8px}
+.step-num{display:inline-block;margin-right:8px;padding:2px 9px;border-radius:999px;background:var(--ink);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px}

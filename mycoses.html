@@ -103,9 +103,6 @@ input[type=range]::-moz-range-thumb{border-color:var(--olive)}
 .seg button:hover:not(:disabled){border-color:var(--green-line)}
 .seg button.on{background:var(--olive);border-color:var(--olive);color:#fff}
 .seg button:disabled{opacity:.4;cursor:not-allowed}
-.step-label{margin:14px 0 4px;font-size:.95rem;font-weight:600;color:var(--ink)}
-.step-label.step-gap{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line,#E6E2C8)}
-.step-num{display:inline-block;margin-right:8px;padding:2px 9px;border-radius:999px;background:var(--ink);color:var(--paper,#fff);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px}
 .lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
 .lab-row .opt:disabled{opacity:.5;cursor:not-allowed}
 .stage-name{font-size:1.1rem;font-weight:750;color:var(--olive);min-height:1.6em}
@@ -1235,8 +1232,6 @@ Act.explore('act-targetMap',{name:'targetMap',svg:'<svg viewBox="0 0 660 304" ro
   }});
 
 /* ---- m1s1 · Anatomy of a fungal cell ---- */
-
-function stepLabel(n,text,gap){var p=el('p','step-label'+(gap?' step-gap':''));p.innerHTML='<span class="step-num">Step '+n+'</span> '+text;return p;}
 
 (function cellBuilder(){
   var host=$('act-cellBuilder'),name='cellBuilder',vkey=name+'_v';
