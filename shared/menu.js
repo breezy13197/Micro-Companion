@@ -61,11 +61,13 @@
      In the hub every menu button is a destination. In a companion, a module
      heading both opens the module and expands its list of sections, so the
      menu stays open for that click, so the student can pick a section.
+     The small arrow beside each module only expands or collapses its list,
+     so it keeps the menu open too.
      Any other menu button (a section, a quiz, Start Here) closes it. */
   nav.addEventListener('click',function(e){
     var b=e.target.closest('button');
     if(!mq.matches||!b)return;
-    if(isHub||!b.classList.contains('mod-head')){set(false);window.scrollTo(0,0);}
+    if(isHub||!(b.classList.contains('mod-head')||b.classList.contains('chev-btn'))){set(false);window.scrollTo(0,0);}
   },true);
 
   /* Escape closes it; going back to a wide screen resets it. */
