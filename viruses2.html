@@ -112,10 +112,10 @@ input[type=range]::-moz-range-thumb{border-color:var(--oxblood)}
 
 /* ---------- custom activity pieces ---------- */
 .lab-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
-.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
-.seg button{border:0;background:transparent;padding:8px 15px;font-size:.86rem;color:var(--ink-mid)}
-.seg button+button{border-left:1.5px solid var(--line)}
-.seg button.on{background:var(--oxblood);color:#fff}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1.5px solid var(--line);border-radius:999px;background:#fff;padding:8px 15px;font-size:.86rem;line-height:1.35;color:var(--ink-mid);cursor:pointer;text-align:left;max-width:100%}
+.seg button:hover:not(:disabled){border-color:var(--green-line)}
+.seg button.on{background:var(--oxblood);border-color:var(--oxblood);color:#fff}
 .seg button:disabled{opacity:.4;cursor:not-allowed}
 .lab-label{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
 .lab-h{display:block;margin:24px 0 4px}
