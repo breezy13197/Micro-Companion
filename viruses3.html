@@ -1419,11 +1419,11 @@ document.querySelectorAll('[data-reveal]').forEach(function(b){
     latent:{label:'Latency in a neuron',dna:'circle',lat:90,rep:3,txt:'The viral DNA is a circle that is not integrated into the host chromosome. LATs are the main transcripts, and they suppress viral replication.'},
     react:{label:'Reactivation',dna:'linear',lat:20,rep:85,txt:'Suppression is overcome and viral replication restarts. The lecture does not name the trigger, so none is shown here.'}
   };
-  var top=el('div','lab-row');top.innerHTML='<span class="lab-label">State</span>';
+  var top=el('div','lab-row');top.appendChild(stepLabel(1,'Choose the infection state'));
   var seg=segControl([['lytic','Lytic infection'],['latent','Latent in neuron'],['react','Reactivation']],function(v){st=v;acv=false;paint();});
   top.appendChild(seg.box);
   var row2=el('div','lab-row');var acvBtn=btn('Give acyclovir','ghost');acvBtn.setAttribute('aria-pressed','false');
-  row2.appendChild(acvBtn);
+  row2.appendChild(stepLabel(2,'Try giving acyclovir',true));row2.appendChild(acvBtn);
   var fig=el('div','figure'),mReplic=meter('Viral replication'),mLat=meter('LAT activity','alt'),txt=el('div','act-cap'),prog=el('p','caption');
   txt.setAttribute('aria-live','polite');
   var gateBox=el('div');
@@ -1619,10 +1619,10 @@ Act.sort('act-dnaSort',{name:'dnaSort',options:['Linear dsDNA, nucleus','Circula
 (function(){
   var name='polBench',vkey=name+'_v',host=$('act-polBench');
   var seen=(state.activities[vkey]||[]).slice(),v='hsv',noPol=false,unlocked=false;
-  var top=el('div','lab-row');top.innerHTML='<span class="lab-label">Virus</span>';
+  var top=el('div','lab-row');top.appendChild(stepLabel(1,'Choose a virus'));
   var seg=segControl([['hsv','Herpes simplex virus'],['hpv','HPV'],['pox','Poxvirus']],function(x){v=x;noPol=false;paint();});
   top.appendChild(seg.box);
-  var row2=el('div','lab-row'),knock=btn('Remove the virion’s own polymerase','ghost');knock.setAttribute('aria-pressed','false');row2.appendChild(knock);
+  var row2=el('div','lab-row'),knock=btn('Remove the virion’s own polymerase','ghost');knock.setAttribute('aria-pressed','false');row2.appendChild(stepLabel(2,'Test what happens without the virus&rsquo;s own polymerase',true));row2.appendChild(knock);
   var fig=el('div','figure'),txt=el('div','act-cap'),prog=el('p','caption'),gateBox=el('div');
   txt.setAttribute('aria-live','polite');
   var lab=el('div');[top,row2,fig,txt,prog].forEach(function(x){lab.appendChild(x);});
@@ -1803,9 +1803,9 @@ Act.sort('act-hpvSchedule',{name:'hpvSchedule',options:['2 doses, 6–12 months 
   var name='genomeTray',vkey=name+'_v',host=$('act-genomeTray');
   var built=(state.activities[vkey]||[]).slice(),H='H1',N='N2';
   var GOAL=['H1N1','H3N2','H5N1'];
-  var top=el('div','lab-row');top.innerHTML='<span class="lab-label">Hemagglutinin</span>';
+  var top=el('div','lab-row');top.appendChild(stepLabel(1,'Choose a hemagglutinin (H)'));
   var sH=segControl([['H1','H1'],['H3','H3'],['H5','H5']],function(v){H=v;paint();});top.appendChild(sH.box);
-  var mid=el('div','lab-row');mid.innerHTML='<span class="lab-label">Neuraminidase</span>';
+  var mid=el('div','lab-row');mid.appendChild(stepLabel(2,'Choose a neuraminidase (N)',true));
   var sN=segControl([['N1','N1'],['N2','N2']],function(v){N=v;paint();});mid.appendChild(sN.box);
   var more=el('div','lab-row'),addH=btn('Try to add a second H','ghost');more.appendChild(addH);
   var fig=el('div','figure'),goals=el('div','goal-chips'),txt=el('div','act-cap'),prog=el('p','caption');
@@ -2126,10 +2126,10 @@ Act.sort('act-platformMatch',{name:'platformMatch',options:['Fertilized chicken 
 (function(){
   var name='fusionLab',vkey=name+'_v',host=$('act-fusionLab');
   var seen=(state.activities[vkey]||[]).slice(),v='rsv',att=true,fus=true,unlocked=false;
-  var top=el('div','lab-row');top.innerHTML='<span class="lab-label">Virus</span>';
+  var top=el('div','lab-row');top.appendChild(stepLabel(1,'Choose a virus'));
   var seg=segControl([['para','Parainfluenza'],['rsv','RSV'],['cov','Coronavirus']],function(x){v=x;att=true;fus=true;paint();});top.appendChild(seg.box);
   var row2=el('div','lab-row'),tAtt=btn('Attachment protein works','ghost'),tFus=btn('Fusion function works','ghost');
-  row2.appendChild(tAtt);row2.appendChild(tFus);
+  row2.appendChild(stepLabel(2,'Switch each protein function off and back on',true));row2.appendChild(tAtt);row2.appendChild(tFus);
   var fig=el('div','figure'),txt=el('div','act-cap'),prog=el('p','caption'),gateBox=el('div');
   txt.setAttribute('aria-live','polite');
   var lab=el('div');[top,row2,fig,txt,prog].forEach(function(x){lab.appendChild(x);});

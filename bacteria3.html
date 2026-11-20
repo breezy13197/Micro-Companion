@@ -105,10 +105,10 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
 .sim-label{font-size:.74rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
 .sim-row .sim-label{margin-bottom:0}
 .sim-val{font-weight:800;color:var(--green);min-width:4.5ch}
-.sim-seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
-.sim-seg button{border:0;background:transparent;padding:8px 14px;font-size:.86rem;color:var(--ink-mid);border-right:1.5px solid var(--line)}
-.sim-seg button:last-child{border-right:0}
-.sim-seg button.on{background:var(--green);color:#fff;font-weight:650}
+.sim-seg{display:flex;flex-wrap:wrap;gap:8px}
+.sim-seg button{border:1.5px solid var(--line);border-radius:999px;background:#fff;padding:8px 15px;font-size:.86rem;line-height:1.35;color:var(--ink-mid);cursor:pointer;text-align:left;max-width:100%}
+.sim-seg button:hover:not(:disabled){border-color:var(--green-line)}
+.sim-seg button.on{background:var(--green);border-color:var(--green);color:#fff;font-weight:650}
 .sim-seg button:disabled{opacity:.45;cursor:not-allowed}
 .sim-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start;margin:4px 0}
 .sim-fig{margin:0 0 6px !important;padding:12px !important}
@@ -2268,11 +2268,11 @@ Act.explore('act-anthraxDoors', {name:'anthraxDoors',
       bars=el('div','sim-bars'),msg=el('div','feedback show'),note=el('p','caption'),chips=el('div','act-chips');
   slider.type='range';slider.min='0';slider.max='100';slider.step='10';slider.value='0';
   slider.setAttribute('aria-label','Toxin dose');slider.style.flex='1 1 220px';
-  row1.innerHTML='<span class="sim-label">Toxin</span>';
+  row1.appendChild(stepLabel(1,'Choose a toxin'));
   var seg=el('div','sim-seg'),segBtns={};
   TOX.forEach(function(t){var b=el('button',null,t[1]);b.type='button';b.onclick=function(){tox=t[0];if(tox==='none')dose=0;slider.value=String(dose);paint();};seg.appendChild(b);segBtns[t[0]]=b;});
   row1.appendChild(seg);
-  row2.innerHTML='<span class="sim-label">Dose</span>';row2.appendChild(slider);row2.appendChild(val);
+  row2.appendChild(stepLabel(2,'Set the dose',true));row2.appendChild(slider);row2.appendChild(val);
   note.textContent='Teaching model: bar lengths and drawings show direction and relative size, not measured values.';
   [step,row1,row2,fig,bars,msg,note,chips].forEach(function(x){lab.appendChild(x);});
 

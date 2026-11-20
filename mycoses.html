@@ -1250,11 +1250,13 @@ Act.explore('act-targetMap',{name:'targetMap',svg:'<svg viewBox="0 0 660 304" ro
     er:'The endoplasmic reticulum belongs to eukaryotes. Bacteria have none.'};
   var type='fungal',chosen=[];
   var seg=segControl(TYPES,function(v){type=v;chosen=[];msg.className='feedback show';msg.innerHTML='Choose the parts this cell has, then check.';paint();});
-  var row=el('div','lab-row');row.innerHTML='<span class="lab-label">Build a</span>';row.appendChild(seg.box);
+  var step1=stepLabel(1,'Choose a cell type');
+  var row=el('div','lab-row');row.appendChild(seg.box);
+  var step2=stepLabel(2,'Tap each part that this cell has',true);
   var chips=el('div','act-chips'),fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
   var ctl=el('div','controls'),chk=el('button','btn','Check this cell'),clr=el('button','btn ghost','Clear parts');
   chk.type=clr.type='button';ctl.appendChild(chk);ctl.appendChild(clr);
-  [row,chips,fig,ctl,msg,prog].forEach(function(x){host.appendChild(x);});
+  [step1,row,step2,chips,fig,ctl,msg,prog].forEach(function(x){host.appendChild(x);});
   var chipEls={};
   PARTS.forEach(function(p){
     var b=el('button','act-chip',p[1]);b.type='button';
@@ -1319,8 +1321,8 @@ Act.explore('act-targetMap',{name:'targetMap',svg:'<svg viewBox="0 0 660 304" ro
   var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
   var oseg=segControl(ORGS,function(v){org=v;paint();});
   var tseg=segControl([['25','Room temperature (25 °C)'],['37','Body temperature (37 °C)']],function(v){temp=Number(v);paint();});
-  var r1=el('div','lab-row');r1.innerHTML='<span class="lab-label">Organism</span>';r1.appendChild(oseg.box);
-  var r2=el('div','lab-row');r2.innerHTML='<span class="lab-label">Grown at</span>';r2.appendChild(tseg.box);
+  var r1=el('div');r1.appendChild(stepLabel(1,'Choose an organism'));var r1r=el('div','lab-row');r1r.appendChild(oseg.box);r1.appendChild(r1r);
+  var r2=el('div');r2.appendChild(stepLabel(2,'Choose the temperature it grows at',true));var r2r=el('div','lab-row');r2r.appendChild(tseg.box);r2.appendChild(r2r);
   var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
   [r1,r2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
   function hy(d,w){return '<path d="'+d+'" fill="none" stroke="#6B6624" stroke-width="'+(w||7)+'" stroke-linecap="round"/>';}
@@ -1471,8 +1473,8 @@ Act.sort('act-harmSort',{name:'harmSort',options:['Mycosis','Mycotoxicosis','All
   var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
   var fseg=segControl([['conv','Conventional amphotericin B'],['lipo','Liposomal amphotericin B']],function(v){form=v;paint();});
   var sseg=segControl([['fungal','Fungal cell membrane'],['kidney','Kidney cell membrane']],function(v){site=v;paint();});
-  var r1=el('div','lab-row');r1.innerHTML='<span class="lab-label">Formulation</span>';r1.appendChild(fseg.box);
-  var r2=el('div','lab-row');r2.innerHTML='<span class="lab-label">Look at</span>';r2.appendChild(sseg.box);
+  var r1=el('div');r1.appendChild(stepLabel(1,'Choose a formulation'));var r1r=el('div','lab-row');r1r.appendChild(fseg.box);r1.appendChild(r1r);
+  var r2=el('div');r2.appendChild(stepLabel(2,'Choose which membrane to look at',true));var r2r=el('div','lab-row');r2r.appendChild(sseg.box);r2.appendChild(r2r);
   var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
   [r1,r2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
   var KILL={conv:3,lipo:3},TOX={conv:3,lipo:1};
@@ -1823,8 +1825,8 @@ Act.order('act-cryptoSeq',{name:'cryptoSeq',items:[
   var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
   var s1=segControl([['normal','Normal lungs'],['cavity','Existing lung cavity'],['allergic','Allergic airway response']],function(v){lung=v;paint();});
   var s2=segControl([['intact','Intact immunity'],['weak','Neutropenia or high-dose steroids']],function(v){imm=v;paint();});
-  var r1=el('div','lab-row');r1.innerHTML='<span class="lab-label">Lung condition</span>';r1.appendChild(s1.box);
-  var r2=el('div','lab-row');r2.innerHTML='<span class="lab-label">Immune status</span>';r2.appendChild(s2.box);
+  var r1=el('div');r1.appendChild(stepLabel(1,'Choose the patient&rsquo;s lung condition'));var r1r=el('div','lab-row');r1r.appendChild(s1.box);r1.appendChild(r1r);
+  var r2=el('div');r2.appendChild(stepLabel(2,'Choose the patient&rsquo;s immune status',true));var r2r=el('div','lab-row');r2r.appendChild(s2.box);r2.appendChild(r2r);
   var fig=el('div','figure'),msg=el('div','feedback show'),prog=el('p','caption');
   [r1,r2,fig,msg,prog].forEach(function(x){lab.appendChild(x);});
   function outcome(){if(imm==='weak')return 'invasive';if(lung==='cavity')return 'aspergilloma';if(lung==='allergic')return 'abpa';return 'none';}

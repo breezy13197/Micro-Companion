@@ -52,14 +52,14 @@ Everything below follows from these three points.
   shared/
     styles.css      the whole design system — one copy, used by every companion
     storage.js       defines `state`, save/load — one copy
-    helpers.js        el(), shuffle(), order(), LETTERS — one copy
+    helpers.js        el(), shuffle(), order(), stepLabel(), LETTERS — one copy
     activities.js      the activity toolkit, `Act`: dnd, sort, order, fill, explore, stages, stepper, predict, gate — one copy
     engine.js          nav, checkpoints, quizzes, flashcards, completion — one copy
     welcome.css         the Start page's layout, color-neutral — one copy; see §15
     welcome.js           draws Start-page icons, live counts, and button wiring — one copy; see §15.3
     menu.js              phone-size "Menu" button that collapses the side menu; injects its own CSS; loaded last by every companion and by index.html
     shell.css            the sidebar, top bar, and module overview pages, color-neutral — one copy; see §16
-    sections.css         the small marks every content page shares (eyebrow, lede, keypoints, hands-card) — one copy; see §17
+    sections.css         the small marks every content page shares (eyebrow, lede, keypoints, hands-card, step labels) — one copy; see §17
   banks/
     enzymes.js               this topic's checkpoints, quiz pool, flashcards — WITH stable IDs
     enzymes.manifest.js        this topic's module/section MAP — the ONLY place it's written; see §14
@@ -1134,6 +1134,7 @@ Every content page (a section inside a module, a module quiz, the flashcards, th
 | `.keypoints` | A short list inside a section's opening card | Pale tint (`--w-kp-bg`) with a 4 px left edge in the highlight color |
 | `.card.hands-card` | Every card where the student acts (drag, sort, simulate, predict) | A 4 px top edge in the highlight color |
 | `.try-note` | The instruction line under a hands-on card's heading | 0.9 rem, soft color, sits **above** the activity |
+| `.step-label` (+ `.step-num`, `.step-gap`) | A numbered "Step 1 / Step 2" line above each row of controls in an activity whose controls are used in order | A dark "STEP n" pill, then a short instruction; `.step-gap` adds a dashed divider above Step 2. Inside a `.lab-row` or `.sim-row` it takes a full line of its own |
 
 ### 17.2 The pattern
 
@@ -1142,6 +1143,7 @@ A content section is normally three cards: (1) an opening card with the eyebrow,
 - Every card that asks the student to do something is a `.hands-card`. Cards that only explain or only hold checkpoint questions are not.
 - The first paragraph under a page heading is always `.lede`, including on quiz, flashcard, and final-exam pages.
 - A hands-on card's instruction is a `.try-note`, never a `.caption`. A `.caption` belongs under a figure.
+- When an activity has two or more rows of controls that the student uses in order (pick a cell type, then add parts; pick an organism, then a temperature), label each row with `stepLabel(n, text, gap)` from `shared/helpers.js` instead of a bare uppercase row label, so the rows can't be mistaken for one list. Pass `gap` as `true` for every step after the first. Write the text as an instruction ("Choose a virus"), not a noun ("Virus"). A single row of controls, or two independent panels (Part A / Part B), doesn't need step numbers.
 - A card hidden until a prediction is answered (`.card.hands-card.hidden`) keeps the same classes. The predict-first pattern that hides and reveals a card is unaffected.
 
 ### 17.3 Eyebrow wording

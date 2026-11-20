@@ -1826,9 +1826,9 @@ Act.dnd('act-targetPlace',{name:'targetPlace',
   var gateBox=el('div'),lab=el('div');host.appendChild(gateBox);host.appendChild(lab);
 
   var vseg=segControl([['hiv','HIV (retrovirus)'],['flu','Influenza A']],function(v){virus=v;if(v==='flu'&&block===4)block=null;resetRound();});
-  var vrow=el('div','lab-row');vrow.innerHTML='<span class="lab-label">Virus</span>';vrow.appendChild(vseg.box);
+  var vrow=el('div','lab-row');vrow.appendChild(stepLabel(1,'Choose a virus'));vrow.appendChild(vseg.box);
   var stepBtns=segControl(STEPS.map(function(s){return [String(s.n),String(s.n)];}),function(v){block=Number(v);resetRound();});
-  var srow=el('div','lab-row');srow.innerHTML='<span class="lab-label">Block stage</span>';srow.appendChild(stepBtns.box);
+  var srow=el('div','lab-row');srow.appendChild(stepLabel(2,'Choose the stage to block',true));srow.appendChild(stepBtns.box);
   STEPS.forEach(function(s){stepBtns.buttons[String(s.n)].title=s.name;});
   var stageName=el('div','stage-name'),fig=el('div','figure'),stepNote=el('div','lab-step'),cards=el('div','vb-cards'),
       info=el('div','feedback'),ctl=el('div','controls'),
@@ -3404,10 +3404,10 @@ Act.fill('act-rabiesFill',{name:'rabiesFill',
       top=el('div','hl-top'),grid=el('div','hl-grid'),chain=el('div','hl-chain'),status=el('div','feedback'),cmp=el('p','caption'),model=el('p','caption'),prog=el('p','caption');
   slider.type='range';slider.min='0';slider.max='100';slider.step='5';slider.value=String(cov);slider.style.flex='1 1 220px';
   slider.setAttribute('aria-label','Percent of the population that is immune');
-  row1.innerHTML='<span class="lab-label">Disease</span>';
+  row1.appendChild(stepLabel(1,'Choose a disease'));
   var seg=segControl([['measles','Measles (about 95%)'],['polio','Polio (about 80%)']],function(v){dis=v;paint();visit();paint();});
   row1.appendChild(seg.box);
-  row2.innerHTML='<span class="lab-label">Percent immune</span>';row2.appendChild(slider);row2.appendChild(val);
+  row2.appendChild(stepLabel(2,'Set the percent of people who are immune',true));row2.appendChild(slider);row2.appendChild(val);
   model.innerHTML='A simplified model: each case infects about (100 \u2212 percent immune) \u00F7 (100 \u2212 threshold) other people, so the number is exactly 1 at the threshold. Thresholds are the WHO figures from the lecture.';
   [note,row1,row2,top,grid,chain,status,cmp,model,prog].forEach(function(x){lab.appendChild(x);});
   function persist(){Act.keep(vkey,seen.slice());}
