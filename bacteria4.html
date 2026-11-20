@@ -131,10 +131,10 @@ input[type=range]::-moz-range-thumb{border-color:var(--graphite)}
 .sim-label{font-size:.74rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
 .sim-row .sim-label{margin-bottom:0}
 .sim-val{font-weight:800;color:var(--green);min-width:4.5ch}
-.sim-seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
-.sim-seg button{border:0;background:transparent;padding:8px 14px;font-size:.86rem;color:var(--ink-mid);border-right:1.5px solid var(--line)}
-.sim-seg button:last-child{border-right:0}
-.sim-seg button.on{background:var(--green);color:#fff;font-weight:650}
+.sim-seg{display:flex;flex-wrap:wrap;gap:8px}
+.sim-seg button{border:1.5px solid var(--line);border-radius:999px;background:#fff;padding:8px 15px;font-size:.86rem;line-height:1.35;color:var(--ink-mid);cursor:pointer;text-align:left;max-width:100%}
+.sim-seg button:hover:not(:disabled){border-color:var(--green-line)}
+.sim-seg button.on{background:var(--green);border-color:var(--green);color:#fff;font-weight:650}
 .sim-seg button:disabled{opacity:.45;cursor:not-allowed}
 .sim-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start;margin:4px 0}
 .sim-fig{margin:0 0 6px !important;padding:12px !important}
