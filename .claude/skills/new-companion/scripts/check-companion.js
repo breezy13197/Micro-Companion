@@ -187,6 +187,12 @@ if (!fs.existsSync(htmlFile)) {
   sectionKeys.forEach((k) => {
     if (!new RegExp(`data-key=["']${k}["']`).test(html)) err(`The page has no <section data-key="${k}"> for manifest section "${k}".`);
   });
+  // The engine only draws a checkpoint's answer buttons where the page has a
+  // matching data-check="<id>" element, so a missing one makes its section
+  // impossible to finish (shared/engine.js, the [data-check] loop).
+  usedChecks.forEach((c) => {
+    if (!new RegExp(`data-check=["']${c}["']`).test(html)) err(`Checkpoint "${c}" is required by the manifest, but ${topic}.html has no data-check="${c}" element, so students can never answer it.`);
+  });
   activityNames.forEach((a) => {
     if (!html.includes(a)) err(`Activity "${a}" is in the manifest but never mentioned in ${topic}.html.`);
   });
