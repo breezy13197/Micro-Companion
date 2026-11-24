@@ -47,6 +47,8 @@ Everything below follows from these three points.
   bacteria1.html            this topic's markup + its own content script, which DERIVES its structure from bacteria1.manifest.js
   ...
   index.html                loads every bank + manifest in /banks; dashboard, exams, flashcards — see §14
+  tools/
+    bankbridge.html         BankBridge, the question-bank editor (instructor-only; students never load it)
 ```
 
 **`shared/`** never becomes topic-specific. If a change to `engine.js` only makes sense for one companion, it doesn't belong in `engine.js` — it belongs in that companion's own content script. The same goes for `activities.js`: a builder that only makes sense for one topic belongs in that topic's content script, registered with `Act.register()` (§5).
