@@ -663,31 +663,40 @@ function checkOf(item, kind){
 }
 
 /* ================================================================= IDs === */
+// New IDs continue the bank's own numbering. The "stem" is everything before
+// the trailing number, so BAC1-081 -> "BAC1-", V3-M2-020 -> "V3-M2-",
+// HUB-CARD-47 -> "HUB-CARD-". Retired IDs count too, so a number is never reused.
+function idStem(id){
+  var m = String(id||"").match(/^(.*?)(\d+)$/);
+  return m ? {stem:m[1], num:parseInt(m[2],10), width:m[2].length} : null;
+}
+function nextFromStem(stem, width, pool){
+  var max = 0;
+  pool.forEach(function(id){
+    var s = idStem(id);
+    if(s && s.stem.toUpperCase() === stem.toUpperCase()) max = Math.max(max, s.num);
+  });
+  var n = String(max + 1); while(n.length < width) n = "0" + n;
+  return stem + n;
+}
+function lastStem(ids){
+  for(var i = ids.length - 1; i >= 0; i--){ var s = idStem(ids[i]); if(s && s.stem) return s; }
+  return null;
+}
 function idPrefix(){
-  for(var i = 0; i < S.pool.length; i++){
-    var m = String(S.pool[i].id).match(/^([A-Za-z]+)-\d+$/);
-    if(m) return m[1].toUpperCase();
-  }
-  return (S.topicId || "TOPIC").replace(/[^a-z]/gi,"").slice(0,4).toUpperCase() || "TOPIC";
+  var s = lastStem(S.pool.map(function(q){ return q.id; }));
+  if(s) return s.stem.replace(/-$/,"");
+  return (S.topicId || "TOPIC").replace(/[^a-z0-9]/gi,"").slice(0,4).toUpperCase() || "TOPIC";
 }
 function nextId(){
-  var p = idPrefix(), max = 0;
   var all = S.pool.map(function(q){ return q.id; }).concat(S.retired);
-  all.forEach(function(id){
-    var m = String(id).match(/^([A-Za-z]+)-(\d+)$/);
-    if(m && m[1].toUpperCase() === p) max = Math.max(max, parseInt(m[2],10));
-  });
-  var n = String(max + 1); while(n.length < 3) n = "0" + n;
-  return p + "-" + n;
+  var s = lastStem(S.pool.map(function(q){ return q.id; }));
+  return s ? nextFromStem(s.stem, s.width, all) : nextFromStem(idPrefix() + "-", 3, all);
 }
 function nextCardId(){
-  var p = idPrefix(), max = 0;
-  S.cards.forEach(function(c){
-    var m = String(c.id).match(/-CARD-(\d+)$/i);
-    if(m) max = Math.max(max, parseInt(m[1],10));
-  });
-  var n = String(max + 1); while(n.length < 2) n = "0" + n;
-  return p + "-CARD-" + n;
+  var all = S.cards.map(function(c){ return c.id; }).concat(S.retired);
+  var s = lastStem(S.cards.map(function(c){ return c.id; }));
+  return s ? nextFromStem(s.stem, s.width, all) : nextFromStem(idPrefix() + "-CARD-", 2, all);
 }
 function nextCpKey(){
   var n = 1, used = {}, i;
