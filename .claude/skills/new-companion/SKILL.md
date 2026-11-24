@@ -167,7 +167,12 @@ Run each of these and fix what it finds before telling the instructor it's done.
    ```
    ERRORS must reach zero. Read each WARNING and fix it, or say why it's fine.
 2. **Syntax**: `node --check` on the bank, manifest and images file.
-3. **The browser tests** find the new companion automatically (`browser-tests/README.md`):
+3. **Question review**: hand the whole companion to the `question-reviewer`
+   subagent (`.claude/agents/question-reviewer.md`), and give it the lecture's path.
+   Fix every *Must fix* and *Should fix* item, then run the reviewer again on
+   the questions you changed. Put any *Consider* items you left alone, and every
+   fact it couldn't verify, in the hand-over summary.
+4. **The browser tests** find the new companion automatically (`browser-tests/README.md`):
    ```bash
    cd browser-tests && npm ci && npx playwright test --project=chromium --grep "<id>" --trace off
    ```
@@ -175,10 +180,10 @@ Run each of these and fix what it finds before telling the instructor it's done.
    version can't find it, launch with `executablePath: '/opt/pw-browsers/chromium'`
    rather than running `playwright install`. A custom activity may need a small
    test helper (README, "When you add a new companion").
-4. **Walk the §12 smoke test** in a real browser (Playwright), plus the
+5. **Walk the §12 smoke test** in a real browser (Playwright), plus the
    additions in §15.6, §16.5 and §17.5. Make sure the progress ring can reach
    exactly 100% after `Act.solveAll()` and every quiz is submitted.
-5. **Look at it.** Take screenshots of the Start page, one content section and
+6. **Look at it.** Take screenshots of the Start page, one content section and
    one activity, at desktop and 375 px phone width, and show them to the instructor.
 
 ## Phase 4: Hand over
