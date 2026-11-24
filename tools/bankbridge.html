@@ -6,7 +6,7 @@
 <title>BankBridge — Question Bank Editor</title>
 <style>
 /* ============================================================
-   BankBridge v1.2 — design tokens
+   BankBridge v1.3 — design tokens
    Companion colors are reserved for companions (Enzymes = green).
    This tool uses its own identity: deep indigo + amber action.
    ============================================================ */
@@ -214,6 +214,8 @@ pre.out{
 .pdf-check input{width:17px; height:17px}
 .pdf-filter{border:1px solid var(--line); border-radius:var(--r-md); padding:12px 14px; flex:1 1 260px; min-width:0}
 .pdf-filter .flabel{margin-bottom:8px}
+.pdf-filter.wide{margin-top:12px}
+.pdf-filter.wide .pdf-row{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
 .pdf-filter .pdf-row{gap:8px 18px}
 .pdf-filter .links{font-size:12.5px; margin-top:8px; display:flex; gap:12px}
 .pdf-filter .links button{background:none; border:0; padding:0; color:var(--indigo); text-decoration:underline; cursor:pointer; font-size:12.5px}
@@ -279,7 +281,7 @@ pre.out{
       <div class="mark" aria-hidden="true">B</div>
       <div>
         <div class="name">BankBridge</div>
-        <div class="ver">v1.2 · question banks</div>
+        <div class="ver">v1.3 · question banks</div>
       </div>
     </div>
 
@@ -363,7 +365,7 @@ pre.out{
 
 <script>
 /* ==========================================================================
-   BankBridge v1.2
+   BankBridge v1.3
    A standalone editor for companion question-bank files.
    No network, no storage, no dependencies. Everything is in this one file.
    ========================================================================== */
@@ -385,7 +387,7 @@ var S = {
   filter:{q:"", m:"all", area:"all", level:"all", only:"all"},
   dirty:false,
   loadNotes:[],     // things worth telling the user about the file we read
-  pdfOpts:{ includePool:true, includeCheckpoints:false, includeCards:false, skipMods:{}, skipLevels:{}, keyMode:true, title:"" }
+  pdfOpts:{ includePool:true, includeCheckpoints:false, includeCards:false, skipMods:{}, skipLevels:{}, skipAreas:{}, keyMode:true, title:"" }
 };
 
 /* ------------------------------------------------------------- helpers -- */
@@ -441,7 +443,7 @@ function splitExtras(obj, known){
 function loadBank(text, fileName){
   var data = parseBank(text);
   var notes = [];
-  S.pdfOpts.skipMods = {}; S.pdfOpts.skipLevels = {};
+  S.pdfOpts.skipMods = {}; S.pdfOpts.skipLevels = {}; S.pdfOpts.skipAreas = {};
 
   if(data.POOL === null && data.CHECKPOINTS === null && data.CARDS === null){
     throw new Error("This file loaded without errors, but it does not define POOL, CHECKPOINTS or CARDS. It may not be a companion bank file.");
@@ -1175,11 +1177,12 @@ function groupByModule(list){
 // what you see in the preview is exactly what prints.
 var PDF_LEVELS = [["concept","Concept"],["application","Application"],["integration","Integration"],["","No level set"]];
 function pdfPool(o){
-  return S.pool.filter(function(q){ return !o.skipMods[q.m || ""] && !o.skipLevels[q.level || ""]; });
+  return S.pool.filter(function(q){ return !o.skipMods[q.m || ""] && !o.skipLevels[q.level || ""] && !o.skipAreas[q.area || ""]; });
 }
 function pdfFiltered(o){
   return Object.keys(o.skipMods).some(function(k){ return o.skipMods[k]; })
-      || Object.keys(o.skipLevels).some(function(k){ return o.skipLevels[k]; });
+      || Object.keys(o.skipLevels).some(function(k){ return o.skipLevels[k]; })
+      || Object.keys(o.skipAreas).some(function(k){ return o.skipAreas[k]; });
 }
 function pdfFilterLabel(o){
   if(!pdfFiltered(o)) return "";
@@ -1187,7 +1190,12 @@ function pdfFilterLabel(o){
   S.pool.forEach(function(q){ mods[q.m || ""] = 1; });
   var m = Object.keys(mods).sort().filter(function(k){ return !o.skipMods[k]; }).map(function(k){ return k || "no module"; });
   PDF_LEVELS.forEach(function(p){ if(!o.skipLevels[p[0]] && (p[0] || S.pool.some(function(q){ return !q.level; }))) lv.push(p[1].toLowerCase()); });
-  return "modules: " + (m.join(", ") || "none") + " \u00b7 levels: " + (lv.join(", ") || "none");
+  var areas = {}; S.pool.forEach(function(q){ areas[q.area || ""] = 1; });
+  var ak = Object.keys(areas), keep = ak.filter(function(k){ return !o.skipAreas[k]; });
+  var a = keep.length === ak.length ? "all" : keep.length <= 4 ? keep.map(function(k){ return k || "no area"; }).sort().join(", ") || "none" : keep.length + " of " + ak.length;
+  var allM = m.length === Object.keys(mods).length;
+  var allL = !Object.keys(o.skipLevels).some(function(k){ return o.skipLevels[k] && S.pool.some(function(q){ return (q.level || "") === k; }); });
+  return "modules: " + (allM ? "all" : m.join(", ") || "none") + " \u00b7 levels: " + (allL ? "all" : lv.join(", ") || "none") + " \u00b7 content areas: " + a;
 }
 function buildPdfHTML(o){
   var out = [];
@@ -1218,7 +1226,7 @@ function buildPdfHTML(o){
         });
       });
     } else if(filt){
-      out.push('<h2 class="psec">Quiz questions</h2><div class="pnote">No quiz questions match the modules and levels checked above.</div>');
+      out.push('<h2 class="psec">Quiz questions</h2><div class="pnote">No quiz questions match the modules, levels and content areas checked above.</div>');
     }
   }
 
@@ -1308,7 +1316,12 @@ function renderPdfExport(){
   var frow = el("div",{class:"pdf-row"});
   frow.appendChild(filterBox("Modules to include", null, modPairs, o.skipMods));
   frow.appendChild(filterBox("Levels to include", null, lvPairs, o.skipLevels));
-  opts.appendChild(el("div",{},[frow, el("div",{style:"font-size:12.5px;color:var(--ink-soft);margin-top:6px", text:"These two filters apply to quiz questions only. Checkpoints and flashcards have no module or level, so they are always printed in full when checked above."})]));
+  var acount = {}; S.pool.forEach(function(q){ var k = q.area || ""; acount[k] = (acount[k]||0) + 1; });
+  var areaPairs = Object.keys(acount).sort(function(a,b){ return a === "" ? 1 : b === "" ? -1 : a.localeCompare(b); })
+    .map(function(k){ return [k, k || "No area set", acount[k]]; });
+  var abox = filterBox("Content areas to include", null, areaPairs, o.skipAreas);
+  abox.classList.add("wide");
+  opts.appendChild(el("div",{},[frow, abox, el("div",{style:"font-size:12.5px;color:var(--ink-soft);margin-top:6px", text:"These filters apply to quiz questions only, and a question is printed only if its module, level and content area are all checked. Checkpoints and flashcards have no module, level or area, so they are always printed in full when checked above."})]));
 
   var row2 = el("div",{class:"pdf-row"});
   row2.appendChild(field("Document title", "Shown at the top of the page.", textInput(o.title || S.topicTitle, function(v){ o.title = v; updatePreview(); })));
@@ -1498,7 +1511,7 @@ $("btn-new").onclick = function(){
   S.topicId = id;
   S.topicTitle = "";
   S.pool = []; S.checkpoints = []; S.cards = []; S.retired = []; S.loadNotes = [];
-  S.pdfOpts.skipMods = {}; S.pdfOpts.skipLevels = {};
+  S.pdfOpts.skipMods = {}; S.pdfOpts.skipLevels = {}; S.pdfOpts.skipAreas = {};
   S.fileName = id + ".js"; S.loaded = true; S.dirty = false;
   S.sel = {pool:null, checkpoints:null, cards:null};
   setView("overview");
