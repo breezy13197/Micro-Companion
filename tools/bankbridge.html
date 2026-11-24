@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BankBridge — Question Bank Editor</title>
+<style>
+/* ============================================================
+   BankBridge v1.1 — design tokens
+   Companion colors are reserved for companions (Enzymes = green).
+   This tool uses its own identity: deep indigo + amber action.
+   ============================================================ */
+:root{
+  --indigo:#3d3a8c; --indigo-mid:#5b56b8; --indigo-soft:#ecebfa; --indigo-line:#d5d2f2;
+  --amber:#8f5906; --amber-soft:#fdf1dc; --amber-line:#f0d9ac;
+  --rose:#b3213b; --rose-soft:#fdeaee; --rose-line:#f3c2cc;
+  --moss:#1f7a54; --moss-soft:#e4f5ec; --moss-line:#bfe5d3;
+  --ink:#1d1c2b; --ink-mid:#54526b; --ink-soft:#6f6d88;
+  --page:#f3f3f8; --card:#ffffff; --line:#e4e3ee; --line-soft:#f0eff7;
+  --r-lg:18px; --r-md:12px; --r-sm:8px;
+  --shadow:0 1px 2px rgba(29,28,43,.04), 0 8px 24px rgba(29,28,43,.06);
+  --shadow-lift:0 2px 4px rgba(29,28,43,.06), 0 14px 34px rgba(29,28,43,.10);
+  --sans:"Segoe UI Variable Text","Segoe UI",Inter,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Cascadia Mono",ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--page); color:var(--ink); font-family:var(--sans);
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0; font-weight:650; letter-spacing:-.01em}
+button,input,select,textarea{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--indigo-mid); outline-offset:2px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+
+/* ---------- shell ---------- */
+.app{display:grid; grid-template-columns:236px 1fr; min-height:100vh}
+.rail{
+  background:var(--card); border-right:1px solid var(--line);
+  padding:22px 16px; display:flex; flex-direction:column; gap:26px; position:sticky; top:0; height:100vh;
+}
+.brand{display:flex; align-items:center; gap:11px}
+.brand .mark{
+  width:38px;height:38px;border-radius:11px;background:var(--indigo);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:17px;flex:0 0 auto;
+}
+.brand .name{font-weight:680; font-size:16px; line-height:1.15}
+.brand .ver{font-size:11.5px; color:var(--ink-soft); font-variant-numeric:tabular-nums}
+.rail nav{display:flex; flex-direction:column; gap:3px}
+.rail nav button{
+  display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%;
+  background:none; border:0; padding:10px 12px; border-radius:var(--r-md);
+  color:var(--ink-mid); cursor:pointer; text-align:left; font-size:14.5px; min-height:42px;
+}
+.rail nav button:hover{background:var(--line-soft); color:var(--ink)}
+.rail nav button[aria-current="true"]{background:var(--indigo-soft); color:var(--indigo); font-weight:620}
+.rail nav .n{font-size:12px; color:var(--ink-soft); font-variant-numeric:tabular-nums}
+.rail nav button[aria-current="true"] .n{color:var(--indigo-mid)}
+.rail .foot{margin-top:auto; display:flex; flex-direction:column; gap:8px}
+
+.main{padding:24px 30px 60px; min-width:0}
+.topbar{display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start; justify-content:space-between; margin-bottom:20px}
+.topbar h1{font-size:22px}
+.topbar .sub{color:var(--ink-mid); font-size:13.5px; margin-top:3px}
+.actions{display:flex; gap:9px; flex-wrap:wrap}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:7px; min-height:40px; padding:0 16px;
+  border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--ink);
+  font-weight:560; font-size:14px; cursor:pointer;
+}
+.btn:hover{border-color:#cbc9dc; box-shadow:var(--shadow)}
+.btn.primary{background:var(--indigo); border-color:var(--indigo); color:#fff}
+.btn.primary:hover{background:#332f7d}
+.btn.warn{background:var(--amber-soft); border-color:var(--amber-line); color:var(--amber)}
+.btn.danger{background:var(--rose-soft); border-color:var(--rose-line); color:var(--rose)}
+.btn.small{min-height:32px; padding:0 11px; font-size:13px; border-radius:8px}
+.btn:disabled{opacity:.45; cursor:not-allowed; box-shadow:none}
+.btn.icon{padding:0 10px}
+
+/* ---------- cards ---------- */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--shadow)}
+.pad{padding:20px 22px}
+
+/* ---------- start screen ---------- */
+.start{max-width:760px; margin:5vh auto 0}
+.start h2{font-size:26px; margin-bottom:8px}
+.start p{color:var(--ink-mid); margin:0 0 20px}
+.drop{
+  border:2px dashed var(--indigo-line); background:var(--indigo-soft);
+  border-radius:var(--r-lg); padding:46px 26px; text-align:center;
+}
+.drop.over{background:#e2e0f8; border-color:var(--indigo-mid)}
+.drop h3{font-size:17px; margin-bottom:6px}
+.drop p{margin:0 0 18px; font-size:14px}
+.start .or{display:flex; align-items:center; gap:14px; color:var(--ink-soft); font-size:13px; margin:22px 0}
+.start .or::before,.start .or::after{content:""; height:1px; background:var(--line); flex:1}
+.start ul{color:var(--ink-mid); font-size:14px; padding-left:20px; line-height:1.7}
+
+/* ---------- stats ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:20px}
+.stat{background:var(--card); border:1px solid var(--line); border-radius:var(--r-lg); padding:15px 17px; box-shadow:var(--shadow)}
+.stat .k{font-size:13px; color:var(--ink-mid)}
+.stat .v{font-size:25px; font-weight:680; font-variant-numeric:tabular-nums; margin-top:3px; letter-spacing:-.02em}
+.stat .v small{font-size:14px; font-weight:500; color:var(--ink-soft)}
+.stat.flag .v{color:var(--rose)}
+.stat.ok .v{color:var(--moss)}
+.stat.warnv .v{color:var(--amber)}
+
+/* ---------- workspace ---------- */
+.work{display:grid; grid-template-columns:minmax(300px,390px) 1fr; gap:18px; align-items:start}
+.listcol{position:sticky; top:24px}
+.toolbar{display:flex; gap:8px; padding:14px; border-bottom:1px solid var(--line); flex-wrap:wrap}
+.toolbar input[type=search],.toolbar select{
+  border:1px solid var(--line); border-radius:9px; padding:8px 10px; background:var(--card); min-height:38px;
+}
+.toolbar input[type=search]{flex:1; min-width:130px}
+.toolbar select{max-width:100%; text-overflow:ellipsis}
+.qlist{max-height:calc(100vh - 300px); overflow:auto; padding:8px}
+.qrow{
+  display:flex; gap:11px; width:100%; text-align:left; background:none; border:0;
+  padding:11px 12px; border-radius:var(--r-md); cursor:pointer; align-items:flex-start;
+}
+.qrow:hover{background:var(--line-soft)}
+.qrow[aria-current="true"]{background:var(--indigo-soft); box-shadow:inset 0 0 0 1px var(--indigo-line)}
+.qrow .id{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); flex:0 0 auto; padding-top:2px; width:72px}
+.qrow[aria-current="true"] .id{color:var(--indigo)}
+.qrow .txt{flex:1; min-width:0; font-size:13.5px; line-height:1.45}
+.qrow .txt .stem{display:block; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical}
+.qrow .meta{margin-top:5px; display:flex; gap:6px; flex-wrap:wrap}
+.dot{flex:0 0 auto; width:9px; height:9px; border-radius:50%; margin-top:5px; background:var(--moss)}
+.dot.w{background:var(--amber)} .dot.e{background:var(--rose)}
+.chip{
+  display:inline-flex; align-items:center; gap:4px; font-size:11.5px; padding:2px 8px;
+  border-radius:999px; background:var(--line-soft); color:var(--ink-mid); border:1px solid var(--line);
+}
+.chip.lv-concept{background:var(--indigo-soft); color:var(--indigo); border-color:var(--indigo-line)}
+.chip.lv-application{background:var(--amber-soft); color:var(--amber); border-color:var(--amber-line)}
+.chip.lv-integration{background:var(--moss-soft); color:var(--moss); border-color:var(--moss-line)}
+.empty{padding:40px 24px; text-align:center; color:var(--ink-mid); font-size:14px}
+.empty strong{display:block; color:var(--ink); margin-bottom:6px; font-size:15px}
+
+/* ---------- editor form ---------- */
+.ed{padding:0}
+.ed .head{
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:16px 22px; border-bottom:1px solid var(--line); flex-wrap:wrap;
+}
+.ed .head .qid{font-family:var(--mono); font-size:14px; font-weight:600}
+.ed .body{padding:20px 22px; display:flex; flex-direction:column; gap:18px}
+.field label,.flabel{display:block; font-size:13px; font-weight:600; color:var(--ink-mid); margin-bottom:6px}
+.field .hint{font-size:12.5px; color:var(--ink-soft); font-weight:400; margin-top:5px}
+.field input[type=text],.field textarea,.field select{
+  width:100%; border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+  background:var(--card); min-height:42px; resize:vertical;
+}
+.field textarea{line-height:1.55}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--indigo-mid)}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px}
+.opt-row{display:flex; gap:10px; align-items:flex-start; margin-bottom:9px}
+.opt-row .letter{
+  flex:0 0 auto; width:30px; height:42px; display:grid; place-items:center;
+  font-weight:650; color:var(--ink-soft); font-size:14px;
+}
+.opt-row textarea{flex:1; min-height:42px}
+.opt-row .mark{
+  flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; height:42px; padding:0 11px;
+  border:1px solid var(--line); border-radius:10px; background:var(--card); cursor:pointer; font-size:12.5px; color:var(--ink-mid);
+}
+.opt-row .mark.on{background:var(--moss-soft); border-color:var(--moss-line); color:var(--moss); font-weight:620}
+.opt-row .del{flex:0 0 auto; height:42px}
+
+/* ---------- validation ---------- */
+.checks{border-top:1px solid var(--line); padding:16px 22px; background:#fafaff; border-radius:0 0 var(--r-lg) var(--r-lg)}
+.checks h4{font-size:13px; color:var(--ink-mid); margin-bottom:10px}
+.issue{display:flex; gap:9px; padding:9px 11px; border-radius:10px; margin-bottom:7px; font-size:13.5px; line-height:1.45}
+.issue.e{background:var(--rose-soft); border:1px solid var(--rose-line); color:#7d1226}
+.issue.w{background:var(--amber-soft); border:1px solid var(--amber-line); color:#7a4c06}
+.issue.g{background:var(--moss-soft); border:1px solid var(--moss-line); color:#14563a}
+.issue .ic{font-weight:700; flex:0 0 auto}
+
+/* ---------- overview / export panels ---------- */
+.panel h3{font-size:16px; margin-bottom:4px}
+.panel .lead{color:var(--ink-mid); font-size:13.5px; margin:0 0 16px}
+table.tbl{width:100%; border-collapse:collapse; font-size:13.5px}
+table.tbl th,table.tbl td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--line-soft)}
+table.tbl th{color:var(--ink-mid); font-weight:600; font-size:12.5px}
+table.tbl td.num{text-align:right; font-variant-numeric:tabular-nums}
+pre.out{
+  background:#1d1c2b; color:#e8e7f5; padding:16px; border-radius:var(--r-md);
+  overflow:auto; max-height:440px; font-family:var(--mono); font-size:12.5px; line-height:1.6; white-space:pre;
+}
+.note{background:var(--indigo-soft); border:1px solid var(--indigo-line); border-radius:var(--r-md); padding:13px 15px; font-size:13.5px; color:var(--indigo); margin-bottom:16px}
+.note.warn{background:var(--amber-soft); border-color:var(--amber-line); color:#7a4c06}
+.note.bad{background:var(--rose-soft); border-color:var(--rose-line); color:#7d1226}
+
+/* ---------- toast ---------- */
+#toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%);
+  background:var(--ink); color:#fff; padding:12px 18px; border-radius:11px; font-size:14px;
+  box-shadow:var(--shadow-lift); z-index:50; max-width:min(560px,92vw);
+}
+#toast[hidden]{display:none}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* ---------- PDF export ---------- */
+.pdf-opts{display:flex; flex-direction:column; gap:16px; margin-bottom:22px}
+.pdf-row{display:flex; gap:22px; flex-wrap:wrap}
+.pdf-check{display:flex; align-items:center; gap:8px; font-size:14px}
+.pdf-check input{width:17px; height:17px}
+.radiogroup{display:flex; flex-direction:column; gap:8px}
+.radiogroup label{display:flex; gap:9px; align-items:flex-start; font-size:14px; cursor:pointer}
+.radiogroup input{margin-top:3px}
+.radiogroup .rt{font-weight:600}
+.radiogroup .rd{color:var(--ink-mid); font-size:12.5px}
+.previewwrap{border:1px solid var(--line); border-radius:var(--r-md); background:#e9e9f2; padding:22px; max-height:600px; overflow:auto}
+
+/* the printable document itself — same look on screen (inside the grey
+   preview tray) and on paper */
+#printarea{position:absolute; left:-9999px; top:0; width:800px}
+.pdoc{background:#fff; padding:0; color:#111; font-family:var(--sans)}
+.previewwrap .pdoc{box-shadow:0 1px 3px rgba(0,0,0,.15); padding:44px 50px; max-width:720px; margin:0 auto}
+.pdoc .phead{border-bottom:2px solid #111; padding-bottom:10px; margin-bottom:18px}
+.pdoc .phead h1{font-size:19px; margin-bottom:3px}
+.pdoc .phead .pmeta{font-size:12px; color:#555}
+.pdoc h2.psec{font-size:14px; text-transform:none; border-bottom:1px solid #ccc; padding-bottom:5px; margin:22px 0 12px}
+.pdoc h2.psec:first-of-type{margin-top:0}
+.pdoc .pnote{font-size:11.5px; color:#666; font-style:italic; margin-bottom:10px}
+.pdoc .pq{margin-bottom:16px; page-break-inside:avoid}
+.pdoc .pq .pstem{font-size:13.5px; margin-bottom:7px}
+.pdoc .pq .pstem b{font-variant-numeric:tabular-nums}
+.pdoc .pq ol{margin:0; padding-left:0; list-style:none}
+.pdoc .pq ol li{font-size:13px; padding:3px 0 3px 26px; position:relative}
+.pdoc .pq ol li b.let{position:absolute; left:0; width:20px; font-weight:700}
+.pdoc .pq ol li.key{font-weight:700}
+.pdoc .pq ol li.key::after{content:" \2713 correct"; font-weight:700; color:#14563a}
+.pdoc .pq .prat{font-size:12px; color:#333; margin-top:5px; padding:7px 10px; background:#f3f3f8; border-left:3px solid #3d3a8c}
+.pdoc table.pcard{width:100%; border-collapse:collapse; margin-bottom:4px}
+.pdoc table.pcard td{border:1px solid #ccc; padding:7px 9px; font-size:12.5px; vertical-align:top}
+.pdoc table.pcard td.pf{width:34%; font-weight:600}
+.pdoc .pkey{margin-top:26px; page-break-before:auto}
+.pdoc .pkey h2.psec{margin-top:0}
+.pdoc .pkeygrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:6px 14px; font-size:12px; font-family:var(--mono)}
+
+@media print{
+  @page{ margin:0.75in; }
+  body *{ visibility:hidden; }
+  #printarea, #printarea *{ visibility:visible; }
+  #printarea{ position:static; left:0; width:auto; }
+  .pdoc{ padding:0; }
+}
+
+@media (max-width:1080px){
+  .app{grid-template-columns:1fr}
+  .rail{position:static; height:auto; flex-direction:row; align-items:center; flex-wrap:wrap; gap:14px}
+  .rail nav{flex-direction:row; flex-wrap:wrap}
+  .rail .foot{margin-top:0; flex-direction:row}
+  .work{grid-template-columns:1fr}
+  .listcol{position:static}
+  .qlist{max-height:340px}
+  .main{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">B</div>
+      <div>
+        <div class="name">BankBridge</div>
+        <div class="ver">v1.1 · question banks</div>
+      </div>
+    </div>
+
+    <nav id="nav" aria-label="Sections" hidden>
+      <button data-view="pool" aria-current="true">Quiz questions <span class="n" id="n-pool">0</span></button>
+      <button data-view="checkpoints">Checkpoints <span class="n" id="n-cp">0</span></button>
+      <button data-view="cards">Flashcards <span class="n" id="n-cards">0</span></button>
+      <button data-view="overview">Bank overview</button>
+      <button data-view="pdf">Export to PDF</button>
+      <button data-view="save">Save file</button>
+      <button data-view="help">How to use this</button>
+    </nav>
+
+    <div class="foot" id="railfoot" hidden>
+      <button class="btn small" id="btn-close">Close bank</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- ============ START SCREEN ============ -->
+    <section id="v-start">
+      <div class="start">
+        <h2>Open a question bank</h2>
+        <p>Pick one of your companion bank files — for example <code>banks/enzymes.js</code>. Everything happens inside this browser tab; nothing is uploaded anywhere.</p>
+
+        <div class="drop" id="drop">
+          <h3>Drop a bank file here</h3>
+          <p>or choose it from your computer</p>
+          <button class="btn primary" id="btn-pick">Choose a .js bank file</button>
+          <input type="file" id="file" accept=".js,text/javascript" hidden>
+        </div>
+
+        <div class="or">or</div>
+        <button class="btn" id="btn-new">Start an empty bank for a new topic</button>
+
+        <div class="card pad" style="margin-top:26px">
+          <h3 style="font-size:15px;margin-bottom:8px">What this tool does</h3>
+          <ul>
+            <li>Shows every question in the bank in one editable list.</li>
+            <li>Checks each question against your course's question-writing guidelines while you type.</li>
+            <li>Lets you add, edit, duplicate and retire questions.</li>
+            <li>Writes a fresh <code>.js</code> file you drop back into your <code>banks/</code> folder.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WORKING SCREENS ============ -->
+    <div id="v-work" hidden>
+      <div class="topbar">
+        <div>
+          <h1 id="pgtitle">Quiz questions</h1>
+          <div class="sub" id="pgsub"></div>
+        </div>
+        <div class="actions" id="pgactions"></div>
+      </div>
+
+      <div id="stats" class="stats"></div>
+
+      <!-- list + editor -->
+      <div class="work" id="workgrid">
+        <div class="card listcol">
+          <div class="toolbar" id="toolbar"></div>
+          <div class="qlist" id="qlist" role="listbox" aria-label="Items in this bank"></div>
+        </div>
+        <div class="card ed" id="editor"></div>
+      </div>
+
+      <!-- single-panel views -->
+      <div id="panel" class="card pad panel" hidden></div>
+    </div>
+  </main>
+</div>
+
+<div id="toast" hidden role="status" aria-live="polite"></div>
+
+<!-- Built by the Export to PDF screen just before printing. Kept off-screen
+     rather than display:none, because a browser will not print an element
+     that has no layout box, even if you make it visible right before printing. -->
+<div id="printarea" class="pdoc"></div>
+
+<script>
+/* ==========================================================================
+   BankBridge v1.1
+   A standalone editor for companion question-bank files.
+   No network, no storage, no dependencies. Everything is in this one file.
+   ========================================================================== */
+"use strict";
+var VERSION = "1.0";
+
+/* ---------------------------------------------------------------- state -- */
+var S = {
+  loaded:false,
+  fileName:"",
+  topicId:"",
+  topicTitle:"",
+  pool:[],          // [{id,m,area,level,stem,options[],answer,why,_extra}]
+  checkpoints:[],   // [{key,options[],answer,why,_extra}]
+  cards:[],         // [{id,t,d,flip,_extra}]
+  retired:[],       // ids removed at some point — never reused
+  view:"pool",
+  sel:{pool:null, checkpoints:null, cards:null},
+  filter:{q:"", m:"all", area:"all", level:"all", only:"all"},
+  dirty:false,
+  loadNotes:[],     // things worth telling the user about the file we read
+  pdfOpts:{ includePool:true, includeCheckpoints:false, includeCards:false, module:"all", keyMode:true, title:"" }
+};
+
+/* ------------------------------------------------------------- helpers -- */
+function $(id){ return document.getElementById(id); }
+function el(tag, attrs, kids){
+  var n = document.createElement(tag);
+  if(attrs) for(var k in attrs){
+    if(k === "class") n.className = attrs[k];
+    else if(k === "text") n.textContent = attrs[k];
+    else if(k === "html") n.innerHTML = attrs[k];
+    else if(k.slice(0,2) === "on") n[k] = attrs[k];
+    else if(attrs[k] !== null && attrs[k] !== undefined && attrs[k] !== false) n.setAttribute(k, attrs[k]);
+  }
+  (kids||[]).forEach(function(c){ if(c) n.appendChild(c); });
+  return n;
+}
+var LETTERS = ["A","B","C","D","E","F"];
+function toast(msg){
+  var t = $("toast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toast._t); toast._t = setTimeout(function(){ t.hidden = true; }, 4200);
+}
+function markDirty(){ S.dirty = true; }
+window.addEventListener("beforeunload", function(e){
+  if(S.dirty){ e.preventDefault(); e.returnValue = ""; }
+});
+
+/* ============================================================== PARSING ==
+   A bank file is plain JavaScript: `var POOL = [...]` and friends.
+   We run it inside a function so its `var`s stay local, then hand back
+   whatever it defined. If the file has a syntax error, this throws and we
+   show the browser's own message, which usually names the line.
+   ======================================================================== */
+function parseBank(text){
+  var tail = "\n;return {" +
+    "TOPIC_ID: typeof TOPIC_ID!=='undefined'?TOPIC_ID:null," +
+    "TOPIC_TITLE: typeof TOPIC_TITLE!=='undefined'?TOPIC_TITLE:null," +
+    "CHECKPOINTS: typeof CHECKPOINTS!=='undefined'?CHECKPOINTS:null," +
+    "CARDS: typeof CARDS!=='undefined'?CARDS:null," +
+    "POOL: typeof POOL!=='undefined'?POOL:null};";
+  return new Function('"use strict";' + text + tail)();
+}
+
+var KNOWN_POOL = ["id","m","area","level","stem","options","answer","why"];
+var KNOWN_CP   = ["options","answer","why"];
+var KNOWN_CARD = ["id","t","d","flip"];
+
+function splitExtras(obj, known){
+  var extra = {}, has = false;
+  for(var k in obj){ if(known.indexOf(k) === -1){ extra[k] = obj[k]; has = true; } }
+  return has ? extra : null;
+}
+
+function loadBank(text, fileName){
+  var data = parseBank(text);
+  var notes = [];
+
+  if(data.POOL === null && data.CHECKPOINTS === null && data.CARDS === null){
+    throw new Error("This file loaded without errors, but it does not define POOL, CHECKPOINTS or CARDS. It may not be a companion bank file.");
+  }
+
+  S.pool = (data.POOL || []).map(function(q){
+    return { id:q.id||"", m:q.m||"", area:q.area||"", level:q.level||"",
+             stem:q.stem||"", options:(q.options||[]).slice(), answer:(typeof q.answer==="number"?q.answer:0),
+             why:q.why||"", _extra:splitExtras(q, KNOWN_POOL) };
+  });
+  S.checkpoints = [];
+  if(data.CHECKPOINTS){
+    for(var key in data.CHECKPOINTS){
+      var c = data.CHECKPOINTS[key];
+      S.checkpoints.push({ key:key, options:(c.options||[]).slice(),
+        answer:(typeof c.answer==="number"?c.answer:0), why:c.why||"", _extra:splitExtras(c, KNOWN_CP) });
+    }
+  }
+  S.cards = (data.CARDS || []).map(function(c){
+    return { id:c.id||"", t:c.t||"", d:c.d||"", flip:!!c.flip, _extra:splitExtras(c, KNOWN_CARD) };
+  });
+
+  S.topicId    = data.TOPIC_ID || "";
+  S.topicTitle = data.TOPIC_TITLE || "";
+  S.fileName   = fileName || (S.topicId ? S.topicId + ".js" : "bank.js");
+
+  // Retired IDs are recorded as a comment line by this tool, so a deleted
+  // question's number is never handed to a new question later.
+  var rm = text.match(/\/\/\s*RETIRED IDS:\s*(.+)/);
+  S.retired = rm ? rm[1].split(/[,\s]+/).filter(Boolean) : [];
+
+  if(!S.topicId) notes.push("This file has no TOPIC_ID. The companion needs one — set it at the top of the Bank overview page.");
+  if(data.POOL === null) notes.push("No POOL was found, so the quiz-question list starts empty.");
+  if(data.CHECKPOINTS === null) notes.push("No CHECKPOINTS were found, so the checkpoint list starts empty.");
+  if(data.CARDS === null) notes.push("No CARDS were found, so the flashcard list starts empty.");
+
+  var extras = S.pool.filter(function(q){return q._extra;}).length
+             + S.checkpoints.filter(function(c){return c._extra;}).length
+             + S.cards.filter(function(c){return c._extra;}).length;
+  if(extras) notes.push(extras + " item(s) carry properties this editor does not have a field for. They are preserved exactly and written back out unchanged.");
+
+  var blank = S.pool.filter(function(q){ return !q.id; }).length;
+  if(blank) notes.push(blank + " question(s) in the file have no id. Give each one an ID before saving.");
+
+  S.loadNotes = notes;
+  S.loaded = true; S.dirty = false;
+  S.sel = {pool:S.pool.length?0:null, checkpoints:S.checkpoints.length?0:null, cards:S.cards.length?0:null};
+}
+
+/* ============================================================== WRITING == */
+function jsStr(s){
+  return "'" + String(s == null ? "" : s)
+    .replace(/\\/g,"\\\\").replace(/'/g,"\\'")
+    .replace(/\r/g,"").replace(/\n/g,"\\n") + "'";
+}
+function jsVal(v){
+  if(typeof v === "string") return jsStr(v);
+  if(typeof v === "number" || typeof v === "boolean") return String(v);
+  return JSON.stringify(v);
+}
+function optionsBlock(opts, indent){
+  var pad = indent;
+  return "[\n" + opts.map(function(o){ return pad + "  " + jsStr(o); }).join(",\n") + "\n" + pad + "]";
+}
+function generate(){
+  var L = [];
+  var stamp = new Date().toISOString().slice(0,10);
+  L.push("// banks/" + (S.topicId || "topic") + ".js");
+  L.push("// " + (S.topicTitle || "Untitled companion"));
+  L.push("// Last edited " + stamp + " with BankBridge v" + VERSION + ".");
+  L.push("// Question IDs are permanent: never renumber them, never reuse a retired one.");
+  if(S.retired.length) L.push("// RETIRED IDS: " + S.retired.join(", "));
+  L.push("");
+  L.push("var TOPIC_ID    = " + jsStr(S.topicId) + ";");
+  L.push("var TOPIC_TITLE = " + jsStr(S.topicTitle) + ";");
+  L.push("");
+
+  L.push("var CHECKPOINTS = {");
+  L.push(S.checkpoints.map(function(c){
+    var b = [];
+    b.push("  " + c.key + ": {");
+    b.push("    options: " + optionsBlock(c.options, "    ") + ",");
+    b.push("    answer: " + c.answer + ",");
+    b.push("    why: " + jsStr(c.why));
+    if(c._extra) for(var k in c._extra) b.push("    , " + k + ": " + jsVal(c._extra[k]));
+    b.push("  }");
+    return b.join("\n");
+  }).join(",\n"));
+  L.push("};");
+  L.push("");
+
+  L.push("var CARDS = [");
+  L.push(S.cards.map(function(c){
+    var s = "  { id:" + jsStr(c.id) + ", t:" + jsStr(c.t) + ", d:" + jsStr(c.d);
+    if(c.flip) s += ", flip:true";
+    if(c._extra) for(var k in c._extra) s += ", " + k + ":" + jsVal(c._extra[k]);
+    return s + " }";
+  }).join(",\n"));
+  L.push("];");
+  L.push("");
+
+  L.push("var POOL = [");
+  L.push(S.pool.map(function(q){
+    var b = [];
+    b.push("  {");
+    b.push("    id: " + jsStr(q.id) + ",");
+    b.push("    m: " + jsStr(q.m) + ",");
+    b.push("    area: " + jsStr(q.area) + ",");
+    b.push("    level: " + jsStr(q.level) + ",");
+    b.push("    stem: " + jsStr(q.stem) + ",");
+    b.push("    options: " + optionsBlock(q.options, "    ") + ",");
+    b.push("    answer: " + q.answer + ",");
+    b.push("    why: " + jsStr(q.why));
+    if(q._extra) for(var k in q._extra) b.push("    , " + k + ": " + jsVal(q._extra[k]));
+    b.push("  }");
+    return b.join("\n");
+  }).join(",\n"));
+  L.push("];");
+  L.push("");
+  return L.join("\n");
+}
+
+/* ==================================================== WRITING-RULE CHECKS ==
+   These mirror the course question-writing guidelines. Errors stop a
+   question being usable; warnings are judgement calls you may override.
+   ======================================================================== */
+var ABSOLUTE = ["always","never","only","all","none","every","entirely","completely","exclusively"];
+var VAGUE    = ["frequently","occasionally","usually","commonly","often","sometimes","rarely","generally","typically","seldom"];
+var NEGATIVE = ["not","except","incorrect","false","least","cannot","unlikely"];
+var STOP = ("the a an of in to is are and or for with which what that this these those you your it its "
+ + "be been was were on at as by from does do did how why when who whom whose most best patient").split(" ");
+
+function words(s){ return String(s||"").toLowerCase().match(/[a-z][a-z'-]+/g) || []; }
+function hasWord(s, list){
+  var w = words(s), found = [];
+  list.forEach(function(t){ if(w.indexOf(t) !== -1) found.push(t); });
+  return found;
+}
+function issue(kind, msg){ return {kind:kind, msg:msg}; }
+
+function checkItem(item, kind){
+  // kind: 'pool' | 'checkpoints'
+  var out = [];
+  var stem = kind === "pool" ? item.stem : item.why ? item.stem : item.stem; // checkpoints have no stem field
+  var opts = item.options || [];
+  var isPool = kind === "pool";
+
+  /* ---- errors: these break the companion or the guidelines outright ---- */
+  if(isPool){
+    if(!String(item.id).trim()) out.push(issue("e","No question ID. Every question needs a permanent ID such as ENZ-014."));
+    if(!String(item.m).trim())  out.push(issue("e","No module. The companion uses this to decide which quiz the question belongs to."));
+    if(!String(item.level).trim()) out.push(issue("e","No level. Pick concept, application or integration — the final exam is built from these."));
+    if(!String(item.area).trim()) out.push(issue("e","No area. After a quiz, this is what sends a student to the right section to review."));
+    if(!String(item.stem).trim()) out.push(issue("e","The question stem is empty."));
+  }
+  if(opts.length < 3) out.push(issue("e","Only " + opts.length + " answer choice(s). The guidelines ask for 3 to 5."));
+  if(opts.length > 5) out.push(issue("e", opts.length + " answer choices. The guidelines ask for 3 to 5."));
+  if(!isPool && opts.length !== 4) out.push(issue("w","Checkpoints in the reference companion use 4 choices. This one has " + opts.length + "."));
+  var blanks = opts.filter(function(o){ return !String(o).trim(); }).length;
+  if(blanks) out.push(issue("e", blanks + " answer choice(s) are blank."));
+  if(item.answer < 0 || item.answer >= opts.length) out.push(issue("e","No correct answer is marked."));
+  if(!String(item.why||"").trim()) out.push(issue("e","No rationale. Every item needs a 'why' — the teaching explanation shown after answering."));
+
+  var seen = {}, dupe = false;
+  opts.forEach(function(o){ var k = String(o).trim().toLowerCase(); if(k && seen[k]) dupe = true; seen[k] = 1; });
+  if(dupe) out.push(issue("e","Two answer choices are identical."));
+
+  /* ---- warnings: style and quality flags from the guidelines ---- */
+  var allText = (isPool ? item.stem + " " : "") + opts.join(" ");
+  var abs = hasWord(allText, ABSOLUTE);
+  if(abs.length) out.push(issue("w","Absolute wording: " + abs.join(", ") + ". Students answer these on grammar rather than knowledge."));
+  var vag = hasWord(allText, VAGUE);
+  if(vag.length) out.push(issue("w","Vague frequency wording: " + vag.join(", ") + ". Different readers score these differently."));
+  if(isPool){
+    var neg = hasWord(item.stem, NEGATIVE);
+    if(neg.length) out.push(issue("w","Negative stem wording: " + neg.join(", ") + ". Rewrite in the positive if you can."));
+  }
+  var joined = opts.join(" | ").toLowerCase();
+  if(/all of the above|none of the above|both a and b|a and b only/.test(joined))
+    out.push(issue("w","Uses an 'all/none of the above' style choice. The guidelines rule these out."));
+  if(/select all that apply|check all that apply|choose all/.test(allText.toLowerCase()))
+    out.push(issue("w","This looks like a select-all-that-apply item. The guidelines require single best answer."));
+
+  // parallel structure — a much longer correct answer is a giveaway
+  var lens = opts.map(function(o){ return words(o).length; });
+  var real = lens.filter(function(n){ return n > 0; });
+  if(real.length > 1){
+    var max = Math.max.apply(null, real), min = Math.min.apply(null, real);
+    if(max >= 2 * min && (max - min) >= 4)
+      out.push(issue("w","Answer choices are uneven in length (" + min + " to " + max + " words). Even them up so length is not a clue."));
+    // Only worth flagging when the key stands out clearly. A key that is one or
+    // two words longer than the rest is normal writing, not a giveaway.
+    var sorted = lens.slice().sort(function(a,b){ return b-a; });
+    var runnerUp = sorted[1] || 0;
+    if(item.answer >= 0 && item.answer < lens.length && lens[item.answer] === max
+       && real.length > 2 && (max - runnerUp) >= 3)
+      out.push(issue("w","The correct answer is " + (max - runnerUp) + " words longer than any other choice. Test-wise students pick the longest option."));
+  }
+  // stem repeating a distinctive word from the key
+  if(isPool && item.answer >= 0 && opts[item.answer]){
+    var stemW = words(item.stem), keyW = words(opts[item.answer]);
+    var echo = keyW.filter(function(w){ return w.length > 4 && STOP.indexOf(w) === -1 && stemW.indexOf(w) !== -1; });
+    echo = echo.filter(function(v,i,a){ return a.indexOf(v) === i; });
+    if(echo.length) out.push(issue("w","The stem repeats a word from the correct answer: " + echo.join(", ") + ". That word points at the key."));
+  }
+  if(isPool && words(item.stem).length > 60)
+    out.push(issue("w","Long stem (" + words(item.stem).length + " words). Trim anything a student does not need to answer."));
+
+  return out;
+}
+function worst(list){
+  if(list.some(function(i){return i.kind === "e";})) return "e";
+  if(list.length) return "w";
+  return "g";
+}
+function checkCard(c){
+  var out = [];
+  if(!String(c.id).trim()) out.push(issue("e","No flashcard ID."));
+  if(!String(c.t).trim())  out.push(issue("e","The front of the card is empty."));
+  if(!String(c.d).trim())  out.push(issue("e","The back of the card is empty."));
+  return out;
+}
+function checkOf(item, kind){
+  return kind === "cards" ? checkCard(item) : checkItem(item, kind);
+}
+
+/* ================================================================= IDs === */
+// New IDs continue the bank's own numbering. The "stem" is everything before
+// the trailing number, so BAC1-081 -> "BAC1-", V3-M2-020 -> "V3-M2-",
+// HUB-CARD-47 -> "HUB-CARD-". Retired IDs count too, so a number is never reused.
+function idStem(id){
+  var m = String(id||"").match(/^(.*?)(\d+)$/);
+  return m ? {stem:m[1], num:parseInt(m[2],10), width:m[2].length} : null;
+}
+function nextFromStem(stem, width, pool){
+  var max = 0;
+  pool.forEach(function(id){
+    var s = idStem(id);
+    if(s && s.stem.toUpperCase() === stem.toUpperCase()) max = Math.max(max, s.num);
+  });
+  var n = String(max + 1); while(n.length < width) n = "0" + n;
+  return stem + n;
+}
+function lastStem(ids){
+  for(var i = ids.length - 1; i >= 0; i--){ var s = idStem(ids[i]); if(s && s.stem) return s; }
+  return null;
+}
+function idPrefix(){
+  var s = lastStem(S.pool.map(function(q){ return q.id; }));
+  if(s) return s.stem.replace(/-$/,"");
+  return (S.topicId || "TOPIC").replace(/[^a-z0-9]/gi,"").slice(0,4).toUpperCase() || "TOPIC";
+}
+function nextId(){
+  var all = S.pool.map(function(q){ return q.id; }).concat(S.retired);
+  var s = lastStem(S.pool.map(function(q){ return q.id; }));
+  return s ? nextFromStem(s.stem, s.width, all) : nextFromStem(idPrefix() + "-", 3, all);
+}
+function nextCardId(){
+  var all = S.cards.map(function(c){ return c.id; }).concat(S.retired);
+  var s = lastStem(S.cards.map(function(c){ return c.id; }));
+  return s ? nextFromStem(s.stem, s.width, all) : nextFromStem(idPrefix() + "-CARD-", 2, all);
+}
+function nextCpKey(){
+  var n = 1, used = {}, i;
+  S.checkpoints.forEach(function(c){ used[c.key] = 1; });
+  while(used["c" + n]) n++;
+  return "c" + n;
+}
+
+/* ============================================================== ROUTING == */
+function collection(){ return S.view === "checkpoints" ? S.checkpoints : S.view === "cards" ? S.cards : S.pool; }
+function setView(v){
+  S.view = v;
+  Array.prototype.forEach.call(document.querySelectorAll("#nav button"), function(b){
+    b.setAttribute("aria-current", b.dataset.view === v ? "true" : "false");
+  });
+  render();
+}
+$("nav").addEventListener("click", function(e){
+  var b = e.target.closest("button[data-view]"); if(b) setView(b.dataset.view);
+});
+
+/* ================================================================ RENDER = */
+var TITLES = {pool:"Quiz questions", checkpoints:"Checkpoints", cards:"Flashcards", overview:"Bank overview", pdf:"Export to PDF", save:"Save file", help:"How to use this"};
+var SUBS = {
+  pool:"Graded questions used in module quizzes and the final exam.",
+  checkpoints:"The try-until-correct questions inside each section. These gate a student's progress.",
+  cards:"Retrieval-practice cards. These are not graded and never block progress.",
+  overview:"Topic details and how the bank is balanced.",
+  pdf:"Turn a set of questions into a printable document, or a PDF, using your browser's own print dialog.",
+  save:"Check the file, then write it back to your banks folder.",
+  help:"What each part of this tool does."
+};
+
+function render(){
+  if(!S.loaded){ $("v-start").hidden = false; $("v-work").hidden = true; $("nav").hidden = true; $("railfoot").hidden = true; return; }
+  $("v-start").hidden = true; $("v-work").hidden = false; $("nav").hidden = false; $("railfoot").hidden = false;
+
+  $("n-pool").textContent  = S.pool.length;
+  $("n-cp").textContent    = S.checkpoints.length;
+  $("n-cards").textContent = S.cards.length;
+  $("pgtitle").textContent = TITLES[S.view];
+  $("pgsub").textContent   = SUBS[S.view];
+
+  var listy = (S.view === "pool" || S.view === "checkpoints" || S.view === "cards");
+  $("workgrid").hidden = !listy;
+  $("panel").hidden = listy;
+  $("stats").hidden = !listy;
+
+  renderActions();
+  if(listy){ renderStats(); renderToolbar(); renderList(); renderEditor(); }
+  else if(S.view === "overview") renderOverview();
+  else if(S.view === "pdf") renderPdfExport();
+  else if(S.view === "save") renderSave();
+  else renderHelp();
+}
+
+function renderActions(){
+  var a = $("pgactions"); a.innerHTML = "";
+  if(S.view === "pool" || S.view === "checkpoints" || S.view === "cards"){
+    a.appendChild(el("button",{class:"btn primary", text:"Add " + (S.view==="cards"?"flashcard":S.view==="checkpoints"?"checkpoint":"question"), onclick:addItem}));
+  }
+  if(S.dirty) a.appendChild(el("span",{class:"chip", text:"Unsaved changes", style:"align-self:center"}));
+  a.appendChild(el("button",{class:"btn", text:"Save file", onclick:function(){ setView("save"); }}));
+}
+
+function renderStats(){
+  var box = $("stats"); box.innerHTML = "";
+  var items = collection(), kind = S.view;
+  var errs = 0, warns = 0;
+  items.forEach(function(it){
+    var r = checkOf(it, kind);
+    if(r.some(function(i){return i.kind==="e";})) errs++;
+    else if(r.length) warns++;
+  });
+  function stat(k, v, cls, sub){
+    box.appendChild(el("div",{class:"stat " + (cls||"")},[
+      el("div",{class:"k", text:k}),
+      el("div",{class:"v", html:v + (sub ? " <small>" + sub + "</small>" : "")})
+    ]));
+  }
+  stat("Total items", items.length);
+  stat("Ready to use", items.length - errs - warns, "ok", "of " + items.length);
+  stat("Worth a look", warns, warns ? "warnv" : "");
+  stat("Must be fixed", errs, errs ? "flag" : "");
+  if(kind === "pool"){
+    var mods = {}; S.pool.forEach(function(q){ mods[q.m] = (mods[q.m]||0) + 1; });
+    stat("Modules covered", Object.keys(mods).filter(function(k){return k;}).length);
+  }
+}
+
+function renderToolbar(){
+  var t = $("toolbar"); t.innerHTML = "";
+  var search = el("input",{type:"search", placeholder:"Search text and IDs", value:S.filter.q,
+    "aria-label":"Search this list", oninput:function(){ S.filter.q = this.value; renderList(); }});
+  t.appendChild(search);
+
+  if(S.view === "pool"){
+    var mods = {}; S.pool.forEach(function(q){ if(q.m) mods[q.m] = 1; });
+    var msel = el("select",{"aria-label":"Filter by module", onchange:function(){ S.filter.m = this.value; S.filter.area = "all"; renderToolbar(); renderList(); }});
+    msel.appendChild(el("option",{value:"all", text:"All modules"}));
+    Object.keys(mods).sort().forEach(function(m){
+      msel.appendChild(el("option",{value:m, text:m, selected:S.filter.m===m}));
+    });
+    t.appendChild(msel);
+
+    // Content-area filter. Only lists areas found in the module picked above,
+    // so the list stays short; "No area set" finds questions missing one.
+    var areas = {}, noArea = 0;
+    S.pool.forEach(function(q){
+      if(S.filter.m !== "all" && q.m !== S.filter.m) return;
+      if(q.area) areas[q.area] = (areas[q.area]||0) + 1; else noArea++;
+    });
+    if(S.filter.area !== "all" && S.filter.area !== "__none" && !areas[S.filter.area]) S.filter.area = "all";
+    var asel = el("select",{"aria-label":"Filter by content area", onchange:function(){ S.filter.area = this.value; renderList(); }});
+    asel.appendChild(el("option",{value:"all", text:"All content areas"}));
+    Object.keys(areas).sort(function(a,b){ return a.localeCompare(b); }).forEach(function(a){
+      asel.appendChild(el("option",{value:a, text:a + " (" + areas[a] + ")", selected:S.filter.area===a}));
+    });
+    if(noArea) asel.appendChild(el("option",{value:"__none", text:"No area set (" + noArea + ")", selected:S.filter.area==="__none"}));
+    t.appendChild(asel);
+
+    var lsel = el("select",{"aria-label":"Filter by level", onchange:function(){ S.filter.level = this.value; renderList(); }});
+    [["all","All levels"],["concept","Concept"],["application","Application"],["integration","Integration"]].forEach(function(p){
+      lsel.appendChild(el("option",{value:p[0], text:p[1], selected:S.filter.level===p[0]}));
+    });
+    t.appendChild(lsel);
+  }
+  var osel = el("select",{"aria-label":"Filter by status", onchange:function(){ S.filter.only = this.value; renderList(); }});
+  [["all","Every item"],["flagged","Only flagged items"],["errors","Only must-fix items"]].forEach(function(p){
+    osel.appendChild(el("option",{value:p[0], text:p[1], selected:S.filter.only===p[0]}));
+  });
+  t.appendChild(osel);
+}
+
+function itemText(it){
+  if(S.view === "cards") return it.t + " " + it.d + " " + it.id;
+  if(S.view === "checkpoints") return it.key + " " + it.options.join(" ") + " " + it.why;
+  return it.id + " " + it.stem + " " + it.options.join(" ") + " " + it.area + " " + it.why;
+}
+function visibleIndexes(){
+  var q = S.filter.q.trim().toLowerCase(), out = [];
+  collection().forEach(function(it, i){
+    if(q && itemText(it).toLowerCase().indexOf(q) === -1) return;
+    if(S.view === "pool"){
+      if(S.filter.m !== "all" && it.m !== S.filter.m) return;
+      if(S.filter.area === "__none" && it.area) return;
+      if(S.filter.area !== "all" && S.filter.area !== "__none" && it.area !== S.filter.area) return;
+      if(S.filter.level !== "all" && it.level !== S.filter.level) return;
+    }
+    if(S.filter.only !== "all"){
+      var r = checkOf(it, S.view);
+      if(S.filter.only === "errors" && !r.some(function(x){return x.kind==="e";})) return;
+      if(S.filter.only === "flagged" && !r.length) return;
+    }
+    out.push(i);
+  });
+  return out;
+}
+
+function renderList(){
+  var L = $("qlist"); L.innerHTML = "";
+  var items = collection();
+  if(!items.length){
+    L.appendChild(el("div",{class:"empty"},[
+      el("strong",{text:"Nothing here yet"}),
+      el("span",{text:"Use the add button above to write the first one."})
+    ]));
+    return;
+  }
+  var vis = visibleIndexes();
+  if(!vis.length){
+    L.appendChild(el("div",{class:"empty"},[
+      el("strong",{text:"No items match these filters"}),
+      el("span",{text:"There are " + items.length + " items in this list. Clear the search box or set the filters back to 'All'."})
+    ]));
+    return;
+  }
+  vis.forEach(function(i){
+    var it = items[i], r = checkOf(it, S.view), w = worst(r);
+    var label = S.view === "cards" ? it.id : S.view === "checkpoints" ? it.key : it.id;
+    var body  = S.view === "cards" ? it.t : S.view === "checkpoints" ? (it.options[it.answer]||"(no answer marked)") : it.stem;
+    var meta = el("div",{class:"meta"});
+    if(S.view === "pool"){
+      if(it.m) meta.appendChild(el("span",{class:"chip", text:it.m}));
+      if(it.level) meta.appendChild(el("span",{class:"chip lv-"+it.level, text:it.level}));
+      if(it.area) meta.appendChild(el("span",{class:"chip", text:it.area}));
+    }
+    if(r.length) meta.appendChild(el("span",{class:"chip", text:(w==="e"?"must fix: ":"check: ") + r.length}));
+    var row = el("button",{class:"qrow", role:"option", "aria-current": (S.sel[S.view]===i?"true":"false"),
+      onclick:function(){ S.sel[S.view] = i; renderList(); renderEditor(); }},[
+      el("span",{class:"dot " + (w==="e"?"e":w==="w"?"w":""), title:(w==="e"?"Must be fixed":w==="w"?"Worth a look":"No issues found")}),
+      el("span",{class:"id", text:label || "(no id)"}),
+      el("span",{class:"txt"},[ el("span",{class:"stem", text: body || "(empty)"}), meta ])
+    ]);
+    L.appendChild(row);
+  });
+}
+
+/* --------------------------------------------------------------- editor -- */
+function field(labelText, hintText, input){
+  var f = el("div",{class:"field"});
+  f.appendChild(el("label",{text:labelText}));
+  f.appendChild(input);
+  if(hintText) f.appendChild(el("div",{class:"hint", text:hintText}));
+  return f;
+}
+function textInput(val, onchange, ph){
+  return el("input",{type:"text", value:val||"", placeholder:ph||"", oninput:function(){ onchange(this.value); }});
+}
+function textArea(val, onchange, rows, ph){
+  var t = el("textarea",{rows:rows||3, placeholder:ph||"", oninput:function(){ onchange(this.value); autoGrow(this); }});
+  t.value = val || "";
+  return t;
+}
+function autoGrow(t){ t.style.height = "auto"; t.style.height = Math.max(42, t.scrollHeight + 2) + "px"; }
+
+function touch(){ markDirty(); renderList(); renderStats(); renderActions(); renderChecks(); }
+
+function renderEditor(){
+  var E = $("editor"); E.innerHTML = "";
+  var items = collection(), i = S.sel[S.view];
+  if(i === null || !items[i]){
+    E.appendChild(el("div",{class:"empty", style:"padding:60px 24px"},[
+      el("strong",{text: items.length ? "Pick an item from the list" : "This bank has no " + TITLES[S.view].toLowerCase() + " yet"}),
+      el("span",{text: items.length ? "Its full text and the guideline checks appear here." : "Add the first one with the button at the top of the page."})
+    ]));
+    return;
+  }
+  var it = items[i];
+  return S.view === "cards" ? renderCardEditor(E, it, i) : renderQEditor(E, it, i);
+}
+
+function renderQEditor(E, it, idx){
+  var isPool = S.view === "pool";
+  var head = el("div",{class:"head"},[
+    el("div",{class:"qid", text: isPool ? (it.id || "(no ID)") : "Checkpoint " + it.key}),
+    el("div",{class:"actions"},[
+      el("button",{class:"btn small", text:"Duplicate", onclick:function(){ duplicateItem(idx); }}),
+      el("button",{class:"btn small danger", text:"Retire", onclick:function(){ deleteItem(idx); }})
+    ])
+  ]);
+  E.appendChild(head);
+  var body = el("div",{class:"body"});
+
+  if(isPool){
+    var g = el("div",{class:"grid3"});
+    g.appendChild(field("Question ID","Permanent. Do not renumber or reuse.", textInput(it.id, function(v){ it.id = v.trim(); touch(); head.firstChild.textContent = it.id || "(no ID)"; })));
+    g.appendChild(field("Module","Matches a module id in the companion, e.g. m1.", textInput(it.m, function(v){ it.m = v.trim(); touch(); }, "m1")));
+    var lv = el("select",{onchange:function(){ it.level = this.value; touch(); }});
+    [["","Choose a level"],["concept","Concept"],["application","Application"],["integration","Integration"]].forEach(function(p){
+      lv.appendChild(el("option",{value:p[0], text:p[1], selected:it.level===p[0]}));
+    });
+    g.appendChild(field("Level","Used to build the stratified final exam.", lv));
+    body.appendChild(g);
+
+    var areas = {}; S.pool.forEach(function(q){ if(q.area) areas[q.area] = 1; });
+    var list = el("datalist",{id:"arealist"});
+    Object.keys(areas).sort().forEach(function(a){ list.appendChild(el("option",{value:a})); });
+    var ain = textInput(it.area, function(v){ it.area = v.trim(); touch(); }, "Enzyme basics");
+    ain.setAttribute("list","arealist");
+    body.appendChild(list);
+    body.appendChild(field("Content area","Where a student is sent to review after missing this. Must match an entry in the companion's AREA_SECTION list.", ain));
+
+    body.appendChild(field("Question stem","Positive wording, one idea, no more detail than the student needs.",
+      textArea(it.stem, function(v){ it.stem = v; touch(); }, 3, "What happens to the reaction rate when...")));
+  } else {
+    body.appendChild(field("Checkpoint key","The name used in the page markup: data-check=\"" + it.key + "\".",
+      textInput(it.key, function(v){ it.key = v.trim(); touch(); head.firstChild.textContent = "Checkpoint " + it.key; }, "c1")));
+    body.appendChild(el("div",{class:"note", text:"A checkpoint's question text lives in the companion's HTML page, not in this file. Here you edit its answer choices and rationale."}));
+  }
+
+  // options
+  var wrap = el("div");
+  wrap.appendChild(el("div",{class:"flabel", text:"Answer choices — click 'Correct' on the right one"}));
+  var opts = el("div");
+  it.options.forEach(function(o, oi){
+    var ta = textArea(o, function(v){ it.options[oi] = v; touch(); }, 1);
+    var row = el("div",{class:"opt-row"},[
+      el("div",{class:"letter", text:LETTERS[oi] || String(oi+1)}),
+      ta,
+      el("button",{class:"mark" + (it.answer===oi?" on":""), type:"button",
+        "aria-pressed": it.answer===oi ? "true":"false",
+        text: it.answer===oi ? "Correct" : "Mark correct",
+        onclick:function(){ it.answer = oi; markDirty(); renderEditor(); renderList(); renderStats(); }}),
+      el("button",{class:"btn small danger del", text:"Remove", onclick:function(){
+        if(it.options.length <= 2){ toast("A question needs at least two choices before you can remove another."); return; }
+        it.options.splice(oi,1);
+        if(it.answer === oi) it.answer = 0; else if(it.answer > oi) it.answer--;
+        markDirty(); renderEditor(); renderList(); renderStats();
+      }})
+    ]);
+    opts.appendChild(row);
+    setTimeout(function(){ autoGrow(ta); }, 0);
+  });
+  wrap.appendChild(opts);
+  wrap.appendChild(el("button",{class:"btn small", text:"Add a choice", onclick:function(){
+    if(it.options.length >= 5){ toast("The guidelines cap answer choices at five."); return; }
+    it.options.push(""); markDirty(); renderEditor(); renderList(); renderStats();
+  }}));
+  body.appendChild(wrap);
+
+  body.appendChild(field("Rationale (why)","Shown to the student after they answer. Explain the reasoning, not just 'correct'.",
+    textArea(it.why, function(v){ it.why = v; touch(); }, 3, "Because the enzyme is saturated at this point...")));
+
+  if(it._extra){
+    body.appendChild(el("div",{class:"note warn", text:"This item also carries: " + Object.keys(it._extra).join(", ") + ". BankBridge keeps these exactly as they were and writes them back out."}));
+  }
+  E.appendChild(body);
+  E.appendChild(el("div",{class:"checks", id:"checks"}));
+  renderChecks();
+}
+
+function renderCardEditor(E, it, idx){
+  E.appendChild(el("div",{class:"head"},[
+    el("div",{class:"qid", text: it.id || "(no ID)"}),
+    el("div",{class:"actions"},[
+      el("button",{class:"btn small", text:"Duplicate", onclick:function(){ duplicateItem(idx); }}),
+      el("button",{class:"btn small danger", text:"Retire", onclick:function(){ deleteItem(idx); }})
+    ])
+  ]));
+  var body = el("div",{class:"body"});
+  body.appendChild(field("Flashcard ID","Permanent, like question IDs.", textInput(it.id, function(v){ it.id = v.trim(); touch(); })));
+  body.appendChild(field("Front of the card","The term or the prompt.", textArea(it.t, function(v){ it.t = v; touch(); }, 2)));
+  body.appendChild(field("Back of the card","The definition or the answer.", textArea(it.d, function(v){ it.d = v; touch(); }, 3)));
+  var cb = el("input",{type:"checkbox", onchange:function(){ it.flip = this.checked; touch(); }});
+  cb.checked = !!it.flip;
+  var lab = el("label",{style:"display:flex;gap:9px;align-items:center;font-weight:500;color:var(--ink)"},[cb, el("span",{text:"Mark this as a reversed-recall card"})]);
+  body.appendChild(lab);
+  E.appendChild(body);
+  E.appendChild(el("div",{class:"checks", id:"checks"}));
+  renderChecks();
+}
+
+function renderChecks(){
+  var C = $("checks"); if(!C) return;
+  var it = collection()[S.sel[S.view]]; if(!it) return;
+  var r = checkOf(it, S.view);
+  C.innerHTML = "";
+  C.appendChild(el("h4",{text:"Checked against the question-writing guidelines"}));
+  if(!r.length){
+    C.appendChild(el("div",{class:"issue g"},[el("span",{class:"ic",text:"OK"}),el("span",{text:"All " + guidelineCount() + " checks passed for this item."})]));
+    return;
+  }
+  r.forEach(function(x){
+    C.appendChild(el("div",{class:"issue " + x.kind},[
+      el("span",{class:"ic", text: x.kind==="e" ? "Fix" : "Look"}),
+      el("span",{text:x.msg})
+    ]));
+  });
+}
+function guidelineCount(){ return S.view === "cards" ? 3 : 14; }
+
+/* --------------------------------------------------------- add / delete -- */
+function addItem(){
+  if(S.view === "pool"){
+    S.pool.push({id:nextId(), m:"", area:"", level:"", stem:"", options:["","","",""], answer:0, why:"", _extra:null});
+    S.sel.pool = S.pool.length - 1;
+  } else if(S.view === "checkpoints"){
+    S.checkpoints.push({key:nextCpKey(), options:["","","",""], answer:0, why:"", _extra:null});
+    S.sel.checkpoints = S.checkpoints.length - 1;
+  } else {
+    S.cards.push({id:nextCardId(), t:"", d:"", flip:false, _extra:null});
+    S.sel.cards = S.cards.length - 1;
+  }
+  S.filter = {q:"", m:"all", area:"all", level:"all", only:"all"};
+  markDirty(); render();
+}
+function duplicateItem(i){
+  var items = collection();
+  var copy = JSON.parse(JSON.stringify(items[i]));
+  if(S.view === "pool") copy.id = nextId();
+  else if(S.view === "cards") copy.id = nextCardId();
+  else copy.key = nextCpKey();
+  items.splice(i+1, 0, copy);
+  S.sel[S.view] = i + 1;
+  markDirty(); render();
+  toast("Copied. The new item has ID " + (copy.id || copy.key) + " — old IDs are never reused.");
+}
+function deleteItem(i){
+  var items = collection(), it = items[i];
+  var label = it.id || it.key || "this item";
+  if(!confirm("Retire " + label + "?\n\nIt is removed from the bank, and its ID is recorded so it is never given to a future question. This cannot be undone from inside the tool — but nothing is written to your file until you save.")) return;
+  if(it.id) S.retired.push(it.id);
+  items.splice(i,1);
+  S.sel[S.view] = items.length ? Math.min(i, items.length-1) : null;
+  markDirty(); render();
+  toast(label + " retired. Save the file to make it permanent.");
+}
+
+/* ------------------------------------------------------------- overview -- */
+function renderOverview(){
+  var P = $("panel"); P.innerHTML = "";
+  P.appendChild(el("h3",{text:"Topic details"}));
+  P.appendChild(el("p",{class:"lead", text:"These two values are read by the companion. TOPIC_ID also decides where a student's saved progress is stored, so two companions must never share one."}));
+
+  var g = el("div",{class:"grid3"});
+  g.appendChild(field("TOPIC_ID","Short, lowercase, no spaces — e.g. pharmacokinetics.", textInput(S.topicId, function(v){ S.topicId = v.trim(); markDirty(); renderActions(); })));
+  g.appendChild(field("TOPIC_TITLE","The full name students see.", textInput(S.topicTitle, function(v){ S.topicTitle = v; markDirty(); renderActions(); })));
+  P.appendChild(g);
+
+  if(S.loadNotes.length){
+    P.appendChild(el("h3",{text:"Notes from opening this file", style:"margin-top:26px"}));
+    S.loadNotes.forEach(function(n){ P.appendChild(el("div",{class:"note warn", text:n})); });
+  }
+
+  // level balance
+  P.appendChild(el("h3",{text:"Final exam balance", style:"margin-top:26px"}));
+  P.appendChild(el("p",{class:"lead", text:"The final exam draws 8 concept, 10 application and 7 integration questions by default. You need at least that many of each, and comfortably more if you want the exam to differ between attempts."}));
+  var lv = {concept:0, application:0, integration:0, "(none set)":0};
+  S.pool.forEach(function(q){ if(lv[q.level] === undefined) lv[q.level] = 0; lv[q.level || "(none set)"]++; });
+  var need = {concept:8, application:10, integration:7};
+  var t1 = el("table",{class:"tbl"});
+  t1.appendChild(el("tr",{},[el("th",{text:"Level"}),el("th",{class:"num",text:"In bank"}),el("th",{class:"num",text:"Exam needs"}),el("th",{text:"Status"})]));
+  Object.keys(lv).forEach(function(k){
+    if(k === "(none set)" && !lv[k]) return;
+    var n = lv[k], req = need[k];
+    var status = req === undefined ? "Not a level the companion recognises"
+      : n < req ? "Short by " + (req - n) : n < req * 1.5 ? "Enough, but every exam will look similar" : "Comfortable";
+    t1.appendChild(el("tr",{},[el("td",{text:k}),el("td",{class:"num",text:n}),el("td",{class:"num",text:req===undefined?"—":req}),el("td",{text:status})]));
+  });
+  P.appendChild(t1);
+
+  // module coverage
+  P.appendChild(el("h3",{text:"Questions per module", style:"margin-top:26px"}));
+  P.appendChild(el("p",{class:"lead", text:"Each module quiz pulls 8 questions from its own module by default."}));
+  var mods = {}; S.pool.forEach(function(q){ var k = q.m || "(none set)"; mods[k] = (mods[k]||0) + 1; });
+  var t2 = el("table",{class:"tbl"});
+  t2.appendChild(el("tr",{},[el("th",{text:"Module"}),el("th",{class:"num",text:"Questions"}),el("th",{text:"Status"})]));
+  Object.keys(mods).sort().forEach(function(k){
+    var n = mods[k];
+    var st = k === "(none set)" ? "These will not appear in any module quiz" : n < 8 ? "Short by " + (8-n) + " for a full 8-question quiz" : n < 12 ? "Enough, but retakes will repeat" : "Comfortable";
+    t2.appendChild(el("tr",{},[el("td",{text:k}),el("td",{class:"num",text:n}),el("td",{text:st})]));
+  });
+  P.appendChild(t2);
+
+  // areas
+  var areas = {}; S.pool.forEach(function(q){ var k = q.area || "(none set)"; areas[k] = (areas[k]||0)+1; });
+  P.appendChild(el("h3",{text:"Content areas", style:"margin-top:26px"}));
+  P.appendChild(el("p",{class:"lead", text:"Every name here must also appear in the companion's AREA_SECTION list, or a student who misses the question is sent nowhere. Spelling has to match exactly, capital letters included."}));
+  var t3 = el("table",{class:"tbl"});
+  t3.appendChild(el("tr",{},[el("th",{text:"Area"}),el("th",{class:"num",text:"Questions"})]));
+  Object.keys(areas).sort().forEach(function(k){
+    t3.appendChild(el("tr",{},[el("td",{text:k}),el("td",{class:"num",text:areas[k]})]));
+  });
+  P.appendChild(t3);
+
+  if(S.retired.length){
+    P.appendChild(el("h3",{text:"Retired IDs", style:"margin-top:26px"}));
+    P.appendChild(el("p",{class:"lead", text:"These questions were removed. Their IDs are kept in the saved file as a comment so no future question is ever given the same number."}));
+    P.appendChild(el("div",{class:"note", text:S.retired.join(", ")}));
+  }
+}
+
+/* ------------------------------------------------------------ pdf export -- */
+function esc(s){
+  return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function groupByModule(list){
+  var order = [], map = {};
+  list.forEach(function(q){
+    var k = q.m || "Unassigned";
+    if(!map[k]){ map[k] = []; order.push(k); }
+    map[k].push(q);
+  });
+  return {order:order.sort(), map:map};
+}
+// Builds the printable document as an HTML string from the current bank
+// state and the options chosen on the Export to PDF screen. Used for both
+// the on-screen preview and the hidden area that actually gets printed, so
+// what you see in the preview is exactly what prints.
+function buildPdfHTML(o){
+  var out = [];
+  var title = o.title || S.topicTitle || S.topicId || "Question bank";
+  out.push('<div class="phead"><h1>' + esc(title) + '</h1><div class="pmeta">'
+    + (o.keyMode ? "Answer key \u2014 shows correct answers and rationale" : "Practice copy \u2014 no answers marked")
+    + ' &middot; generated ' + new Date().toLocaleDateString() + '</div></div>');
+
+  var usedPool = false;
+  if(o.includePool){
+    var list = S.pool.filter(function(q){ return o.module === "all" || q.m === o.module; });
+    if(list.length){
+      usedPool = true;
+      out.push('<h2 class="psec">Quiz questions' + (o.module !== "all" ? " \u2014 " + esc(o.module) : "") + '</h2>');
+      var g = groupByModule(list), n = 0;
+      g.order.forEach(function(mod){
+        if(o.module === "all" && g.order.length > 1) out.push('<h3 style="font-size:12.5px;color:#555;margin:14px 0 8px">' + esc(mod) + '</h3>');
+        g.map[mod].forEach(function(q){
+          n++;
+          out.push('<div class="pq"><div class="pstem"><b>' + n + '.</b> ' + esc(q.stem) + '</div><ol>');
+          q.options.forEach(function(opt, i){
+            var cls = (o.keyMode && i === q.answer) ? ' class="key"' : '';
+            out.push('<li' + cls + '><b class="let">' + (LETTERS[i]||(i+1)) + '.</b> ' + esc(opt) + '</li>');
+          });
+          out.push('</ol>');
+          if(o.keyMode && q.why) out.push('<div class="prat">Why: ' + esc(q.why) + '</div>');
+          out.push('</div>');
+        });
+      });
+    } else if(o.module !== "all"){
+      out.push('<h2 class="psec">Quiz questions</h2><div class="pnote">No questions in module ' + esc(o.module) + '.</div>');
+    }
+  }
+
+  if(o.includeCheckpoints && S.checkpoints.length){
+    out.push('<h2 class="psec">Checkpoints</h2><div class="pnote">Checkpoint question text lives in the companion\u2019s page and is not included here \u2014 only the answer choices and rationale below.</div>');
+    S.checkpoints.forEach(function(c, idx){
+      out.push('<div class="pq"><div class="pstem"><b>' + esc(c.key) + '.</b></div><ol>');
+      c.options.forEach(function(opt, i){
+        var cls = (o.keyMode && i === c.answer) ? ' class="key"' : '';
+        out.push('<li' + cls + '><b class="let">' + (LETTERS[i]||(i+1)) + '.</b> ' + esc(opt) + '</li>');
+      });
+      out.push('</ol>');
+      if(o.keyMode && c.why) out.push('<div class="prat">Why: ' + esc(c.why) + '</div>');
+      out.push('</div>');
+    });
+  }
+
+  if(o.includeCards && S.cards.length){
+    out.push('<h2 class="psec">Flashcards</h2><table class="pcard">');
+    S.cards.forEach(function(c){
+      out.push('<tr><td class="pf">' + esc(c.t) + '</td><td>' + esc(c.d) + '</td></tr>');
+    });
+    out.push('</table>');
+  }
+
+  if(o.keyMode && usedPool){
+    var keyList = S.pool.filter(function(q){ return o.module === "all" || q.m === o.module; });
+    out.push('<div class="pkey"><h2 class="psec">Answer key \u2014 quick reference</h2><div class="pkeygrid">');
+    keyList.forEach(function(q){
+      out.push('<div>' + esc(q.id||"?") + ': ' + (LETTERS[q.answer]||"?") + '</div>');
+    });
+    out.push('</div></div>');
+  }
+
+  if(!o.includePool && !o.includeCheckpoints && !o.includeCards){
+    out.push('<div class="pnote">Nothing is selected above, so there is nothing to show here yet.</div>');
+  }
+  return out.join("\n");
+}
+
+function renderPdfExport(){
+  var P = $("panel"); P.innerHTML = "";
+  var o = S.pdfOpts;
+
+  P.appendChild(el("h3",{text:"What goes in the document"}));
+  P.appendChild(el("p",{class:"lead", text:"Choose what to include, then check the preview below. Nothing is created as a file until you print \u2014 this screen never touches your bank file."}));
+
+  var opts = el("div",{class:"pdf-opts"});
+
+  var checkRow = el("div",{class:"pdf-row"});
+  function checkbox(labelText, key, count){
+    var cb = el("input",{type:"checkbox", onchange:function(){ o[key] = this.checked; updatePreview(); }});
+    cb.checked = o[key];
+    var lab = el("label",{class:"pdf-check"},[cb, el("span",{text:labelText + " (" + count + ")"})]);
+    return lab;
+  }
+  checkRow.appendChild(checkbox("Quiz questions", "includePool", S.pool.length));
+  checkRow.appendChild(checkbox("Checkpoints", "includeCheckpoints", S.checkpoints.length));
+  checkRow.appendChild(checkbox("Flashcards", "includeCards", S.cards.length));
+  opts.appendChild(checkRow);
+
+  var row2 = el("div",{class:"pdf-row"});
+  var mods = {}; S.pool.forEach(function(q){ if(q.m) mods[q.m] = 1; });
+  var msel = el("select",{"aria-label":"Limit quiz questions to one module", onchange:function(){ o.module = this.value; updatePreview(); }});
+  msel.appendChild(el("option",{value:"all", text:"All modules", selected:o.module==="all"}));
+  Object.keys(mods).sort().forEach(function(m){ msel.appendChild(el("option",{value:m, text:m, selected:o.module===m})); });
+  row2.appendChild(field("Limit quiz questions to", "Only affects the quiz question list above.", msel));
+  row2.appendChild(field("Document title", "Shown at the top of the page.", textInput(o.title || S.topicTitle, function(v){ o.title = v; updatePreview(); })));
+  opts.appendChild(row2);
+
+  var rg = el("div",{class:"radiogroup"});
+  [
+    ["true","Answer key","Shows the correct choice and the rationale for every question. Keep this copy for yourself."],
+    ["false","Practice copy","No answers marked and no rationale \u2014 safe to hand to students as a paper backup or extra practice."]
+  ].forEach(function(p){
+    var r = el("input",{type:"radio", name:"keymode", value:p[0], onchange:function(){ o.keyMode = (this.value === "true"); updatePreview(); }});
+    r.checked = (String(o.keyMode) === p[0]);
+    rg.appendChild(el("label",{},[r, el("span",{},[el("span",{class:"rt", text:p[1]}), el("br"), el("span",{class:"rd", text:p[2]})])]));
+  });
+  opts.appendChild(field("Answer key or practice copy", null, rg));
+  P.appendChild(opts);
+
+  if(o.keyMode === false){
+    P.appendChild(el("div",{class:"note warn", text:"Practice-copy mode still checks answer keys internally so the compact key list can be printed separately if you switch modes \u2014 nothing marked as correct will appear on this copy."}));
+  }
+
+  P.appendChild(el("h3",{text:"Preview", style:"margin-top:10px"}));
+  P.appendChild(el("p",{class:"lead", text:"This is exactly what will print."}));
+  var preview = el("div",{class:"previewwrap"});
+  var doc = el("div",{class:"pdoc", id:"pdfpreview"});
+  preview.appendChild(doc);
+  P.appendChild(preview);
+
+  P.appendChild(el("div",{class:"actions", style:"margin-top:18px"},[
+    el("button",{class:"btn primary", text:"Open print dialog", onclick:function(){
+      $("printarea").innerHTML = doc.innerHTML;
+      window.print();
+    }})
+  ]));
+  P.appendChild(el("div",{class:"note", style:"margin-top:14px", text:"The print dialog opens next. Choose your printer as usual to print on paper, or choose \u201cSave as PDF\u201d (Windows and Chromebook) or \u201cSave to PDF\u201d / \u201cSave as PDF\u201d (Mac) as the destination to save a PDF file instead of printing."}));
+
+  function updatePreview(){ doc.innerHTML = buildPdfHTML(o); }
+  updatePreview();
+}
+
+/* ----------------------------------------------------------------- save -- */
+function renderSave(){
+  var P = $("panel"); P.innerHTML = "";
+  var errItems = [];
+  [["pool","Quiz question"],["checkpoints","Checkpoint"],["cards","Flashcard"]].forEach(function(p){
+    S[p[0]].forEach(function(it){
+      var r = checkOf(it, p[0]);
+      r.filter(function(x){return x.kind === "e";}).forEach(function(x){
+        errItems.push({label:p[1] + " " + (it.id || it.key || "(no id)"), msg:x.msg, view:p[0], item:it});
+      });
+    });
+  });
+  var total = S.pool.length + S.checkpoints.length + S.cards.length;
+
+  // duplicate IDs across the whole bank
+  var seen = {}, dupes = [];
+  S.pool.concat(S.cards).forEach(function(it){ if(it.id){ if(seen[it.id]) dupes.push(it.id); seen[it.id] = 1; } });
+  var cseen = {};
+  S.checkpoints.forEach(function(c){ if(cseen[c.key]) dupes.push(c.key + " (checkpoint)"); cseen[c.key] = 1; });
+
+  P.appendChild(el("h3",{text:"Before you save"}));
+  P.appendChild(el("p",{class:"lead", text:"Checked all " + total + " items in this bank: " + S.pool.length + " quiz questions, " + S.checkpoints.length + " checkpoints, " + S.cards.length + " flashcards."}));
+
+  if(dupes.length) P.appendChild(el("div",{class:"note bad", text:"Repeated IDs: " + dupes.join(", ") + ". IDs must be unique, or a hub cannot tell two questions apart."}));
+  if(!S.topicId) P.appendChild(el("div",{class:"note bad", text:"TOPIC_ID is empty. Set it on the Bank overview page — without it the companion cannot save student progress."}));
+
+  if(errItems.length){
+    P.appendChild(el("div",{class:"note bad", text:errItems.length + " must-fix problem(s) across " + total + " items. The file will still save, but the companion may not behave correctly until these are sorted."}));
+    var t = el("table",{class:"tbl"});
+    t.appendChild(el("tr",{},[el("th",{text:"Item"}),el("th",{text:"Problem"}),el("th",{text:""})]));
+    errItems.slice(0,40).forEach(function(e){
+      t.appendChild(el("tr",{},[
+        el("td",{text:e.label}), el("td",{text:e.msg}),
+        el("td",{},[el("button",{class:"btn small", text:"Go to it", onclick:function(){
+          S.view = e.view; S.sel[e.view] = S[e.view].indexOf(e.item);
+          S.filter = {q:"", m:"all", area:"all", level:"all", only:"all"};
+          setView(e.view);
+        }})])
+      ]));
+    });
+    P.appendChild(t);
+    if(errItems.length > 40) P.appendChild(el("p",{class:"lead", text:"Showing the first 40 of " + errItems.length + "."}));
+  } else {
+    P.appendChild(el("div",{class:"note", text:"No must-fix problems found. Warnings, if any, are shown next to each question and are yours to judge."}));
+  }
+
+  var fname = (S.topicId || "bank") + ".js";
+  P.appendChild(el("h3",{text:"Save the file", style:"margin-top:26px"}));
+  P.appendChild(el("p",{class:"lead", text:"This downloads a complete replacement for banks/" + fname + ". Put it in your banks folder, overwriting the old one — keep a copy of the old file until you have opened the companion and seen it work."}));
+  P.appendChild(el("div",{class:"actions"},[
+    el("button",{class:"btn primary", text:"Download " + fname, onclick:function(){ download(fname); }}),
+    el("button",{class:"btn", text:"Copy the file text instead", onclick:copyOut}),
+    el("button",{class:"btn", text:"Show me the file", onclick:function(){
+      var pre = $("preview"); pre.hidden = !pre.hidden;
+      if(!pre.hidden) pre.textContent = generate();
+    }})
+  ]));
+  P.appendChild(el("pre",{class:"out", id:"preview", hidden:true}));
+}
+function download(fname){
+  var blob = new Blob([generate()], {type:"text/javascript;charset=utf-8"});
+  var url = URL.createObjectURL(blob);
+  var a = el("a",{href:url, download:fname});
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+  S.dirty = false; renderActions();
+  toast("Saved " + fname + " to your downloads folder.");
+}
+function copyOut(){
+  var text = generate();
+  function ok(){ S.dirty = false; renderActions(); toast("The whole file is on your clipboard. Paste it over the old one."); }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(ok, fallback);
+  } else fallback();
+  function fallback(){
+    var ta = el("textarea",{}); ta.value = text;
+    ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); ok(); }
+    catch(err){ toast("This browser blocked copying. Use the download button instead."); }
+    ta.remove();
+  }
+}
+
+/* ----------------------------------------------------------------- help -- */
+function renderHelp(){
+  var P = $("panel");
+  P.innerHTML =
+  '<h3>What this tool is</h3>'
+  + '<p class="lead">Each study companion keeps its questions in a plain text file ending in <code>.js</code>, inside a folder called <code>banks</code>. That file is just a long list of questions written in a format the companion knows how to read. BankBridge opens that file, shows you the questions as a normal form, and writes a fresh copy of the file when you are done. It never changes the companion itself.</p>'
+  + '<h3 style="margin-top:22px">The three lists</h3>'
+  + '<table class="tbl">'
+  + '<tr><th>List</th><th>What it holds</th><th>Where students meet it</th></tr>'
+  + '<tr><td>Quiz questions</td><td>The graded pool</td><td>Module quizzes and the final exam</td></tr>'
+  + '<tr><td>Checkpoints</td><td>Answer choices for the small in-page questions</td><td>Inside a section; a student must get these right to move on</td></tr>'
+  + '<tr><td>Flashcards</td><td>Term and definition pairs</td><td>The retrieval practice page; never graded</td></tr>'
+  + '</table>'
+  + '<h3 style="margin-top:22px">Why IDs matter</h3>'
+  + '<p class="lead">Every question has a permanent ID like <code>ENZ-014</code>. Once given out, it is never reused and never renumbered, even if the question is rewritten. That is what lets you say later "students keep missing ENZ-014" and have it mean one specific question forever. When you retire a question here, its ID is written into the saved file as a note so no new question is ever handed the same number.</p>'
+  + '<h3 style="margin-top:22px">The checks</h3>'
+  + '<p class="lead">Two kinds appear under each question. <strong>Fix</strong> means something is missing or broken and the companion may misbehave — an empty rationale, no correct answer marked, two choices instead of four. <strong>Look</strong> means the wording clashes with the course question-writing guidelines: absolute words like "always", vague ones like "usually", a negative stem, or a correct answer that is noticeably longer than the others. You can save with warnings; they are judgement calls, not errors.</p>'
+  + '<h3 style="margin-top:22px">Saving safely</h3>'
+  + '<p class="lead">Nothing you do here touches your files until you press download. The download is a complete replacement for the bank file, not a patch. Keep the old version somewhere until you have opened the companion in a browser and confirmed the questions still appear.</p>'
+  + '<h3 style="margin-top:22px">If something goes wrong</h3>'
+  + '<p class="lead">If a file will not open, the message names the line where the problem is. The usual cause is an apostrophe inside a question that was not escaped. Files saved by this tool escape them for you.</p>'
+  + '<p class="lead">Everything runs inside this page. There is no internet connection, no account and no copy of your questions anywhere else. Closing the tab discards anything not yet downloaded.</p>';
+}
+
+/* ================================================================= BOOT == */
+$("btn-pick").onclick = function(){ $("file").click(); };
+$("file").onchange = function(){ if(this.files[0]) readFile(this.files[0]); };
+
+var drop = $("drop");
+["dragenter","dragover"].forEach(function(ev){
+  drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add("over"); });
+});
+["dragleave","drop"].forEach(function(ev){
+  drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove("over"); });
+});
+drop.addEventListener("drop", function(e){
+  var f = e.dataTransfer.files[0];
+  if(f) readFile(f);
+});
+
+function readFile(f){
+  if(f.size === 0){ alert("That file is empty (0 KB). It may not have finished copying — try it again from its original location."); return; }
+  var r = new FileReader();
+  r.onerror = function(){ alert("This file could not be read. If it is on a shared drive, copy it to your desktop first and try again."); };
+  r.onload = function(){
+    try{
+      loadBank(r.result, f.name);
+      setView(S.pool.length ? "pool" : "overview");
+      if(S.loadNotes.length) toast("Opened " + f.name + " — there are notes about this file on the Bank overview page.");
+      else toast("Opened " + f.name + ": " + S.pool.length + " questions, " + S.checkpoints.length + " checkpoints, " + S.cards.length + " flashcards.");
+    }catch(err){
+      alert("This file could not be opened.\n\n" + err.message + "\n\nThe most common cause is a typing mistake in the file itself, such as a missing comma or an apostrophe inside a question. The message above usually names the line.");
+    }
+  };
+  r.readAsText(f);
+}
+
+$("btn-new").onclick = function(){
+  var id = prompt("Short topic id for the new companion — lowercase, no spaces.\nFor example: pharmacokinetics", "");
+  if(id === null) return;
+  id = id.trim().toLowerCase().replace(/\s+/g,"-");
+  if(!id){ toast("A topic id is needed to start."); return; }
+  S.topicId = id;
+  S.topicTitle = "";
+  S.pool = []; S.checkpoints = []; S.cards = []; S.retired = []; S.loadNotes = [];
+  S.fileName = id + ".js"; S.loaded = true; S.dirty = false;
+  S.sel = {pool:null, checkpoints:null, cards:null};
+  setView("overview");
+  toast("Empty bank started. Give it a title, then add your first question.");
+};
+
+$("btn-close").onclick = function(){
+  if(S.dirty && !confirm("You have changes that have not been saved to a file. Close this bank and lose them?")) return;
+  S.loaded = false; S.dirty = false;
+  S.pool = []; S.checkpoints = []; S.cards = []; S.retired = []; S.loadNotes = [];
+  S.topicId = ""; S.topicTitle = "";
+  $("file").value = "";
+  render();
+};
+
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s"){ e.preventDefault(); if(S.loaded) setView("save"); }
+});
+
+render();
+</script>
+</body>
+</html>

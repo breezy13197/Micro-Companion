@@ -139,6 +139,14 @@ To change the hub's colors later, open `index.html` in a text editor and search 
 
 The `m` field of each hub question can now hold **more than one** companion, joined by `+`. Keep that format (for example `bacteria1+bacteria3`, no spaces). If you use BankBridge to edit `hub.js`, open a few questions after saving to confirm the `m` values survived.
 
+## Editing questions with BankBridge
+
+BankBridge is the question editor. A copy lives in this repository at `tools/bankbridge.html`, so it is saved alongside the question banks it edits. Students never use it, so you can leave the `tools/` folder out of what you publish.
+
+To use it, double-click `tools/bankbridge.html` to open it in your web browser, then click the open button and choose a bank file from the `banks/` folder (for example `banks/bacteria1.js`). Nothing is uploaded anywhere; the file stays on your computer.
+
+**Finding questions by content area.** On the Quiz questions screen, above the list, there is a drop-down that starts as "All content areas." Pick an area (for example "Gram staining") to see only the questions on that topic; the number in parentheses after each area tells you how many questions it has. If you first pick a module in the drop-down beside the search box, the area list shrinks to just that module's areas, which keeps it short. The last choice, "No area set," shows any question that is missing an area, which is worth fixing because the area is what sends a student to the right section to review after a wrong answer.
+
 ## Checking it works in different browsers
 
 The `browser-tests/` folder is an automatic checker. It opens the hub and every companion in Chrome, Firefox, Safari and phone-sized screens, clicks through them the way a student would, and reports anything that breaks. Students do not need it; you can leave it out of the folder you publish. Its own `README.md` explains how to run it by hand, step by step.
