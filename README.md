@@ -145,7 +145,7 @@ BankBridge is the question editor. A copy lives in this repository at `tools/ban
 
 To use it, double-click `tools/bankbridge.html` to open it in your web browser, then click the open button and choose a bank file from the `banks/` folder (for example `banks/bacteria1.js`). Nothing is uploaded anywhere; the file stays on your computer.
 
-**Finding questions by content area.** On the Quiz questions screen, above the list, there is a drop-down that starts as "All content areas." Pick an area (for example "Gram staining") to see only the questions on that topic; the number in brackets after each area tells you how many questions it has. If you first pick a module in the drop-down beside the search box, the area list shrinks to just that module's areas, which keeps it short. The last choice, "No area set," shows any question that is missing an area, which is worth fixing because the area is what sends a student to the right section to review after a wrong answer.
+**Finding questions by content area.** On the Quiz questions screen, above the list, there is a drop-down that starts as "All content areas." Pick an area (for example "Gram staining") to see only the questions on that topic; the number in parentheses after each area tells you how many questions it has. If you first pick a module in the drop-down beside the search box, the area list shrinks to just that module's areas, which keeps it short. The last choice, "No area set," shows any question that is missing an area, which is worth fixing because the area is what sends a student to the right section to review after a wrong answer.
 
 ## Checking it works in different browsers
 
