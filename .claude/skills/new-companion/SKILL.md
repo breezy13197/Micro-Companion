@@ -128,7 +128,7 @@ it's easiest to go wrong:
    `CHECKPOINTS`, `CARDS` and `POOL`. Assign permanent ids as you write
    (`<PREFIX>-001`, `<PREFIX>-CARD-01`) and pick a prefix no other bank uses.
    - Every question follows §10 and the Guidelines docx: single best answer,
-     4 parallel choices, positive stem, no always/never, no all/none of the
+     3 to 5 parallel choices, positive stem, no always/never, no all/none of the
      above, and a teaching `why`.
    - **Adaptive exams (AGENTS.md):** these come from `area` tags, not extra
      code (§8 "The targeted round"). Give every `POOL` question an `area`, and

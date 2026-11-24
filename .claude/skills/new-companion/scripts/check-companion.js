@@ -141,7 +141,6 @@ const answerSpots = [0, 0, 0, 0, 0];
 function checkItem(label, stem, options, answer, why) {
   if (!Array.isArray(options)) { err(`${label}: no options list.`); return; }
   if (options.length < 3 || options.length > 5) err(`${label}: has ${options.length} choices; the guidelines allow 3 to 5.`);
-  else if (options.length !== 4) warn(`${label}: has ${options.length} choices; this project's standard is 4 (doc section 10).`);
   if (typeof answer !== 'number' || answer < 0 || answer >= options.length) err(`${label}: answer number ${answer} does not point at a choice.`);
   else if (answer < answerSpots.length) answerSpots[answer]++;
   if (!why || !String(why).trim()) err(`${label}: no "why" explanation.`);

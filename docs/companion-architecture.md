@@ -738,7 +738,7 @@ Every checkpoint and every `POOL` question follows the same rules, sourced from 
 - Single best answer, never "select all that apply"
 - Independent of other items — no item should depend on a previous one
 - Clear, focused stem in **positive** wording (no "NOT," "EXCEPT")
-- Exactly 4 homogeneous, parallel-structured answer choices
+- 3 to 5 homogeneous, parallel-structured answer choices (4 is typical)
 - Every distractor should be plausible, not a throwaway
 - No absolute terms ("always," "never," "only," "all")
 - No vague terms ("frequently," "usually," "commonly")
