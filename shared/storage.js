@@ -153,11 +153,13 @@ function saveState(){
 }
 /* Downloads this companion's progress in the hub's backup format, so the
    hub's "Save / load progress" screen can load it back in. Built from the
-   in-memory state, so it works even when the browser refuses writes. */
+   in-memory state, so it works even when the browser refuses writes.
+   A companion cannot see the hub's own record, so the file carries no hub
+   record (null) and restoring it leaves the hub's exam history alone. */
 function downloadSessionBackup(){
   var id=typeof TOPIC_ID!=='undefined'?TOPIC_ID:'default',companions={};
   try{companions[id]=JSON.stringify(state);}catch(e){}
   MCStore.download('microbiology-progress-'+id+'-'+new Date().toISOString().slice(0,10)+'.json',
-    MCStore.buildBackup('unsaved session',{},companions));
+    MCStore.buildBackup('unsaved session',null,companions));
 }
 var state=loadState();
