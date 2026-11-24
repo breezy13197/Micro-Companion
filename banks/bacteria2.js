@@ -8,31 +8,31 @@ var CHECKPOINTS = {
   "c11a": {
     "options": [
       "Peptidoglycan cross-linking in the cell wall",
-      "A DNA polymerase shared by bacteria and humans",
-      "A phospholipid found in both cell membranes",
-      "A metabolic enzyme found in both cell types"
+      "DNA polymerase activity during replication",
+      "Phospholipids of the cytoplasmic membrane",
+      "Glycolytic enzymes of central metabolism"
     ],
     "answer": 0,
     "why": "Human cells build no peptidoglycan wall, so a drug that blocks its assembly harms bacteria and spares the patient. Targets shared with human cells would injure the patient at similar drug concentrations."
   },
   "c11b": {
     "options": [
-      "Inhibiting the uptake of dietary folate by human cells",
+      "Blocking the transporter bacteria use to take up dietary folate",
       "Inhibiting an enzyme in bacterial folate synthesis",
-      "Inhibiting an enzyme that human cells use to absorb folate",
-      "Inhibiting the breakdown of folate in the human liver"
+      "Inhibiting folate-using enzymes shared by both cell types",
+      "Blocking folate absorption from the patient's diet"
     ],
     "answer": 1,
     "why": "Because humans lack the folate-synthesis enzymes, a drug aimed at those enzymes reaches a target that only bacteria have."
   },
   "c11c": {
     "options": [
-      "Drugs that bind human subunits and spare bacterial subunits",
-      "Drugs that bind both subunit types with equal affinity",
-      "Drugs that bind bacterial subunits and spare human subunits",
-      "Drugs that convert bacterial subunits into human subunits"
+      "Drugs that fit bacterial subunits and spare human subunits",
+      "Drugs that fit both subunit types equally well",
+      "Drugs that fit human subunits inside infected cells",
+      "Drugs that fit mitochondrial subunits and spare bacterial ones"
     ],
-    "answer": 2,
+    "answer": 0,
     "why": "The two ribosomes carry out the same job but differ in structure, so a drug can be shaped to fit the bacterial subunits and leave the human ones alone."
   },
   "c12a": {
@@ -59,8 +59,8 @@ var CHECKPOINTS = {
     "options": [
       "Broad-spectrum activity",
       "Narrow-spectrum activity",
-      "Bacteriostatic activity",
-      "Synergistic activity"
+      "Extended-spectrum activity",
+      "Anti-anaerobic activity"
     ],
     "answer": 1,
     "why": "A drug that acts against one or very few types of microbes is narrow-spectrum. A broad-spectrum drug, such as a tetracycline, acts against several unrelated groups."
@@ -117,13 +117,13 @@ var CHECKPOINTS = {
   },
   "c22a": {
     "options": [
-      "Supercoiling of bacterial DNA",
-      "Delivery of aminoacyl-tRNA to the ribosome",
-      "Synthesis of lipid II in the cytoplasm",
-      "Transpeptidase cross-linking of peptidoglycan"
+      "Transglycosylase linking of glycan strands",
+      "Transpeptidase cross-linking of peptide side chains",
+      "D-alanine racemization in the cytoplasm",
+      "Dephosphorylation of the lipid carrier"
     ],
-    "answer": 3,
-    "why": "β-Lactams bind and inhibit the transpeptidase activity of PBPs. Without cross-linking, the wall is weak."
+    "answer": 1,
+    "why": "β-Lactams bind and inhibit the transpeptidase activity of PBPs, not their transglycosylase activity. Without cross-linking, the wall is weak."
   },
   "c22b": {
     "options": [
@@ -143,14 +143,14 @@ var CHECKPOINTS = {
       "Slowing kidney clearance of the antibiotic"
     ],
     "answer": 1,
-    "why": "β-Lactamase inhibitors have no antibiotic activity of their own. They occupy the enzyme so the partner β-lactam survives long enough to reach its PBP target."
+    "why": "Clavulanate, tazobactam, and avibactam have little useful antibacterial activity alone (sulbactam is an exception against Acinetobacter). Their role is to occupy the β-lactamase so the partner β-lactam survives to reach its PBP target."
   },
   "c23a": {
     "options": [
       "Gram-negative bacteria lack D-alanyl-D-alanine precursors",
       "Gram-negative bacteria lack a peptidoglycan layer",
       "The Gram-negative outer membrane blocks large glycopeptides",
-      "Gram-positive bacteria lack a cytoplasmic membrane"
+      "Gram-positive bacteria have a thinner peptidoglycan layer"
     ],
     "answer": 2,
     "why": "Vancomycin is a large glycopeptide. The outer membrane of Gram-negative bacteria is impermeable to it, so the drug never reaches its target."
@@ -197,13 +197,13 @@ var CHECKPOINTS = {
   },
   "c32b": {
     "options": [
-      "Peptidoglycan precursors",
-      "Folate",
-      "Mycolic acids",
-      "Messenger RNA"
+      "DNA replication",
+      "Transcription",
+      "Translation",
+      "Folate synthesis"
     ],
-    "answer": 3,
-    "why": "RNA polymerase makes mRNA from a DNA template. Blocking it stops the transcripts that the ribosome would translate."
+    "answer": 1,
+    "why": "RNA polymerase copies DNA into RNA, which is transcription. Translation stops later because no new mRNA is made, but the direct block is transcription."
   },
   "c32c": {
     "options": [
@@ -213,7 +213,7 @@ var CHECKPOINTS = {
       "R8"
     ],
     "answer": 0,
-    "why": "In the lecture diagram, R7 is tied to spectrum of activity and R6 to cell wall penetration. The substituent on the ring nitrogen is tied to potency."
+    "why": "On the fluoroquinolone core, R7 is tied to spectrum of activity and R6 to cell wall penetration. The substituent on the ring nitrogen is tied to potency."
   },
   "c33a": {
     "options": [
@@ -259,7 +259,7 @@ var CHECKPOINTS = {
     "options": [
       "Macrolides",
       "Tetracyclines",
-      "Clindamycin",
+      "Lincosamides",
       "Oxazolidinones"
     ],
     "answer": 1,
@@ -527,9 +527,9 @@ var CHECKPOINTS = {
   "c53d": {
     "options": [
       "The breakpoint for that drug and organism",
-      "The MIC of a different drug",
-      "The MBC of a different organism",
-      "The oral dose of the drug"
+      "The MIC of another drug tested on the same isolate",
+      "The average MIC from the facility antibiogram",
+      "The MIC of the same drug against a different organism"
     ],
     "answer": 0,
     "why": "Breakpoints are specific to a drug-organism pair, so an MIC is interpreted against its own breakpoint. Raw MIC values are not compared across different drugs or organisms."
@@ -832,10 +832,10 @@ var POOL = [
     "level": "application",
     "stem": "A patient has severe neutropenia. Why is a bacteriostatic antibiotic a weaker choice for this patient?",
     "options": [
-      "The drug requires activation by neutrophil enzymes",
-      "The drug acts against too few bacterial species",
-      "The drug is cleared rapidly from the blood",
-      "Bacterial clearance depends on host defenses such as phagocytosis"
+      "Its activity depends on neutrophil enzymes",
+      "Its spectrum covers too few species",
+      "Its blood levels fall too quickly",
+      "Its effect depends on phagocytes to clear the bacteria"
     ],
     "answer": 3,
     "why": "A bacteriostatic drug holds the bacteria in check while the host removes them. With few neutrophils, that second step is weak."
@@ -949,7 +949,7 @@ var POOL = [
     "id": "BAC2-014",
     "m": "m2",
     "area": "Peptidoglycan pathway and drug targets",
-    "level": "application",
+    "level": "concept",
     "stem": "Which drug binds the D-alanyl-D-alanine end of the growing peptidoglycan precursor?",
     "options": [
       "Cycloserine",
@@ -964,7 +964,7 @@ var POOL = [
     "id": "BAC2-015",
     "m": "m2",
     "area": "Peptidoglycan pathway and drug targets",
-    "level": "application",
+    "level": "concept",
     "stem": "A drug blocks dephosphorylation of the phospholipid that carries peptidoglycan subunits across the membrane. Which drug fits?",
     "options": [
       "Bacitracin",
@@ -980,15 +980,15 @@ var POOL = [
     "m": "m2",
     "area": "Peptidoglycan pathway and drug targets",
     "level": "integration",
-    "stem": "A β-lactam binds PBPs, yet an organism keeps building its wall without destroying the drug. Which change is most likely?",
+    "stem": "Which change would let a bacterium keep cross-linking its wall in the presence of a β-lactam without destroying the drug?",
     "options": [
-      "A PBP with reduced drug affinity",
-      "Increased D-alanine production",
-      "Methylated 23S rRNA",
-      "A mutated DNA gyrase"
+      "A PBP with reduced affinity for the drug",
+      "Overproduction of alanine racemase",
+      "Faster recycling of the lipid carrier",
+      "Replacement of D-Ala-D-Ala with D-Ala-D-Lac"
     ],
     "answer": 0,
-    "why": "Altered PBPs are a target-change route to β-lactam resistance. The other changes belong to other drugs or classes."
+    "why": "A PBP with low affinity for the drug keeps cross-linking even though the β-lactam is present and intact. This is target change. D-Ala-D-Lac is the vancomycin escape route, and extra alanine racemase or faster lipid-carrier recycling would counter cycloserine or bacitracin, not a β-lactam."
   },
   {
     "id": "BAC2-017",
@@ -1009,7 +1009,7 @@ var POOL = [
     "id": "BAC2-018",
     "m": "m2",
     "area": "β-Lactams, PBPs, and β-lactamases",
-    "level": "application",
+    "level": "concept",
     "stem": "Which β-lactam class is reserved for hospital use as drugs of last resort?",
     "options": [
       "Penicillins",
@@ -1024,7 +1024,7 @@ var POOL = [
     "id": "BAC2-019",
     "m": "m2",
     "area": "β-Lactams, PBPs, and β-lactamases",
-    "level": "application",
+    "level": "concept",
     "stem": "Imipenem is given with cilastatin. What does cilastatin do?",
     "options": [
       "Inhibits bacterial β-lactamases",
@@ -1039,16 +1039,16 @@ var POOL = [
     "id": "BAC2-020",
     "m": "m2",
     "area": "β-Lactams, PBPs, and β-lactamases",
-    "level": "application",
-    "stem": "Which structural element does a β-lactamase cleave to destroy an antibiotic?",
+    "level": "concept",
+    "stem": "Penicillins, cephalosporins, and carbapenems can each be destroyed by bacterial enzymes that attack a structure all three classes share. Which structure is attacked?",
     "options": [
-      "The D-Ala-D-Ala peptide bond",
-      "The β-lactam ring",
-      "The glycosidic bond of the wall",
-      "The ester link of the lipid carrier"
+      "The thiazolidine ring",
+      "The four-membered β-lactam ring",
+      "The acyl side chain",
+      "The carboxylic acid group"
     ],
     "answer": 1,
-    "why": "β-Lactamases cleave the β-lactam ring of every β-lactam class, which destroys the drug before it reaches its target."
+    "why": "β-Lactamases break the four-membered ring that all β-lactams share. Individual enzymes differ in which classes they reach: penicillinases, ESBLs, and carbapenemases have progressively broader ranges."
   },
   {
     "id": "BAC2-021",
@@ -1063,29 +1063,29 @@ var POOL = [
       "Greater resistance, because inhibitors induce more enzyme"
     ],
     "answer": 0,
-    "why": "Commonly prescribed inhibitors do not work against metallo-β-lactamases, and inhibitors have no antibiotic activity of their own."
+    "why": "The inhibitors in current combinations (clavulanate, sulbactam, tazobactam, avibactam) do not block zinc-dependent metallo-β-lactamases, so the penicillin is still destroyed. An inhibitor protects the antibiotic; it is not a substitute for it."
   },
   {
     "id": "BAC2-022",
     "m": "m2",
     "area": "Vancomycin and membrane-active drugs",
     "level": "concept",
-    "stem": "How is vancomycin given to treat a systemic infection, given its very low oral bioavailability?",
+    "stem": "A hospitalized patient needs vancomycin for MRSA bacteremia. How is it given?",
     "options": [
-      "Oral tablets",
-      "Topical application",
-      "Rectal suppositories",
+      "Oral capsules",
+      "Intramuscular injection",
+      "Subcutaneous injection",
       "Slow intravenous infusion"
     ],
     "answer": 3,
-    "why": "Oral vancomycin is absorbed poorly, so systemic infections are treated intravenously. Oral dosing is used for intestinal infections."
+    "why": "Oral vancomycin stays in the gut, so it is used only for Clostridioides difficile infection. Systemic infections need slow IV infusion to limit infusion reactions."
   },
   {
     "id": "BAC2-023",
     "m": "m2",
     "area": "Vancomycin and membrane-active drugs",
     "level": "application",
-    "stem": "Which change lowers the risk of red man syndrome during vancomycin therapy?",
+    "stem": "Which change lowers the risk of vancomycin infusion reaction (formerly called red man syndrome)?",
     "options": [
       "Switching to oral vancomycin",
       "Adding a β-lactamase inhibitor",
@@ -1093,7 +1093,7 @@ var POOL = [
       "Doubling the dose"
     ],
     "answer": 2,
-    "why": "Red man syndrome is linked to rapid administration, so a slower infusion reduces the risk."
+    "why": "Vancomycin infusion reaction is linked to rapid administration, so a slower infusion reduces the risk."
   },
   {
     "id": "BAC2-024",
@@ -1102,13 +1102,13 @@ var POOL = [
     "level": "application",
     "stem": "Daptomycin disrupts the membrane of Gram-positive cocci. For which infection is it used?",
     "options": [
-      "Intestinal infection",
+      "Community-acquired pneumonia",
       "Tuberculosis",
       "Right-sided endocarditis",
-      "Clostridioides difficile infection"
+      "Gram-negative urinary tract infection"
     ],
     "answer": 2,
-    "why": "Daptomycin is bactericidal and is used for skin and skin structure infections, bacteremia, and right-sided endocarditis."
+    "why": "Daptomycin is labeled for Staphylococcus aureus bacteremia, including right-sided endocarditis, and for complicated skin infections. It is not used for pneumonia because lung surfactant inactivates it, and it has no Gram-negative activity."
   },
   {
     "id": "BAC2-025",
@@ -1150,7 +1150,7 @@ var POOL = [
       "Human folate enzymes have a different active site",
       "Human cells absorb folate more slowly",
       "Humans convert folate into PABA",
-      "Humans obtain folate from the diet rather than making it"
+      "Humans obtain folate from their diet"
     ],
     "answer": 3,
     "why": "Humans lack the synthesis enzymes, so a drug aimed at them has no human counterpart to injure."
@@ -1160,15 +1160,15 @@ var POOL = [
     "m": "m3",
     "area": "Folate pathway",
     "level": "application",
-    "stem": "Sulfamethoxazole plus trimethoprim blocks two sequential steps. How does this compare with either drug alone?",
+    "stem": "Sulfamethoxazole and trimethoprim each block one step in the same folate pathway. What is the expected effect of combining them?",
     "options": [
-      "Equal suppression, because both drugs act on one enzyme",
-      "Lower suppression, because the drugs compete",
-      "Suppression in human cells rather than in bacteria",
-      "Greater folate suppression than either drug alone"
+      "Folate output matches trimethoprim alone, because both act on one enzyme",
+      "Folate output recovers, because the drugs compete for one site",
+      "Folate output falls less, because each drug is given at a lower dose",
+      "Folate output falls further, because two sequential steps are blocked"
     ],
     "answer": 3,
-    "why": "Blocking two sequential steps lowers folate output more than blocking either step alone."
+    "why": "Sulfamethoxazole blocks dihydropteroate synthase and trimethoprim blocks dihydrofolate reductase, two steps in sequence. Blocking both lowers folate output more than blocking either step alone."
   },
   {
     "id": "BAC2-029",
@@ -1204,7 +1204,7 @@ var POOL = [
     "id": "BAC2-031",
     "m": "m3",
     "area": "DNA and RNA synthesis targets",
-    "level": "application",
+    "level": "concept",
     "stem": "Gram-positive organisms rely more on which enzyme, making it a key fluoroquinolone target in those bacteria?",
     "options": [
       "Topoisomerase IV",
@@ -1234,7 +1234,7 @@ var POOL = [
     "id": "BAC2-033",
     "m": "m3",
     "area": "DNA and RNA synthesis targets",
-    "level": "application",
+    "level": "concept",
     "stem": "Fidaxomicin inhibits RNA polymerase. Against which organism is it specific?",
     "options": [
       "Mycobacterium tuberculosis",
@@ -1249,38 +1249,38 @@ var POOL = [
     "id": "BAC2-034",
     "m": "m3",
     "area": "Prodrugs and TB drugs",
-    "level": "concept",
-    "stem": "Metronidazole is reductively activated by electron-transport proteins in anaerobic organisms, and the activated radical breaks DNA strands. Which term describes this kind of drug?",
+    "level": "application",
+    "stem": "Why is metronidazole active against anaerobes but not against aerobic bacteria?",
     "options": [
-      "Bacteriostatic drug",
-      "Broad-spectrum drug",
-      "Prodrug",
-      "Synergistic drug"
+      "Anaerobes carry electron-transport proteins that reduce it to its active form",
+      "Anaerobes have porins that admit it while aerobes do not",
+      "Anaerobes lack the efflux pumps that aerobes use to expel it",
+      "Anaerobes have a DNA gyrase form that the drug binds"
     ],
-    "answer": 2,
-    "why": "Metronidazole is a prodrug that is reductively activated inside anaerobic and microaerophilic organisms."
+    "answer": 0,
+    "why": "Metronidazole is a prodrug. Low-redox-potential electron-transport proteins in anaerobes reduce it to a radical that breaks DNA strands. Aerobic bacteria do not carry out this reduction, so the drug stays inactive."
   },
   {
     "id": "BAC2-035",
     "m": "m3",
     "area": "Prodrugs and TB drugs",
     "level": "application",
-    "stem": "Nitrofurantoin is more selective for bacteria because bacteria contain more of which form?",
+    "stem": "Nitrofurantoin is more selective for bacteria because bacteria produce more of which form of the drug?",
     "options": [
-      "The oxidized form of the drug",
-      "The reduced form of the drug",
-      "An efflux pump for the drug",
-      "A porin that admits the drug"
+      "The oxidized form",
+      "The reduced form",
+      "The conjugated form",
+      "The hydrolyzed form"
     ],
     "answer": 1,
-    "why": "Selectivity arises from larger amounts of the reduced, active form in bacteria than in human cells."
+    "why": "Bacterial nitroreductases convert more of the drug to its reduced, active form than human cells do, so bacteria are affected more."
   },
   {
     "id": "BAC2-036",
     "m": "m3",
     "area": "Prodrugs and TB drugs",
-    "level": "application",
-    "stem": "Ethambutol inhibits synthesis of which component, disrupting mycolic acid–peptidoglycan linkages?",
+    "level": "concept",
+    "stem": "Ethambutol weakens the attachment of the mycobacterial outer lipid layer to the cell wall. Synthesis of which component does it inhibit?",
     "options": [
       "Mycolic acid",
       "Arabinogalactan",
@@ -1294,16 +1294,16 @@ var POOL = [
     "id": "BAC2-037",
     "m": "m3",
     "area": "Prodrugs and TB drugs",
-    "level": "integration",
-    "stem": "Which drug is effective against semidormant mycobacteria that are unaffected by isoniazid and rifampin?",
+    "level": "concept",
+    "stem": "Which antituberculosis drug is most active against slowly replicating bacilli in an acidic environment, such as inflamed tissue?",
     "options": [
       "Pyrazinamide",
       "Ethambutol",
-      "Fidaxomicin",
-      "Metronidazole"
+      "Isoniazid",
+      "Streptomycin"
     ],
     "answer": 0,
-    "why": "Pyrazinamide reaches semidormant mycobacteria. Its exact mechanism is uncertain and may involve fatty acid synthesis related to mycolic acid production."
+    "why": "Pyrazinamide is converted to pyrazinoic acid and works best at acidic pH, so it reaches slowly replicating bacilli. Rifampin also kills persisting bacilli, which is why both are given early in therapy. Isoniazid and ethambutol act mainly on actively growing bacilli, and streptomycin works poorly at acidic pH."
   },
   {
     "id": "BAC2-038",
@@ -1324,13 +1324,13 @@ var POOL = [
     "id": "BAC2-039",
     "m": "m4",
     "area": "Ribosome structure",
-    "level": "application",
+    "level": "concept",
     "stem": "Which statement compares bacterial and human ribosomes?",
     "options": [
       "The bacterial ribosome is 70S, and the human ribosome is smaller",
-      "The bacterial ribosome is larger than the 70S human ribosome",
+      "The bacterial ribosome is 80S, and the human ribosome is 70S",
       "The bacterial ribosome is 70S, and the human ribosome is larger",
-      "Both ribosomes are 70S particles of identical size"
+      "Both ribosomes are 70S and identical in size"
     ],
     "answer": 2,
     "why": "The bacterial ribosome has 50S and 30S subunits. The eukaryotic ribosome is larger, with 60S and 40S subunits."
@@ -1375,7 +1375,7 @@ var POOL = [
       "Aminoglycosides",
       "Tetracyclines",
       "Macrolides",
-      "Clindamycin"
+      "Lincosamides"
     ],
     "answer": 0,
     "why": "Aminoglycosides inhibit initiation complex formation and cause misreading. Tetracyclines also bind 30S but block A-site entry."
@@ -1399,13 +1399,13 @@ var POOL = [
     "id": "BAC2-044",
     "m": "m4",
     "area": "Drug classes and ribosome targets",
-    "level": "application",
+    "level": "concept",
     "stem": "Doxycycline, minocycline, and tigecycline share which mechanism?",
     "options": [
-      "Blocking translocation on the 50S subunit",
-      "Inhibiting the 70S initiation complex on the 50S subunit",
+      "Blocking peptidyl-tRNA translocation on the 50S subunit",
+      "Blocking 70S initiation complex formation on the 50S subunit",
       "Causing mRNA misreading at the 30S subunit",
-      "Blocking aminoacyl-tRNA entry to the A site of the 30S subunit"
+      "Blocking aminoacyl-tRNA entry at the 30S A site"
     ],
     "answer": 3,
     "why": "All tetracyclines bind the 30S subunit and block aminoacyl-tRNA from entering the A site."
@@ -1423,7 +1423,7 @@ var POOL = [
       "Oxazolidinones"
     ],
     "answer": 2,
-    "why": "Macrolides have a large 13 to 16 carbon ring with attached sugars and bind the 50S subunit."
+    "why": "Macrolides have a large 14- to 16-membered lactone ring with attached sugars and bind the 50S subunit."
   },
   {
     "id": "BAC2-046",
@@ -1475,15 +1475,15 @@ var POOL = [
     "m": "m4",
     "area": "Translation mechanics and inference",
     "level": "integration",
-    "stem": "Which drug class is most directly affected when bacteria methylate 23S rRNA?",
+    "stem": "An isolate becomes resistant to erythromycin and to clindamycin at the same time. Which single change best explains both?",
     "options": [
-      "Tetracyclines",
-      "Aminoglycosides",
-      "Fluoroquinolones",
-      "Macrolides"
+      "A methylated 23S rRNA binding site",
+      "A drug-acetylating enzyme",
+      "Loss of outer-membrane porins",
+      "A mutated 16S rRNA"
     ],
-    "answer": 3,
-    "why": "Macrolides bind the 23S region, and methylation of 23S rRNA blocks erythromycin binding."
+    "answer": 0,
+    "why": "Macrolides and clindamycin bind overlapping sites on the 23S rRNA of the 50S subunit, so one methylation removes binding of both. An acetylating enzyme is specific to one drug class, porin loss matters mainly in Gram-negative bacteria, and 16S rRNA is part of the 30S subunit."
   },
   {
     "id": "BAC2-050",
@@ -1535,7 +1535,7 @@ var POOL = [
     "m": "m5",
     "area": "Routes to resistance",
     "level": "integration",
-    "stem": "A prosthetic joint infection persists despite an active drug. Which nongenetic factor is most relevant?",
+    "stem": "A prosthetic joint infection persists even though the isolate tests susceptible to the drug in the laboratory. Which explanation is most likely?",
     "options": [
       "A foreign body that shields bacteria from the drug",
       "A plasmid-mediated enzyme that cleaves the drug",
@@ -1543,28 +1543,28 @@ var POOL = [
       "A pump that exports the drug from the cell"
     ],
     "answer": 0,
-    "why": "Foreign bodies complicate treatment because bacteria can sit apart from the antibiotic. The other choices are genetic mechanisms."
+    "why": "A susceptible laboratory result means the isolate itself lacks the resistance enzyme, target change, or pump, so those genetic mechanisms do not explain the failure. Bacteria on a foreign body sit apart from the antibiotic and are shielded from it."
   },
   {
     "id": "BAC2-054",
     "m": "m5",
     "area": "Escape mechanisms by drug",
     "level": "application",
-    "stem": "Which mechanism is associated with high-level resistance to β-lactams?",
+    "stem": "Which mechanism gives Gram-negative bacteria high-level resistance to penicillins?",
     "options": [
-      "Poor permeability of the outer membrane",
-      "A chromosomal mutation in DNA gyrase",
-      "Methylation of ribosomal 23S RNA",
-      "Plasmid-mediated β-lactamase production"
+      "Narrowed outer-membrane porins",
+      "Plasmid-mediated β-lactamase",
+      "Increased efflux pump activity",
+      "Reduced autolysin activity"
     ],
-    "answer": 3,
-    "why": "Plasmid-mediated cleavage by β-lactamases produces high-level resistance. Poor permeability produces low-level resistance."
+    "answer": 1,
+    "why": "Plasmid-mediated β-lactamase production destroys the drug and gives high-level resistance. Narrowed porins and efflux lower the amount of drug that arrives, which gives low-level resistance. Autolysins are not the drug target."
   },
   {
     "id": "BAC2-055",
     "m": "m5",
     "area": "Escape mechanisms by drug",
-    "level": "application",
+    "level": "concept",
     "stem": "Which set of enzyme reactions inactivates aminoglycosides?",
     "options": [
       "Methylation, hydroxylation, and sulfation",
@@ -1579,7 +1579,7 @@ var POOL = [
     "id": "BAC2-056",
     "m": "m5",
     "area": "Escape mechanisms by drug",
-    "level": "application",
+    "level": "concept",
     "stem": "Which change reduces erythromycin binding to its target?",
     "options": [
       "Acetylation of the drug",
@@ -1610,15 +1610,15 @@ var POOL = [
     "m": "m5",
     "area": "MIC, MBC, and susceptibility reports",
     "level": "concept",
-    "stem": "Which measure is the lowest drug concentration that inhibits visible growth?",
+    "stem": "In a broth dilution series, which value is read from the lowest drug concentration that prevents visible growth?",
     "options": [
       "Minimum inhibitory concentration",
       "Minimum bactericidal concentration",
-      "Zone of inhibition",
-      "Antibiogram"
+      "Susceptibility breakpoint",
+      "Serum bactericidal titer"
     ],
     "answer": 0,
-    "why": "The MIC comes from a tube dilution test and marks inhibition of growth. The MBC marks killing."
+    "why": "The MIC is the lowest concentration with no visible growth. The MBC is found by subculturing clear tubes to see which concentration killed the organisms. A breakpoint is the cutoff used to interpret an MIC, and a serum bactericidal titer is measured on the patient's serum."
   },
   {
     "id": "BAC2-059",
@@ -1627,7 +1627,7 @@ var POOL = [
     "level": "application",
     "stem": "A tube at 8 µg/mL is clear, but its subculture grows colonies. Which statement fits?",
     "options": [
-      "8 µg/mL is below the MIC and above the MBC",
+      "8 µg/mL is at or above both the MIC and the MBC",
       "8 µg/mL equals the MBC",
       "8 µg/mL is below both the MIC and the MBC",
       "8 µg/mL is at or above the MIC and below the MBC"
@@ -1639,7 +1639,7 @@ var POOL = [
     "id": "BAC2-060",
     "m": "m5",
     "area": "MIC, MBC, and susceptibility reports",
-    "level": "application",
+    "level": "concept",
     "stem": "A disk diffusion test reports which measurement?",
     "options": [
       "The lowest clear tube concentration",
@@ -1657,13 +1657,13 @@ var POOL = [
     "level": "integration",
     "stem": "A clinician needs a quick guide for empiric therapy before culture results return. Which resource fits?",
     "options": [
-      "A single patient's MBC",
-      "A disk diffusion zone from another patient",
+      "The patient's own MIC report",
       "The facility antibiogram",
+      "The drug's package-insert spectrum list",
       "A serum bactericidal titer"
     ],
-    "answer": 2,
-    "why": "An antibiogram summarizes susceptibility across a facility and is used to guide empiric therapy."
+    "answer": 1,
+    "why": "The patient's own results are not back yet, and a package insert does not reflect local resistance. An antibiogram summarizes susceptibility across the facility, so it is used to guide empiric therapy."
   },
   {
     "id": "BAC2-062",
@@ -1675,7 +1675,7 @@ var POOL = [
       "Starting the broadest drug for each patient",
       "Using the narrowest drug that covers the organism",
       "Prescribing antibiotics for self-limiting infections",
-      "Continuing therapy after symptoms resolve"
+      "Continuing antibiotics after a viral cause is confirmed"
     ],
     "answer": 1,
     "why": "Stewardship favors targeted, narrow-spectrum therapy for the shortest duration that achieves the effect."
@@ -1690,7 +1690,7 @@ var POOL = [
       "A serious infection before the organism is identified",
       "A self-limiting upper respiratory infection",
       "Routine prophylaxis before and after surgery",
-      "A patient demand for an antibiotic prescription"
+      "A mild infection with a known, susceptible organism"
     ],
     "answer": 0,
     "why": "Combinations are appropriate when a serious infection is treated before identification, when synergy is desired, or to prevent resistance."
@@ -1702,13 +1702,13 @@ var POOL = [
     "level": "application",
     "stem": "A patient with reduced renal function needs an antibiotic. Which dosing approach fits stewardship?",
     "options": [
-      "Dose adjustment based on the filtration rate",
+      "Dose adjustment based on estimated filtration rate",
       "Doubling the dose to offset lower clearance",
       "Switching to a broader-spectrum drug",
-      "Stopping therapy after the first dose"
+      "Using the standard dose without change"
     ],
     "answer": 0,
-    "why": "Patients with reduced renal function may need dose adjustment based on GFR to limit adverse effects."
+    "why": "Patients with reduced renal function may need dose adjustment based on GFR to limit adverse effects. A standard or doubled dose can accumulate and cause toxicity."
   },
   {
     "id": "BAC2-065",
@@ -1729,7 +1729,7 @@ var POOL = [
     "id": "BAC2-066",
     "m": "m6",
     "area": "Active and passive immunity",
-    "level": "application",
+    "level": "concept",
     "stem": "Which product provides passive immunity?",
     "options": [
       "Tetanus toxoid",
@@ -1760,15 +1760,15 @@ var POOL = [
     "m": "m6",
     "area": "Active and passive immunity",
     "level": "application",
-    "stem": "Bezlotoxumab targeted Clostridioides difficile toxin B and appears in the lecture list of immunoglobulins. Which category does it belong to?",
+    "stem": "A patient receives a monoclonal antibody that binds Clostridioides difficile toxin B. Which type of immunity does this provide?",
     "options": [
       "Active immunity",
       "Passive immunity",
-      "Live attenuated vaccine",
-      "Toxoid vaccine"
+      "Passive-active immunity",
+      "Innate immunity"
     ],
     "answer": 1,
-    "why": "It is a pre-formed antibody, which makes it a passive-immunity product."
+    "why": "A pre-formed antibody gives passive immunity: protection starts at once but fades, and no memory forms. Passive-active immunity pairs an antibody with a vaccine. Bezlotoxumab, the antibody that worked this way, was discontinued in the US in 2025, but it still illustrates the category."
   },
   {
     "id": "BAC2-069",
@@ -1789,22 +1789,22 @@ var POOL = [
     "id": "BAC2-070",
     "m": "m6",
     "area": "Vaccine platforms",
-    "level": "application",
+    "level": "concept",
     "stem": "Acellular pertussis and anthrax vaccines contain selected antigens. Which platform is this?",
     "options": [
-      "Toxoid",
+      "Conjugate",
       "Live attenuated",
       "Inactivated whole-cell",
       "Protein / subunit"
     ],
     "answer": 3,
-    "why": "Protein or subunit vaccines contain selected antigens rather than the whole organism."
+    "why": "Protein or subunit vaccines contain selected antigens rather than the whole organism. Acellular pertussis vaccines include pertussis toxoid among several purified proteins, so they are classed as subunit vaccines."
   },
   {
     "id": "BAC2-071",
     "m": "m6",
     "area": "Vaccine platforms",
-    "level": "application",
+    "level": "concept",
     "stem": "A pertussis vaccine contains killed organisms. Which platform is this?",
     "options": [
       "Live attenuated",
@@ -1819,16 +1819,16 @@ var POOL = [
     "id": "BAC2-072",
     "m": "m6",
     "area": "Vaccine platforms",
-    "level": "integration",
-    "stem": "Which list gives a conjugate, a toxoid, and a live attenuated example, in that order?",
+    "level": "application",
+    "stem": "An infant with severe combined immunodeficiency is due for routine vaccines. Which vaccine should be withheld?",
     "options": [
-      "BCG, Hib, tetanus",
-      "Tetanus, BCG, Hib",
-      "Hib, tetanus, BCG",
-      "Hib, BCG, tetanus"
+      "Hib conjugate",
+      "Tetanus toxoid",
+      "BCG",
+      "Acellular pertussis"
     ],
     "answer": 2,
-    "why": "Hib is a polysaccharide-protein conjugate, tetanus vaccine is a toxoid, and BCG is a live attenuated vaccine."
+    "why": "BCG is a live attenuated vaccine and can cause disseminated infection in a severely immunocompromised host. Conjugate, toxoid, and subunit vaccines contain no living organism, so they are safe to give."
   },
   {
     "id": "BAC2-073",
@@ -1884,26 +1884,26 @@ var POOL = [
     "options": [
       "Antisepsis",
       "Sterile filtration",
-      "Contact precautions",
+      "High-level disinfection",
       "Cleaning"
     ],
     "answer": 3,
-    "why": "Cleaning removes soil first, which improves either process."
+    "why": "Cleaning removes soil first, which improves either process. Soil left on a surface shields organisms and inactivates chemical disinfectants."
   },
   {
     "id": "BAC2-077",
     "m": "m6",
     "area": "Infection control",
     "level": "application",
-    "stem": "A pathogen spreads by respiratory droplets. Which precautions are added to standard precautions?",
+    "stem": "A patient is admitted with suspected meningococcal meningitis. Which precautions are added to standard precautions until 24 hours of effective therapy?",
     "options": [
       "Contact precautions",
       "Airborne precautions",
       "Droplet precautions",
-      "Safe injection practices"
+      "Protective-environment precautions"
     ],
     "answer": 2,
-    "why": "The route of transmission determines room placement and PPE. Droplet precautions address spread by respiratory droplets."
+    "why": "Neisseria meningitidis spreads by respiratory droplets, so droplet precautions are added until the patient has had 24 hours of effective therapy. Airborne precautions are for agents such as tuberculosis and measles that stay suspended in air, and a protective environment shields immunocompromised patients rather than containing an infection."
   },
   {
     "id": "BAC2-078",
@@ -1924,14 +1924,14 @@ var POOL = [
     "m": "m2",
     "area": "β-Lactams, PBPs, and β-lactamases",
     "level": "application",
-    "stem": "A Gram-negative isolate produces a serine carbapenemase (KPC). Which combination is described as covering organisms with this enzyme?",
+    "stem": "A Gram-negative isolate produces a serine carbapenemase (KPC). Which combination is active against many isolates that produce this enzyme?",
     "options": [
       "Amoxicillin-clavulanate",
       "Ceftazidime-avibactam",
       "Piperacillin-tazobactam"
     ],
     "answer": 1,
-    "why": "Ceftazidime-avibactam covers many organisms that produce serine carbapenemases. Amoxicillin-clavulanate is an oral combination, and piperacillin-tazobactam gives broad coverage that includes many Gram-negative and anaerobic organisms."
+    "why": "Avibactam inhibits serine carbapenemases such as KPC, so it protects ceftazidime. Clavulanate and tazobactam do not reliably inhibit KPC, so amoxicillin and piperacillin are still hydrolyzed."
   },
   {
     "id": "BAC2-080",
@@ -1967,8 +1967,8 @@ var POOL = [
     "id": "BAC2-082",
     "m": "m3",
     "area": "Prodrugs and TB drugs",
-    "level": "integration",
-    "stem": "Resistance can arise from loss of the enzyme that activates the drug. Which pair of antituberculosis drugs is named as an example?",
+    "level": "concept",
+    "stem": "Which pair of antituberculosis drugs are both prodrugs that must be activated inside the mycobacterium?",
     "options": [
       "Isoniazid and ethambutol",
       "Ethambutol and rifampin",
@@ -2000,13 +2000,13 @@ var POOL = [
     "level": "application",
     "stem": "A β-lactamase inhibitor is combined with a β-lactam to treat MRSA. Which outcome fits the resistance mechanism?",
     "options": [
-      "Full restoration of activity, because the inhibitor blocks PBP2a",
-      "Little restoration of activity, because a different, insensitive enzyme is responsible",
-      "Partial restoration of activity, because the inhibitor kills the organism",
+      "Full restoration, because the inhibitor blocks PBP2a",
+      "Little restoration, because PBP2a is not a β-lactamase",
+      "Partial restoration, because the inhibitor kills the organism",
       "Greater resistance, because the inhibitor induces PBP2a"
     ],
     "answer": 1,
-    "why": "The mechanism is a different, insensitive enzyme rather than a β-lactamase, so β-lactamase inhibitors do not restore β-lactam activity against MRSA."
+    "why": "MRSA resists β-lactams through PBP2a, an altered PBP with low affinity for the drug, not through a β-lactamase. β-Lactamase inhibitors therefore do not restore β-lactam activity against MRSA."
   },
   {
     "id": "BAC2-085",
@@ -2089,10 +2089,10 @@ var POOL = [
     "level": "application",
     "stem": "An infant needs protection against Haemophilus influenzae type b. Why is a conjugate vaccine chosen over a plain polysaccharide vaccine?",
     "options": [
-      "The carrier protein adds T-cell help, giving a stronger response, memory, and effective boosters",
-      "The vaccine contains a live organism that replicates in the infant",
-      "The vaccine supplies pre-formed antibody for immediate protection",
-      "The vaccine avoids stimulating B cells and prevents adverse effects"
+      "The carrier protein recruits T-cell help and immune memory",
+      "The live organism replicates and boosts immunity",
+      "The pre-formed antibody gives immediate protection",
+      "The adjuvant bypasses B cells and limits side effects"
     ],
     "answer": 0,
     "why": "Infants respond poorly to plain polysaccharide antigens. Linking the polysaccharide to a carrier protein converts the response to T-dependent, with a stronger response, memory, and effective boosters."
@@ -2105,7 +2105,7 @@ var POOL = [
     "stem": "PPSV23 is reserved for older children and adults, whereas Hib, PCV, and MenACWY are given as conjugates in infants. Which explanation links these choices?",
     "options": [
       "Infants make excessive antibody to plain polysaccharide antigens, and conjugation dampens it",
-      "Conjugation converts a toxoid into a live attenuated vaccine",
+      "Conjugation lets the vaccine replicate, which extends exposure in infants",
       "Older children lack B cells that recognize polysaccharide antigens",
       "Infants respond poorly to plain polysaccharide antigens, and conjugation adds T-cell help"
     ],
