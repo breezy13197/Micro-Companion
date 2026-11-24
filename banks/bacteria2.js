@@ -163,7 +163,7 @@ var CHECKPOINTS = {
       "Poor bacterial selectivity that risks kidney and nerve toxicity"
     ],
     "answer": 3,
-    "why": "A detergent-like action does not distinguish bacterial membranes well from human membranes. Polymyxins were set aside in the 1960s for nephrotoxicity and neurotoxicity."
+    "why": "A detergent-like action does not distinguish bacterial membranes well from human membranes. Polymyxins were largely set aside in the 1970s for nephrotoxicity and neurotoxicity."
   },
   "c31a": {
     "options": [
@@ -1475,15 +1475,15 @@ var POOL = [
     "m": "m4",
     "area": "Translation mechanics and inference",
     "level": "integration",
-    "stem": "An isolate becomes resistant to erythromycin and to clindamycin at the same time. Which single change best explains both?",
+    "stem": "An isolate becomes resistant to erythromycin. Tests show the drug enters the cell normally, builds up to its usual level inside, and is not chemically altered. Which change best explains the resistance?",
     "options": [
       "A methylated 23S rRNA binding site",
       "A drug-acetylating enzyme",
       "Loss of outer-membrane porins",
-      "A mutated 16S rRNA"
+      "An efflux pump that exports the drug"
     ],
     "answer": 0,
-    "why": "Macrolides and clindamycin bind overlapping sites on the 23S rRNA of the 50S subunit, so one methylation removes binding of both. An acetylating enzyme is specific to one drug class, porin loss matters mainly in Gram-negative bacteria, and 16S rRNA is part of the 30S subunit."
+    "why": "Normal entry rules out porin loss, a normal level inside rules out efflux, and an unaltered drug rules out an inactivating enzyme. That leaves target change: methylation of 23S rRNA stops erythromycin from binding the 50S subunit."
   },
   {
     "id": "BAC2-050",

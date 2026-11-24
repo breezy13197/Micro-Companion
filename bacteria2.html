@@ -1531,7 +1531,7 @@ MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
 var AREA_SECTION = MANIFEST.areaSection;
 
 var MODULE_QUIZ_SIZE = 6;   /* smaller than the 12-15 questions per module, so targeted rounds have fresh items */
-var FINAL_EXAM_MIX = {concept:6, application:12, integration:7};
+var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
 
 /* ---------- 2. small helpers for this page ---------- */
 function $(id){ return document.getElementById(id); }
@@ -1962,7 +1962,7 @@ Act.sort('act-envelopeSort', {name:'envelopeSort', options:['Vancomycin','Cyclos
   {text:'Acts like a cationic detergent on the phospholipid bilayer, with poor bacterial selectivity.', answer:'Polymyxins', why:'Positively charged amino acids disrupt the bilayer.'},
   {text:'A cyclic lipopeptide that disrupts the membrane of Gram-positive cocci.', answer:'Daptomycin', why:'It is bactericidal.'},
   {text:'Used for bacteremia and right-sided endocarditis.', answer:'Daptomycin', why:'It is also used for skin and skin structure infections.'},
-  {text:'Removed from use in the 1960s over kidney and nerve toxicity, and useful mostly against Gram-negative bacteria.', answer:'Polymyxins', why:'Polymyxin E is colistin.'}
+  {text:'Largely set aside in the 1970s over kidney and nerve toxicity, and useful mostly against Gram-negative bacteria.', answer:'Polymyxins', why:'Polymyxin E is colistin.'}
 ]});
 
 /* ---------- Module 3 · Section 1 ---------- */
@@ -1996,7 +1996,7 @@ Act.sort('act-nucleicSort', {name:'nucleicSort',
   {text:'<strong>Rifabutin</strong>', answer:'RNA polymerase', why:'A rifampin derivative that induces P450 enzymes less.'},
   {text:'<strong>Fidaxomicin</strong> (specific for Clostridioides difficile)', answer:'RNA polymerase', why:'Consequence: transcription in C. difficile is inhibited.'},
   {text:'<strong>Sulfamethoxazole</strong>', answer:'Dihydropteroate synthase', why:'Consequence: an early step in folate synthesis stalls.'},
-  {text:'<strong>Trimethoprim</strong>', answer:'Dihydrofolate reductase', why:'Consequence: DHF is not converted to THF. It is 60,000-fold selective for the bacterial enzyme.'}
+  {text:'<strong>Trimethoprim</strong>', answer:'Dihydrofolate reductase', why:'Consequence: DHF is not converted to THF. It is about 60,000-fold more selective for the bacterial enzyme than for the human one.'}
 ]});
 chain('nucleicLab', ['fqCore','nucleicSort']);
 
