@@ -68,9 +68,13 @@ var MCStore=(function(){
   function isPlainObject(v){return v!==null&&typeof v==='object'&&!Array.isArray(v);}
 
   /* ---------------- backup file format ---------------- */
+  /* `hub` is the hub's own record, or null when the file has none (a
+     companion's emergency backup cannot see the hub's record, so it sends
+     null). A restore leaves the hub's record alone when the file has none,
+     instead of replacing exam history and card marks with blanks. */
   function buildBackup(label,hub,companions){
     return {kind:'micro-hub-backup',version:1,exportedAt:new Date().toISOString(),
-            label:(label||'').trim(),hub:hub||{},companions:companions||{}};
+            label:(label||'').trim(),hub:isPlainObject(hub)?hub:null,companions:companions||{}};
   }
 
   /* The one gate a companion's raw stored string must pass before it is

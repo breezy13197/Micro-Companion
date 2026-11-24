@@ -158,6 +158,59 @@ test.describe('shared storage code', () => {
     expect(JSON.parse(stored).activities).toEqual(backup.companions.bacteria1 ? JSON.parse(backup.companions.bacteria1).activities : null);
   });
 
+  test('restoring a companion emergency backup keeps the hub record', async ({ page }) => {
+    await openCompanion(page, 'bacteria2');
+    const backup = await page.evaluate(() => {
+      let captured = null;
+      const real = MCStore.download;
+      MCStore.download = (name, obj) => { captured = obj; };
+      downloadSessionBackup();
+      MCStore.download = real;
+      return captured;
+    });
+    expect(backup.hub).toBe(null);
+
+    await page.goto('/index.html');
+    await page.evaluate(() => {
+      H.cards.known['bacteria2::card1'] = 1;
+      H.history.push({ ts: 1, score: 80 });
+      H.attempt = { keep: true };
+      saveHub();
+    });
+    // Both the new form (hub: null) and the older form (hub: {}) must leave
+    // the hub record alone.
+    for (const hub of [null, {}]) {
+      await page.evaluate(b => applyBackup(b), Object.assign({}, backup, { hub }));
+      const saved = await page.evaluate(() => JSON.parse(localStorage.getItem(HUB_KEY)));
+      expect(saved.cards.known['bacteria2::card1']).toBe(1);
+      expect(saved.history.length).toBe(1);
+      expect(saved.attempt).toEqual({ keep: true });
+      expect(await page.evaluate(() => H.history.length)).toBe(1);
+    }
+  });
+
+  test('restore refuses, and says why, when storage is blocked from the start', async ({ page }) => {
+    await blockStorage(page);
+    await page.goto('/index.html');
+    let msg = '';
+    page.on('dialog', d => { msg = d.message(); d.accept(); });
+    const result = await page.evaluate(() => applyBackup({
+      kind: 'micro-hub-backup', companions: { bacteria1: '{"checks":{"new":1}}' }, hub: null
+    }));
+    expect(result.written).toEqual([]);
+    expect(msg).toContain('blocking saved progress');
+    await expect(page.locator('#toast, .toast').filter({ hasText: 'Progress restored' })).toHaveCount(0);
+
+    // The preview explains the problem and offers no Replace button.
+    await page.evaluate(() => { setView('backup'); });
+    await page.evaluate(() => {
+      const host = document.createElement('div'); host.id = '__pv'; document.body.appendChild(host);
+      renderBackupPreview(host, { kind: 'micro-hub-backup', companions: {}, hub: null });
+    });
+    await expect(page.locator('#__pv')).toContainText('blocking saved progress');
+    await expect(page.locator('#__pv button', { hasText: 'Replace my progress' })).toHaveCount(0);
+  });
+
   test('the hub and a companion use the very same storage code', async ({ page }) => {
     await page.goto('/index.html');
     const hubSrc = await page.evaluate(() => MCStore.writeAll.toString() + MCStore.validateCompanionRaw.toString());

@@ -823,11 +823,31 @@ function parseBackupFile(text){
   }
   return { ok:true, payload:payload };
 }
+/* True only when the file really carries the hub's own record. A
+   companion's emergency backup has none: newer ones say hub:null, and
+   older ones say hub:{} (an empty object). The hub's own backups always
+   have keys (history, seen, cards...), so an empty object never means
+   "replace my hub record with blanks". Without this check, restoring a
+   companion's emergency backup wiped exam history, card marks and the
+   saved hub exam. */
+function backupHasHub(payload){
+  return isPlainObject(payload.hub) && Object.keys(payload.hub).length > 0;
+}
+/* When the browser blocked storage from the start, nothing can be written
+   for real: MCStore keeps it in memory only, and the reload that follows a
+   restore would throw it away. So restore refuses up front and says why,
+   rather than reporting success and then losing the data. */
+var RESTORE_BLOCKED_MSG = "This browser is blocking saved progress (private browsing is the usual cause), " +
+  "so a backup cannot be loaded here. Nothing was changed. Open the hub in a normal browser window, then load the file again.";
 /* All-or-nothing, via MCStore.writeAll: every previous value is remembered
    before anything is written, and if any write fails everything already
    written is put back, so a student is never left with a half-restored mix
    of old and new. */
 function applyBackup(payload){
+  if(!storageWorks){
+    alert(RESTORE_BLOCKED_MSG);
+    return { written:[], skipped:[], failed:"blocked storage" };
+  }
   var entries = [], skipped = [];
   Object.keys(payload.companions).forEach(function(id){
     if(validateCompanionRaw(payload.companions[id]).ok){
@@ -837,7 +857,7 @@ function applyBackup(payload){
     }
   });
   var newH = null;
-  if(isPlainObject(payload.hub)){
+  if(backupHasHub(payload)){
     newH = Object.assign(blankHub(), payload.hub);
     entries.push({ key:HUB_KEY, value:JSON.stringify(newH), id:"hub history" });
   }
@@ -2883,11 +2903,13 @@ function renderBackupPreview(host, payload){
     ]));
   });
   var liveExams = H.history.length;
-  var backExams = (payload.hub && payload.hub.history) ? payload.hub.history.length : 0;
+  var hasHub = backupHasHub(payload);
+  var backExams = (hasHub && Array.isArray(payload.hub.history)) ? payload.hub.history.length : 0;
   tb.appendChild(el("tr",{},[
     el("td",{text:"Hub exam history"}),
     el("td",{class:"num", text: liveExams + " exam" + (liveExams===1?"":"s")}),
-    el("td",{class:"num", text: backExams + " exam" + (backExams===1?"":"s"), style:"font-weight:650"})
+    el("td",{class:"num", text: hasHub ? backExams + " exam" + (backExams===1?"":"s") : "not in this file",
+      style: hasHub ? "font-weight:650" : ""})
   ]));
   host.appendChild(tb);
 
@@ -2904,7 +2926,18 @@ function renderBackupPreview(host, payload){
       "If a row above shows this device with MORE progress than the backup, loading it will move that companion backwards."})
   ]));
 
+  if(!hasHub){
+    host.appendChild(el("div",{class:"note", style:"margin-top:14px", text:
+      "This file has no hub record, so your hub exam history, flashcard marks and any unfinished hub exam on this device will be kept as they are."}));
+  }
+
   var actions = el("div",{class:"actions", style:"margin-top:16px"});
+  if(!storageWorks){
+    host.appendChild(el("div",{class:"note bad", style:"margin-top:14px", text:RESTORE_BLOCKED_MSG}));
+    actions.appendChild(el("button",{class:"btn", text:"Close", onclick:function(){ host.innerHTML = ""; }}));
+    host.appendChild(actions);
+    return;
+  }
   actions.appendChild(el("button",{class:"btn danger", text:"Replace my progress with this backup", onclick:function(){
     var invalidIds = backupIds.filter(function(id){ return !validateCompanionRaw(payload.companions[id]).ok; });
     var msg = "This will overwrite the progress shown above on this device with what's in the backup file. This can't be undone. Continue?";
