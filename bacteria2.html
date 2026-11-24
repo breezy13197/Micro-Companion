@@ -553,7 +553,7 @@ input[type=range]::-moz-range-thumb{border-color:#2B8CC4}
       <div class="choices"></div><div class="feedback"></div>
     </div>
     <div class="cp-item" data-check="c21b">
-      <p>Bacitracin prevents recycling of the lipid carrier bactoprenol. Which stage does this disrupt?</p>
+      <p>Bacitracin blocks recycling of bactoprenol. Which stage of peptidoglycan synthesis does this disrupt?</p>
       <div class="choices"></div><div class="feedback"></div>
     </div>
     <div class="cp-item" data-check="c21c">
@@ -604,7 +604,7 @@ input[type=range]::-moz-range-thumb{border-color:#2B8CC4}
       <textarea aria-label="Your explanation" placeholder="Write your explanation here"></textarea>
       <p class="fine">Your response stays on your device and is not scored.</p>
       <div class="controls"><button class="btn ghost explain-btn" type="button">Show a model answer</button></div>
-      <div class="ans"><strong>Model answer.</strong> The β-lactamase cleaves the β-lactam ring, so the drug is destroyed before it can bind a PBP. An inhibitor has no antibiotic activity of its own: it occupies or disables the enzyme, so the partner β-lactam survives long enough to block cross-linking. Inhibitors do not work against metallo-β-lactamases.</div>
+      <div class="ans"><strong>Model answer.</strong> The β-lactamase cleaves the β-lactam ring, so the drug is destroyed before it can bind a PBP. Most inhibitors have little useful antibiotic activity of their own (sulbactam against <em>Acinetobacter</em> is an exception): the inhibitor occupies or disables the enzyme, so the partner β-lactam survives long enough to block cross-linking. The inhibitors in current combinations do not work against metallo-β-lactamases.</div>
     </div>
     <h3>Inhibitor combinations in practice</h3>
     <p class="caption">Each inhibitor is paired with a β-lactam partner that it protects from breakdown.</p>
@@ -659,7 +659,7 @@ input[type=range]::-moz-range-thumb{border-color:#2B8CC4}
     <div id="act-envelopeSort"></div>
     <div class="box clinical">
       <h3><span class="tag">PHARMACIST'S LENS</span></h3>
-      <p>Vancomycin has very low oral bioavailability, so it is given by slow intravenous infusion for systemic infection. Infusing it too quickly can cause red man syndrome. Oral vancomycin is reserved for intestinal infections, where the drug needs to stay in the gut.</p>
+      <p>Vancomycin has very low oral bioavailability, so it is given by slow intravenous infusion for systemic infection. Infusing it too quickly can cause a vancomycin infusion reaction (formerly called red man syndrome). Oral vancomycin is reserved for intestinal infections, where the drug needs to stay in the gut.</p>
     </div>
   </div>
     <div class="card">
@@ -796,7 +796,7 @@ input[type=range]::-moz-range-thumb{border-color:#2B8CC4}
       <div class="choices"></div><div class="feedback"></div>
     </div>
     <div class="cp-item" data-check="c32b">
-      <p>Rifampin inhibits bacterial DNA-dependent RNA polymerase. Which product is reduced?</p>
+      <p>Rifampin inhibits bacterial DNA-dependent RNA polymerase. Which process does it directly block?</p>
       <div class="choices"></div><div class="feedback"></div>
     </div>
     <div class="cp-item" data-check="c32c">
@@ -1531,7 +1531,7 @@ MANIFEST.modules.forEach(function(m){ m.sections.forEach(function(s){
 var AREA_SECTION = MANIFEST.areaSection;
 
 var MODULE_QUIZ_SIZE = 6;   /* smaller than the 12-15 questions per module, so targeted rounds have fresh items */
-var FINAL_EXAM_MIX = {concept:6, application:12, integration:7};
+var FINAL_EXAM_MIX = {concept:8, application:10, integration:7};
 
 /* ---------- 2. small helpers for this page ---------- */
 function $(id){ return document.getElementById(id); }
@@ -1942,7 +1942,7 @@ Act.predict('act-betaPredict', {name:'betaPredict',
       options:BQ, answer:0, why:'<p>The drug reaches its PBP targets, binds, and blocks transpeptidation.</p>', reveal:betaReveal('none')},
     {id:'lactamase', title:'β-Lactamase producer', prompt:'An organism makes a β-lactamase. What happens to the drug?',
       options:['The β-lactam ring is cleaved and the drug is inactive','The drug is bound more tightly by its PBP','The drug enters the cell faster','The PBP is converted into a β-lactamase'], answer:0,
-      why:'<p>β-Lactamases cleave the ring of every β-lactam class. Plasmid-mediated β-lactamase production gives high-level resistance.</p>', reveal:betaReveal('lactamase')},
+      why:'<p>β-Lactamases cleave the β-lactam ring. Individual enzymes differ in which classes they reach: penicillinases, ESBLs, and carbapenemases have progressively broader ranges. Plasmid-mediated β-lactamase production gives high-level resistance.</p>', reveal:betaReveal('lactamase')},
     {id:'pbp', title:'Altered PBP', prompt:'An organism carries a PBP with low affinity for the drug. What happens?',
       options:['The drug stays intact, yet cross-linking continues','The drug is cleaved before it reaches a PBP','The drug is pumped out before it binds','Cross-linking is blocked and the wall weakens'], answer:0,
       why:'<p>This is target change: the drug is intact and arrives, but its target no longer responds.</p>', reveal:betaReveal('pbp')},
@@ -1951,7 +1951,7 @@ Act.predict('act-betaPredict', {name:'betaPredict',
       why:'<p>Poor drug permeability produces low-level resistance. Less drug arrives, but some still does.</p>', reveal:betaReveal('perm')},
     {id:'inhib', title:'β-Lactamase plus inhibitor', prompt:'An organism makes a β-lactamase, and a β-lactamase inhibitor is added to the β-lactam. What happens?',
       options:['The inhibitor occupies the enzyme, so the β-lactam reaches its PBP','The inhibitor kills the organism directly','The inhibitor blocks the PBP more tightly than the β-lactam','The inhibitor pumps the enzyme out of the cell'], answer:0,
-      why:'<p>Inhibitors have no antibiotic activity of their own: they protect the partner drug. They do not work against metallo-β-lactamases.</p>', reveal:betaReveal('inhib')}
+      why:'<p>Most inhibitors have little useful antibiotic activity of their own: they protect the partner drug. The inhibitors in current combinations do not work against metallo-β-lactamases.</p>', reveal:betaReveal('inhib')}
   ]});
 chain('betaLab', ['pbpSim','betaPredict']);
 
@@ -1962,7 +1962,7 @@ Act.sort('act-envelopeSort', {name:'envelopeSort', options:['Vancomycin','Cyclos
   {text:'Acts like a cationic detergent on the phospholipid bilayer, with poor bacterial selectivity.', answer:'Polymyxins', why:'Positively charged amino acids disrupt the bilayer.'},
   {text:'A cyclic lipopeptide that disrupts the membrane of Gram-positive cocci.', answer:'Daptomycin', why:'It is bactericidal.'},
   {text:'Used for bacteremia and right-sided endocarditis.', answer:'Daptomycin', why:'It is also used for skin and skin structure infections.'},
-  {text:'Removed from use in the 1960s over kidney and nerve toxicity, and useful mostly against Gram-negative bacteria.', answer:'Polymyxins', why:'Polymyxin E is colistin.'}
+  {text:'Largely set aside in the 1970s over kidney and nerve toxicity, and useful mostly against Gram-negative bacteria.', answer:'Polymyxins', why:'Polymyxin E is colistin.'}
 ]});
 
 /* ---------- Module 3 · Section 1 ---------- */
@@ -1996,7 +1996,7 @@ Act.sort('act-nucleicSort', {name:'nucleicSort',
   {text:'<strong>Rifabutin</strong>', answer:'RNA polymerase', why:'A rifampin derivative that induces P450 enzymes less.'},
   {text:'<strong>Fidaxomicin</strong> (specific for Clostridioides difficile)', answer:'RNA polymerase', why:'Consequence: transcription in C. difficile is inhibited.'},
   {text:'<strong>Sulfamethoxazole</strong>', answer:'Dihydropteroate synthase', why:'Consequence: an early step in folate synthesis stalls.'},
-  {text:'<strong>Trimethoprim</strong>', answer:'Dihydrofolate reductase', why:'Consequence: DHF is not converted to THF. It is 60,000-fold selective for the bacterial enzyme.'}
+  {text:'<strong>Trimethoprim</strong>', answer:'Dihydrofolate reductase', why:'Consequence: DHF is not converted to THF. It is about 60,000-fold more selective for the bacterial enzyme than for the human one.'}
 ]});
 chain('nucleicLab', ['fqCore','nucleicSort']);
 
@@ -2017,7 +2017,7 @@ Act.predict('act-prodrugPredict', {name:'prodrugPredict',
 Act.sort('act-tbSort', {name:'tbSort', options:['Isoniazid','Ethambutol','Pyrazinamide'], rows:[
   {text:'Inhibits mycolic acid synthesis and is specific for mycobacteria.', answer:'Isoniazid', why:'It is often given with pyridoxine to limit neurologic side effects.'},
   {text:'Inhibits arabinogalactan synthesis, disrupting mycolic acid–peptidoglycan linkages.', answer:'Ethambutol', why:'Effective against Mycobacterium tuberculosis.'},
-  {text:'Effective against semidormant mycobacteria that isoniazid and rifampin do not affect.', answer:'Pyrazinamide', why:'Its mechanism is uncertain and may involve fatty acid synthesis related to mycolic acid production.'},
+  {text:'Most active against slowly replicating bacilli in acidic, inflamed tissue.', answer:'Pyrazinamide', why:'It is converted to pyrazinoic acid and works best at acidic pH. Together with rifampin, it kills persisting bacilli early in therapy.'},
   {text:'Often given with pyridoxine to limit neurologic side effects.', answer:'Isoniazid', why:'Pyridoxine is vitamin B6.'}
 ]});
 chain('prodrugLab', ['prodrugPredict','tbSort']);
