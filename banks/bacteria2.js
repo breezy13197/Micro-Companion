@@ -788,13 +788,13 @@ var CARDS = [
   {
     "id": "BAC2-CARD-39",
     "t": "Selective toxicity: where it comes from",
-    "d": "A difference between the bacterial and human target. Either bacteria have a structure humans lack (the peptidoglycan wall), or the drug inhibits the bacterial version of a shared enzyme at a much lower concentration. A near-identical shared target means host toxicity at effective doses.",
+    "d": "A difference between the bacterial and human target. The target may be absent from humans (the peptidoglycan wall, folate synthesis) or built differently (the 70S ribosome; trimethoprim inhibits bacterial dihydrofolate reductase at a far lower concentration than the human enzyme). A near-identical shared target means host toxicity at effective doses.",
     "area": "Selective toxicity"
   },
   {
     "id": "BAC2-CARD-40",
     "t": "Bactericidal versus bacteriostatic",
-    "d": "Bactericidal drugs kill. Bacteriostatic drugs halt growth, so the bacteria regrow when the drug is removed, and clearing them depends on phagocytes. That makes a bacteriostatic drug a weaker choice in severe neutropenia.",
+    "d": "Bactericidal drugs kill. Bacteriostatic drugs stop growth without killing, so the bacteria regrow if the drug is removed, and clearing them depends on host defenses such as phagocytes. That is why bactericidal therapy is favored in life-threatening infections such as endocarditis, where phagocytes reach the bacteria poorly.",
     "area": "Killing, growth arrest, and spectrum"
   },
   {
@@ -806,7 +806,7 @@ var CARDS = [
   {
     "id": "BAC2-CARD-42",
     "t": "The five-part mechanism lens",
-    "d": "Target: what the drug binds. Action: what it does (inhibit, bind, block, disrupt, cause misreading). Selective toxicity: why bacteria suffer more than human cells. Spectrum: which organisms it reaches. Resistance link: how bacteria escape it.",
+    "d": "Target: what bacterial molecule or process is directly affected. Action: what the drug does to it (inhibit, bind, block, disrupt, cause misreading). Selective toxicity: why bacterial cells are more vulnerable than human cells. Spectrum / context: which organisms it reaches and the broad clinical pattern. Resistance link: the simplest escape route from the mechanism.",
     "area": "The mechanism lens"
   },
   {
@@ -817,8 +817,8 @@ var CARDS = [
   },
   {
     "id": "BAC2-CARD-44",
-    "t": "Antibiotic stewardship",
-    "d": "Use the narrowest drug that covers the organism, for the shortest effective duration, with doses adjusted for kidney function. Two drugs together are justified for serious infection before the organism is identified, for synergy, or to prevent resistance.",
+    "t": "Antibiotic stewardship and combination therapy",
+    "d": "For a serious infection, start empiric coverage and send cultures, then narrow to the drug that covers the identified organism. Use the shortest effective course, and adjust the dose when kidney function is reduced. Two drugs together are justified for a serious infection before the organism is identified, for synergy, or to prevent resistance.",
     "area": "Stewardship and combinations"
   }
 ];
