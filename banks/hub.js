@@ -179,7 +179,7 @@ var CARDS = [
   { "id": "HUB-CARD-62", "t": "Starting ART after cryptococcal meningitis", "d": "Begin ART about 4 to 6 weeks after antifungal therapy starts, to lower the risk of IRIS." },
   { "id": "HUB-CARD-63", "t": "CYP inhibitors in HIV and fungal care", "d": "Ritonavir, cobicistat, and the azoles inhibit human CYP enzymes and raise other drug levels. Echinocandins cause few CYP interactions." },
   { "id": "HUB-CARD-64", "t": "Beating disinfection", "d": "Cryptosporidium oocysts survive chlorine (boil or filter water). C. difficile spores survive alcohol (soap and water). Norovirus: soap and water for at least 20 seconds." },
-  { "id": "HUB-CARD-65", "t": "Pregnancy choices", "d": "Toxoplasmosis in pregnancy: spiramycin. MMR (live) and primaquine or tafenoquine are not given in pregnancy. Toxoplasma, rubella, and B19 can reach the fetus." },
+  { "id": "HUB-CARD-65", "t": "Pregnancy choices", "d": "Toxoplasmosis in pregnancy: spiramycin, or pyrimethamine-sulfadiazine once the fetus is infected. MMR (live) and primaquine or tafenoquine are not given in pregnancy. Toxoplasma, rubella, and B19 can reach the fetus." },
   { "id": "HUB-CARD-66", "t": "Pneumocystis: a fungus treated differently", "d": "Grouped with the fungi of T-cell loss, but treated with TMP-SMX (pentamidine or atovaquone as alternatives), not azoles. Prednisone is added if PaO2 is below 70 mm Hg." }
 ];
 
@@ -1734,7 +1734,7 @@ var POOL = [
     "m": "parasitology+viruses4",
     "area": "Transmission and pregnancy",
     "level": "application",
-    "stem": "A pregnant patient asks about infections that can harm the fetus. Which pairing of infection and lecture recommendation is correct?",
+    "stem": "A pregnant patient asks about infections that can harm the fetus. Which pairing of infection and lecture recommendation is correct before any fetal infection is found?",
     "options": [
       "Toxoplasmosis: primaquine. Rubella: MMR is given during pregnancy",
       "Toxoplasmosis: pyrimethamine-sulfadiazine. Rubella: MMR is given during pregnancy",
@@ -1742,7 +1742,7 @@ var POOL = [
       "Toxoplasmosis: primaquine. Rubella: MMR is avoided during pregnancy"
     ],
     "answer": 2,
-    "why": "Spiramycin is used for toxoplasmosis in pregnancy, and pyrimethamine-sulfadiazine is the standard combination otherwise. MMR is a live vaccine and is not given in pregnancy. Primaquine kills malaria hypnozoites, does not treat toxoplasmosis, and is also avoided in pregnancy."
+    "why": "Spiramycin is used for toxoplasmosis in pregnancy while the fetus is not known to be infected. Pyrimethamine-sulfadiazine with leucovorin is used once fetal infection is confirmed and is the standard combination outside pregnancy. MMR is a live vaccine and is not given in pregnancy. Primaquine kills malaria hypnozoites, does not treat toxoplasmosis, and is also avoided in pregnancy."
   },
   {
     "id": "HUB-105",
