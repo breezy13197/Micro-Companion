@@ -602,7 +602,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
     <div class="box predict">
       <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
       <div class="cp-item" data-check="c4a">
-        <p>Which Staphylococcus aureus toxin acts as a superantigen and causes toxic shock syndrome?</p>
+        <p>A woman develops fever, a diffuse sunburn-like rash, and hypotension, and S. aureus is recovered from a retained tampon. Which superantigen is responsible?</p>
         <div class="choices"></div><div class="feedback"></div>
       </div>
       <div class="cp-item" data-check="c4b">
@@ -1403,11 +1403,11 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
     <div class="box predict">
       <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
       <div class="cp-item" data-check="c17a">
-        <p>Watery diarrhea, without blood, most often reflects a toxin acting on which site?</p>
+        <p>Watery, non-bloody diarrhea caused by a toxin, without tissue invasion, points to which site?</p>
         <div class="choices"></div><div class="feedback"></div>
       </div>
       <div class="cp-item" data-check="c17b">
-        <p>Bloody diarrhea most often reflects invasion or Shiga toxin acting at which site?</p>
+        <p>Bloody diarrhea caused by invasion or Shiga toxin points to which site?</p>
         <div class="choices"></div><div class="feedback"></div>
       </div>
       <div class="cp-item" data-check="c17c">
@@ -1575,11 +1575,11 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
         <div class="choices"></div><div class="feedback"></div>
       </div>
       <div class="cp-item" data-check="c19b">
-        <p>Which stage of pertussis is the patient most contagious?</p>
+        <p>During which stage of pertussis is a patient most contagious?</p>
         <div class="choices"></div><div class="feedback"></div>
       </div>
       <div class="cp-item" data-check="c19c">
-        <p>Why is Tdap recommended during every pregnancy, not just once?</p>
+        <p>Why is Tdap given in every pregnancy, even if the patient received it during an earlier pregnancy?</p>
         <div class="choices"></div><div class="feedback"></div>
       </div>
     </div>
@@ -1657,7 +1657,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
     <div class="box predict">
       <h3><span class="tag">CAN YOU PREDICT IT?</span></h3>
       <div class="cp-item" data-check="c21a">
-        <p>What is the major antiphagocytic virulence factor shared by the three classic encapsulated pyogens (S. pneumoniae, N. meningitidis, and H. influenzae)?</p>
+        <p>S. pneumoniae, N. meningitidis, and H. influenzae share a major antiphagocytic virulence factor that explains why patients without a spleen are at high risk. What is it?</p>
         <div class="choices"></div><div class="feedback"></div>
       </div>
       <div class="cp-item" data-check="c21b">
@@ -1665,7 +1665,7 @@ input[type=range]::-moz-range-thumb{border-color:var(--green)}
         <div class="choices"></div><div class="feedback"></div>
       </div>
       <div class="cp-item" data-check="c21c">
-        <p>Which two patient groups require ampicillin to be added to empiric meningitis coverage, specifically for Listeria?</p>
+        <p>Which patients need ampicillin added to empiric meningitis therapy to cover Listeria?</p>
         <div class="choices"></div><div class="feedback"></div>
       </div>
     </div>
@@ -2199,7 +2199,7 @@ Act.stages('act-meningoCase', {name:'meningoCase', stages:[
    why:'Close contacts receive chemoprophylaxis to eliminate nasopharyngeal carriage, regardless of symptoms, because they are at substantially higher risk of secondary disease.'},
   {lead:'<p><b>One week later.</b> The patient has recovered. Public health follows up about the rest of the dormitory floor, none of whom are considered close contacts.</p>',
    prompt:'What longer-term prevention step is most appropriate for the wider dormitory population going forward?',
-   options:['Ensuring they are up to date on MenACWY (and considering MenB)','Chemoprophylaxis for the entire dormitory','No further action is ever needed for a college population','A course of doxycycline for everyone on the floor'], answer:0,
+   options:['Ensuring they are up to date on MenACWY (and considering MenB)','Chemoprophylaxis for the entire dormitory','A single dose of Hib vaccine for each resident','A course of doxycycline for everyone on the floor'], answer:0,
    why:'Outbreaks like this are exactly why MenACWY is recommended at 11-12 with a booster at 16, and why MenB is discussed as a shared decision \u2014 college dormitories are a recognized higher-risk setting.'},
   {lead:'<p><b>Looking back.</b> One patient, three separate decisions: what to give her, what to give her roommate, and what protects everyone else.</p>',
    prompt:'Which virulence factor made it possible for this organism to invade the bloodstream and cause the petechial rash in the first place?',
@@ -2223,9 +2223,9 @@ Act.predict('act-gonoLens', {name:'gonoLens',
      options:['Gentamicin plus azithromycin','Doxycycline alone','Penicillin G','Vancomycin'], answer:0,
      why:'Gentamicin plus azithromycin is the recommended alternative for patients who cannot receive a cephalosporin.'},
     {id:'newborn', title:'Newborn prevention',
-     prompt:'What prevents gonococcal conjunctivitis in a newborn delivered to a mother with untreated gonorrhea?',
-     options:['Erythromycin ointment applied at birth','A maternal vaccine given during pregnancy','Oral ceftriaxone for the newborn','There is no effective prevention'], answer:0,
-     why:'Erythromycin ointment applied to the newborn\u2019s eyes at birth is the standard prevention for gonococcal conjunctivitis.'},
+     prompt:'What is given routinely to every newborn at birth to prevent gonococcal conjunctivitis?',
+     options:['Erythromycin ointment applied to the eyes','A maternal vaccine given during pregnancy','Oral azithromycin for the newborn','Penicillin drops applied to the eyes'], answer:0,
+     why:'Erythromycin ointment applied to the newborn\u2019s eyes at birth is the routine prevention for gonococcal conjunctivitis. No gonococcal vaccine exists. A newborn whose mother had untreated gonorrhea at delivery also receives a single injected dose of ceftriaxone.'},
     {id:'followup', title:'Follow-up testing',
      prompt:'A patient successfully treated for urogenital gonorrhea asks when they should be retested for reinfection.',
      options:['About 3 months after treatment','Immediately after finishing the antibiotic','Only if symptoms return','At 24 hours post-treatment'], answer:0,
@@ -2416,7 +2416,7 @@ Act.stages('act-ecoliCase', {name:'ecoliCase', stages:[
    why:'EHEC (O157:H7) is transmitted through undercooked beef and produces Shiga toxin, which inhibits protein synthesis and causes bloody diarrhea \u2014 unlike the watery diarrhea of ETEC.'},
   {lead:'<p><b>Patient B, continued.</b> The care team considers giving loperamide for symptom control and an antibiotic to shorten the illness.</p>',
    prompt:'Why should both of these be used with great caution (or avoided) in suspected EHEC infection?',
-   options:['Both may increase the risk of precipitating hemolytic uremic syndrome (HUS)','Loperamide is contraindicated only in pregnancy, and antibiotics are simply ineffective','Both interact dangerously with oral rehydration solution','There is no reason to avoid either \u2014 this is outdated advice'], answer:0,
+   options:['Both may increase the risk of precipitating hemolytic uremic syndrome (HUS)','Both mask fever and delay the diagnosis','Both interact dangerously with oral rehydration solution','Both allow the bacteria to invade the bloodstream'], answer:0,
    why:'Antimotility drugs and antibiotics are both approached cautiously (or avoided) in suspected EHEC infection because they may increase the release of Shiga toxin and precipitate HUS.'}
 ]});
 
@@ -2449,12 +2449,12 @@ Act.predict('act-entericLens', {name:'entericLens',
      why:'Campylobacter infection is a recognized trigger for Guillain-Barr\u00e9 syndrome, an immune-mediated complication that appears weeks after the gastrointestinal illness.'},
     {id:'hpylori-mech', title:'Surviving stomach acid',
      prompt:'How does Helicobacter pylori survive in the acidic environment of the stomach?',
-     options:['Urease converts urea to ammonia, neutralizing acid nearby','It secretes a heat-labile toxin that raises stomach pH globally','It forms spores that resist acid','It lives exclusively above the mucus layer, avoiding acid entirely'], answer:0,
+     options:['Urease converts urea to ammonia, neutralizing acid nearby','It secretes a heat-labile toxin that raises stomach pH','It forms spores that resist acid','It pumps protons out faster than acid enters'], answer:0,
      why:'H. pylori\u2019s urease enzyme converts urea to ammonia, neutralizing the acid in its immediate surroundings and allowing it to colonize the gastric mucosa.'},
     {id:'hpylori-tx', title:'Treating H. pylori',
      prompt:'What is first-line treatment for H. pylori infection?',
-     options:['Bismuth quadruple therapy: a PPI, bismuth, tetracycline, and a nitroimidazole for 10-14 days','A single dose of azithromycin','Oral rehydration alone, since the infection is self-limited','Doxycycline monotherapy for 3 days'], answer:0,
-     why:'Bismuth quadruple therapy (PPI, bismuth, tetracycline, and a nitroimidazole) for 10-14 days is first-line, with cure confirmed 4 or more weeks later.'},
+     options:['Bismuth quadruple therapy: a PPI, bismuth, tetracycline, and a nitroimidazole for 14 days','A single dose of azithromycin','Clarithromycin triple therapy for 7 days','Doxycycline monotherapy for 3 days'], answer:0,
+     why:'Bismuth quadruple therapy (PPI, bismuth, tetracycline, and a nitroimidazole) for 14 days is first-line, with cure confirmed 4 or more weeks later. Short clarithromycin triple therapy fails often because of clarithromycin resistance.'},
     {id:'vibrio-tx', title:'Treating cholera',
      prompt:'What is the single most life-saving intervention for a patient with severe cholera?',
      options:['Rehydration (oral or IV)', 'Doxycycline alone, without fluids', 'Loperamide to reduce fluid losses', 'Broad-spectrum antibiotics without fluids'], answer:0,
@@ -2525,19 +2525,19 @@ Act.predict('act-integrativeLens', {name:'integrativeLens',
   items:[
     {id:'abscess-source', title:'An abscess with foul-smelling discharge',
      prompt:'A patient develops a foul-smelling, gas-containing abscess after aspiration. Which group of organisms is most likely involved?',
-     options:['Anaerobes, likely more than one type together','A single aerobic gram-positive coccus','A single aerobic gram-negative rod','A virus'], answer:0,
+     options:['Anaerobes, likely more than one type together','A single aerobic gram-positive coccus','A single aerobic gram-negative rod','Bacteroides fragilis alone, from the colon'], answer:0,
      why:'Foul-smelling discharge and gas in tissue are classic clinical clues for anaerobic infection, and most abscesses contain more than one type of anaerobe.'},
     {id:'bfragilis-tx', title:'Treating a B. fragilis abscess',
      prompt:'An intra-abdominal abscess grows Bacteroides fragilis. Why might a beta-lactam alone fail?',
-     options:['B. fragilis may produce beta-lactamase','B. fragilis is intrinsically resistant to all antibiotics','Beta-lactams cannot penetrate abscess walls under any circumstances','B. fragilis is not actually a pathogen'], answer:0,
+     options:['B. fragilis may produce beta-lactamase','B. fragilis lacks a cell wall for beta-lactams to target','Beta-lactams are inactivated by the low oxygen in an abscess','B. fragilis is a contaminant, so its growth can be ignored'], answer:0,
      why:'B. fragilis may produce beta-lactamase, which can inactivate some beta-lactam antibiotics unless a beta-lactamase inhibitor or an alternative agent (such as metronidazole or clindamycin) is used.'},
     {id:'aminoglycoside-anaerobe', title:'An antibiotic that will not work here',
      prompt:'Why are aminoglycosides like gentamicin ineffective against anaerobic infections?',
-     options:['Their uptake into bacterial cells depends on oxygen, which anaerobes lack','Anaerobes destroy aminoglycosides with a specific enzyme','Aminoglycosides only treat viral infections','Anaerobes have no ribosomes for aminoglycosides to target'], answer:0,
+     options:['Their uptake into bacterial cells depends on oxygen, which anaerobes lack','Anaerobes destroy aminoglycosides with a specific enzyme','Aminoglycosides cannot cross the gram-negative outer membrane','Anaerobic ribosomes lack the aminoglycoside binding site'], answer:0,
      why:'Aminoglycoside uptake into bacterial cells is an oxygen-dependent process, so these drugs are ineffective in the low-oxygen environment where anaerobes live.'},
     {id:'listeria-exception', title:'The meningitis exception',
      prompt:'Unlike the other classic causes of bacterial meningitis, Listeria monocytogenes is not encapsulated. How does it avoid destruction after being engulfed by a phagocyte?',
-     options:['Listeriolysin lets it escape the phagosome','It hides inside red blood cells instead','It sheds its cell wall to become invisible to immune cells','It produces a capsule only inside the phagosome'], answer:0,
+     options:['Listeriolysin lets it escape the phagosome','It blocks phagosome-lysosome fusion, as Mycobacterium does','It sheds its cell wall to become invisible to immune cells','It produces a capsule once inside the phagosome'], answer:0,
      why:'Listeria escapes the phagosome using listeriolysin, letting it survive and replicate inside the host cell \u2014 a completely different strategy from the antiphagocytic capsules of the other classic meningitis-causing organisms.'},
     {id:'empiric-elderly', title:'Empiric coverage in an older adult',
      prompt:'A 68-year-old with suspected bacterial meningitis needs empiric antibiotic coverage. Why is ampicillin added to the usual regimen?',
