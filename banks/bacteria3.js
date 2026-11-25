@@ -64,9 +64,9 @@ var CHECKPOINTS = {
 
   /* m2s1 — S. aureus: from factor to disease (slides 12-15) */
   c4a: {
-    options: ['Toxic shock syndrome toxin (TSST-1)', 'Enterotoxin', 'Exfoliatin', 'Alpha toxin'],
+    options: ['TSST-1', 'Enterotoxin', 'Exfoliatin', 'Alpha toxin'],
     answer: 0,
-    why: 'TSST-1 is the superantigen responsible for toxic shock syndrome, triggering massive cytokine release. Enterotoxin instead causes staphylococcal food poisoning by acting directly on the gut; exfoliatin is a protease that separates skin layers, and alpha toxin pokes holes in cell membranes.'
+    why: 'TSST-1 (toxic shock syndrome toxin) is the superantigen responsible for tampon-associated toxic shock syndrome, triggering massive cytokine release. Enterotoxin instead causes staphylococcal food poisoning by acting on the gut; exfoliatin is a protease that separates skin layers, and alpha toxin pokes holes in cell membranes.'
   },
   c4b: {
     options: ['Exfoliatin', 'Alpha toxin', 'Enterotoxin', 'Panton-Valentine (P-V) leukocidin'],
@@ -108,9 +108,9 @@ var CHECKPOINTS = {
     why: 'The spleen normally clears encapsulated organisms from the blood; without it, encapsulated pathogens like S. pneumoniae cause more severe, harder-to-clear infections. Viridans streptococci, enterococcus, and S. epidermidis are not the classic asplenia risk in this lecture.'
   },
   c6c: {
-    options: ['Antibiotics during labor', 'Antibiotics immediately upon a positive screen', 'No treatment unless the newborn becomes symptomatic', 'Antifungal prophylaxis'],
+    options: ['Antibiotics during labor', 'Antibiotics immediately upon a positive screen', 'No treatment unless the newborn becomes symptomatic', 'A GBS vaccine in the third trimester'],
     answer: 0,
-    why: 'Mothers who screen positive for group B strep receive antibiotics during labor to prevent transmission and neonatal sepsis, rather than being treated immediately at the time of the positive screen or withholding treatment until the newborn is symptomatic.'
+    why: 'Mothers who screen positive for group B strep receive antibiotics during labor to prevent transmission and neonatal sepsis, rather than being treated immediately at the time of the positive screen or withholding treatment until the newborn is symptomatic. No GBS vaccine is licensed.'
   },
 
   /* m3s1 — meningococcus or gonococcus? (slides 33, 35, 37, 79) */
@@ -134,7 +134,7 @@ var CHECKPOINTS = {
   c8a: {
     options: ['Ceftriaxone or penicillin G', 'Doxycycline or azithromycin', 'Vancomycin or linezolid', 'Rifampin or ciprofloxacin'],
     answer: 0,
-    why: 'Ceftriaxone or penicillin G are first-line treatment for meningococcal disease. Rifampin, ceftriaxone, and ciprofloxacin are used for prophylaxis of close contacts rather than treatment of the infected patient.'
+    why: 'Ceftriaxone or penicillin G is first-line treatment for the patient. Doxycycline and azithromycin are not standard treatment, vancomycin and linezolid target resistant gram-positive organisms, and rifampin or ciprofloxacin are used to clear carriage in close contacts, not to treat invasive disease.'
   },
   c8b: {
     options: ['Chemoprophylaxis with rifampin, ceftriaxone, or ciprofloxacin', 'No action unless symptoms develop', 'Immediate vaccination only, with no antibiotics', 'Treatment with the same ceftriaxone course as the patient'],
@@ -188,16 +188,16 @@ var CHECKPOINTS = {
     why: 'Tetanus toxin blocks glycine and GABA release in the spinal cord, so motor neurons fire without their normal brakes, producing muscle spasms and the arched-back posture called opisthotonos.'
   },
   c11c: {
-    options: ['Penicillin may antagonize GABA', 'Penicillin does not treat gram-positive organisms', 'Metronidazole also serves as the antitoxin', 'Penicillin cannot be given with antitoxin'],
+    options: ['Penicillin may antagonize GABA, worsening spasms', 'Penicillin does not reach the spinal cord', 'Metronidazole also neutralizes circulating toxin', 'Penicillin inactivates tetanus immune globulin'],
     answer: 0,
-    why: 'Some sources avoid penicillin in tetanus because it may antagonize GABA, working against the goal of restoring inhibitory neurotransmission; metronidazole is preferred instead.'
+    why: 'Penicillin may antagonize GABA, working against the goal of restoring inhibitory neurotransmission, so metronidazole is preferred. The concern is not drug delivery to the spinal cord, neither antibiotic neutralizes toxin (that is the job of tetanus immune globulin), and penicillin does not inactivate the immune globulin.'
   },
 
   /* m4s3 — C. difficile: the antibiotic-associated cycle (slides 49-52) */
   c12a: {
-    options: ['They suppress the normal colon flora that would otherwise resist C. difficile', 'They directly stimulate toxin production by C. difficile', 'They kill C. difficile spores, triggering a compensatory overgrowth', 'They are ineffective against all gram-positive organisms'],
+    options: ['They suppress the normal colon flora that keep C. difficile in check', 'They directly stimulate C. difficile toxin production', 'They kill spores, triggering compensatory overgrowth', 'They damage the colon lining so spores can invade'],
     answer: 0,
-    why: 'Antibiotics that suppress the normal, protective colon flora create an opening for C. difficile spores to germinate and cause disease. The antibiotics do not directly stimulate toxin production or kill the spores, which resist many agents, including alcohol.'
+    why: 'Antibiotics that suppress the normal, protective colon flora create an opening for C. difficile spores to germinate and cause disease. The antibiotics do not directly stimulate toxin production or kill the spores, which resist many agents, including alcohol, and the colon damage comes from C. difficile\u2019s own toxins, not from the antibiotic.'
   },
   c12b: {
     options: ['Fidaxomicin', 'Metronidazole', 'Ciprofloxacin', 'Amoxicillin'],
@@ -217,9 +217,9 @@ var CHECKPOINTS = {
     why: 'Listeriolysin facilitates escape from the phagosome once the organism has entered the cell. Internalin instead facilitates the initial attachment to human cell surfaces.'
   },
   c13b: {
-    options: ['Immunosuppressed adults, newborns, and pregnant women', 'Healthy young adults', 'Patients with a recent splenectomy only', 'Patients with a penicillin allergy'],
+    options: ['Pregnant patients, newborns, and immunosuppressed adults', 'Adolescents, college students, and military recruits', 'Splenectomy patients, sickle cell patients, and infants', 'Cystic fibrosis, burn, and ventilator patients'],
     answer: 0,
-    why: 'Listeria causes meningitis and sepsis primarily in immunosuppressed adults, newborns, and pregnant women, consistent with its ability to survive intracellularly and evade normal immune defenses.'
+    why: 'Listeria causes meningitis and sepsis in pregnant patients, newborns, and immunosuppressed adults, consistent with its ability to survive inside cells and evade normal immune defenses. Adolescents and dormitory or barracks settings point to meningococcus, missing or poorly working spleens point to encapsulated organisms, and cystic fibrosis, burns, and ventilators point to Pseudomonas.'
   },
   c13c: {
     options: ['It ADP-ribosylates EF-2, shutting down protein synthesis', 'It forms pores in the host cell membrane', 'It blocks acetylcholine release at the neuromuscular junction', 'It clots plasma to wall off the infection'],
@@ -234,9 +234,9 @@ var CHECKPOINTS = {
     why: 'ETEC produces LT (raises cAMP) and ST (raises cGMP) toxins that act on the small intestine, causing watery diarrhea without invading tissue. EHEC instead produces Shiga toxin and causes bloody diarrhea.'
   },
   c14b: {
-    options: ['They may increase the risk of hemolytic uremic syndrome (HUS)', 'They interact dangerously with oral rehydration solution', 'They are contraindicated only in pregnancy', 'They have no specific risk in this setting'],
+    options: ['They may increase the risk of hemolytic uremic syndrome', 'They reduce absorption of oral rehydration solution', 'They mask fever and delay diagnosis', 'They raise the risk of C. difficile infection'],
     answer: 0,
-    why: 'Antimotility drugs can increase the risk of hemolytic uremic syndrome (HUS) in EHEC infection, possibly by prolonging exposure to Shiga toxin, so they are avoided.'
+    why: 'Antimotility drugs can increase the risk of hemolytic uremic syndrome (HUS) in EHEC infection, possibly by prolonging exposure to Shiga toxin, so they are avoided. They do not block oral rehydration, hide fever, or cause C. difficile infection.'
   },
 
   /* m5s2 — Salmonella, Shigella, and Klebsiella (slide 61) */
@@ -268,9 +268,9 @@ var CHECKPOINTS = {
     why: 'Campylobacter jejuni infection is a well-known trigger for Guillain-Barr\u00e9 syndrome, an immune-mediated complication that appears weeks later, as well as reactive arthritis.'
   },
   c16c: {
-    options: ['Urease converts urea to ammonia, neutralizing nearby acid', 'It forms acid-resistant spores', 'It lives exclusively above the mucus layer, avoiding acid', 'It secretes a toxin that raises stomach pH globally'],
+    options: ['Urease converts urea to ammonia, neutralizing nearby acid', 'It forms acid-resistant spores', 'It pumps protons out faster than acid enters', 'Its capsule repels hydrogen ions'],
     answer: 0,
-    why: "H. pylori's urease enzyme converts urea to ammonia, neutralizing the acid in its immediate surroundings and allowing it to colonize the gastric mucosa."
+    why: 'H. pylori\u2019s urease enzyme converts urea to ammonia, neutralizing the acid in its immediate surroundings and allowing it to colonize the gastric mucosa. It does not form spores, and neither proton pumping nor a capsule is how it survives acid.'
   },
 
   /* m5s4 — where the enteric bacteria strike (slide 63) */
@@ -299,7 +299,7 @@ var CHECKPOINTS = {
   c18b: {
     options: ['Patients with cystic fibrosis', 'Healthy young adults', 'Patients with a recent splenectomy', 'Pregnant patients'],
     answer: 0,
-    why: 'Pseudomonas chronically infects most adults with cystic fibrosis, though prevalence has declined with CFTR modulator therapy.'
+    why: 'Pseudomonas is the classic chronic lung pathogen in cystic fibrosis. It still affects many adults with CF, though far fewer since CFTR modulator therapy. Healthy young adults, splenectomy patients, and pregnant patients are not the classic chronic Pseudomonas group.'
   },
 
   /* m6s2 — H. influenzae and B. pertussis (slides 68-70) */
@@ -309,14 +309,14 @@ var CHECKPOINTS = {
     why: 'H. influenzae, S. pneumoniae, and N. meningitidis are the three classic encapsulated pyogens, all covered by conjugate vaccines that have dramatically reduced childhood meningitis.'
   },
   c19b: {
-    options: ['Catarrhal (cold-like symptoms, before the characteristic cough)', 'Paroxysmal (severe coughing fits with a whoop)', 'Convalescent (cough gradually resolving)', 'Patients are equally contagious throughout'],
+    options: ['Catarrhal', 'Paroxysmal', 'Convalescent', 'Incubation'],
     answer: 0,
-    why: 'The catarrhal stage, though it looks like an ordinary cold, is when the patient is most contagious \u2014 before the classic paroxysmal cough even appears.'
+    why: 'The catarrhal stage, which looks like an ordinary cold, is when the patient is most contagious, before the classic paroxysmal cough with its whoop even appears. Spread falls off through the paroxysmal and convalescent stages, and during incubation the patient has no symptoms yet.'
   },
   c19c: {
-    options: ['To transfer protective antibodies to the newborn, who cannot yet be vaccinated', 'Because pregnancy reduces vaccine efficacy from a single dose', 'To treat subclinical maternal pertussis infection', 'Because DTaP is not effective in adults'],
+    options: ['Maternal antibody levels fall over time, so each baby needs a fresh boost', 'The antibodies from the earlier dose were used up by the previous baby', 'Pertussis strains change each year, as influenza strains do', 'A dose given before pregnancy does not cross the placenta'],
     answer: 0,
-    why: 'Tdap in every pregnancy transfers protective antibodies to the newborn, who is too young to be vaccinated directly but is at high risk for severe pertussis.'
+    why: 'Antibody levels fall in the months after a Tdap dose, so a dose from an earlier pregnancy no longer leaves enough antibody to pass to the new baby. A fresh dose in each pregnancy boosts the mother\u2019s antibodies so they cross the placenta and protect the newborn, who is too young to be vaccinated directly. Antibodies are not used up by a previous baby, and pertussis vaccines are not updated yearly like influenza vaccines.'
   },
 
   /* m6s3 — tularemia and plague: zoonotic hazards (slides 71-72) */
@@ -326,9 +326,9 @@ var CHECKPOINTS = {
     why: 'F. tularensis (tularemia) has rabbits, deer, and ticks as its reservoir. Y. pestis (plague) is instead associated with rodents.'
   },
   c20b: {
-    options: ['Notify the laboratory in advance, since both are laboratory hazards', 'No special precautions are needed beyond standard practice', 'Only Y. pestis requires laboratory notification', 'Only F. tularensis requires laboratory notification'],
+    options: ['Notify the laboratory in advance so staff can take added precautions', 'Process it on the open bench like a routine culture', 'Wait for serology results before sending the culture', 'Refrigerate it until the patient\u2019s fever resolves'],
     answer: 0,
-    why: 'Both organisms are laboratory hazards; notifying the laboratory in advance when either is suspected (as with anthrax) protects laboratory staff.'
+    why: 'Both organisms are laboratory hazards, so the laboratory is notified in advance when either is suspected (as with anthrax), letting staff handle the specimen with added precautions. Open-bench processing puts staff at risk, and delaying or holding the specimen only delays the diagnosis.'
   },
   c20c: {
     options: ['Aminoglycosides (gentamicin) or fluoroquinolones', 'Macrolides', 'Penicillins', 'Vancomycin'],
@@ -343,14 +343,14 @@ var CHECKPOINTS = {
     why: 'All three organisms share a polysaccharide capsule that resists phagocytosis, which is why the spleen (the organ that clears encapsulated bacteria from the blood) is so important for controlling these infections.'
   },
   c21b: {
-    options: ['It is not encapsulated, and instead escapes the phagosome using listeriolysin', 'It is the only cause of meningitis that is a virus, not a bacterium', 'It never causes meningitis in any patient population', 'It is fully covered by the standard cephalosporin regimen'],
+    options: ['It lacks a capsule and survives by escaping the phagosome', 'It is a gram-negative rod rather than a coccus', 'It spreads person to person by respiratory droplets', 'It is reliably covered by ceftriaxone'],
     answer: 0,
-    why: 'Unlike the encapsulated pyogens, Listeria is not encapsulated; it survives inside phagocytes by escaping the phagosome with listeriolysin, which is why its coverage requires ampicillin rather than relying on anticapsular defenses.'
+    why: 'Unlike the encapsulated pyogens, Listeria is not encapsulated; it survives inside phagocytes by escaping the phagosome with listeriolysin. Listeria is a gram-positive rod, it is acquired from food rather than by respiratory droplets, and cephalosporins such as ceftriaxone do not cover it, which is why ampicillin is added.'
   },
   c21c: {
-    options: ['Newborns, and adults over 50 or immunocompromised', 'Healthy school-age children and healthy young adults', 'Only patients with a known penicillin allergy', 'Only pregnant patients'],
+    options: ['Newborns, adults over 50, and immunocompromised patients', 'School-age children and healthy young adults', 'Patients with a penicillin allergy', 'College students living in dormitories'],
     answer: 0,
-    why: 'Newborns and adults over 50 (or immunocompromised patients) are the two groups at increased risk for Listeria meningitis, and since cephalosporins do not cover Listeria, ampicillin is added for these patients specifically.'
+    why: 'Newborns, adults over 50, and immunocompromised patients are at increased risk for Listeria meningitis, and since cephalosporins do not cover Listeria, ampicillin is added for them. Healthy children, young adults, and college students are covered by the standard regimen, and a penicillin allergy would argue against ampicillin rather than for it.'
   }
 };
 
@@ -442,21 +442,21 @@ var POOL = [
     why:'Clustered arrangement plus a positive catalase result together point to Staphylococcus. Streptococcus and Enterococcus are catalase-negative, and Neisseria is a gram-negative diplococcus rather than a clustered gram-positive coccus.'
   },
   {
-    id:'BAC3-004', m:'m1', area:'Staphylococcal identification', level:'concept',
-    stem:'Which single test result distinguishes Staphylococcus aureus from the coagulase-negative staphylococci (S. epidermidis and S. saprophyticus)?',
-    options:['A positive coagulase test', 'A positive catalase test', 'Growth in grape-like clusters', 'A gram-positive cell wall'],
+    id:'BAC3-004', m:'m1', area:'Staphylococcal identification', level:'application',
+    stem:'A wound isolate of gram-positive cocci in clusters is catalase-positive and clots rabbit plasma. Which organism is it?',
+    options:['S. aureus', 'S. epidermidis', 'S. saprophyticus', 'S. pyogenes'],
     answer:0,
-    why:'Coagulase is the defining split: S. aureus is coagulase-positive, while S. epidermidis and S. saprophyticus are both coagulase-negative. Catalase activity, clustered growth, and the gram-positive cell wall are shared by all three species.'
+    why:'Clotting plasma is a positive coagulase test, which identifies S. aureus. S. epidermidis and S. saprophyticus are coagulase-negative, and S. pyogenes is a catalase-negative streptococcus that grows in chains.'
   },
   {
-    id:'BAC3-005', m:'m1', area:'Staphylococcal identification', level:'application',
-    stem:'A hospitalized patient develops an infection at the site of a central venous catheter. Culture grows a coagulase-negative, novobiocin-susceptible Staphylococcus. Which organism is the most likely cause?',
-    options:['Staphylococcus epidermidis', 'Staphylococcus saprophyticus', 'Staphylococcus aureus', 'Streptococcus agalactiae'],
+    id:'BAC3-005', m:'m1', area:'Staphylococcal identification', level:'concept',
+    stem:'Which property lets Staphylococcus epidermidis cause infections of catheters and prosthetic devices?',
+    options:['Biofilm formation', 'Coagulase production', 'TSST-1 production', 'Novobiocin resistance'],
     answer:0,
-    why:'S. epidermidis is novobiocin-susceptible and is the classic cause of catheter- and device-associated infections through biofilm formation. S. saprophyticus is novobiocin-resistant and causes UTIs instead; S. aureus would be coagulase-positive, and S. agalactiae is a Streptococcus.'
+    why:'S. epidermidis forms a biofilm on plastic and metal surfaces, which is why it is the classic cause of catheter- and device-associated infections. It is coagulase-negative, does not make TSST-1 (an S. aureus toxin), and is novobiocin-susceptible; novobiocin resistance belongs to S. saprophyticus.'
   },
   {
-    id:'BAC3-006', m:'m1', area:'Staphylococcal identification', level:'integration',
+    id:'BAC3-006', m:'m1', area:'Staphylococcal identification', level:'concept',
     stem:'Which finding correctly separates Staphylococcus saprophyticus from Staphylococcus epidermidis?',
     options:['Novobiocin resistance versus susceptibility', 'Coagulase-positive versus coagulase-negative', 'Catalase-positive versus catalase-negative', 'Beta-hemolytic versus alpha-hemolytic'],
     answer:0,
@@ -477,7 +477,7 @@ var POOL = [
     why:'Bacitracin resistance combined with a positive CAMP test identifies group B Streptococcus (S. agalactiae). Group A Streptococcus (S. pyogenes) is also beta-hemolytic but is bacitracin-sensitive instead. S. pneumoniae and the viridans streptococci are both alpha-hemolytic.'
   },
   {
-    id:'BAC3-009', m:'m1', area:'Streptococcal & enterococcal identification', level:'application',
+    id:'BAC3-009', m:'m1', area:'Streptococcal & enterococcal identification', level:'concept',
     stem:'Which test result separates Streptococcus pneumoniae from the viridans streptococci?',
     options:['Optochin sensitivity versus resistance', 'Bacitracin sensitivity versus resistance', 'Beta-hemolysis versus alpha-hemolysis', 'A positive versus negative CAMP test'],
     answer:0,
@@ -519,11 +519,11 @@ var POOL = [
     why:'DNase digests DNA in necrotic tissue and exudates, thinning pus so the organism can spread. M protein resists phagocytosis, streptolysin O causes hemolysis, and erythrogenic toxin produces the scarlet fever rash.'
   },
   {
-    id:'BAC3-015', m:'m2', area:'Group A strep virulence and disease', level:'integration',
-    stem:'Antibiotic treatment of the initial group A streptococcal pharyngitis is well established to prevent which immune-mediated complication?',
-    options:['Rheumatic fever', 'Glomerulonephritis', 'Both rheumatic fever and glomerulonephritis equally', 'Neither complication'],
+    id:'BAC3-015', m:'m2', area:'Group A strep virulence and disease', level:'concept',
+    stem:'Which feature do rheumatic fever and acute glomerulonephritis share as complications of group A streptococcal infection?',
+    options:['Both are immune-mediated and appear weeks after the infection', 'Both are prevented by antibiotic treatment of the pharyngitis', 'Both result from direct bacterial invasion of the affected organ', 'Both are caused by erythrogenic toxin acting on the organ'],
     answer:0,
-    why:'Antibiotics given for the initial strep throat infection are established to prevent rheumatic fever. Glomerulonephritis is also an immune-mediated complication, but antibiotic treatment of the pharyngitis has not been shown to prevent it in the same way.'
+    why:'Rheumatic fever and acute glomerulonephritis are both immune-mediated complications that appear weeks after the infection, once the bacteria are gone. Antibiotics for strep throat prevent rheumatic fever but not glomerulonephritis, and neither complication comes from direct invasion or from erythrogenic toxin, which causes the scarlet fever rash.'
   },
   {
     id:'BAC3-016', m:'m2', area:'Group A strep virulence and disease', level:'application',
@@ -534,20 +534,20 @@ var POOL = [
   },
   {
     id:'BAC3-017', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'concept',
-    stem:'Which Streptococcus pneumoniae virulence factor breaks down IgA to facilitate colonization of the mucosa?',
+    stem:'Which Streptococcus pneumoniae virulence factor helps it colonize the mucosa by cleaving the main antibody class found on mucosal surfaces?',
     options:['IgA protease', 'Pneumolysin', 'Capsular polysaccharide', 'Lipoteichoic acid'],
     answer:0,
     why:'IgA protease breaks down IgA, facilitating mucosal colonization. Pneumolysin instead causes hemolysis, the capsule resists phagocytosis, and lipoteichoic acid activates complement.'
   },
   {
     id:'BAC3-018', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'application',
-    stem:'A patient with a history of heavy alcohol use is hospitalized with pneumonia and thick, blood-tinged sputum. Which factor most increases this patient\u2019s risk for pneumococcal infection?',
-    options:['Depressed cough reflex and increased aspiration of secretions', 'A congenitally absent spleen', 'A recent splenectomy for trauma', 'An underlying immunodeficiency in IgA production'],
+    stem:'A patient with heavy alcohol use is hospitalized with pneumococcal pneumonia and rust-colored sputum. Which mechanism best explains why alcohol use raises the risk of this infection?',
+    options:['Depressed cough reflex and aspiration of secretions', 'Loss of splenic clearance of encapsulated bacteria', 'Low IgA levels on the airway lining', 'Reduced stomach acid allowing swallowed bacteria to survive'],
     answer:0,
-    why:'Alcohol and drug intoxication depress the cough reflex and increase aspiration of secretions, lowering resistance to pneumococcal infection. Splenectomy and asplenia are separate, well-known risk factors, but they are not described in this vignette.'
+    why:'Alcohol intoxication depresses the cough reflex and increases aspiration of secretions, lowering resistance to pneumococcal infection. Loss of the spleen is a separate risk factor that alcohol use does not cause, and low airway IgA or reduced stomach acid are not how alcohol raises pneumococcal risk.'
   },
   {
-    id:'BAC3-019', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'application',
+    id:'BAC3-019', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'concept',
     stem:'Which organism is most associated with subacute endocarditis following a dental procedure?',
     options:['Viridans streptococci', 'Streptococcus pneumoniae', 'Streptococcus agalactiae', 'Enterococcus faecalis'],
     answer:0,
@@ -562,7 +562,7 @@ var POOL = [
   },
   {
     id:'BAC3-021', m:'m3', area:'Neisseria: virulence and diagnosis', level:'concept',
-    stem:'Both Neisseria meningitidis and Neisseria gonorrhoeae share which virulence factor that breaks down IgA?',
+    stem:'Which virulence factor is made by both N. meningitidis and N. gonorrhoeae and helps them colonize mucosa by cleaving secretory antibody?',
     options:['IgA protease', 'Pili', 'Factor H binding protein', 'Polysaccharide capsule'],
     answer:0,
     why:'IgA protease is produced by both Neisseria species (and by S. pneumoniae), helping the organism attach to mucosal surfaces by breaking down IgA. Pili and Factor H binding protein are specific to one organism or the other, and the polysaccharide capsule is specific to N. meningitidis.'
@@ -584,9 +584,9 @@ var POOL = [
   {
     id:'BAC3-024', m:'m3', area:'Meningococcus: treatment and prevention', level:'concept',
     stem:'Which meningococcal vaccine is recommended for adolescents at age 11-12 with a booster at 16?',
-    options:['MenACWY', 'MenB', 'Combined MenABCWY only', 'PCV20'],
+    options:['MenACWY', 'MenB', 'Hib conjugate', 'PCV20'],
     answer:0,
-    why:'MenACWY is routinely recommended at age 11-12 with a booster at 16. MenB is a shared clinical decision, ideally given around age 16-18, and PCV20 is a pneumococcal vaccine, not a meningococcal one.'
+    why:'MenACWY is routinely recommended at age 11-12 with a booster at 16. MenB is a shared clinical decision, ideally given around age 16-18, and the combined MenABCWY vaccine can be used when both MenACWY and MenB are due at the same visit. Hib conjugate and PCV20 protect against H. influenzae type b and pneumococcus, not meningococcus.'
   },
   {
     id:'BAC3-025', m:'m3', area:'Meningococcus: treatment and prevention', level:'application',
@@ -617,18 +617,18 @@ var POOL = [
     why:'Gentamicin plus azithromycin is the recommended alternative regimen for patients who cannot receive a cephalosporin.'
   },
   {
-    id:'BAC3-029', m:'m3', area:'Gonococcus: treatment and prevention', level:'application',
+    id:'BAC3-029', m:'m3', area:'Gonococcus: treatment and prevention', level:'concept',
     stem:'After treatment for gonococcal infection, when should a patient be retested for reinfection?',
     options:['About 3 months after treatment', 'Immediately after finishing the antibiotic', 'Only if symptoms return', 'At 24 hours post-treatment'],
     answer:0,
     why:'Retesting for reinfection about 3 months after treatment is recommended; a test of cure at 7-14 days is reserved specifically for pharyngeal infection.'
   },
   {
-    id:'BAC3-030', m:'m3', area:'Gonococcus: treatment and prevention', level:'integration',
-    stem:'A pregnant patient has an untreated gonococcal infection at delivery. Which intervention prevents the most common complication in the newborn?',
+    id:'BAC3-030', m:'m3', area:'Gonococcus: treatment and prevention', level:'concept',
+    stem:'Which measure is given routinely to every newborn at birth to prevent gonococcal conjunctivitis?',
     options:['Erythromycin ointment applied to the newborn\u2019s eyes', 'Oral doxycycline for the newborn', 'A single dose of the MenB vaccine for the newborn', 'Isolating the newborn from the mother'],
     answer:0,
-    why:'Erythromycin ointment applied at birth prevents gonococcal conjunctivitis, the classic newborn complication of untreated maternal gonococcal infection.'
+    why:'Erythromycin eye ointment is applied to every newborn at birth to prevent gonococcal conjunctivitis. A newborn whose mother had untreated gonorrhea at delivery also receives a single injected dose of ceftriaxone. Doxycycline is not given to newborns, MenB protects against meningococcus rather than gonococcus, and separating the baby from the mother does not prevent infection acquired during birth.'
   },
   {
     id:'BAC3-031', m:'m4', area:'Anthrax: portals and toxin', level:'concept',
@@ -645,11 +645,11 @@ var POOL = [
     why:'A painless black eschar from an occupational exposure is classic for cutaneous anthrax, which accounts for nearly all anthrax cases.'
   },
   {
-    id:'BAC3-033', m:'m4', area:'Anthrax: portals and toxin', level:'concept',
-    stem:'What distinguishes the two enterotoxins of Bacillus cereus food poisoning?',
-    options:['One raises cAMP like cholera toxin, and one acts as a superantigen like staphylococcal enterotoxin', 'Both are identical to the anthrax lethal factor', 'Both require living bacterial invasion of the gut wall', 'Neither toxin is heat-stable'],
+    id:'BAC3-033', m:'m4', area:'Anthrax: portals and toxin', level:'application',
+    stem:'A family begins vomiting within 2 hours of eating fried rice that was held at room temperature. Which feature of Bacillus cereus explains the rapid onset?',
+    options:['A heat-stable toxin was already formed in the food', 'Spores germinate in the colon and invade its wall', 'Shiga toxin damages the intestinal lining', 'The organism must first multiply in the small intestine'],
     answer:0,
-    why:'B. cereus produces two different enterotoxins, one that raises cAMP similarly to cholera toxin and one that acts as a superantigen similarly to staphylococcal enterotoxin, after spores germinate in improperly reheated food such as rice.'
+    why:'In the vomiting form of B. cereus food poisoning, spores germinate in the cooked rice and the bacteria make a heat-stable toxin in the food itself, so symptoms start within hours and reheating does not destroy it. The slower diarrheal form, starting 8 to 16 hours after eating, comes from toxins made after the bacteria reach the small intestine. B. cereus does not invade the colon wall or make Shiga toxin.'
   },
   {
     id:'BAC3-034', m:'m4', area:'Toxin mechanism: flaccid, spastic, and destructive', level:'concept',
@@ -666,11 +666,11 @@ var POOL = [
     why:'Botulinum toxin blocks acetylcholine release, producing descending flaccid paralysis that classically begins with the cranial nerves, consistent with improperly canned food as the source.'
   },
   {
-    id:'BAC3-036', m:'m4', area:'Toxin mechanism: flaccid, spastic, and destructive', level:'integration',
+    id:'BAC3-036', m:'m4', area:'Toxin mechanism: flaccid, spastic, and destructive', level:'application',
     stem:'A wound contaminated with soil becomes infected, and the patient develops gas gangrene. Which treatment approach is most appropriate?',
     options:['Penicillin G plus surgical debridement of the wound', 'Antitoxin and respiratory support alone', 'Metronidazole plus benzodiazepines', 'Erythromycin ointment applied to the wound'],
     answer:0,
-    why:'Gas gangrene from C. perfringens is treated with penicillin G plus surgical debridement of necrotic tissue; antitoxin and respiratory support are the treatment for botulism instead.'
+    why:'Gas gangrene from C. perfringens needs urgent surgical debridement of dead tissue plus penicillin G, and current guidelines add clindamycin to reduce toxin production. Antitoxin and respiratory support are the treatment for botulism, metronidazole and benzodiazepines fit tetanus, and erythromycin ointment is used for newborn eye prophylaxis.'
   },
   {
     id:'BAC3-037', m:'m4', area:'C. difficile: the antibiotic-associated cycle', level:'application',
@@ -694,7 +694,7 @@ var POOL = [
     why:'Listeria monocytogenes, associated with unpasteurized dairy products, is treated with ampicillin, often combined with gentamicin, or given as trimethoprim-sulfamethoxazole; cephalosporins alone do not reliably cover Listeria.'
   },
   {
-    id:'BAC3-040', m:'m4', area:'Listeria and diphtheria', level:'integration',
+    id:'BAC3-040', m:'m4', area:'Listeria and diphtheria', level:'application',
     stem:'A child with a gray pseudomembrane in the throat and swollen neck nodes (\u201cbull neck\u201d) is found to have toxin-producing Corynebacterium diphtheriae. Beyond antibiotics, which treatment is essential?',
     options:['Diphtheria antitoxin, to neutralize circulating toxin', 'Surgical debridement of the pseudomembrane', 'Fidaxomicin', 'Erythromycin ointment applied to the throat'],
     answer:0,
@@ -715,11 +715,11 @@ var POOL = [
     why:'Hemolytic uremic syndrome (HUS) \u2014 kidney failure, hemolytic anemia, and thrombocytopenia \u2014 is a life-threatening complication of Shiga toxin from EHEC (E. coli O157:H7).'
   },
   {
-    id:'BAC3-043', m:'m5', area:'E. coli: ETEC vs EHEC', level:'integration',
+    id:'BAC3-043', m:'m5', area:'E. coli: ETEC vs EHEC', level:'concept',
     stem:'Why is antibiotic use controversial in suspected EHEC infection?',
-    options:['Antibiotics may increase the risk of precipitating HUS', 'Antibiotics are completely ineffective against all E. coli', 'EHEC has no known antibiotic susceptibilities', 'Antibiotics interfere with oral rehydration'],
+    options:['Antibiotics may increase the risk of precipitating HUS', 'EHEC is intrinsically resistant to beta-lactams', 'Antibiotics worsen dehydration by increasing stool output', 'Antibiotics interfere with oral rehydration'],
     answer:0,
-    why:'Antibiotic use in EHEC infection is controversial because certain agents may increase Shiga toxin release and precipitate HUS, similar to the concern with antimotility drugs.'
+    why:'Antibiotic use in EHEC infection is controversial because certain agents may increase Shiga toxin release and precipitate HUS, similar to the concern with antimotility drugs. EHEC is not intrinsically resistant to beta-lactams, and antibiotics do not worsen dehydration or block oral rehydration.'
   },
   {
     id:'BAC3-044', m:'m5', area:'Salmonella, Shigella & Klebsiella', level:'concept',
@@ -737,10 +737,10 @@ var POOL = [
   },
   {
     id:'BAC3-046', m:'m5', area:'Salmonella, Shigella & Klebsiella', level:'application',
-    stem:'A patient with gastroenteritis after eating undercooked poultry has a non-lactose-fermenting, H2S-positive organism recovered from stool. Most cases require which management?',
-    options:['Supportive fluids, with antibiotics reserved for severe or high-risk cases', 'Immediate ceftriaxone regardless of severity', 'Antimotility drugs as first-line therapy', 'No treatment is ever appropriate'],
+    stem:'A patient with gastroenteritis after eating undercooked poultry has a non-lactose-fermenting, H2S-positive organism recovered from stool. The patient is otherwise healthy, with mild illness. Which management is appropriate?',
+    options:['Oral fluids and supportive care, without antibiotics', 'Ceftriaxone for 7 days', 'Loperamide as first-line therapy', 'Ciprofloxacin for 14 days to prevent carriage'],
     answer:0,
-    why:'Non-typhoidal Salmonella gastroenteritis is usually managed with fluids alone; antibiotics are reserved for severe illness or high-risk patients.'
+    why:'Non-typhoidal Salmonella gastroenteritis in a healthy patient with mild illness is managed with fluids and supportive care. Antibiotics are reserved for severe illness or high-risk patients, because they do not help mild illness and can prolong carriage. Antimotility drugs are avoided in invasive diarrhea.'
   },
   {
     id:'BAC3-047', m:'m5', area:'Vibrio, Campylobacter & H. pylori', level:'concept',
@@ -750,14 +750,14 @@ var POOL = [
     why:'Campylobacter jejuni is a curved, gull-wing-shaped rod that grows at 42\u00b0C and is classically linked to poultry and unpasteurized milk.'
   },
   {
-    id:'BAC3-048', m:'m5', area:'Vibrio, Campylobacter & H. pylori', level:'application',
+    id:'BAC3-048', m:'m5', area:'Vibrio, Campylobacter & H. pylori', level:'concept',
     stem:'Which regimen is first-line for confirmed Helicobacter pylori infection?',
-    options:['Bismuth quadruple therapy for 10-14 days', 'A single dose of azithromycin', 'Doxycycline monotherapy', 'Rehydration alone'],
+    options:['Bismuth quadruple therapy for 14 days', 'Clarithromycin triple therapy for 7 days', 'Doxycycline monotherapy', 'A single dose of azithromycin'],
     answer:0,
-    why:'Bismuth quadruple therapy (a proton pump inhibitor, bismuth, tetracycline, and a nitroimidazole) for 10-14 days is first-line for H. pylori, with cure confirmed 4 or more weeks later.'
+    why:'Bismuth quadruple therapy (a proton pump inhibitor, bismuth, tetracycline, and a nitroimidazole) for 14 days is first-line for H. pylori, with cure confirmed 4 or more weeks later. Short clarithromycin triple therapy fails often because of clarithromycin resistance, and single antibiotics do not reliably cure the infection.'
   },
   {
-    id:'BAC3-049', m:'m5', area:'Vibrio, Campylobacter & H. pylori', level:'integration',
+    id:'BAC3-049', m:'m5', area:'Vibrio, Campylobacter & H. pylori', level:'application',
     stem:'A patient with profuse, rice-water diarrhea after drinking contaminated water is severely dehydrated. What is the single most important intervention?',
     options:['Rehydration, oral or IV', 'Doxycycline alone', 'Loperamide', 'Broad-spectrum antibiotics without fluids'],
     answer:0,
@@ -792,7 +792,7 @@ var POOL = [
     why:'Blue-green pigment (pyocyanin) with a fruity odor and a positive oxidase test are classic identifying features of Pseudomonas aeruginosa.'
   },
   {
-    id:'BAC3-054', m:'m6', area:'Pseudomonas: the opportunist', level:'integration',
+    id:'BAC3-054', m:'m6', area:'Pseudomonas: the opportunist', level:'concept',
     stem:'A patient with a difficult-to-treat, resistant Pseudomonas aeruginosa infection needs an agent from the newer beta-lactam/beta-lactamase-inhibitor class. Which of the following fits?',
     options:['Ceftazidime-avibactam', 'Amoxicillin-clavulanate', 'Nitrofurantoin', 'Trimethoprim-sulfamethoxazole'],
     answer:0,
@@ -813,7 +813,7 @@ var POOL = [
     why:'The initial cold-like illness is the catarrhal stage of pertussis; the subsequent severe coughing fits with vomiting mark the paroxysmal stage.'
   },
   {
-    id:'BAC3-057', m:'m6', area:'H. influenzae & B. pertussis: vaccine-preventable', level:'application',
+    id:'BAC3-057', m:'m6', area:'H. influenzae & B. pertussis: vaccine-preventable', level:'concept',
     stem:'Which diagnostic test is now preferred for Bordetella pertussis, over the older fluorescent antibody method?',
     options:['PCR of a nasopharyngeal swab', 'Blood culture', 'Urine antigen testing', 'Skin biopsy'],
     answer:0,
@@ -821,10 +821,10 @@ var POOL = [
   },
   {
     id:'BAC3-058', m:'m6', area:'Tularemia and plague: zoonotic hazards', level:'concept',
-    stem:'Which organism produces only endotoxin, with no exotoxin, among the zoonotic organisms in this module?',
+    stem:'Which of the following organisms produces endotoxin but no exotoxin?',
     options:['Francisella tularensis', 'Yersinia pestis', 'Bordetella pertussis', 'Pseudomonas aeruginosa'],
     answer:0,
-    why:'F. tularensis produces endotoxin but no exotoxin. Y. pestis, in contrast, produces an antiphagocytic capsule, endotoxin, exotoxin, and Yops.'
+    why:'F. tularensis produces endotoxin but no exotoxin. Y. pestis produces an antiphagocytic capsule, endotoxin, exotoxin, and Yops; B. pertussis makes pertussis toxin, and Pseudomonas makes exotoxin A.'
   },
   {
     id:'BAC3-059', m:'m6', area:'Tularemia and plague: zoonotic hazards', level:'application',
@@ -843,16 +843,16 @@ var POOL = [
   {
     id:'BAC3-061', m:'m6', area:'Anaerobes & the encapsulated-organism synthesis', level:'application',
     stem:'A patient develops a lung abscess after an episode of aspiration. Which anaerobes, based on their mouth origin, are most likely involved?',
-    options:['Prevotella and Fusobacterium', 'Bacteroides fragilis', 'Clostridium tetani', 'Listeria monocytogenes'],
+    options:['Prevotella and Fusobacterium', 'Bacteroides fragilis and Enterococcus faecalis', 'Clostridium perfringens and Clostridium tetani', 'Pseudomonas aeruginosa and Escherichia coli'],
     answer:0,
-    why:'Prevotella and Fusobacterium are mouth anaerobes associated with aspiration pneumonia and lung or brain abscess, while Bacteroides fragilis (a colon anaerobe) points instead toward intra-abdominal abscess.'
+    why:'Prevotella and Fusobacterium are mouth anaerobes associated with aspiration pneumonia and lung or brain abscess. Bacteroides fragilis and Enterococcus are colon organisms that point toward intra-abdominal abscess, the clostridia cause toxin-mediated and wound disease, and Pseudomonas and E. coli are not anaerobes.'
   },
   {
-    id:'BAC3-062', m:'m6', area:'Anaerobes & the encapsulated-organism synthesis', level:'integration',
-    stem:'Why does dexamethasone matter in suspected pneumococcal meningitis?',
-    options:['It is given with or just before the first antibiotic dose', 'It replaces the need for antibiotics entirely', 'It is given only after a full course of antibiotics is completed', 'It treats Listeria specifically'],
+    id:'BAC3-062', m:'m6', area:'Anaerobes & the encapsulated-organism synthesis', level:'concept',
+    stem:'In suspected pneumococcal meningitis, when should dexamethasone be started?',
+    options:['With or just before the first antibiotic dose', 'After the first 24 hours of antibiotics', 'After the antibiotic course is complete', 'Once culture confirms pneumococcus'],
     answer:0,
-    why:'Dexamethasone is given with or just before the first antibiotic dose for suspected pneumococcal meningitis, as part of standard management alongside antibiotics chosen to cover resistant pneumococci (such as vancomycin) and, in appropriate age groups, Listeria (ampicillin).'
+    why:'Dexamethasone is started with or just before the first antibiotic dose. It blunts the inflammatory surge from bacterial lysis, which lowers the rates of hearing loss and death. The benefit is lost if it is started after antibiotics are already running, so it is not delayed until culture results or the end of treatment.'
   },
 
   /* ---- Added in the coverage pass: pool expanded to 18-19 questions per module ---- */
@@ -871,7 +871,7 @@ var POOL = [
     why:'Catalase breaks hydrogen peroxide into water and oxygen, and the oxygen appears as bubbles. No bubbles means the organism is catalase-negative, which fits Streptococcus or Enterococcus rather than Staphylococcus.'
   },
   {
-    id:'BAC3-065', m:'m1', area:'Staph vs strep basics', level:'concept',
+    id:'BAC3-065', m:'m6', area:'Anaerobes & the encapsulated-organism synthesis', level:'concept',
     stem:'Anaerobes are inhibited by oxygen partly because they lack or have reduced amounts of which pair of enzymes?',
     options:['Catalase and superoxide dismutase', 'Coagulase and hyaluronidase', 'Beta-lactamase and penicillinase', 'Urease and oxidase'],
     answer:0,
@@ -929,9 +929,9 @@ var POOL = [
   {
     id:'BAC3-073', m:'m2', area:'S. aureus virulence and disease', level:'application',
     stem:'A hospital isolate of Staphylococcus aureus is resistant to nafcillin. Which mechanism explains this resistance?',
-    options:['Mutant penicillin-binding proteins', 'Synthesis of beta-lactamase', 'Loss of the peptidoglycan layer', 'Efflux of the drug by the capsule'],
+    options:['Mutant penicillin-binding proteins', 'Synthesis of beta-lactamase', 'Loss of the peptidoglycan layer', 'An efflux pump that exports the drug'],
     answer:0,
-    why:'Methicillin- or nafcillin-resistant S. aureus (MRSA) carries mutant penicillin-binding proteins. Beta-lactamase explains resistance to penicillin G, which nafcillin is designed to withstand. Vancomycin, often with gentamicin, or daptomycin is used for MRSA.'
+    why:'Methicillin- or nafcillin-resistant S. aureus (MRSA) carries mutant penicillin-binding proteins that the drug cannot bind. Beta-lactamase explains resistance to penicillin G, which nafcillin is designed to withstand; S. aureus keeps its peptidoglycan, and efflux pumps are not how it resists nafcillin. MRSA is treated with vancomycin or daptomycin.'
   },
   {
     id:'BAC3-074', m:'m2', area:'S. aureus virulence and disease', level:'application',
@@ -1032,7 +1032,7 @@ var POOL = [
     why:'Treat with a single intramuscular dose of ceftriaxone, and add doxycycline for 7 days when chlamydia has not been excluded. Routine azithromycin dual therapy was dropped, and penicillin or ciprofloxacin alone are not reliable because of resistance.'
   },
   {
-    id:'BAC3-088', m:'m3', area:'Gonococcus: treatment and prevention', level:'application',
+    id:'BAC3-088', m:'m3', area:'Gonococcus: treatment and prevention', level:'concept',
     stem:'For which site of gonococcal infection is a test of cure recommended 7 to 14 days after treatment?',
     options:['Pharynx', 'Urethra', 'Cervix', 'Conjunctiva'],
     answer:0,
@@ -1040,17 +1040,17 @@ var POOL = [
   },
   {
     id:'BAC3-089', m:'m4', area:'Anthrax: portals and toxin', level:'concept',
-    stem:'Which component of the anthrax exotoxin is an adenylate cyclase?',
-    options:['Edema factor', 'Lethal factor', 'Protective antigen', 'Alpha toxin'],
+    stem:'Which anthrax toxin component is a protease that kills host cells, including macrophages?',
+    options:['Lethal factor', 'Edema factor', 'Protective antigen', 'Poly-D-glutamate capsule'],
     answer:0,
-    why:'Edema factor is an adenylate cyclase, lethal factor is a protease, and protective antigen binds host cells and delivers the other two. Alpha toxin belongs to S. aureus and C. perfringens, not B. anthracis.'
+    why:'Lethal factor is a protease that causes cell death. Edema factor is an adenylate cyclase that raises cAMP, protective antigen binds host cells and delivers the other two, and the poly-D-glutamate capsule resists phagocytosis but is not part of the toxin.'
   },
   {
     id:'BAC3-090', m:'m4', area:'Anthrax: portals and toxin', level:'application',
-    stem:'A patient has flu-like illness after inhaling spores and is diagnosed with systemic anthrax. Which management is appropriate?',
+    stem:'A patient has inhalation anthrax, and meningitis has not yet been ruled out. Which treatment plan is recommended?',
     options:['Two bactericidal drugs, a protein synthesis inhibitor, and antitoxin', 'A single oral fluoroquinolone course given for 7 days', 'A single oral penicillin course given for 3 days', 'Supportive care followed by a booster dose of vaccine'],
     answer:0,
-    why:'Systemic anthrax needs two bactericidal drugs from different classes plus a protein synthesis inhibitor (for example linezolid or clindamycin) for 2 weeks or longer, plus antitoxin. Single-agent oral courses fit cutaneous disease without meningitis, and vaccination is prevention, not treatment.'
+    why:'When meningitis has not been ruled out, systemic anthrax is treated with two bactericidal drugs from different classes plus a protein synthesis inhibitor (for example linezolid or clindamycin) for 2 weeks or longer, plus antitoxin. If meningitis is ruled out, one bactericidal drug plus a protein synthesis inhibitor is enough. Single-agent oral courses fit cutaneous disease without systemic illness, and vaccination is prevention, not treatment.'
   },
   {
     id:'BAC3-091', m:'m4', area:'Toxin mechanism: flaccid, spastic, and destructive', level:'concept',
@@ -1074,11 +1074,11 @@ var POOL = [
     why:'C. perfringens food poisoning is caused by a pore-forming enterotoxin that binds claudin receptors at intestinal tight junctions. Lecithinase is the gas gangrene toxin, and EF-2 inactivation belongs to diphtheria toxin and Pseudomonas exotoxin A.'
   },
   {
-    id:'BAC3-094', m:'m4', area:'C. difficile: the antibiotic-associated cycle', level:'application',
-    stem:'A patient has a first episode of confirmed C. difficile infection. Which drug is preferred?',
-    options:['Fidaxomicin', 'Metronidazole', 'Clindamycin', 'Ciprofloxacin'],
+    id:'BAC3-094', m:'m4', area:'C. difficile: the antibiotic-associated cycle', level:'concept',
+    stem:'Fidaxomicin is unavailable for a patient with a first episode of C. difficile infection. Which alternative is recommended?',
+    options:['Oral vancomycin', 'IV vancomycin', 'Clindamycin', 'Ciprofloxacin'],
     answer:0,
-    why:'Fidaxomicin is preferred for a first episode and for recurrences because it is followed by fewer recurrences than vancomycin; oral vancomycin is an acceptable alternative. Metronidazole is reserved, and clindamycin and ciprofloxacin are high-risk causes of the disease.'
+    why:'Fidaxomicin is preferred for a first episode, and oral vancomycin is the recommended alternative. IV vancomycin does not reach the colon, and clindamycin and ciprofloxacin are high-risk causes of the disease.'
   },
   {
     id:'BAC3-095', m:'m4', area:'C. difficile: the antibiotic-associated cycle', level:'application',
@@ -1096,10 +1096,10 @@ var POOL = [
   },
   {
     id:'BAC3-097', m:'m4', area:'Listeria and diphtheria', level:'concept',
-    stem:'Which Listeria monocytogenes product allows the organism to escape from the phagosome after entering a cell?',
-    options:['Listeriolysin', 'Internalin', 'Lethal factor', 'Streptolysin O'],
+    stem:'Which Listeria monocytogenes surface protein lets it attach to and enter intestinal cells?',
+    options:['Internalin', 'Listeriolysin', 'Protein A', 'M protein'],
     answer:0,
-    why:'Listeriolysin lets Listeria escape the phagosome after cell entry. Internalin comes earlier and helps the organism attach to and enter human cells.'
+    why:'Internalin lets Listeria attach to and enter human cells. Listeriolysin acts later, letting it escape the phagosome; protein A belongs to S. aureus, and M protein belongs to group A strep.'
   },
   {
     id:'BAC3-098', m:'m5', area:'E. coli: ETEC vs EHEC', level:'concept',
@@ -1117,10 +1117,10 @@ var POOL = [
   },
   {
     id:'BAC3-100', m:'m5', area:'Salmonella, Shigella & Klebsiella', level:'application',
-    stem:'A traveler develops typhoid fever and later becomes a chronic gallbladder carrier. Which organism is responsible?',
+    stem:'A traveler returns with sustained fever, abdominal pain, and rose spots, and later becomes a chronic gallbladder carrier. Which organism is responsible?',
     options:['Salmonella Typhi', 'Non-typhoidal Salmonella', 'Shigella dysenteriae', 'Vibrio cholerae'],
     answer:0,
-    why:'S. Typhi causes typhoid fever and gallbladder carriage, and a typhoid vaccine is advised for travelers. Non-typhoidal Salmonella (poultry, eggs, reptiles) causes gastroenteritis instead.'
+    why:'Sustained fever, abdominal pain, rose spots, and later gallbladder carriage describe typhoid fever, caused by S. Typhi; a typhoid vaccine is advised for travelers. Non-typhoidal Salmonella (poultry, eggs, reptiles) causes gastroenteritis instead, Shigella causes bloody diarrhea, and Vibrio cholerae causes watery diarrhea without carriage in the gallbladder.'
   },
   {
     id:'BAC3-101', m:'m5', area:'Salmonella, Shigella & Klebsiella', level:'integration',
@@ -1179,14 +1179,14 @@ var POOL = [
     why:'Rifampin is the prophylaxis for contacts of H. influenzae meningitis. Azithromycin is the contact prophylaxis for pertussis, a similar-looking pairing that is easy to swap.'
   },
   {
-    id:'BAC3-109', m:'m6', area:'H. influenzae & B. pertussis: vaccine-preventable', level:'application',
+    id:'BAC3-109', m:'m6', area:'H. influenzae & B. pertussis: vaccine-preventable', level:'concept',
     stem:'Which vaccine is recommended during pregnancy to protect the newborn from pertussis?',
     options:['Tdap', 'DTaP', 'MenACWY', 'PCV20'],
     answer:0,
     why:'Tdap is recommended in each pregnancy so maternal antibodies protect the newborn. DTaP is the childhood series, and MenACWY and PCV20 protect against meningococcus and pneumococcus.'
   },
   {
-    id:'BAC3-110', m:'m6', area:'Tularemia and plague: zoonotic hazards', level:'application',
+    id:'BAC3-110', m:'m6', area:'Tularemia and plague: zoonotic hazards', level:'concept',
     stem:'Which antibiotic is a first-line choice for plague caused by Yersinia pestis?',
     options:['Gentamicin', 'Penicillin G', 'Cefazolin', 'Clindamycin'],
     answer:0,
