@@ -556,257 +556,308 @@ var CARDS=[
  {
   "id": "V4-CARD-01",
   "t": "Measles virus: genome and envelope",
-  "d": "Paramyxovirus. Negative-sense single-stranded RNA, helical capsid, enveloped. Carries an RNA-dependent RNA polymerase in the virion."
+  "d": "Paramyxovirus. Negative-sense single-stranded RNA, helical capsid, enveloped. Carries an RNA-dependent RNA polymerase in the virion.",
+  "area": "Childhood virus features"
  },
  {
   "id": "V4-CARD-02",
   "t": "Mumps virus: genome and envelope",
-  "d": "Paramyxovirus like measles. Negative-sense single-stranded RNA, helical capsid, enveloped, with a virion polymerase."
+  "d": "Paramyxovirus like measles. Negative-sense single-stranded RNA, helical capsid, enveloped, with a virion polymerase.",
+  "area": "Childhood virus features"
  },
  {
   "id": "V4-CARD-03",
   "t": "Rubella virus: genome and envelope",
-  "d": "Togavirus. Positive-sense single-stranded RNA, icosahedral capsid, enveloped."
+  "d": "Togavirus. Positive-sense single-stranded RNA, icosahedral capsid, enveloped.",
+  "area": "Childhood virus features"
  },
  {
   "id": "V4-CARD-04",
   "t": "Parvovirus B19: genome and envelope",
-  "d": "Parvovirus. Single-stranded DNA, icosahedral capsid, no envelope."
+  "d": "Parvovirus. Single-stranded DNA, icosahedral capsid, no envelope.",
+  "area": "Childhood virus features"
  },
  {
   "id": "V4-CARD-05",
   "t": "HHV-6: genome and envelope",
-  "d": "Herpesvirus. Double-stranded DNA, icosahedral capsid, enveloped. Two serotypes. Latent after infection."
+  "d": "Herpesvirus. Double-stranded DNA, icosahedral capsid, enveloped. Two serotypes. Latent after infection.",
+  "area": "Childhood virus features"
  },
  {
   "id": "V4-CARD-06",
   "t": "Why measles and mumps carry a polymerase",
-  "d": "Their negative-sense RNA cannot be translated directly, and host cells have no enzyme that copies it into mRNA."
+  "d": "Their negative-sense RNA cannot be translated directly, and host cells have no enzyme that copies it into mRNA.",
+  "area": "Childhood virus features"
  },
  {
   "id": "V4-CARD-07",
   "t": "Measles: signature signs",
-  "d": "High fever and a maculopapular rash. Koplik spots (white spots on the cheek lining) can appear before the rash."
+  "d": "High fever and a maculopapular rash. Koplik spots (white spots on the cheek lining) can appear before the rash.",
+  "area": "Measles pathogenesis and complications"
  },
  {
   "id": "V4-CARD-08",
   "t": "Measles: how it spreads",
-  "d": "Droplets and airborne. Virus can stay infectious in the air for up to 2 hours after the patient leaves."
+  "d": "Droplets and airborne. Virus can stay infectious in the air for up to 2 hours after the patient leaves.",
+  "area": "Measles transmission and prevention"
  },
  {
   "id": "V4-CARD-09",
   "t": "Measles: contagious period",
-  "d": "From about 4 days before the rash to about 4 days after. Airborne Precautions apply."
+  "d": "From about 4 days before the rash to about 4 days after. Airborne Precautions apply.",
+  "area": "Measles transmission and prevention"
  },
  {
   "id": "V4-CARD-10",
   "t": "Measles pathogenesis in order",
-  "d": "Upper respiratory tract, then blood, then reticuloendothelial cells (second round of replication), then skin."
+  "d": "Upper respiratory tract, then blood, then reticuloendothelial cells (second round of replication), then skin.",
+  "area": "Measles pathogenesis and complications"
  },
  {
   "id": "V4-CARD-11",
   "t": "Measles rash: cause",
-  "d": "Cytotoxic T cells attacking virus-infected skin cells. The rash is an immune response."
+  "d": "Cytotoxic T cells attacking virus-infected skin cells. The rash is an immune response.",
+  "area": "Measles pathogenesis and complications"
  },
  {
   "id": "V4-CARD-12",
   "t": "Measles fusion protein",
-  "d": "Viral fusion protein joins infected cells together, producing multinucleated giant cells."
+  "d": "Viral fusion protein joins infected cells together, producing multinucleated giant cells.",
+  "area": "Measles pathogenesis and complications"
  },
  {
   "id": "V4-CARD-13",
   "t": "Immune amnesia",
-  "d": "Measles can erase part of the immune memory from earlier infections and vaccines, leaving the child open to other infections."
+  "d": "Measles can erase part of the immune memory from earlier infections and vaccines, leaving the child open to other infections.",
+  "area": "Measles pathogenesis and complications"
  },
  {
   "id": "V4-CARD-14",
   "t": "Measles complications",
-  "d": "Diarrhea, otitis media, pneumonia, and encephalitis, in about 30% of U.S. cases. SSPE can appear years later."
+  "d": "Diarrhea, otitis media, pneumonia, and encephalitis, in about 30% of U.S. cases. SSPE can appear years later.",
+  "area": "Measles pathogenesis and complications"
  },
  {
   "id": "V4-CARD-15",
   "t": "Vitamin A in measles",
-  "d": "Lowered deaths in children under 2 years in a Cochrane subgroup. Not an antiviral."
+  "d": "Lowered deaths in children under 2 years in a Cochrane subgroup. Not an antiviral.",
+  "area": "Measles pathogenesis and complications"
  },
  {
   "id": "V4-CARD-16",
   "t": "Measles post-exposure options",
-  "d": "MMR within 72 hours, or immune globulin within 6 days, when appropriate for the person."
+  "d": "MMR within 72 hours, or immune globulin within 6 days, when appropriate for the person.",
+  "area": "Measles transmission and prevention"
  },
  {
   "id": "V4-CARD-17",
   "t": "MMR vaccine",
-  "d": "Live vaccine for measles, mumps, and rubella. Two doses, at 12–15 months and 4–6 years. Not given in pregnancy or severe immunocompromise."
+  "d": "Live vaccine for measles, mumps, and rubella. Two doses, at 12–15 months and 4–6 years. Not given in pregnancy or severe immunocompromise.",
+  "area": "MMR vaccination"
  },
  {
   "id": "V4-CARD-18",
   "t": "Mumps: spread within the body",
-  "d": "Respiratory droplets, then the parotid glands, with possible involvement of testes, ovaries, pancreas, and meninges."
+  "d": "Respiratory droplets, then the parotid glands, with possible involvement of testes, ovaries, pancreas, and meninges.",
+  "area": "Mumps tissue tropism"
  },
  {
   "id": "V4-CARD-19",
   "t": "Mumps orchitis",
-  "d": "Occurs in postpubertal males. Sterility is rare and linked to bilateral involvement."
+  "d": "Occurs in postpubertal males. Sterility is rare and linked to bilateral involvement.",
+  "area": "Mumps tissue tropism"
  },
  {
   "id": "V4-CARD-20",
   "t": "Mumps meningitis",
-  "d": "Typically benign. Care is supportive."
+  "d": "Typically benign. Care is supportive.",
+  "area": "Mumps tissue tropism"
  },
  {
   "id": "V4-CARD-21",
   "t": "Rubella: spread within the body",
-  "d": "Nasopharynx and local lymph nodes, then viremia, then skin and organs. The placenta can be reached in pregnancy."
+  "d": "Nasopharynx and local lymph nodes, then viremia, then skin and organs. The placenta can be reached in pregnancy.",
+  "area": "Rubella and congenital infection"
  },
  {
   "id": "V4-CARD-22",
   "t": "Congenital rubella syndrome",
-  "d": "Profound fetal damage, greatest with first-trimester infection. Infants can shed virus for months."
+  "d": "Profound fetal damage, greatest with first-trimester infection. Infants can shed virus for months.",
+  "area": "Rubella and congenital infection"
  },
  {
   "id": "V4-CARD-23",
   "t": "Rubella and pregnancy",
-  "d": "MMR is not given in pregnancy. A non-immune woman is vaccinated before pregnancy or after delivery. Immune globulin is not routine."
+  "d": "MMR is not given in pregnancy. A non-immune woman is vaccinated before pregnancy or after delivery. Immune globulin is not routine.",
+  "area": "Rubella and congenital infection"
  },
  {
   "id": "V4-CARD-24",
   "t": "Parvovirus B19: target cell",
-  "d": "Erythroid precursors (erythroblasts). Infection halts red cell production."
+  "d": "Erythroid precursors (erythroblasts). Infection halts red cell production.",
+  "area": "Parvovirus B19"
  },
  {
   "id": "V4-CARD-25",
   "t": "Parvovirus B19: classic signs",
-  "d": "Slapped-cheek rash. Rash and arthritis are linked to immune complexes."
+  "d": "Slapped-cheek rash. Rash and arthritis are linked to immune complexes.",
+  "area": "Parvovirus B19"
  },
  {
   "id": "V4-CARD-26",
   "t": "Aplastic crisis",
-  "d": "A sudden drop in red cell production caused by B19 in people with hemolytic anemias such as sickle cell disease, thalassemia, or hereditary spherocytosis."
+  "d": "A sudden drop in red cell production caused by B19 in people with hemolytic anemias such as sickle cell disease, thalassemia, or hereditary spherocytosis.",
+  "area": "Parvovirus B19"
  },
  {
   "id": "V4-CARD-27",
   "t": "Fetal hydrops from B19",
-  "d": "Fetal erythroid infection, then anemia, then heart failure, then edema (hydrops). Risk highest at weeks 9–20, and most fetal infections resolve."
+  "d": "Fetal erythroid infection, then anemia, then heart failure, then edema (hydrops). Risk highest at weeks 9–20, and most fetal infections resolve.",
+  "area": "Pregnancy rash case"
  },
  {
   "id": "V4-CARD-28",
   "t": "B19 treatment",
-  "d": "Supportive care. Transfusion for severe anemia. IVIG for people who cannot clear the virus, such as immunocompromised patients."
+  "d": "Supportive care. Transfusion for severe anemia. IVIG for people who cannot clear the virus, such as immunocompromised patients.",
+  "area": "Parvovirus B19"
  },
  {
   "id": "V4-CARD-29",
   "t": "Roseola (HHV-6)",
-  "d": "High fever for days, then a rash that appears after the fever resolves."
+  "d": "High fever for days, then a rash that appears after the fever resolves.",
+  "area": "HHV-6 and roseola"
  },
  {
   "id": "V4-CARD-30",
   "t": "HHV-6 latency and reactivation",
-  "d": "After infection the virus is latent. Reactivation in transplant recipients can cause encephalitis, pneumonia, and hepatitis. Foscarnet or ganciclovir are listed."
+  "d": "After infection the virus is latent. Reactivation in transplant recipients can cause encephalitis, pneumonia, and hepatitis. Foscarnet or ganciclovir are listed.",
+  "area": "HHV-6 and roseola"
  },
  {
   "id": "V4-CARD-31",
   "t": "Enteric virus shared features",
-  "d": "Spread by the fecal-oral route, no envelope (so they survive stomach acid), RNA genomes."
+  "d": "Spread by the fecal-oral route, no envelope (so they survive stomach acid), RNA genomes.",
+  "area": "Fecal–oral transmission"
  },
  {
   "id": "V4-CARD-32",
   "t": "Two enteric virus groups",
-  "d": "Gastroenteritis viruses (norovirus, rotavirus) and the genus Enterovirus (poliovirus, coxsackievirus, echovirus)."
+  "d": "Gastroenteritis viruses (norovirus, rotavirus) and the genus Enterovirus (poliovirus, coxsackievirus, echovirus).",
+  "area": "Fecal–oral transmission"
  },
  {
   "id": "V4-CARD-33",
   "t": "Norovirus: genome",
-  "d": "Caliciviridae. Positive-sense single-stranded RNA, no polymerase in the virion."
+  "d": "Caliciviridae. Positive-sense single-stranded RNA, no polymerase in the virion.",
+  "area": "Enteric virus genomes"
  },
  {
   "id": "V4-CARD-34",
   "t": "Rotavirus: genome",
-  "d": "Reoviridae. Double-stranded RNA in 11 segments, with a polymerase in the virion."
+  "d": "Reoviridae. Double-stranded RNA in 11 segments, with a polymerase in the virion.",
+  "area": "Enteric virus genomes"
  },
  {
   "id": "V4-CARD-35",
   "t": "Norovirus: why it spreads easily",
-  "d": "Low infectious dose, shedding before symptoms and for weeks after, and persistence on surfaces for days."
+  "d": "Low infectious dose, shedding before symptoms and for weeks after, and persistence on surfaces for days.",
+  "area": "Norovirus outbreaks"
  },
  {
   "id": "V4-CARD-36",
   "t": "Norovirus: course and diagnosis",
-  "d": "Onset 12–48 hours after exposure. Stool PCR. Supportive fluids."
+  "d": "Onset 12–48 hours after exposure. Stool PCR. Supportive fluids.",
+  "area": "Norovirus outbreaks"
  },
  {
   "id": "V4-CARD-37",
   "t": "Norovirus: prevention",
-  "d": "Wash with soap and water for at least 20 seconds. Stay home for 48 hours after symptoms stop. No vaccine."
+  "d": "Wash with soap and water for at least 20 seconds. Stay home for 48 hours after symptoms stop. No vaccine.",
+  "area": "Norovirus outbreaks"
  },
  {
   "id": "V4-CARD-38",
   "t": "Rotavirus: who and when",
-  "d": "Children 6–24 months old. Incubation 1–3 days. Fever and vomiting ease on day 2, with diarrhea for 5–7 days."
+  "d": "Children 6–24 months old. Incubation 1–3 days. Fever and vomiting ease on day 2, with diarrhea for 5–7 days.",
+  "area": "Norovirus vs. rotavirus"
  },
  {
   "id": "V4-CARD-39",
   "t": "Gastroenteritis pathogenesis",
-  "d": "Virus infects small-intestine epithelium, destroys cells, and disrupts absorption. The main complication is dehydration."
+  "d": "Virus infects small-intestine epithelium, destroys cells, and disrupts absorption. The main complication is dehydration.",
+  "area": "Rotavirus pathogenesis and fluids"
  },
  {
   "id": "V4-CARD-40",
   "t": "Osmotic vs. secretory diarrhea",
-  "d": "Osmotic: unabsorbed nutrients hold water in the lumen. Secretory: active fluid secretion into the lumen. They are distinct and can occur together."
+  "d": "Osmotic: unabsorbed nutrients hold water in the lumen. Secretory: active fluid secretion into the lumen. They are distinct and can occur together.",
+  "area": "Rotavirus pathogenesis and fluids"
  },
  {
   "id": "V4-CARD-41",
   "t": "Rotavirus treatment",
-  "d": "Oral rehydration solution. IV fluids for severe dehydration. Zinc for 10–14 days (WHO). Antibiotics do not help."
+  "d": "Oral rehydration solution. IV fluids for severe dehydration. Zinc for 10–14 days (WHO). Antibiotics do not help.",
+  "area": "Rotavirus pathogenesis and fluids"
  },
  {
   "id": "V4-CARD-42",
   "t": "Rotavirus vaccines",
-  "d": "Oral and live. Rotarix is 2 doses (2 and 4 months). RotaTeq is 3 doses (2, 4, and 6 months)."
+  "d": "Oral and live. Rotarix is 2 doses (2 and 4 months). RotaTeq is 3 doses (2, 4, and 6 months).",
+  "area": "Rotavirus vaccines"
  },
  {
   "id": "V4-CARD-43",
   "t": "Rotavirus vaccine age limits",
-  "d": "First dose by 14 weeks 6 days. Last dose by 8 months 0 days."
+  "d": "First dose by 14 weeks 6 days. Last dose by 8 months 0 days.",
+  "area": "Rotavirus vaccines"
  },
  {
   "id": "V4-CARD-44",
   "t": "Rotavirus vaccine contraindications",
-  "d": "SCID and a history of intussusception. The Rotarix applicator contains latex."
+  "d": "SCID and a history of intussusception. The Rotarix applicator contains latex.",
+  "area": "Rotavirus vaccines"
  },
  {
   "id": "V4-CARD-45",
   "t": "Poliovirus: four stages",
-  "d": "Alimentary, lymphatic, viremic, neurologic. Most infections stop at the viremic stage."
+  "d": "Alimentary, lymphatic, viremic, neurologic. Most infections stop at the viremic stage.",
+  "area": "Poliovirus pathogenesis and vaccines"
  },
  {
   "id": "V4-CARD-46",
   "t": "Poliovirus paralysis",
-  "d": "About 1% of infections in non-immunized people reach the nervous system, causing flaccid paralysis."
+  "d": "About 1% of infections in non-immunized people reach the nervous system, causing flaccid paralysis.",
+  "area": "Poliovirus pathogenesis and vaccines"
  },
  {
   "id": "V4-CARD-47",
   "t": "IPV vs. OPV",
-  "d": "IPV: injected, builds serum antibody, little gut effect. OPV: oral, builds serum antibody and gut IgA, with vaccine-associated paralysis in about 1 per 2–4 million doses."
+  "d": "IPV: injected, builds serum antibody, little gut effect. OPV: oral, builds serum antibody and gut IgA, with vaccine-associated paralysis in about 1 per 2–4 million doses.",
+  "area": "Poliovirus pathogenesis and vaccines"
  },
  {
   "id": "V4-CARD-48",
   "t": "Coxsackievirus A",
-  "d": "Herpangina, hand-foot-and-mouth disease, and aseptic meningitis. Skin and mucous membranes."
+  "d": "Herpangina, hand-foot-and-mouth disease, and aseptic meningitis. Skin and mucous membranes.",
+  "area": "Coxsackievirus and echovirus"
  },
  {
   "id": "V4-CARD-49",
   "t": "Coxsackievirus B",
-  "d": "Pleurodynia, myocarditis and pericarditis, and severe neonatal myocarditis. Heart, pleura, pancreas, and liver."
+  "d": "Pleurodynia, myocarditis and pericarditis, and severe neonatal myocarditis. Heart, pleura, pancreas, and liver.",
+  "area": "Coxsackievirus and echovirus"
  },
  {
   "id": "V4-CARD-50",
   "t": "Echovirus",
-  "d": "Aseptic meningitis, febrile illness, and respiratory illness."
+  "d": "Aseptic meningitis, febrile illness, and respiratory illness.",
+  "area": "Coxsackievirus and echovirus"
  },
  {
   "id": "V4-CARD-51",
   "t": "Local vs. systemic infection",
-  "d": "Local: infection stays at the entry site (rotavirus, norovirus in the gut). Systemic: virus spreads through blood or lymph to distant organs (measles, rubella, B19, mumps, poliovirus)."
+  "d": "Local: infection stays at the entry site (rotavirus, norovirus in the gut). Systemic: virus spreads through blood or lymph to distant organs (measles, rubella, B19, mumps, poliovirus).",
+  "area": "Local vs. systemic infection"
  }
 ];
 

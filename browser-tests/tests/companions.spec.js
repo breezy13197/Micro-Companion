@@ -31,6 +31,22 @@ for (const id of COMPANIONS) {
       expect(problems.list()).toEqual([]);
     });
 
+    // The review-list deck shows the cards for each concept a student missed.
+    // A card with no concept never appears there, and a concept with no card
+    // leaves that student with nothing to review. Every card names its
+    // concept with an explicit `area`, so both gaps are caught here.
+    test('every flashcard names a real concept, and every concept has a card', async ({ page }) => {
+      await openCompanion(page, id);
+      const gaps = await page.evaluate(() => {
+        const areas = Object.keys(AREA_SECTION), idx = cardAreaIndex();
+        const badCards = CARDS.filter(c => typeof c.area !== 'string' || !AREA_SECTION[c.area]).map(c => c.id);
+        const emptyAreas = areas.filter(a => !idx.some(m => m[a]));
+        return { badCards, emptyAreas };
+      });
+      expect(gaps.badCards).toEqual([]);
+      expect(gaps.emptyAreas).toEqual([]);
+    });
+
     test('every section opens and is the only one showing', async ({ page }) => {
       const problems = watchProblems(page);
       await openCompanion(page, id);

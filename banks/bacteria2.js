@@ -560,192 +560,266 @@ var CARDS = [
   {
     "id": "BAC2-CARD-01",
     "t": "β-Lactams: target and effect",
-    "d": "Penicillin-binding proteins (transpeptidase). Cross-linking of peptidoglycan is blocked, so the wall weakens."
+    "d": "Penicillin-binding proteins (transpeptidase). Cross-linking of peptidoglycan is blocked, so the wall weakens.",
+    "area": "β-Lactams, PBPs, and β-lactamases"
   },
   {
     "id": "BAC2-CARD-02",
     "t": "Which drug binds D-alanyl-D-alanine on the growing precursor?",
-    "d": "Vancomycin. It sterically blocks the transpeptidase."
+    "d": "Vancomycin. It sterically blocks the transpeptidase.",
+    "area": "Vancomycin and membrane-active drugs"
   },
   {
     "id": "BAC2-CARD-03",
     "t": "Cycloserine: target and effect",
-    "d": "Mimics D-alanine and inhibits synthesis of D-alanyl-D-alanine, so wall precursors are not made."
+    "d": "Mimics D-alanine and inhibits synthesis of D-alanyl-D-alanine, so wall precursors are not made.",
+    "area": "Peptidoglycan pathway and drug targets"
   },
   {
     "id": "BAC2-CARD-04",
     "t": "Bacitracin: target and effect",
-    "d": "Prevents recycling of the lipid carrier that moves peptidoglycan subunits across the membrane."
+    "d": "Prevents recycling of the lipid carrier that moves peptidoglycan subunits across the membrane.",
+    "area": "Peptidoglycan pathway and drug targets"
   },
   {
     "id": "BAC2-CARD-05",
     "t": "Polymyxins: target and effect",
-    "d": "Cationic detergent-like action on the phospholipid bilayer. Poor bacterial selectivity limits their use."
+    "d": "Cationic detergent-like action on the phospholipid bilayer. Poor bacterial selectivity limits their use.",
+    "area": "Vancomycin and membrane-active drugs"
   },
   {
     "id": "BAC2-CARD-06",
     "t": "Daptomycin: target and effect",
-    "d": "Disrupts the cell membrane of Gram-positive cocci. It is bactericidal."
+    "d": "Disrupts the cell membrane of Gram-positive cocci. It is bactericidal.",
+    "area": "Vancomycin and membrane-active drugs"
   },
   {
     "id": "BAC2-CARD-07",
     "t": "Sulfonamides: target and effect",
-    "d": "Mimic PABA and inhibit dihydropteroate synthase, blocking an early folate-pathway step."
+    "d": "Mimic PABA and inhibit dihydropteroate synthase, blocking an early folate-pathway step.",
+    "area": "Folate pathway"
   },
   {
     "id": "BAC2-CARD-08",
     "t": "Trimethoprim: target and effect",
-    "d": "Inhibits dihydrofolate reductase (DHF to THF). It is about 60,000-fold selective for the bacterial enzyme."
+    "d": "Inhibits dihydrofolate reductase (DHF to THF). It is about 60,000-fold selective for the bacterial enzyme.",
+    "area": "Folate pathway"
   },
   {
     "id": "BAC2-CARD-09",
     "t": "Fluoroquinolones: target and effect",
-    "d": "Inhibit DNA gyrase and topoisomerase IV, preventing bacterial DNA replication."
+    "d": "Inhibit DNA gyrase and topoisomerase IV, preventing bacterial DNA replication.",
+    "area": "DNA and RNA synthesis targets"
   },
   {
     "id": "BAC2-CARD-10",
     "t": "Rifampin: target and effect",
-    "d": "Inhibits bacterial DNA-dependent RNA polymerase, blocking mRNA synthesis."
+    "d": "Inhibits bacterial DNA-dependent RNA polymerase, blocking mRNA synthesis.",
+    "area": "DNA and RNA synthesis targets"
   },
   {
     "id": "BAC2-CARD-11",
     "t": "Aminoglycosides: target and effect",
-    "d": "Bind the 30S subunit, inhibit initiation complex formation, and cause mRNA misreading."
+    "d": "Bind the 30S subunit, inhibit initiation complex formation, and cause mRNA misreading.",
+    "area": "Drug classes and ribosome targets"
   },
   {
     "id": "BAC2-CARD-12",
     "t": "Tetracyclines: target and effect",
-    "d": "Bind the 30S subunit and block aminoacyl-tRNA from entering the A site."
+    "d": "Bind the 30S subunit and block aminoacyl-tRNA from entering the A site.",
+    "area": "Drug classes and ribosome targets"
   },
   {
     "id": "BAC2-CARD-13",
     "t": "Macrolides: target and effect",
-    "d": "Bind the 50S subunit and prevent tRNA from leaving the ribosome after amino acid transfer."
+    "d": "Bind the 50S subunit and prevent tRNA from leaving the ribosome after amino acid transfer.",
+    "area": "Drug classes and ribosome targets"
   },
   {
     "id": "BAC2-CARD-14",
     "t": "Clindamycin: target and effect",
-    "d": "Binds the 50S subunit and blocks peptide bond formation. It cannot bind the human 60S ribosome."
+    "d": "Binds the 50S subunit and blocks peptide bond formation. It cannot bind the human 60S ribosome.",
+    "area": "Drug classes and ribosome targets"
   },
   {
     "id": "BAC2-CARD-15",
     "t": "Linezolid: target and effect",
-    "d": "Binds 23S rRNA in the 50S subunit and inhibits formation of the 70S initiation complex."
+    "d": "Binds 23S rRNA in the 50S subunit and inhibits formation of the 70S initiation complex.",
+    "area": "Drug classes and ribosome targets"
   },
   {
     "id": "BAC2-CARD-16",
     "t": "What follows when DNA gyrase and topoisomerase IV are blocked?",
-    "d": "Bacterial DNA replication stops."
+    "d": "Bacterial DNA replication stops.",
+    "area": "DNA and RNA synthesis targets"
   },
   {
     "id": "BAC2-CARD-17",
     "t": "What follows when the A site is blocked?",
-    "d": "Aminoacyl-tRNA cannot enter, so no new amino acids are added to the chain."
+    "d": "Aminoacyl-tRNA cannot enter, so no new amino acids are added to the chain.",
+    "area": "Translation mechanics and inference"
   },
   {
     "id": "BAC2-CARD-18",
     "t": "Metronidazole: how does it work?",
-    "d": "A prodrug reductively activated in anaerobic organisms. The activated radical breaks DNA strands."
+    "d": "A prodrug reductively activated in anaerobic organisms. The activated radical breaks DNA strands.",
+    "area": "Prodrugs and TB drugs"
   },
   {
     "id": "BAC2-CARD-19",
     "t": "Isoniazid versus ethambutol",
-    "d": "Isoniazid inhibits mycolic acid synthesis. Ethambutol inhibits arabinogalactan synthesis."
+    "d": "Isoniazid inhibits mycolic acid synthesis. Ethambutol inhibits arabinogalactan synthesis.",
+    "area": "Prodrugs and TB drugs"
   },
   {
     "id": "BAC2-CARD-20",
     "t": "Drug inactivation: example",
-    "d": "β-lactamases cleave the β-lactam ring. Aminoglycoside-modifying enzymes adenylylate, acetylate, or phosphorylate the drug."
+    "d": "β-lactamases cleave the β-lactam ring. Aminoglycoside-modifying enzymes adenylylate, acetylate, or phosphorylate the drug.",
+    "area": "Routes to resistance"
   },
   {
     "id": "BAC2-CARD-21",
     "t": "Target change: example",
-    "d": "PBP2a in MRSA, or methylation of 23S rRNA that blocks erythromycin binding."
+    "d": "PBP2a in MRSA, or methylation of 23S rRNA that blocks erythromycin binding.",
+    "area": "Escape mechanisms by drug"
   },
   {
     "id": "BAC2-CARD-22",
     "t": "Reduced entry: example",
-    "d": "Porin loss or altered permeability lowers the amount of drug that reaches the cell."
+    "d": "Porin loss or altered permeability lowers the amount of drug that reaches the cell.",
+    "area": "Routes to resistance"
   },
   {
     "id": "BAC2-CARD-23",
     "t": "Efflux: example",
-    "d": "Tetracycline and multidrug efflux pumps keep the intracellular drug concentration too low."
+    "d": "Tetracycline and multidrug efflux pumps keep the intracellular drug concentration too low.",
+    "area": "Escape mechanisms by drug"
   },
   {
     "id": "BAC2-CARD-24",
     "t": "MIC",
-    "d": "The lowest drug concentration that inhibits visible growth. It comes from a tube dilution test."
+    "d": "The lowest drug concentration that inhibits visible growth. It comes from a tube dilution test.",
+    "area": "MIC, MBC, and susceptibility reports"
   },
   {
     "id": "BAC2-CARD-25",
     "t": "MBC",
-    "d": "The lowest drug concentration that kills at least 99.9% of the organisms after subculture."
+    "d": "The lowest drug concentration that kills at least 99.9% of the organisms after subculture.",
+    "area": "MIC, MBC, and susceptibility reports"
   },
   {
     "id": "BAC2-CARD-26",
     "t": "Antibiogram",
-    "d": "A periodic facility-level summary of the percentage of isolates susceptible to each antibiotic. It guides empiric therapy."
+    "d": "A periodic facility-level summary of the percentage of isolates susceptible to each antibiotic. It guides empiric therapy.",
+    "area": "MIC, MBC, and susceptibility reports"
   },
   {
     "id": "BAC2-CARD-27",
     "t": "Passive-active immunity",
-    "d": "Immune globulin plus vaccine: immediate protection and long-term immunity, as with tetanus immune globulin plus toxoid."
+    "d": "Immune globulin plus vaccine: immediate protection and long-term immunity, as with tetanus immune globulin plus toxoid.",
+    "area": "Active and passive immunity"
   },
   {
     "id": "BAC2-CARD-28",
     "t": "Toxoid vaccine",
-    "d": "An inactivated toxin. Examples: diphtheria and tetanus."
+    "d": "An inactivated toxin. Examples: diphtheria and tetanus.",
+    "area": "Vaccine platforms"
   },
   {
     "id": "BAC2-CARD-29",
     "t": "Conjugate vaccine",
-    "d": "A polysaccharide linked to a protein. Examples: Hib, PCV, and MenACWY."
+    "d": "A polysaccharide linked to a protein. Examples: Hib, PCV, and MenACWY.",
+    "area": "Vaccine platforms"
   },
   {
     "id": "BAC2-CARD-30",
     "t": "Live attenuated vaccine",
-    "d": "A weakened organism. Examples: Ty21a and BCG."
+    "d": "A weakened organism. Examples: Ty21a and BCG.",
+    "area": "Vaccine platforms"
   },
   {
     "id": "BAC2-CARD-31",
     "t": "Sterilization versus disinfection",
-    "d": "Sterilization destroys all microorganisms, including spores. Disinfection does not necessarily eliminate spores."
+    "d": "Sterilization destroys all microorganisms, including spores. Disinfection does not necessarily eliminate spores.",
+    "area": "Infection control"
   },
   {
     "id": "BAC2-CARD-32",
     "t": "Antiseptic versus disinfectant",
-    "d": "Antiseptics are used on living tissue. Disinfectants are used on inanimate surfaces."
+    "d": "Antiseptics are used on living tissue. Disinfectants are used on inanimate surfaces.",
+    "area": "Infection control"
   },
   {
     "id": "BAC2-CARD-33",
     "t": "Ceftazidime-avibactam: what does it cover?",
-    "d": "Many organisms that produce serine carbapenemases such as KPC, but not metallo-β-lactamase producers."
+    "d": "Many organisms that produce serine carbapenemases such as KPC, but not metallo-β-lactamase producers.",
+    "area": "β-Lactams, PBPs, and β-lactamases"
   },
   {
     "id": "BAC2-CARD-34",
     "t": "Prodrugs activated inside the microbe: how can resistance arise?",
-    "d": "By losing or mutating the activating enzyme, as seen with isoniazid and pyrazinamide."
+    "d": "By losing or mutating the activating enzyme, as seen with isoniazid and pyrazinamide.",
+    "area": "Prodrugs and TB drugs"
   },
   {
     "id": "BAC2-CARD-35",
     "t": "PBP2a in MRSA",
-    "d": "An altered penicillin-binding protein encoded by mecA. It has markedly reduced affinity for β-lactams, so cross-linking continues. β-Lactamase inhibitors do not restore activity."
+    "d": "An altered penicillin-binding protein encoded by mecA. It has markedly reduced affinity for β-lactams, so cross-linking continues. β-Lactamase inhibitors do not restore activity.",
+    "area": "Escape mechanisms by drug"
   },
   {
     "id": "BAC2-CARD-36",
     "t": "MRSA versus VRE: how do the mechanisms differ?",
-    "d": "MRSA alters the target enzyme (PBP2a). VRE alters the drug's binding substrate (D-Ala-D-Lac instead of D-Ala-D-Ala)."
+    "d": "MRSA alters the target enzyme (PBP2a). VRE alters the drug's binding substrate (D-Ala-D-Lac instead of D-Ala-D-Ala).",
+    "area": "Escape mechanisms by drug"
   },
   {
     "id": "BAC2-CARD-37",
     "t": "Susceptible, Intermediate, and Resistant",
-    "d": "S: likely to respond to standard dosing. I: may respond at higher dosing or when the drug concentrates at the infection site. R: unlikely to respond even at maximum safe dosing. Breakpoints are specific to each drug-organism pair."
+    "d": "S: likely to respond to standard dosing. I: may respond at higher dosing or when the drug concentrates at the infection site. R: unlikely to respond even at maximum safe dosing. Breakpoints are specific to each drug-organism pair.",
+    "area": "MIC, MBC, and susceptibility reports"
   },
   {
     "id": "BAC2-CARD-38",
     "t": "Plain polysaccharide versus conjugate vaccine",
-    "d": "Plain: T-independent response, weaker and shorter-lived, little memory. Conjugate: polysaccharide linked to a carrier protein, T-dependent, stronger response with memory and effective boosters."
+    "d": "Plain: T-independent response, weaker and shorter-lived, little memory. Conjugate: polysaccharide linked to a carrier protein, T-dependent, stronger response with memory and effective boosters.",
+    "area": "Vaccine platforms"
+  },
+  {
+    "id": "BAC2-CARD-39",
+    "t": "Selective toxicity: where it comes from",
+    "d": "A difference between the bacterial and human target. Either bacteria have a structure humans lack (the peptidoglycan wall), or the drug inhibits the bacterial version of a shared enzyme at a much lower concentration. A near-identical shared target means host toxicity at effective doses.",
+    "area": "Selective toxicity"
+  },
+  {
+    "id": "BAC2-CARD-40",
+    "t": "Bactericidal versus bacteriostatic",
+    "d": "Bactericidal drugs kill. Bacteriostatic drugs halt growth, so the bacteria regrow when the drug is removed, and clearing them depends on phagocytes. That makes a bacteriostatic drug a weaker choice in severe neutropenia.",
+    "area": "Killing, growth arrest, and spectrum"
+  },
+  {
+    "id": "BAC2-CARD-41",
+    "t": "Broad versus narrow spectrum",
+    "d": "Broad: several unrelated groups are affected, as with tetracyclines (Gram-negative rods, chlamydiae, mycoplasmas, rickettsiae). Narrow: one group or organism, as with vancomycin (Gram-positive cocci), fidaxomicin (C. difficile), or isoniazid (mycobacteria).",
+    "area": "Killing, growth arrest, and spectrum"
+  },
+  {
+    "id": "BAC2-CARD-42",
+    "t": "The five-part mechanism lens",
+    "d": "Target: what the drug binds. Action: what it does (inhibit, bind, block, disrupt, cause misreading). Selective toxicity: why bacteria suffer more than human cells. Spectrum: which organisms it reaches. Resistance link: how bacteria escape it.",
+    "area": "The mechanism lens"
+  },
+  {
+    "id": "BAC2-CARD-43",
+    "t": "Bacterial versus human ribosome",
+    "d": "Bacterial: 70S, a 30S subunit (16S rRNA) plus a 50S subunit (23S rRNA and the exit tunnel). Human: 80S, a 40S plus a 60S subunit. The difference in size and structure lets drugs such as clindamycin bind the bacterial ribosome and spare the human one.",
+    "area": "Ribosome structure"
+  },
+  {
+    "id": "BAC2-CARD-44",
+    "t": "Antibiotic stewardship",
+    "d": "Use the narrowest drug that covers the organism, for the shortest effective duration, with doses adjusted for kidney function. Two drugs together are justified for serious infection before the organism is identified, for synergy, or to prevent resistance.",
+    "area": "Stewardship and combinations"
   }
 ];
 
