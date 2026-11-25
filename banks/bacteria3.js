@@ -1198,5 +1198,40 @@ var POOL = [
     options:['Their uptake into bacterial cells depends on oxygen', 'Anaerobes destroy them with beta-lactamase', 'Anaerobes lack the ribosome they bind', 'They cannot penetrate abscess walls'],
     answer:0,
     why:'Aminoglycoside uptake into bacterial cells requires oxygen, so these drugs fail against anaerobes and in oxygen-free abscesses. Metronidazole, clindamycin, and penicillin are among the drugs that work, with drainage of the abscess.'
+  },
+  {
+    id:'BAC3-112', m:'m6', area:'Anaerobes & the encapsulated-organism synthesis', level:'integration',
+    stem:'Bacterial meningitis is suspected in two patients: a 72-year-old and a healthy 20-year-old college student. Why does the older patient\u2019s empiric regimen add ampicillin, while the student\u2019s does not?',
+    options:['Age over 50 raises the risk of Listeria, which cephalosporins do not cover', 'Older adults are more likely to carry ceftriaxone-resistant meningococcus', 'Ampicillin covers pneumococcus better than ceftriaxone in older adults', 'The MenACWY vaccine protects college students against Listeria'],
+    answer:0,
+    why:'Listeria is a meningitis risk in newborns, adults over 50, and immunocompromised patients, and cephalosporins do not cover it, so ampicillin is added for them. Ceftriaxone remains first-line for meningococcus and covers the encapsulated pyogens, and meningococcal vaccines do not protect against Listeria.'
+  },
+  {
+    id:'BAC3-113', m:'m6', area:'Anaerobes & the encapsulated-organism synthesis', level:'integration',
+    stem:'A patient has their spleen removed after a car accident. Which set of vaccines best protects against the organisms this patient is now least able to clear?',
+    options:['Pneumococcal, meningococcal, and Hib vaccines', 'Pneumococcal, Tdap, and typhoid vaccines', 'Meningococcal, Tdap, and anthrax vaccines', 'Hib, typhoid, and anthrax vaccines'],
+    answer:0,
+    why:'The spleen clears encapsulated bacteria from the blood, so a patient without one is at high risk from the three classic encapsulated pyogens: S. pneumoniae, N. meningitidis, and H. influenzae type b. Each has its own vaccine. Tdap, typhoid, and anthrax vaccines protect against organisms whose danger does not depend on the spleen.'
+  },
+  {
+    id:'BAC3-114', m:'m5', area:'Where the enteric bacteria strike', level:'integration',
+    stem:'Two patients have diarrhea after a summer barbecue. Patient 1 has profuse watery stool and no fever. Patient 2 has bloody stool and cramping after eating undercooked ground beef. Which plan fits both patients?',
+    options:['Rehydrate both, and avoid antibiotics and loperamide in Patient 2', 'Rehydrate both, and give Patient 2 ciprofloxacin to shorten the illness', 'Give loperamide to both to reduce fluid losses', 'Give azithromycin to both, then rehydrate if symptoms persist'],
+    answer:0,
+    why:'Watery diarrhea without fever points to a small-intestine toxin such as ETEC, and bloody diarrhea after undercooked beef points to EHEC in the colon. Rehydration is the mainstay for both. In suspected EHEC, antibiotics and antimotility drugs such as loperamide may raise the risk of hemolytic uremic syndrome, so they are avoided.'
+  },
+  {
+    id:'BAC3-115', m:'m2', area:'Pneumococcus, viridans, enterococcus & GBS disease', level:'integration',
+    stem:'A pregnant patient asks how to protect her baby from pertussis, group B strep, and Listeria. Which plan addresses each of these risks?',
+    options:['Tdap in this pregnancy, GBS screening with antibiotics during labor if positive, and avoiding unpasteurized dairy', 'Tdap in this pregnancy, antibiotics as soon as a GBS screen is positive, and avoiding unpasteurized dairy', 'Tdap if not given in an earlier pregnancy, GBS screening with antibiotics during labor if positive, and avoiding unpasteurized dairy', 'Tdap in this pregnancy, GBS screening with antibiotics during labor if positive, and avoiding undercooked poultry'],
+    answer:0,
+    why:'Tdap is given in every pregnancy so fresh antibodies cross to the newborn. A positive GBS screen is treated with antibiotics during labor, not at the time of the screen. Listeria is linked to unpasteurized dairy, so avoiding it lowers the risk; undercooked poultry is a Salmonella and Campylobacter risk instead.'
+  },
+  {
+    id:'BAC3-116', m:'m4', area:'C. difficile: the antibiotic-associated cycle', level:'integration',
+    stem:'A patient is treated with clindamycin for an aspiration lung abscess. Five days later, the patient develops frequent watery diarrhea, and stool testing confirms C. difficile. Which next step is best?',
+    options:['Stop clindamycin if possible and start fidaxomicin', 'Continue clindamycin and add loperamide', 'Switch clindamycin to ciprofloxacin and observe', 'Continue clindamycin and add IV vancomycin'],
+    answer:0,
+    why:'Clindamycin is a classic trigger for C. difficile infection, so the causative antibiotic is stopped if possible, and fidaxomicin is preferred for a first episode (oral vancomycin is the alternative). Ciprofloxacin is also a high-risk trigger, antimotility drugs are avoided, and IV vancomycin does not reach the colon.'
   }
 ];
