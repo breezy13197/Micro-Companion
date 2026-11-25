@@ -136,14 +136,14 @@ for (const id of COMPANIONS) {
       // (Some activities are made of several smaller ones, so their names are
       // not all in Act.registry. What matters is the outcome checked below.)
       await page.evaluate(() => Act.solveAll());
-      const unset = await page.evaluate(() => {
+      // Composite activities (such as the Mycoses consult) update on a timer.
+      await expect.poll(() => page.evaluate(() => {
         const out = [];
         MANIFEST.modules.forEach(m => m.sections.forEach(s => {
           if (s.activity && (state.activities[s.activity] === undefined || state.activities[s.activity] === null)) out.push(s.activity);
         }));
         return out;
-      });
-      expect(unset, 'activities still empty after solveAll').toEqual([]);
+      }), { message: 'activities still empty after solveAll' }).toEqual([]);
 
       // Restoring saved activity progress runs different code from a fresh load.
       await page.reload();
