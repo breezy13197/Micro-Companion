@@ -904,15 +904,15 @@ var POOL = [
     "m": "m1",
     "area": "Killing, growth arrest, and spectrum",
     "level": "application",
-    "stem": "A patient has severe neutropenia. Why is a bacteriostatic antibiotic a weaker choice for this patient?",
+    "stem": "A patient has infective endocarditis, with bacteria growing inside heart-valve vegetations. Why is a bacteriostatic antibiotic a weaker choice for this patient?",
     "options": [
-      "Its activity depends on neutrophil enzymes",
-      "Its spectrum covers too few species",
-      "Its blood levels fall too quickly",
-      "Its effect depends on phagocytes to clear the bacteria"
+      "Its activity depends on enzymes released by neutrophils",
+      "Its spectrum covers too few of the likely species",
+      "Its blood levels fall too quickly between doses",
+      "It relies on phagocytes, which reach vegetations poorly"
     ],
     "answer": 3,
-    "why": "A bacteriostatic drug holds the bacteria in check while the host removes them. With few neutrophils, that second step is weak."
+    "why": "A bacteriostatic drug only holds the bacteria in check, and phagocytes must then remove them. Inside vegetations, phagocytes reach the bacteria poorly, so that second step fails. The other options describe problems unrelated to whether a drug kills bacteria or only halts their growth."
   },
   {
     "id": "BAC2-007",
