@@ -164,13 +164,13 @@ var CARDS = [
   { "id": "HUB-CARD-47", "t": "Interferon: evasion and therapy", "d": "Influenza NS-1 can inhibit interferon production, two Ebola proteins block interferon induction and action, and EBV blocks interferon synthesis. Recombinant interferon alpha is used for chronic hepatitis B." },
   { "id": "HUB-CARD-48", "t": "Two walls, two drug classes", "d": "Bacteria: peptidoglycan (penicillins). Fungi: chitin and β-glucan (echinocandins). Human cells have no wall, so penicillin misses Candida and caspofungin misses S. aureus." },
   { "id": "HUB-CARD-49", "t": "Membrane drugs and selectivity", "d": "Polymyxins act on phospholipids that human cells share (kidney and nerve toxicity). Amphotericin B prefers ergosterol over cholesterol, but kidney toxicity remains; the liposomal form limits it." },
-  { "id": "HUB-CARD-50", "t": "One selective target per pathogen", "d": "Bacteria: peptidoglycan cross-linking. Fungi: ergosterol synthesis. Plasmodium: heme detoxification into hemozoin. None of these exists in human cells." },
+  { "id": "HUB-CARD-50", "t": "One selective target per pathogen", "d": "Bacteria: peptidoglycan cross-linking. Fungi: ergosterol synthesis. Plasmodium: heme detoxification into hemozoin. Humans have no peptidoglycan or hemozoin and make cholesterol, not ergosterol." },
   { "id": "HUB-CARD-51", "t": "Metronidazole across kingdoms", "d": "Reduced to DNA-breaking radicals inside anaerobic bacteria and anaerobic protozoa (Entamoeba, Giardia, Trichomonas). Aerobic bacteria do not activate it." },
   { "id": "HUB-CARD-52", "t": "Folate blockade, twice", "d": "TMP-SMX and pyrimethamine-sulfadiazine each block dihydrofolate reductase plus dihydropteroate synthase. Leucovorin is added to pyrimethamine to protect human cells." },
   { "id": "HUB-CARD-53", "t": "Paromomycin and the 30S subunit", "d": "Paromomycin, an aminoglycoside, binds 16S rRNA, the RNA of the small (30S) subunit that aminoglycosides target in bacteria. It stays in the gut lumen to clear amebic cysts." },
   { "id": "HUB-CARD-54", "t": "Prodrugs activated by the pathogen", "d": "Flucytosine: fungal cytosine deaminase. Acyclovir: viral thymidine kinase. Metronidazole: anaerobic reduction. Activation is what makes each one selective." },
   { "id": "HUB-CARD-55", "t": "Combinations against resistance", "d": "Flucytosine with amphotericin B, multidrug TB regimens, and ART for HIV. A single drug lets resistant mutants emerge." },
-  { "id": "HUB-CARD-56", "t": "Carbol fuchsin, two organisms", "d": "Acid-fast stains leave M. tuberculosis and Cryptosporidium oocysts red after the acid wash, against a blue background." },
+  { "id": "HUB-CARD-56", "t": "Carbol fuchsin, two organisms", "d": "Acid-fast stains leave M. tuberculosis red after the acid wash, and a modified (Kinyoun) acid-fast stain does the same for Cryptosporidium oocysts, against a blue background." },
   { "id": "HUB-CARD-57", "t": "Branching filaments versus septate hyphae", "d": "Nocardia: weakly acid-fast bacterium, TMP-SMX. Aspergillus: septate mold, voriconazole. Both threaten patients on high-dose corticosteroids." },
   { "id": "HUB-CARD-58", "t": "Capsules in meningitis", "d": "S. pneumoniae and Cryptococcus neoformans both resist phagocytosis with a polysaccharide capsule. India ink shows the cryptococcal capsule as a halo." },
   { "id": "HUB-CARD-59", "t": "When granulomas fail", "d": "Latent TB and contained endemic fungi are walled off in granulomas. Corticosteroids blunt macrophage and T-cell control, and the organisms can reactivate." },
@@ -1373,13 +1373,13 @@ var POOL = [
     "id": "HUB-080",
     "m": "bacteria2+mycoses",
     "area": "Selective targets across microbes",
-    "level": "application",
-    "stem": "Polymyxins and amphotericin B both damage membranes, but amphotericin B is more selective for its target cells. Which feature accounts for the difference?",
+    "level": "integration",
+    "stem": "Polymyxins and amphotericin B both damage membranes, yet amphotericin B spares human cells better. Which difference in the molecules they bind explains this?",
     "options": [
-      "Amphotericin B prefers ergosterol, whereas polymyxins act on phospholipids that human cells share",
-      "Amphotericin B is packaged in liposomes, whereas polymyxins are given as free drug",
-      "Amphotericin B acts on the cell wall, whereas polymyxins act on the inner membrane",
-      "Amphotericin B binds cholesterol, whereas polymyxins bind ergosterol"
+      "Amphotericin B favors a sterol found in fungi; polymyxins attack lipids human cells also have",
+      "Amphotericin B favors cholesterol in human cells; polymyxins attack ergosterol in bacteria",
+      "Amphotericin B binds the fungal cell wall; polymyxins bind the bacterial inner membrane",
+      "Amphotericin B binds β-glucan in the wall; polymyxins bind sterols in the membrane"
     ],
     "answer": 0,
     "why": "Polymyxins act like detergents on phospholipid bilayers, which human cells also have, so kidney and nerve toxicity limit their use. Amphotericin B binds ergosterol in preference to cholesterol. The preference is incomplete, which is why kidney toxicity remains. The liposomal form lowers that toxicity but does not change the drug’s target."
@@ -1397,14 +1397,14 @@ var POOL = [
       "Bacteria: peptidoglycan cross-linking. Fungi: ergosterol synthesis. Plasmodium: hemozoin formation"
     ],
     "answer": 3,
-    "why": "Each correct target is absent from human cells. Penicillins block peptidoglycan cross-linking, azoles block ergosterol synthesis, and chloroquine blocks the parasite’s conversion of toxic heme into hemozoin. β-glucan belongs to fungal walls, and 70S ribosomes belong to bacteria."
+    "why": "Each correct target is missing from human cells or differs from the human version. Penicillins block peptidoglycan cross-linking, azoles block ergosterol synthesis, and chloroquine blocks the parasite’s conversion of toxic heme into hemozoin. β-glucan belongs to fungal walls, and 70S ribosomes are the bacterial ribosome target."
   },
   {
     "id": "HUB-082",
     "m": "bacteria2+parasitology",
     "area": "Antiparasitic drugs from the antibacterial toolkit",
     "level": "application",
-    "stem": "Metronidazole treats both an anaerobic bacterial abscess and Giardia infection. Which property of these organisms does the drug exploit?",
+    "stem": "Metronidazole treats both a polymicrobial intra-abdominal abscess and Giardia infection. Which property of these organisms does the drug exploit?",
     "options": [
       "Porin channels that carry the drug across an outer membrane",
       "Anaerobic metabolism that reduces the drug to DNA-damaging radicals",
@@ -1419,15 +1419,15 @@ var POOL = [
     "m": "bacteria2+parasitology",
     "area": "Antiparasitic drugs from the antibacterial toolkit",
     "level": "concept",
-    "stem": "Paromomycin clears Entamoeba cysts from the gut lumen by binding 16S ribosomal RNA. Which antibacterial class acts on the same ribosomal subunit?",
+    "stem": "Paromomycin, a luminal agent that clears Entamoeba cysts, binds 16S ribosomal RNA. To which antibacterial class does it belong?",
     "options": [
-      "Macrolides, which bind the 50S subunit and block translocation",
-      "Lincosamides such as clindamycin, which bind 23S rRNA in the 50S subunit",
-      "Aminoglycosides, which bind the 30S subunit and cause misreading",
-      "Oxazolidinones, which bind the 50S subunit and block initiation"
+      "Macrolides",
+      "Lincosamides",
+      "Aminoglycosides",
+      "Oxazolidinones"
     ],
     "answer": 2,
-    "why": "The bacterial 30S subunit contains 16S rRNA. Paromomycin is itself an aminoglycoside, and it stays in the gut lumen, which suits clearing cysts after metronidazole treats tissue disease. Macrolides, clindamycin, and linezolid act on the 50S subunit."
+    "why": "16S rRNA lies in the small (30S) subunit, where aminoglycosides cause misreading in bacteria. Macrolides, clindamycin, and linezolid bind the 50S subunit. Paromomycin is an aminoglycoside-type drug that stays in the gut lumen, which suits clearing cysts after metronidazole treats tissue disease."
   },
   {
     "id": "HUB-084",
@@ -1451,10 +1451,10 @@ var POOL = [
     "level": "integration",
     "stem": "Leucovorin is given with pyrimethamine-sulfadiazine for toxoplasmosis. Which statement explains why it is needed and why it does not weaken the treatment?",
     "options": [
-      "Leucovorin kills tachyzoites directly, so a lower pyrimethamine dose is enough",
-      "Leucovorin speeds pyrimethamine clearance, which lowers its effect on the patient alone",
-      "Leucovorin blocks sulfadiazine uptake into human cells, so the parasite receives more drug",
-      "Pyrimethamine also blocks human folate use, and human cells can use leucovorin while the parasite does not"
+      "Leucovorin kills tachyzoites directly, so less pyrimethamine is needed",
+      "Leucovorin speeds pyrimethamine clearance from the patient’s tissues",
+      "Leucovorin blocks sulfadiazine uptake, so more drug reaches the parasite",
+      "Leucovorin supplies folate that human cells can use and the parasite cannot"
     ],
     "answer": 3,
     "why": "Pyrimethamine inhibits dihydrofolate reductase, an enzyme human cells also depend on to use folate, so the combination can deplete the patient’s folate. Leucovorin (folinic acid) is a form of folate that human cells can use, so it replaces what the drugs deplete without rescuing the parasite."
@@ -1481,13 +1481,13 @@ var POOL = [
     "level": "integration",
     "stem": "Flucytosine, acyclovir, and metronidazole each spare human cells for a similar reason. What do they share?",
     "options": [
-      "Each binds a final target that human cells lack entirely",
-      "Each is excreted unchanged before it reaches human cells",
-      "Each is a prodrug activated mainly by an enzyme or pathway of the pathogen",
-      "Each blocks a wall-building enzyme that human cells lack"
+      "Each binds a final target that has no human counterpart",
+      "Each is excreted before it can enter human cells",
+      "Each is a prodrug that the pathogen itself first activates",
+      "Each blocks a wall enzyme that human cells do not have"
     ],
     "answer": 2,
-    "why": "Fungal cytosine deaminase converts flucytosine to fluorouracil, and human cells lack that enzyme. Viral thymidine kinase phosphorylates acyclovir more effectively than the cellular enzyme. Anaerobic organisms reduce metronidazole to DNA-damaging radicals. The final targets (thymidylate synthase, DNA polymerase, DNA) exist in human cells too, so activation is what makes these drugs selective."
+    "why": "Fungal cytosine deaminase converts flucytosine to fluorouracil, and human cells lack that enzyme. Viral thymidine kinase adds acyclovir’s first phosphate more effectively than the cellular enzyme, and host kinases finish the job. Anaerobic organisms reduce metronidazole to DNA-damaging radicals. The final targets (thymidylate synthase, DNA polymerase, DNA) exist in human cells too, so activation is what makes these drugs selective."
   },
   {
     "id": "HUB-088",
@@ -1502,7 +1502,7 @@ var POOL = [
       "A combination allows the course to be given as a single dose"
     ],
     "answer": 1,
-    "why": "Resistance develops quickly when flucytosine is used alone, so it is paired with amphotericin B. TB drugs with different targets lower the chance that a resistant mutant survives. HIV’s error-prone polymerase lets mutants arise readily, so ART combines drugs from different classes."
+    "why": "Resistance develops quickly when flucytosine is used alone, so it is paired with amphotericin B. TB drugs with different targets lower the chance that a resistant mutant survives. In HIV, drugs from different classes block different steps, so one mutation is less likely to defeat the whole regimen."
   },
   {
     "id": "HUB-089",
@@ -1512,9 +1512,9 @@ var POOL = [
     "stem": "A modified acid-fast stain of stool from a patient with HIV and prolonged watery diarrhea shows red spheres on a blue background. What do these structures share with Mycobacterium tuberculosis on an acid-fast stain?",
     "options": [
       "Both take up the blue counterstain after an acid wash",
-      "Both stain purple because they hold crystal violet",
-      "Both appear as clear halos against a dark background",
-      "Both keep the red carbol fuchsin dye after an acid wash"
+      "Both hold crystal violet after an iodine step",
+      "Both exclude India ink and show a clear halo",
+      "Both hold carbol fuchsin after an acid wash"
     ],
     "answer": 3,
     "why": "The red spheres are Cryptosporidium oocysts. Acid-fast methods use carbol fuchsin, and acid-fast structures such as the mycolic acid-rich wall of M. tuberculosis keep it through the acid wash, while other material takes up the blue counterstain. Crystal violet belongs to the Gram stain, and a clear halo on India ink is the pattern of Cryptococcus."
@@ -1524,7 +1524,7 @@ var POOL = [
     "m": "bacteria4+mycoses",
     "area": "Stains and look-alikes",
     "level": "application",
-    "stem": "A transplant recipient on high-dose corticosteroids has a lung nodule. Biopsy shows thin, branching filaments that are weakly acid-fast. Which organism and first-line drug fit?",
+    "stem": "A transplant recipient on high-dose corticosteroids has a lung nodule and a new brain abscess. Biopsy shows thin, branching, weakly acid-fast filaments that grow in aerobic culture. Which organism and first-line drug fit?",
     "options": [
       "Nocardia, treated with TMP-SMX",
       "Aspergillus, treated with voriconazole",
@@ -1532,7 +1532,7 @@ var POOL = [
       "Rhizopus, treated with liposomal amphotericin B"
     ],
     "answer": 0,
-    "why": "Nocardia is an aerobic, branching bacterium that is weakly acid-fast and is treated with TMP-SMX. Aspergillus also threatens patients on corticosteroids, but its septate hyphae are not acid-fast. Actinomyces is anaerobic oral flora and is not acid-fast, and Rhizopus forms nonseptate hyphae and is linked to ketoacidosis."
+    "why": "Nocardia is an aerobic, branching bacterium that is weakly acid-fast, spreads from the lung to the brain in immunocompromised patients, and is treated with TMP-SMX. Aspergillus also threatens patients on corticosteroids, but it is a mold with septate hyphae, treated with voriconazole. Actinomyces is anaerobic oral flora that causes draining sinus tracts after mucosal trauma and is treated with penicillin G. Rhizopus forms nonseptate hyphae and is linked to ketoacidosis."
   },
   {
     "id": "HUB-091",
@@ -1541,10 +1541,10 @@ var POOL = [
     "level": "concept",
     "stem": "Streptococcus pneumoniae and Cryptococcus neoformans can both cause meningitis. Which shared virulence factor helps each avoid clearance?",
     "options": [
-      "An endotoxin in an outer membrane",
-      "Spores that resist heat and drying",
-      "A polysaccharide capsule that resists phagocytosis",
-      "A thick peptidoglycan wall"
+      "An outer membrane that carries endotoxin",
+      "Spores that survive heat and drying",
+      "A capsule that blocks phagocytosis",
+      "A thick peptidoglycan cell wall"
     ],
     "answer": 2,
     "why": "Both organisms carry a polysaccharide capsule that resists phagocytosis. India ink outlines the cryptococcal capsule as a clear halo. Endotoxin belongs to Gram-negative bacteria, S. pneumoniae does not form spores, and Cryptococcus has no peptidoglycan."
@@ -1557,9 +1557,9 @@ var POOL = [
     "stem": "A patient with latent tuberculosis and a past, contained histoplasmosis starts long-term, high-dose corticosteroids. Which shared process puts the patient at risk for both infections?",
     "options": [
       "Lower stomach acid lets both organisms enter through the gut",
-      "Weaker macrophage and T-cell control lets organisms held in granulomas grow again",
+      "Weaker macrophage and T-cell control lets contained organisms regrow",
       "Neutropenia lets both organisms form biofilms on catheters",
-      "The steroid acts as a growth factor that both organisms use"
+      "Steroid-induced hyperglycemia feeds the growth of both organisms"
     ],
     "answer": 1,
     "why": "In latent TB and in contained endemic mycoses, activated macrophages and lymphocytes wall the organism off in a granuloma. High-dose corticosteroids blunt macrophage and T-cell function, so the hold on the granuloma weakens and the organism can reactivate."
@@ -1589,7 +1589,7 @@ var POOL = [
       "About 4 to 6 weeks after antifungal therapy begins, to lower the risk of IRIS",
       "On the same day as antifungal therapy, to restore CD4 cells before the fungus spreads",
       "After the CD4 count rises above 200 cells/µL, because ART cannot act sooner",
-      "About 4 to 6 weeks after antifungal therapy begins, to avoid flucytosine toxicity"
+      "After fluconazole maintenance ends, to avoid azole–booster drug interactions"
     ],
     "answer": 0,
     "why": "As ART restores CD4 cells, the recovering immune system can mount a profound inflammatory response to the fungus (immune reconstitution inflammatory syndrome), and cryptococcal IRIS can be deadly. Starting ART about 4 to 6 weeks after antifungal therapy begins gives that therapy time to work first."
@@ -1603,7 +1603,7 @@ var POOL = [
     "options": [
       "CD4 T cells are the cells in which Pneumocystis replicates",
       "TMP-SMX lowers the HIV viral load as well as preventing pneumonia",
-      "CD4 loss measures the loss of cell-mediated immunity that lets Pneumocystis cause pneumonia",
+      "The CD4 count tracks the cell-mediated immunity that controls Pneumocystis",
       "The viral load cannot be measured once antiretroviral therapy begins"
     ],
     "answer": 2,
@@ -1617,7 +1617,7 @@ var POOL = [
     "stem": "Which group of infections is linked to the loss of CD4 T-cell function in advanced HIV?",
     "options": [
       "Invasive aspergillosis, mucormycosis, and candidemia",
-      "Cryptococcal meningitis, Pneumocystis pneumonia, and toxoplasmosis",
+      "Cryptococcosis, Pneumocystis pneumonia, and toxoplasmosis",
       "Giardiasis, amebic colitis, and trichomoniasis",
       "Sporotrichosis, tinea pedis, and onychomycosis"
     ],
@@ -1658,7 +1658,7 @@ var POOL = [
     "id": "HUB-099",
     "m": "mycoses+parasitology",
     "area": "Fungi, protozoa, and Pneumocystis",
-    "level": "application",
+    "level": "concept",
     "stem": "Pneumocystis jirovecii is grouped with Cryptococcus among the fungi that threaten patients with T-cell loss. How is Pneumocystis pneumonia treated?",
     "options": [
       "Fluconazole, as for cryptococcal maintenance",
@@ -1674,11 +1674,11 @@ var POOL = [
     "m": "mycoses+parasitology",
     "area": "Fungi, protozoa, and Pneumocystis",
     "level": "integration",
-    "stem": "A patient treated for Pneumocystis pneumonia has a PaO2 of 62 mm Hg, so prednisone is added. Which fungal risk rises with high-dose corticosteroids?",
+    "stem": "A patient treated for Pneumocystis pneumonia has a PaO2 of 62 mm Hg, so prednisone is added. Which fungal infection does high-dose corticosteroid therapy put the patient at risk for?",
     "options": [
-      "Dermatophyte infection of the nails",
-      "Invasive aspergillosis and reactivated endemic fungi",
-      "Sporotrichosis after a puncture wound",
+      "Onychomycosis from a dermatophyte",
+      "Invasive aspergillosis of the lung",
+      "Sporotrichosis after a thorn puncture",
       "Tinea capitis from a household pet"
     ],
     "answer": 1,
@@ -1691,9 +1691,9 @@ var POOL = [
     "level": "concept",
     "stem": "Fungi and protozoa are eukaryotes. Why does this make them harder to treat selectively than bacteria?",
     "options": [
-      "They share more cell machinery with human cells, so fewer targets are unique",
+      "Their cells resemble human cells, so few targets are unique",
       "They divide faster than bacteria, so drugs cannot keep pace",
-      "They lack ribosomes, so protein synthesis cannot be targeted",
+      "Many live inside human cells, so drugs cannot reach them",
       "They have a peptidoglycan wall that blocks drug entry"
     ],
     "answer": 0,
@@ -1706,10 +1706,10 @@ var POOL = [
     "level": "integration",
     "stem": "Which pairing of agent and control measure is correct?",
     "options": [
-      "Cryptosporidium: chlorinating water. C. difficile: alcohol hand rub. Norovirus: soap and water for about 5 seconds",
-      "Cryptosporidium: alcohol hand rub. C. difficile: chlorinating water. Norovirus: boiling or filtering water",
-      "Cryptosporidium: chlorinating water. C. difficile: soap and water. Norovirus: alcohol hand rub for about 5 seconds",
-      "Cryptosporidium: boiling or filtering water. C. difficile: soap and water. Norovirus: soap and water for at least 20 seconds"
+      "Cryptosporidium: chlorinated water. C. difficile: alcohol hand rub. Norovirus: soap and water",
+      "Cryptosporidium: alcohol hand rub. C. difficile: chlorinated water. Norovirus: alcohol hand rub",
+      "Cryptosporidium: chlorinated water. C. difficile: soap and water. Norovirus: alcohol hand rub",
+      "Cryptosporidium: boiled or filtered water. C. difficile: soap and water. Norovirus: soap and water"
     ],
     "answer": 3,
     "why": "Chlorination does not kill Cryptosporidium oocysts, so water must be boiled or filtered. Alcohol does not kill C. difficile spores, which are removed mechanically with soap and water. The lecture advises washing with soap and water for at least 20 seconds against enteric viruses such as norovirus."
@@ -1721,8 +1721,8 @@ var POOL = [
     "level": "concept",
     "stem": "Malaria and arboviral infections such as dengue are both spread by mosquitoes. Which feature do the two share?",
     "options": [
-      "Female mosquitoes transmit the pathogen in a blood meal after it develops inside the mosquito",
-      "Male mosquitoes transmit the pathogen while feeding on plant nectar",
+      "Female mosquitoes pass it on in a blood meal after it develops inside them",
+      "The pathogen passes on at once, with no development inside the mosquito",
       "The pathogen passes from person to person once a mosquito starts the outbreak",
       "Humans are the definitive host in which the sexual cycle takes place"
     ],
@@ -1793,7 +1793,7 @@ var POOL = [
     "id": "HUB-108",
     "m": "bacteria3+parasitology",
     "area": "Enteric infections and their control",
-    "level": "application",
+    "level": "concept",
     "stem": "Bloody diarrhea can come from bacteria or protozoa. Which organism invades the colon and can travel through portal blood to form a liver abscess?",
     "options": [
       "Entamoeba histolytica",
@@ -1809,12 +1809,12 @@ var POOL = [
     "m": "parasitology+viruses1",
     "area": "Host defenses and containment",
     "level": "concept",
-    "stem": "Pneumocystis varies its surface glycoprotein, and some viruses rapidly vary their surface proteins. What advantage does this give each pathogen?",
+    "stem": "Pneumocystis switches the surface glycoprotein it expresses, and some viruses persist through rapid antigenic variation. What advantage do both gain?",
     "options": [
-      "The pathogen becomes resistant to TMP-SMX and antiviral drugs",
-      "Antibodies made earlier may no longer recognize the changed surface",
-      "The pathogen can enter cells without binding a receptor",
-      "The pathogen grows faster at body temperature"
+      "Resistance to TMP-SMX and to antiviral drugs",
+      "Escape from antibodies made against the earlier version",
+      "Escape from phagocytes by hiding inside a capsule",
+      "Latency, with no proteins expressed for long periods"
     ],
     "answer": 1,
     "why": "Antigenic variation changes the surface proteins that antibodies recognize, so antibodies made against the earlier version may no longer bind. This helps the pathogen persist. It does not cause drug resistance or remove the need for a receptor."
@@ -1823,16 +1823,16 @@ var POOL = [
     "id": "HUB-110",
     "m": "mycoses+parasitology",
     "area": "Stains and look-alikes",
-    "level": "application",
-    "stem": "Which pairing of laboratory finding and organism is correct?",
+    "level": "concept",
+    "stem": "Cryptococcus and Cryptosporidium both threaten patients with advanced HIV, and their names are easy to confuse. Which pairing of organism and laboratory finding is correct?",
     "options": [
-      "India ink halo: Cryptosporidium. Red oocysts on acid-fast stain: Cryptococcus. Thin blood smear: Giardia",
-      "India ink halo: Aspergillus. Red oocysts on acid-fast stain: Giardia. Thin blood smear: Toxoplasma",
-      "India ink halo: Cryptococcus. Red oocysts on acid-fast stain: Entamoeba. Thin blood smear: Candida",
-      "India ink halo: Cryptococcus. Red oocysts on acid-fast stain: Cryptosporidium. Thin blood smear: Plasmodium species"
+      "Cryptococcus: red oocysts on a modified acid-fast stain of stool",
+      "Cryptosporidium: a clear halo around cells on India ink of CSF",
+      "Cryptosporidium: ring forms inside red cells on a thin blood smear",
+      "Cryptococcus: a clear halo around cells on India ink of CSF"
     ],
     "answer": 3,
-    "why": "India ink outlines the cryptococcal capsule as a clear halo. A modified Kinyoun acid-fast stain shows Cryptosporidium oocysts as red spheres on a blue background. A thin blood smear identifies the Plasmodium species and the percent of red cells infected."
+    "why": "India ink outlines the capsule of Cryptococcus, a yeast that causes meningitis, as a clear halo in cerebrospinal fluid. Cryptosporidium is an intestinal protozoan whose oocysts appear as red spheres on a modified Kinyoun acid-fast stain of stool. Ring forms in red cells on a thin smear point to Plasmodium."
   },
   {
     "id": "HUB-111",
@@ -1841,12 +1841,57 @@ var POOL = [
     "level": "application",
     "stem": "A patient with advanced HIV has fever and headache. India ink of cerebrospinal fluid shows encapsulated yeasts. Which induction regimen fits, and which drug class should be avoided?",
     "options": [
-      "Liposomal amphotericin B plus flucytosine; avoid echinocandins, which are inactive against this yeast",
-      "Pyrimethamine-sulfadiazine with leucovorin; avoid TMP-SMX, which antagonizes it",
-      "An echinocandin; avoid amphotericin B, which cannot reach the central nervous system",
-      "Voriconazole; avoid flucytosine, which is inactive against yeasts"
+      "Liposomal amphotericin B plus flucytosine; avoid echinocandins",
+      "Pyrimethamine-sulfadiazine with leucovorin; avoid TMP-SMX",
+      "An echinocandin such as micafungin; avoid amphotericin B",
+      "Voriconazole alone; avoid flucytosine"
     ],
     "answer": 0,
     "why": "The encapsulated yeast is Cryptococcus neoformans. Induction is liposomal amphotericin B plus flucytosine, followed by fluconazole, and echinocandins are inactive against Cryptococcus. Pyrimethamine-sulfadiazine treats toxoplasmosis, another brain infection in advanced HIV, but it does not fit an India ink finding."
+  },
+  {
+    "id": "HUB-112",
+    "m": "bacteria2+mycoses",
+    "area": "Drug interactions in combined regimens",
+    "level": "application",
+    "stem": "A patient taking rifampin for tuberculosis starts itraconazole for histoplasmosis, and the itraconazole level stays low. Which explanation fits?",
+    "options": [
+      "Rifampin inhibits CYP3A, so the azole is converted to an inactive form",
+      "Rifampin induces CYP450 enzymes, so the azole is cleared faster",
+      "Rifampin binds ergosterol, so the azole has no target left",
+      "Rifampin blocks fungal RNA polymerase, which antagonizes the azole"
+    ],
+    "answer": 1,
+    "why": "Rifampin induces cytochrome P450 enzymes, which speeds the breakdown of drugs cleared by them, including the azoles. This is the opposite of ritonavir and the azoles themselves, which inhibit CYP enzymes and raise other drug levels. Rifabutin, a rifampin derivative, induces P450 enzymes less, which matters when a patient takes other drugs."
+  },
+  {
+    "id": "HUB-113",
+    "m": "mycoses+parasitology",
+    "area": "Fungi, protozoa, and Pneumocystis",
+    "level": "integration",
+    "stem": "A patient with HIV and a CD4 count of 120 cells/µL starts TMP-SMX to prevent Pneumocystis pneumonia. Which other opportunistic organism does the same drug act against?",
+    "options": [
+      "Cryptococcus neoformans",
+      "Aspergillus fumigatus",
+      "Toxoplasma gondii",
+      "Candida albicans"
+    ],
+    "answer": 2,
+    "why": "TMP-SMX blocks two steps in folate synthesis. It is the first-choice drug for Pneumocystis and an alternative agent against Toxoplasma, so prophylaxis covers both. Cryptococcus, Aspergillus, and Candida are treated with polyenes, azoles, or echinocandins, which act on the fungal membrane or wall."
+  },
+  {
+    "id": "HUB-114",
+    "m": "parasitology+viruses4",
+    "area": "Enteric infections and their control",
+    "level": "application",
+    "stem": "In one outbreak, vomiting and diarrhea begin 12 to 48 hours after a shared meal. In another, watery diarrhea follows swimming in a chlorinated community pool. Which agents best fit the two outbreaks, in order?",
+    "options": [
+      "Cryptosporidium, then norovirus",
+      "Giardia lamblia, then rotavirus",
+      "Rotavirus, then Entamoeba histolytica",
+      "Norovirus, then Cryptosporidium"
+    ],
+    "answer": 3,
+    "why": "Norovirus symptoms begin about 12 to 48 hours after exposure, faster than rotavirus at 1 to 3 days. Cryptosporidium oocysts survive chlorination, so outbreaks can follow swimming in a treated pool. Entamoeba causes bloody diarrhea, and Giardia is linked to untreated water."
   }
 ];

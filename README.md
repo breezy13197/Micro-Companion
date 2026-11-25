@@ -20,7 +20,7 @@ A set of web pages that students open in a browser. No installation, no server, 
 | `browser-tests/` | An automatic checker for you, not for students (see "Checking it works in different browsers" below). |
 | `.github/` | Instructions that tell GitHub to run that checker for you on every change. Students never see it. |
 
-`banks/hub.js` is the hub's own question bank: 111 questions and 66 flashcards that each need **two or more lectures** at once. Every companion, including Mycoses and Parasitology, now has integration questions.
+`banks/hub.js` is the hub's own question bank: 114 questions and 66 flashcards that each need **two or more lectures** at once. Every companion, including Mycoses and Parasitology, now has integration questions.
 
 ---
 
@@ -92,7 +92,7 @@ You should see a table like this:
 | Viruses V: Hepatitis, Arboviruses, Rabies, Ebola, HIV | 76 | 68 | 68 | manifest loaded | locked · 0% |
 | Mycoses: Fungal Infections and Antifungals | 86 | 60 | 66 | manifest loaded | locked · 0% |
 | Parasitology: Protozoa and Antiparasitics | 150 | 54 | 46 | manifest loaded | locked · 0% |
-| Integration & review | 111 | 0 | 66 | not needed | unlocked |
+| Integration & review | 114 | 0 | 66 | not needed | unlocked |
 
 (The numbers will change when you add or remove questions, and "Hub exams" will change as progress is made. What matters is that every row says "manifest loaded", except the last, which says "not needed".)
 
@@ -130,10 +130,10 @@ To change the hub's colors later, open `index.html` in a text editor and search 
 
 ## The Integration question bank
 
-- 111 questions in 32 concept areas, each tagged with the companions it draws on (for example `bacteria2+bacteria4` or `mycoses+viruses5`). Levels: 28 concept, 51 application, 32 integration.
-- Questions `HUB-079` to `HUB-111` (and flashcards `HUB-CARD-48` to `HUB-CARD-66`) are the Mycoses and Parasitology set. Each one pairs Mycoses or Parasitology with another lecture: for example, metronidazole and the folate blockers across bacteria and protozoa, opportunistic infections and drug interactions in advanced HIV, acid-fast staining of mycobacteria and Cryptosporidium, and infections in pregnancy. 20 draw on Mycoses and 21 on Parasitology.
+- 114 questions in 32 concept areas, each tagged with the companions it draws on (for example `bacteria2+bacteria4` or `mycoses+viruses5`). Levels: 31 concept, 49 application, 34 integration.
+- Questions `HUB-079` to `HUB-114` (and flashcards `HUB-CARD-48` to `HUB-CARD-66`) are the Mycoses and Parasitology set. Each one pairs Mycoses or Parasitology with another lecture: for example, metronidazole and the folate blockers across bacteria and protozoa, opportunistic infections and drug interactions in advanced HIV, acid-fast staining of mycobacteria and Cryptosporidium, and infections in pregnancy. 22 draw on Mycoses and 23 on Parasitology. This set was checked by the question-reviewer agent and revised to remove answer cues (the correct choice being the longest, or repeating a word from the stem).
 - Every question was checked against your Question Writing Guidelines: single best answer, 4 options, a rationale for each, no "all/none of the above," no NOT/EXCEPT stems, no absolute terms (always, never, only) or vague terms (usually, commonly), correct answers spread evenly across A to D.
-- IDs run `HUB-001` to `HUB-111` and must **never be reused or renumbered**, even if you delete a question.
+- IDs run `HUB-001` to `HUB-114` and must **never be reused or renumbered**, even if you delete a question.
 - Every fact comes from your lecture cards. Please read through the questions before students see them. You know the lectures better than I do.
 
 ### If you edit questions later
